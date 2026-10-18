@@ -126,6 +126,10 @@ L'elenco completo, tradotto nel luna park, è nel §7 del soggetto. Le più impo
   con il motore del sito e il Chrome dell'utente; `--foglio` li impagina in un foglio di provini.
   **Leggi i PNG** prima di dichiarare una scena finita. Nel renderer i font possono essere sostitutivi: dillo
   quando la verifica è avvenuta solo lì.
+- `node strumenti/controlla.mjs` controlla sottotitoli, finestre e moduli comuni senza aprire i film.
+- Dopo aver caricato un film su claude.ai, rendilo anche con il player vero di Motion, offline
+  (`render-offline.md` del tipo Motion): i file del player stanno nello scratchpad, mai nel repository.
+- In ogni scena `render(t, kit)` usa il `kit` che riceve: in Motion ogni scena ha il suo.
 - Per ogni scena controlla almeno l'inizio, il centro, la fine e ogni battuta:
   - testi che escono dal riquadro, etichette sovrapposte, elementi coperti o tagliati;
   - sottotitoli in anticipo o in ritardo sulle immagini;
