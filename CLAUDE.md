@@ -98,10 +98,15 @@ se una scena è bella ma scientificamente sbagliata, si riscrive.
   una modifica a una scena vale per l'artifact e per il sito.
 - Le scene possono usare solo le funzioni del kit che `sito/motore/kit.js` offre. Se una scena ne usa una nuova,
   prima la si aggiunge al motore (con lo stesso comportamento di Motion), poi la si usa.
-- La musica del sito la suona `sito/motore/suono.js`: stessi comandi di `score.js`, strumenti nostri.
-  Lo stile «anni 90» (`sito/motore/anni90.js`) si ricava da `score.js`: usa gli accordi del `pad` per arpeggi,
-  basso, batteria e melodia, e marimba o basso per capire dove la musica è vivace. Chi scrive una partitura nuova
-  tenga gli accordi sul `pad`, così entrambi gli stili funzionano.
+- L'audio del sito lo suona `sito/motore/suono.js` su tre canali: **musica**, **effetti**, **voce**, ognuno con
+  volume e interruttore suoi. Gli effetti sono i `S.fx` di `score.js`; la musica è il tema di
+  `episodi/NN-titolo/audio/tracce.json` (`sito/motore/tema.js`), un giro che si ripete uguale per tutto l'episodio
+  e non riparte a ogni scena. La voce (e ogni altro file audio) si aggiunge come `clip` in `tracce.json`.
+  `tracce.json` è solo del sito: non va nello store di Motion.
+- La musica sta più bassa degli effetti (−20 dB di partenza, misurati: i picchi degli effetti restano circa 12 dB sopra la musica): se si cambia il missaggio, gli effetti restano sopra.
+- Lo stile «anni 90» (`sito/motore/anni90.js`) usa gli accordi del `pad` per arpeggi, basso, batteria e melodia,
+  e marimba o basso per capire dove la musica è vivace. Chi scrive un tema o una partitura nuova tenga gli accordi
+  sul `pad`, così entrambi gli stili funzionano.
 - Il player di Motion (`app.js`) non va mai copiato nel repository né pubblicato: è codice di Anthropic.
 - Prima di dire che il sito funziona, apri `sito/guarda.html?ep=…&t=…` con un server locale e guarda i fotogrammi.
 - In `sito/episodi.json` c'è l'elenco degli episodi: aggiornalo quando ne nasce uno nuovo.

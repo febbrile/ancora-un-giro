@@ -39,11 +39,13 @@ episodi/NN-titolo/               il sorgente di ogni episodio (film Motion)
   modules/score.js               la colonna sonora
   modules/base.css               stile comune
   modules/fetched-fonts.json     elenco font gestito dal player: non modificarlo a mano
+  audio/tracce.json              solo per il sito: cosa suona nei canali musica, effetti e voce (vedi sotto)
 sito/                            il sito statico: elenco episodi e player nostro che legge episodi/*/modules
   index.html, guarda.html        le due pagine (guarda.html?ep=01-al-mare-emma)
   motore/kit.js                  le funzioni del kit di Motion che usano le scene, scritte da noi
-  motore/suono.js                il sintetizzatore Web Audio che suona score.js
-  motore/anni90.js               riarrangia score.js come la musica di un videogioco anni 90
+  motore/suono.js                il sintetizzatore Web Audio, con i canali musica, effetti e voce
+  motore/tema.js                 il tema di ogni episodio: un giro di accordi che si ripete uguale fino alla fine
+  motore/anni90.js               riarrangia la musica come quella di un videogioco anni 90
   motore/player.js               palco, barra del tempo, capitoli, tastiera
   episodi.json                   l'elenco degli episodi del sito
 personaggi/                      la tela di design: Emma, Ada, i compagni, gli oggetti, due fotogrammi di prova
@@ -80,14 +82,53 @@ Questa cartella ne è la copia di sorgente, esportata il 18 ottobre 2026.
 
 Il sito fa girare gli stessi file di `episodi/` nel browser, senza Motion: le scene non si copiano e non si
 riscrivono. Il player nostro (`sito/motore/`) offre le stesse funzioni del kit (`kit.scene`, `kit.h`, `kit.rng`,
-`kit.typist`, `TextFx`, le curve `seg`, `eo`, `eio`, …) e suona `score.js` con un sintetizzatore suo:
-le immagini sono identiche a Motion, la musica è simile ma non uguale.
+`kit.typist`, `TextFx`, le curve `seg`, `eo`, `eio`, …) e ha un audio suo: le immagini sono identiche a Motion,
+il suono no.
 
-La musica ha due stili, che si scelgono col pulsante ♪ (o il tasto S) e restano memorizzati:
-- **Anni 90** (quello di partenza): la stessa partitura riarrangiata da `motore/anni90.js` con voci da console.
-  Sugli accordi di `score.js` nascono arpeggi veloci, un basso che salta d'ottava, una batteria e una melodia;
-  i cambi di scena e i rumori restano quelli.
-- **Calma**: la partitura com'è, come nei film Motion.
+### L'audio del sito
+
+Il suono passa per tre **canali**, ognuno col suo interruttore e il suo volume nel pannello dell'audio
+(il pulsante coi cursori, accanto all'altoparlante). Le scelte di chi guarda restano memorizzate.
+
+| Canale | Cosa suona | Volume di partenza |
+|---|---|---|
+| Musica | il tema dell'episodio, che si ripete uguale dall'inizio alla fine | −20 dB |
+| Effetti sonori | i rumori di `score.js` (`S.fx`), agli stessi istanti dei film Motion | 0 dB |
+| Voce | file audio messi a un istante del film (per esempio una voce narrante); il canale compare solo se c'è | 0 dB |
+
+Tasti: **N** accende e spegne la musica, **M** tutto l'audio, **S** cambia lo stile della musica.
+
+Cosa suona in ogni canale lo dice `episodi/NN-titolo/audio/tracce.json`, che il player di Motion non legge:
+
+```json
+{
+  "musica": {
+    "tema": { "frasi": [
+      { "accordi": ["D", "Bm", "G", "A"], "carattere": "leggero" },
+      { "accordi": ["D", "Bm", "G", "A"], "carattere": "vivace" }
+    ] },
+    "dissolvenza": 3
+  },
+  "volumi": { "musica": -20, "effetti": 0, "voce": 0 },
+  "clip": [
+    { "canale": "voce", "file": "voce/01-notte.mp3", "da": 2.5 }
+  ]
+}
+```
+
+- `musica.tema`: un accordo per battuta (accordi possibili: D, Bm, G, A, Em, Fm), con le stesse voci di `score.js`.
+  «leggero» è pad e vibrafono, «vivace» pad, marimba e basso. Il giro intero si ripete fino alla fine del film,
+  senza seguire le scene; `dissolvenza` sono i secondi in cui si spegne alla fine.
+- Al posto del tema, `musica.file` suona un file audio in giro continuo (`"giro": false` per suonarlo una volta sola);
+  senza né tema né file, la musica è quella di `score.js` scena per scena, come nei film Motion.
+- `clip`: file audio (mp3, ogg, wav) nella cartella `audio/`, ognuno sul suo canale, che parte al secondo `da` del film.
+  Se si salta a metà di una clip, riparte dal punto giusto. `livello` (in dB) regola la singola clip.
+- `volumi`: il volume di partenza di ogni canale, in dB.
+
+La musica ha due stili, che si scelgono nel pannello dell'audio (o col tasto S):
+- **Anni 90** (quello di partenza): la musica riarrangiata da `motore/anni90.js` con voci da console.
+  Sugli accordi del pad nascono arpeggi veloci, un basso che salta d'ottava, una batteria e una melodia.
+- **Calma**: la musica com'è scritta.
 
 Per provarlo in locale, dalla cartella del repository:
 

@@ -10,11 +10,18 @@
   const stage = $('stage'), schermo = $('schermo'), velo = $('velo'), messaggio = $('messaggio'), grande = $('grande');
   const barra = $('barra'), fatto = $('fatto'), pomello = $('pomello'), etichetta = $('etichetta'), orologio = $('orologio');
 
-  let film = null, suono = null, tempo = 0, inCorso = false, partenza = 0, origine = 0, muto = false, trascina = false;
-  // Lo stile della musica: «anni 90» (riarrangiata) o «calma» (la partitura com'è). Si ricorda tra una visita e l'altra.
+  let film = null, suono = null, audio = {}, tempo = 0, inCorso = false, partenza = 0, origine = 0, muto = false, trascina = false;
+  // Lo stile della musica: «anni 90» (riarrangiata) o «calma» (com'è scritta). Si ricorda tra una visita e l'altra.
   const STILI = { anni90: 'Anni 90', calma: 'Calma' };
   let stile = 'anni90';
   try { const s = localStorage.getItem('pozzo-stile'); if (STILI[s]) stile = s; } catch (e) {}
+  // I canali dell'audio: acceso/spento e volume da 0 a 100 (79 = com'è scritto, 100 = +6 dB, curva cubica come l'orecchio).
+  // Il volume di partenza lo dà tracce.json; quello che sceglie chi guarda si ricorda tra una visita e l'altra.
+  const NOMI = { musica: 'Musica', effetti: 'Effetti sonori', voce: 'Voce' };
+  const canali = {}, scelti = {};
+  try { Object.assign(scelti, JSON.parse(localStorage.getItem('pozzo-canali')) || {}); } catch (e) {}
+  const guadagno = v => 2 * Math.pow(v / 100, 3);
+  const daDecibel = x => Math.round(100 * Math.cbrt(Math.pow(10, x / 20) / 2));
 
   const mmss = s => { s = Math.max(0, Math.floor(s)); return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); };
 
@@ -42,7 +49,7 @@
 
     try {
       await caratteri();
-      film = await Pozzo.carica('../episodi/' + cartella, stage);
+      [film, audio] = await Promise.all([Pozzo.carica('../episodi/' + cartella, stage), tracce('../episodi/' + cartella + '/audio/')]);
     } catch (e) {
       console.error(e);
       messaggio.textContent = 'Non riesco a caricare l’episodio: ' + e.message;
@@ -51,6 +58,7 @@
     }
     barra.setAttribute('aria-valuemax', String(Math.round(film.durata)));
     disegnaCapitoli();
+    disegnaPannello();
     adatta();
     const t0 = parseFloat(parametri.get('t'));
     vai(isFinite(t0) ? t0 : 0);
@@ -58,6 +66,14 @@
     grande.hidden = false;
     if (isFinite(t0)) velo.classList.add('via');
     requestAnimationFrame(giro);
+  }
+
+  // tracce.json è facoltativo: senza, la musica è quella di score.js scena per scena.
+  async function tracce(base) {
+    let t = {};
+    try { const r = await fetch(base + 'tracce.json', { cache: 'no-cache' }); if (r.ok) t = await r.json(); } catch (e) { console.warn('tracce.json:', e); }
+    t.base = base;
+    return t;
   }
 
   function vicini(elenco, io) {
@@ -114,7 +130,12 @@
   function suona() {
     if (!film) return;
     if (tempo >= film.durata - 0.05) tempo = 0;
-    if (!suono) { try { suono = Pozzo.creaSuono(film.partitura, film.durata, stile); if (suono) suono.muto(muto); } catch (e) { console.error(e); suono = null; } }
+    if (!suono) {
+      try {
+        suono = Pozzo.creaSuono(film.partitura, film.durata, audio, stile);
+        if (suono) { suono.muto(muto); Object.keys(canali).forEach(applica); }
+      } catch (e) { console.error(e); suono = null; }
+    }
     inCorso = true;
     origine = tempo; partenza = performance.now();
     if (suono) suono.avvia(tempo);
@@ -176,17 +197,68 @@
     $('onde-audio').setAttribute('d', muto ? 'M16 9l5 6M21 9l-5 6' : 'M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12');
     $('audio').setAttribute('aria-label', muto ? 'Rimetti l’audio' : 'Togli l’audio');
   });
-  function mostraStile() {
-    $('stile').textContent = '♪ ' + STILI[stile];
-    $('stile').setAttribute('aria-label', 'Musica: ' + STILI[stile] + '. Cambia stile');
+
+  // ── Il pannello dell'audio: un interruttore e un volume per canale, e lo stile della musica ─────────
+  const pannello = $('pannello-audio'), mixer = $('mixer');
+  function disegnaPannello() {
+    const presenti = Pozzo.canaliPresenti(film.partitura, audio), volumi = audio.volumi || {};
+    pannello.innerHTML = '';
+    Pozzo.CANALI.forEach(n => {
+      if (!presenti[n]) return;
+      const mio = scelti[n] || {};
+      const c = canali[n] = {
+        acceso: typeof mio.acceso === 'boolean' ? mio.acceso : true,
+        volume: typeof mio.volume === 'number' ? mio.volume : daDecibel(Number(volumi[n]) || 0),
+      };
+      const riga = document.createElement('div');
+      riga.className = 'canale';
+      riga.innerHTML = '<div class="testa"><span class="nome"></span><button class="interruttore" role="switch"><span></span></button></div>' +
+        '<input type="range" min="0" max="100" step="1">';
+      riga.querySelector('.nome').textContent = NOMI[n];
+      const interruttore = riga.querySelector('button'), cursore = riga.querySelector('input');
+      interruttore.setAttribute('aria-label', NOMI[n]);
+      cursore.setAttribute('aria-label', 'Volume: ' + NOMI[n]);
+      cursore.value = String(c.volume);
+      interruttore.addEventListener('click', () => { c.acceso = !c.acceso; cambia(n); });
+      cursore.addEventListener('input', () => { c.volume = Number(cursore.value); c.acceso = true; cambia(n); });
+      c.mostra = () => { interruttore.setAttribute('aria-checked', String(c.acceso)); riga.classList.toggle('spento', !c.acceso); cursore.value = String(c.volume); };
+      c.mostra();
+      pannello.appendChild(riga);
+      if (n === 'musica') {
+        const stili = document.createElement('div');
+        stili.className = 'stili'; stili.setAttribute('role', 'group'); stili.setAttribute('aria-label', 'Stile della musica');
+        Object.keys(STILI).forEach(k => {
+          const b = document.createElement('button');
+          b.dataset.stile = k; b.textContent = STILI[k];
+          b.addEventListener('click', () => scegliStile(k));
+          stili.appendChild(b);
+        });
+        riga.appendChild(stili);
+        mostraStile();
+      }
+    });
   }
-  mostraStile();
-  $('stile').addEventListener('click', () => {
-    stile = stile === 'anni90' ? 'calma' : 'anni90';
+  function applica(n) { if (suono && canali[n]) suono.canale(n, { acceso: canali[n].acceso, volume: guadagno(canali[n].volume) }); }
+  function cambia(n) {
+    const c = canali[n];
+    applica(n); c.mostra();
+    scelti[n] = { acceso: c.acceso, volume: c.volume };
+    try { localStorage.setItem('pozzo-canali', JSON.stringify(scelti)); } catch (e) {}
+  }
+  function scegliStile(k) {
+    stile = k;
     try { localStorage.setItem('pozzo-stile', stile); } catch (e) {}
     if (suono) suono.stile(stile);
     mostraStile();
-  });
+  }
+  function mostraStile() { pannello.querySelectorAll('.stili button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.stile === stile))); }
+  function apriPannello(si) {
+    pannello.hidden = !si;
+    mixer.setAttribute('aria-expanded', String(si));
+  }
+  mixer.addEventListener('click', ev => { ev.stopPropagation(); apriPannello(pannello.hidden); });
+  document.addEventListener('pointerdown', ev => { if (!pannello.hidden && !pannello.contains(ev.target) && !mixer.contains(ev.target)) apriPannello(false); });
+
   $('intero').addEventListener('click', () => {
     const el = $('lettore');
     if (document.fullscreenElement) document.exitFullscreen();
@@ -195,16 +267,19 @@
   document.addEventListener('keydown', ev => {
     if (!film || ev.metaKey || ev.ctrlKey || ev.altKey) return;
     const tag = (ev.target && ev.target.tagName) || '';
+    if (ev.key === 'Escape' && !pannello.hidden) { apriPannello(false); mixer.focus(); return; }
+    if (tag === 'INPUT') return;
     if (ev.key === ' ' || ev.key === 'k') { if (tag === 'BUTTON' && ev.key === ' ') return; alterna(); ev.preventDefault(); }
     else if (ev.key === 'ArrowLeft') { vai(tempo - 5); ev.preventDefault(); }
     else if (ev.key === 'ArrowRight') { vai(tempo + 5); ev.preventDefault(); }
     else if (ev.key === 'm' || ev.key === 'M') $('audio').click();
-    else if (ev.key === 's' || ev.key === 'S') $('stile').click();
+    else if ((ev.key === 'n' || ev.key === 'N') && canali.musica) { canali.musica.acceso = !canali.musica.acceso; cambia('musica'); }
+    else if ((ev.key === 's' || ev.key === 'S') && canali.musica) scegliStile(stile === 'anni90' ? 'calma' : 'anni90');
     else if (ev.key === 'f' || ev.key === 'F') $('intero').click();
   });
 
   // Per i controlli automatici: window.pozzo.vai(12.5) disegna quel fotogramma.
-  window.pozzo = { vai: t => vai(t), suona, pausa, get film() { return film; }, get tempo() { return tempo; } };
+  window.pozzo = { vai: t => vai(t), suona, pausa, get film() { return film; }, get tempo() { return tempo; }, get suono() { return suono; }, get canali() { return canali; } };
 
   avvio();
 })();
