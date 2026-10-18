@@ -20,7 +20,7 @@ Nel laboratorio lavora **Ada**, una piccola scienziata con un camice troppo lung
 
 Ada porta il nastro sul bordo, dove la aspetta lo **Spezzaparole**, una vecchia macchina con una grande forbice. Nel pozzo le frasi intere non passano. La forbice fa *zac, zac*, e il nastro diventa tre pezzi: «Al», «mare», «Emma».
 
-I tre pezzi scivolano oltre il bordo e, appena entrano nel buio, prendono vita. **Al** è un sassolino tondo e silenzioso. **Mare** è un'onda con gli occhi. **Emma** è una bambina fatta di luce, bionda, con un fermaglio a stellina tra i capelli. Si prendono per mano e spariscono giù.
+I tre pezzi scivolano oltre il bordo come ritagli di carta. Il primo tratto del pozzo è fatto di pietre di tutti i colori. Cadendo, ogni ritaglio passa davanti a una pietra che si accende, e in quella luce prende vita. **Al** è un sassolino tondo e silenzioso. **Mare** è un'onda con gli occhi. **Emma** è una bambina fatta di luce, bionda, con un fermaglio a stellina tra i capelli. Si prendono per mano e spariscono giù.
 
 Ada si siede accanto alla carrucola e aspetta. Cosa succeda laggiù, lei non lo vede: il pozzo è troppo profondo, e Ada dentro non scende mai.
 
@@ -40,15 +40,15 @@ Titolo: **Il pozzo delle parole**.
 
 *Circa 4 minuti.*
 
-Di nuovo il bordo del pozzo, di notte. Lo Spezzaparole fa *zac, zac*, e Al, Mare ed Emma scivolano nel buio.
+Di nuovo il bordo del pozzo, di notte. Lo Spezzaparole fa *zac, zac*, e tre ritagli di carta scivolano nel buio.
 
-«Questa volta non restiamo con Ada. Questa volta scendiamo con Emma.»
+«Questa volta non restiamo con Ada. Questa volta scendiamo con loro.»
 
-**L'armadio.** Il primo tratto del pozzo è un grande armadio di pietra, con migliaia di cassetti. Ognuno dei tre trova il proprio, lo apre e ci trova un vestito di luce. Il vestito di Mare è azzurro come il mare. Quello di Emma è rosa antico, un colore che non somiglia a niente in particolare.
+**Le pietre.** Il primo tratto del pozzo è fatto di migliaia di pietre, ognuna di un colore diverso: una per ogni pezzo che può cadere nel pozzo. Ogni ritaglio passa davanti alla sua. La pietra si accende e il ritaglio prende vita, con addosso un vestito di luce del colore di quella pietra. Il vestito di Mare è azzurro come il mare. Quello di Emma è rosa antico, un colore che non somiglia a niente in particolare.
 
 «Per ora, Emma è soltanto un nome.»
 
-**La caduta.** Il fondo dell'armadio si apre, e i tre cadono tenendosi per mano, in una lunga spirale.
+**La caduta.** Oltre le pietre, il pozzo si apre nel buio, e i tre cadono tenendosi per mano, in una lunga spirale.
 
 **La sala rotonda.** Atterrano in una sala rotonda. Tra loro si accendono dei fili di luce: tra Emma e Mare il filo brilla come una lampadina, tra Emma e Al si vede appena. Lungo i fili cominciano a scorrere i colori. Emma riceve tanto dell'azzurro di Mare e quasi niente di Al, e il suo vestito, per la prima volta, prende un po' del colore del mare.
 
@@ -99,7 +99,7 @@ Cartello: **Continua**.
 | Da dove vengono le pareti (l'acqua che le leviga) | Una puntata sull'origine del pozzo (addestramento) |
 | *Modello linguistico*, «il pozzo calcola, non pensa» detto a voce | Resta mostrato e non detto; il nome vero arriverà quando servirà |
 | Perché la pesca può dare un'altra parola | La puntata del secchio (campionamento, poi il termostato) |
-| Le stanze come finestre, il vestito uguale in ogni frase, i colori simili tra parole simili | Le puntate dedicate all'armadio e alle stanze |
+| Le stanze come finestre, il vestito uguale in ogni frase, i colori simili tra parole simili | Le puntate dedicate alle pietre e alle stanze (al parco Emma ripassa davanti alla stessa pietra) |
 | La mappa del giro e il riassunto finale | Il giro si vede accadere nel prologo, senza mappa |
 
 ## Corrispondenze (il rigore che resta sotto)
@@ -108,7 +108,7 @@ Cartello: **Continua**.
 | Il telefono, il nastro, Ada che porta la frase e attacca la parola | Il programma intorno al modello: chiamata e ciclo |
 | Lo Spezzaparole sul bordo | Tokenizer, fuori dal modello |
 | Il nastro che torna allo Spezzaparole, la storia che cresce di una parola | Generazione autoregressiva, un token per giro |
-| Il vestito dall'armadio | Embedding |
+| La pietra che si accende e dà il vestito, una per ogni pezzo | Embedding: una riga della tabella E, un parametro (pietra) sempre uguale |
 | Fili di luce e colori che scorrono | Pesi di attention e media pesata |
 | Ingranaggi, botola, forza che tira; «Emma resta Emma» | Feed-forward e connessione residua: `x = x + Δ` |
 | Tutti e tre scendono fino all'ultimo piano | Tutte le posizioni attraversano tutti gli strati |
@@ -120,6 +120,7 @@ Cartello: **Continua**.
 | Ada non vede cosa succede laggiù | Opacità: da fuori si vede solo il secchio |
 
 ## Cose da controllare
+- **Ogni elemento deve stare nel mondo di un pozzo.** L'armadio è stato sostituito dalle pietre colorate del primo tratto. La bozza 3, la tela dei personaggi e il `CLAUDE.md` parlano ancora del Grande Armadio: si aggiornano quando scriviamo la bibbia.
 - **Niente lettere nel pozzo.** Le stanze sono arredate con oggetti, non con scritte: il salvagente con «nuota» è diventato pinne e occhialini. Le campane hanno un nome solo nella voce del narratore, non scritto su di loro.
 - **Emma non diventa «nuota»**: il racconto non lo dice mai, e il vestito resta blu.
 - **I colori di Emma** restano quelli di `numeri.py` (rosa antico, azzurro polvere, azzurro, blu mare). Il colore dopo la sala rotonda e il colore di Al non sono ancora in `numeri.py`: prima di disegnarli vanno dichiarati e calcolati lì. Per ora il racconto non nomina il colore di Al.
