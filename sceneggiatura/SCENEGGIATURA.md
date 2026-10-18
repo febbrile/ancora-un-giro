@@ -908,7 +908,10 @@ Modelli veri: migliaia di coordinate (per esempio 4.096)
 5. **Dati inventati e dichiarati:** E, le righe di U, le lanterne e i cartelli, gli spostamenti Δ, le righe finali dei giri dell'ep. 3, le carte dell'ep. 4. Tutto il resto è calcolato.
 6. **Ep. 3, i giri successivi.** Il film mostra solo la riga finale di ogni giro e il suo secchio; il percorso dei nuovi viaggiatori nei piani non è calcolato.
 7. **Il vocabolario giocattolo** ha 14 parole; i modelli veri tra 30.000 e 200.000.
-8. **Tutti si spostano, insieme.** Ogni strato calcola uno spostamento per ogni posizione, non solo per l'ultima, e la fila passa al piano successivo tutta insieme. Il film semplifica: si apre una sola botola, la direzione dei calcoli, e tutti e tre ci cadono dentro. Nel calcolo vero lo spostamento di Al e Mare non è identico a quello di Emma: per questo atterrano in punti un po' diversi, e i loro numeri non sono mostrati.
+8. **Tutti si spostano, insieme.** Ogni strato calcola uno spostamento per ogni posizione, non solo per l'ultima, e la fila passa al piano successivo tutta insieme. Il film semplifica: si apre una sola botola, la direzione presa dai calcoli (sguardi e ingranaggio), e tutti e tre ci cadono dentro.
+   - **Una stanza sola.** Sono tutti nella stessa stanza perché la stanza è la lettura della posizione di Emma; Al e Mare viaggiano con lei.
+   - **Direzione, non probabilità.** La botola è uno spostamento, non una scelta: a metà pozzo non c'è ancora nessuna probabilità. Le probabilità nascono solo in fondo, con le campane e il secchio, e la scelta la fa Ada pescando.
+   - **Al e Mare.** Nel calcolo vero il loro spostamento non è identico a quello di Emma: per questo atterrano in punti un po' diversi, e i loro numeri non sono mostrati.
 
 ---
 

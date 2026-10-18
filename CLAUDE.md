@@ -44,6 +44,8 @@ se una scena è bella ma scientificamente sbagliata, si riscrive.
 11. Il colore del vestito di Emma viene **dai vicini** (le parole a cui somiglia), non da una singola riga.
 12. **Parliamo solo del nostro modellino.** Niente confronti con «i modelli veri» (piani, parole, dimensioni):
     aprono collegamenti che andrebbero spiegati. L'unica eccezione è l'episodio 4, dedicato proprio a questo.
+13. **A metà pozzo ci sono spostamenti, non probabilità.** Botole, frecce e stanze mostrano direzioni calcolate;
+    le probabilità nascono solo in fondo (campane e secchio) e la scelta la fa Ada pescando.
 
 ## Le metafore fissate
 
