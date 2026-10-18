@@ -27,7 +27,7 @@ Bozza 3, 18 ottobre 2026. Sostituisce la bozza 2 (che resta nella storia del rep
 
 | Episodio | Titolo | Durata | Cuore dell'episodio |
 |---|---|---|---|
-| 1 | Al mare Emma | 4:48 | Il viaggio intero, una volta, con calma |
+| 1 | Al mare Emma | 4:46 | Il viaggio intero, una volta, con calma |
 | 2 | Al parco Emma | 4:16 | Stessa partenza, contesto diverso, strada diversa |
 | 3 | Fino alla Fine | 4:37 | Temperatura, il ciclo, l'ultima riga, EOS, max_tokens |
 | 4 | Mille semi | 3:01 | Da 3 coordinate a migliaia |
@@ -336,7 +336,7 @@ nuova carta = 0.1·Al + 0.7·Mare + 0.2·Emma
 
 ---
 
-### 1.7 · Sempre più giù · 0:46
+### 1.7 · Sempre più giù · 0:44
 
 **VISIVO.** Una sequenza quasi muta: quattro piani uno sotto l'altro, e la camera scende con i viaggiatori.
 - **Il pavimento della Sala.** Sotto ognuno dei tre, dentro il pavimento di pietra, gira un piccolo ingranaggio. Poi si apre una botola: non proprio sotto i piedi, ma un po' più in là, e in un punto diverso per ognuno. Al, Mare ed Emma vengono tirati via, ognuno verso la sua botola (posa «tirata via»), e cadono.
@@ -344,13 +344,10 @@ nuova carta = 0.1·Al + 0.7·Mare + 0.2·Emma
 - **Piano 2, il molo.** Tra onde e conchiglie compare, per la prima volta, un verbo: **nuota**, su un salvagente. Il ritratto è sparito. Vestito azzurro. Sguardi, ingranaggi, botole.
 - **Piano 3, il fondo.** Acqua profonda e luminosa: **nuota** grande, **gioca** più piccolo. Vestito blu mare. Qui il pavimento non si apre più.
 
-Nell'angolo, il monitor di Ada disegna la scia di Emma, una freccia per piano. Alla fine la camera si allontana: sotto i tre piani se ne vedono in trasparenza decine di altri, un pozzo fantasma.
+Nell'angolo, il monitor di Ada disegna la scia di Emma, una freccia per piano. Alla fine la camera si allontana finché si vedono tutti e quattro i piani del nostro pozzo, uno sotto l'altro. Il viaggio ripassa in accelerato, tre volte e sempre più veloce: tre lucine (Al, Mare, Emma) scendono di botola in botola e lasciano tre scie diverse. Nessuna parola.
 
 **NARRATORE.**
 > E da lì, giù: un piano dopo l'altro.
-
-**ADA.**
-> Il mio pozzo ha tre piani. Quelli veri ne hanno decine.
 
 **MONITOR.**
 ```

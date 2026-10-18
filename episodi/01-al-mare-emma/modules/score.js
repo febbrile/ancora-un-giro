@@ -78,7 +78,8 @@ kit.score(function (S, T) {
     [0, 0.12, 0.24].forEach(d => S.fx('boing', pi + o + 1.8 + d, { vel: 38 }));
   });
   [11.0, 21.4].forEach(g => S.fx('sparkle', pi + g + 0.3, { vel: 40 }));
-  S.fx('revswell', pi + 32.0, { dur: 4.0 });
+  S.fx('revswell', pi + 32.0, { dur: 3.0 });
+  [[35.2, 2.6], [38.2, 1.7], [40.2, 1.1]].forEach(([c, d]) => S.fx('whoosh', pi + c, { dur: d }));
   const ca = T.campane;
   S.chord('box', ['A5', 'C#6', 'E6'], { t: ca + 6.6, dur: 1.5, vel: 46 });
   S.chord('vib', ['F#4', 'A4', 'C#5', 'E5'], { t: ca + 7.2, dur: 3, vel: 50 });

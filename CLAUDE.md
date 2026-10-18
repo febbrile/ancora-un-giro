@@ -42,6 +42,8 @@ se una scena è bella ma scientificamente sbagliata, si riscrive.
     nessuna riga vuol dire "acqua" o "nome". Conta solo quanto due carte si somigliano.
     Nessuna parola giocattolo è allineata a un asse.
 11. Il colore del vestito di Emma viene **dai vicini** (le parole a cui somiglia), non da una singola riga.
+12. **Parliamo solo del nostro modellino.** Niente confronti con «i modelli veri» (piani, parole, dimensioni):
+    aprono collegamenti che andrebbero spiegati. L'unica eccezione è l'episodio 4, dedicato proprio a questo.
 
 ## Le metafore fissate
 

@@ -1,11 +1,14 @@
 const { seg, eo, ei, eio, eob, lerp } = kit;
 // 1.7 · Sempre più giù: quasi senza parole. A ogni piano gira un ingranaggio sotto ognuno, si apre una botola
 // in un punto diverso per ciascuno (lo spostamento) e cadono tutti e tre nella stanza sotto.
+// Alla fine si vedono tutti i piani del nostro pozzo e il viaggio ripassa in accelerato, tre volte.
 const SG_RH = 1080, SG_F = r => 900 + SG_RH * r;
 const SG_X0 = [520, 860, 1180];
 const SG_H = [[440, 900, 1320], [380, 960, 1440], [340, 1020, 1520]];
 const SG_OPEN = [4.2, 14.4, 24.8];
 const SG_SGUARDI = [null, 11.0, 21.4];
+const SG_PASSI = [[35.2, 2.6], [38.2, 1.7], [40.2, 1.1]];
+const SG_SCIA = ['#17B3B3', '#8787FE', '#2864DC'];
 const SG_V = [[0.55, 0.07, -0.58], [0.11, 0.50, -0.72], [-0.82, 1.11, -0.50], [-2.47, 2.19, 0.14]];
 const SG_WAVE = '<path d="M0 340 C90 310 180 330 214 392 C230 424 210 452 182 446 C160 440 160 414 180 414 C164 384 110 378 64 404 C40 418 18 436 0 446 Z"/><path d="M10 352 C90 326 170 344 204 396" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" fill="none" opacity=".55"/>';
 // Dove sta ognuno nella stanza r.
@@ -71,7 +74,6 @@ kit.scene('piani', {
     const P = window.PZ, V = P.VESTITO.mare;
     let mondo = '';
     for (let r = 0; r < 4; r++) mondo += sgStanza(r);
-    for (let k = 0; k < 10; k++) mondo += '<rect x="80" y="' + (4320 + 120 + k * 1080) + '" width="1760" height="760" rx="40" fill="#1B2244" stroke="#2A3466" stroke-width="20" opacity="' + (0.85 - k * 0.08).toFixed(2) + '"/>';
     // Botole e ingranaggi: tre per ogni piano che si apre.
     for (let r = 0; r < 3; r++) SG_H[r].forEach((h, j) => {
       const y = SG_F(r);
@@ -89,6 +91,13 @@ kit.scene('piani', {
     }
     mondo += sguardi;
     for (let j = 0; j < 3; j++) mondo += sgPersonaggio(P, j);
+    // Il ripasso accelerato: tre scie, di botola in botola.
+    for (let j = 0; j < 3; j++) {
+      let d = 'M' + sgPos(j, 0) + ' ' + (SG_F(0) - 90);
+      for (let r = 0; r < 3; r++) d += ' L' + SG_H[r][j] + ' ' + (SG_F(r) + 10) + ' L' + SG_H[r][j] + ' ' + (SG_F(r + 1) - 90);
+      mondo += '<path class="sg-scia" d="' + d + '" stroke="' + SG_SCIA[j] + '" stroke-width="24" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity="0"/>' +
+        '<g class="sg-luce" opacity="0"><circle r="90" fill="' + SG_SCIA[j] + '" opacity=".45" filter="url(#pz-soft)"/><circle r="38" fill="#FFF4E0"/></g>';
+    }
     // Il monitor nell'angolo: la scia di Emma, una freccia per piano.
     const O = sgProj([0, 0, 0]);
     let hud = '<g class="sg-hud"><rect x="1460" y="40" width="420" height="380" rx="18" fill="#0F2A2A" stroke="#C9973F" stroke-width="6"/>' +
@@ -102,25 +111,25 @@ kit.scene('piani', {
       '<g class="sg-mondo">' + mondo + '</g>' + hud +
       '<g class="sg-ban"><rect x="60" y="40" width="760" height="80" rx="16" fill="#0F2A2A" stroke="#C9973F" stroke-width="5"/>' +
       '<text x="440" y="92" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="30" fill="#9BE7C4">Ogni piano sposta tutti: x = x + Δ</text></g>' +
-      '<text class="sg-fant" x="1440" y="560" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="600" font-size="56" fill="#C8CEE8">nei modelli veri:</text>' +
-      '<text class="sg-fant" x="1440" y="630" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="600" font-size="56" fill="#C8CEE8">decine di piani</text></svg>' +
-      P.sott('NARRATORE', 'E da lì, giù: un piano dopo l’altro.') +
-      P.sott('ADA', 'Il mio pozzo ha tre piani. Quelli veri ne hanno decine.') + '</div>'));
+      '</svg>' +
+      P.sott('NARRATORE', 'E da lì, giù: un piano dopo l’altro.') + '</div>'));
     const all = c => [...kit.stage.querySelectorAll(c)], q = c => kit.stage.querySelector(c);
-    this.mondo = q('.sg-mondo'); this.hud = q('.sg-hud'); this.ban = q('.sg-ban'); this.fant = all('.sg-fant');
+    this.mondo = q('.sg-mondo'); this.hud = q('.sg-hud'); this.ban = q('.sg-ban');
+    this.scia = all('.sg-scia'); this.luci = all('.sg-luce');
+    this.lun = this.scia.map(p => { try { return p.getTotalLength(); } catch (e) { return 4000; } });
     this.p = all('.sg-p').map(g => ({ g, n: g.querySelector('.sg-n'), m: g.querySelector('.sg-m'), dir: g.querySelector('.sg-dir') }));
     this.vest = [this.p[2].n.firstElementChild.firstElementChild, this.p[2].dir.firstElementChild.firstElementChild];
     this.ing = all('.sg-ing').map(g => ({ r: +g.getAttribute('data-r'), rot: g.querySelector('.sg-rot'), luce: g.querySelector('.sg-ingluce') }));
     this.buchi = all('.sg-buco'); this.sg = all('.sg-sg'); this.fr = all('.sg-fr');
     this.bov = q('.sg-bov'); this.n2 = q('.sg-nuota2'); this.n3 = q('.sg-nuota3'); this.g3 = q('.sg-gioca3');
-    this.sub = window.PZ.subs(kit, [[0.4, 3.6], [34.0, 39.0]]);
+    this.sub = window.PZ.subs(kit, [[0.4, 3.6]]);
   },
   render(t) {
     const P = window.PZ, V = P.VESTITO.mare;
-    // La camera segue la caduta; alla fine si allontana sul pozzo fantasma.
+    // La camera segue la caduta; alla fine si allontana fino a mostrare tutti i piani del nostro pozzo.
     let cam = 0;
     SG_OPEN.forEach(o => { cam += eio(seg(t, o + 0.5, o + 2.0)); });
-    const z = eio(seg(t, 32.0, 36.0)), zs = lerp(1, 0.11, z);
+    const z = eio(seg(t, 32.0, 35.0)), zs = lerp(1, 0.24, z);
     const ty = lerp(-cam * SG_RH, 20, z), tx = 960 * (1 - zs);
     this.mondo.setAttribute('transform', 'translate(' + tx.toFixed(1) + ' ' + ty.toFixed(1) + ') scale(' + zs.toFixed(4) + ')');
     // I tre viaggiatori: fermi, poi tirati verso la botola, poi giù nella stanza sotto.
@@ -166,7 +175,20 @@ kit.scene('piani', {
     this.fr.forEach((f, i) => f.setAttribute('opacity', eo(seg(t, SG_OPEN[i] + 2.0, SG_OPEN[i] + 2.6)).toFixed(2)));
     this.hud.setAttribute('opacity', (eo(seg(t, 0.5, 1.2)) * (1 - eio(seg(t, 31.6, 32.4)))).toFixed(2));
     this.ban.setAttribute('opacity', (eo(seg(t, 7.0, 7.6)) * (1 - seg(t, 12.8, 13.4))).toFixed(2));
-    this.fant.forEach(f => f.setAttribute('opacity', eo(seg(t, 35.4, 36.2)).toFixed(2)));
+    // Il ripasso: le lucine scendono di botola in botola, ogni volta più veloci.
+    this.scia.forEach((p, j) => {
+      const L = this.lun[j], a = seg(t, SG_PASSI[0][0], SG_PASSI[0][0] + SG_PASSI[0][1]);
+      p.setAttribute('stroke-dasharray', L.toFixed(0) + ' ' + L.toFixed(0));
+      p.setAttribute('stroke-dashoffset', (L * (1 - a)).toFixed(0));
+      p.setAttribute('opacity', a > 0 ? '0.85' : '0');
+      let u = -1, fade = 1;
+      SG_PASSI.forEach(([t0, d]) => { if (t >= t0 && t <= t0 + d + 0.4) { u = Math.min(1, (t - t0) / d); fade = 1 - seg(t, t0 + d, t0 + d + 0.4); } });
+      const g = this.luci[j];
+      if (u < 0) { g.setAttribute('opacity', 0); return; }
+      let pt = { x: 0, y: 0 }; try { pt = p.getPointAtLength(L * eio(u)); } catch (e) {}
+      g.setAttribute('transform', 'translate(' + pt.x.toFixed(1) + ' ' + pt.y.toFixed(1) + ')');
+      g.setAttribute('opacity', fade.toFixed(2));
+    });
     this.bov.setAttribute('transform', 'translate(660 ' + (SG_RH + 400 + 8 * Math.sin(t * 1.3)).toFixed(1) + ') rotate(' + (2 * Math.sin(t * 0.9)).toFixed(2) + ')');
     const gl = 0.85 + 0.15 * Math.sin(t * 2.4);
     this.n2.setAttribute('opacity', gl.toFixed(2)); this.n3.setAttribute('opacity', gl.toFixed(2)); this.g3.setAttribute('opacity', (0.8 * gl).toFixed(2));
