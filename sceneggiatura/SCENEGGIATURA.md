@@ -28,7 +28,7 @@ Bozza 3, 18 ottobre 2026. Sostituisce la bozza 2 (che resta nella storia del rep
 | Episodio | Titolo | Durata | Cuore dell'episodio |
 |---|---|---|---|
 | 1 | Al mare Emma | 4:46 | Il viaggio intero, una volta, con calma |
-| 2 | Al parco Emma | 4:16 | Stessa partenza, contesto diverso, strada diversa |
+| 2 | Al parco Emma | 4:04 | Stessa partenza, contesto diverso, strada diversa |
 | 3 | Fino alla Fine | 4:37 | Temperatura, il ciclo, l'ultima riga, EOS, max_tokens |
 | 4 | Mille semi | 3:01 | Da 3 coordinate a migliaia |
 
@@ -494,53 +494,35 @@ nuova carta = 0.1·Al + 0.7·Parco + 0.2·Emma
 
 ---
 
-### 2.5 · Un'altra strada · 0:22
+### 2.5 · Un'altra strada · 0:46
 
-**VISIVO.** Gli ingranaggi girano e si apre una botola: questa volta **dall'altra parte** del pavimento. La forza invisibile tira lì Emma, Al e Parco, e cadono insieme. Il vestito passa da rosa antico a verde salvia. Sul monitor, in trasparenza, la scia blu di ieri; il puntino di oggi parte dallo stesso punto e va altrove.
+**VISIVO.** Il pavimento della Sala, pieno di botole chiuse con i loro ingranaggi. Girano, se ne accende uno solo: questa volta la botola che si apre è **dall'altra parte** rispetto a ieri. Emma, Al e Parco vengono tirati lì e cadono insieme. Poi, quasi senza parole, la discesa:
+- **Piano 1.** Un prato dentro una stanza: foglie che cadono dal soffitto, un'altalena, uno scivolo. Il ritratto di Bovary appeso a un ramo. Vestito verde salvia.
+- **Piano 2.** Compare **corre**, scritto su una scarpetta da corsa. Vestito verde.
+- **Piano 3.** **corre** grande, **gioca** più piccolo. Vestito verde prato. Qui il pavimento non si apre più.
+
+A ogni piano: sguardi, ingranaggi, una botola sola. Nell'angolo, il monitor di Ada: in trasparenza la scia blu di ieri, e la scia verde di oggi che parte dallo stesso punto e va altrove.
 
 **NARRATORE.**
-> La nuova carta era diversa, e la forza invisibile tirò Emma da un'altra parte.
+> La nuova carta era diversa, e la forza invisibile li tirò da un'altra parte.
 
 **ADA.**
 > Da qui le due strade si separano.
-
-**MONITOR.**
-```
-x1 = ♠ 0.73 ♥ 0.49 ♦ −0.14   (ieri: ♠ 0.11 ♥ 0.50 ♦ −0.72)
-```
-
-**CONCETTO.** Stesso punto di partenza, spostamento diverso.
-
----
-
-### 2.6 · Le stanze del parco · 0:36
-
-**VISIVO.**
-- **Piano 1.** Un prato dentro una stanza: foglie che cadono dal soffitto, un'altalena, uno scivolo. Il ritratto di Bovary appeso a un ramo.
-- **Piano 2.** Compare **corre**, scritto su una scarpetta da corsa.
-- **Piano 3.** **corre** grande, **gioca** più piccolo. Il vestito è verde prato.
-
-Al e Parco cadono sempre con Emma.
-
-**NARRATORE.**
-> Questa volta le stanze erano un prato: foglie che cadevano dal soffitto, un'altalena, uno scivolo. E il ritratto, appeso a un ramo.
-
-**ADA.**
-> Periscopio: altalena, foglie, scivolo. Poi compare un verbo: «corre».
 
 **NARRATORE.**
 > E il vestito di Emma diventò verde, come un prato.
 
 **MONITOR.**
 ```
+x1 = ♠ 0.73 ♥ 0.49 ♦ −0.14   (ieri: ♠ 0.11 ♥ 0.50 ♦ −0.72)
 Le stanze sono letture, non tappe obbligate.
 ```
 
-**CONCETTO.** Letture intermedie diverse; il residuo porta con sé il passato (il ritratto).
+**CONCETTO.** Stesso punto di partenza, spostamento diverso; letture intermedie diverse; il residuo porta con sé il passato (il ritratto).
 
 ---
 
-### 2.7 · Le campane · 0:26
+### 2.6 · Le campane · 0:26
 
 **VISIVO.** Sul fondo arriva solo Emma. Le stesse campane di ieri, ferme, di pietra. L'onda di luce le tocca tutte: questa volta rintocca forte *corre*. Primo piano: la partita a carte con la campana *corre*, pastiglie 0.01, 1.27, 1.93, gettone 3.21. Anche *gioca* suona bene, come ieri.
 
@@ -559,7 +541,7 @@ corre: 0.01 + 1.27 + 1.93 = 3.21
 
 ---
 
-### 2.8 · Il secchio e la pesca · 0:22
+### 2.7 · Il secchio e la pesca · 0:22
 
 **VISIVO.** Pioggia di palline, quasi tutte verdi. Il secchio risale. Ada pesca: una pallina verde. Emma corre sul prato.
 
@@ -576,7 +558,7 @@ corre 44% · gioca 19% · foglie 9%
 
 ---
 
-### 2.9 · Due cieli · 0:32
+### 2.8 · Due cieli · 0:32
 
 **VISIVO.** Il monitor si espande fino a riempire lo schermo e diventa un cielo notturno con tre assi appena accennati (♠ ♥ ♦). Una sola stella di partenza, rosa antico: Emma. Da lì partono **due scie**: una piega verso le stelle blu (*nuota*, *onde*, *conchiglie*), l'altra verso quelle verdi (*corre*, *foglie*, *altalena*). Tra le due brilla *gioca*. La camera ruota lentamente, senza parole, per dieci secondi.
 
@@ -595,7 +577,7 @@ Embedding: uguale. Dopo gli strati: dipende da tutta la frase.
 
 ---
 
-### 2.10 · Continua · 0:10
+### 2.9 · Continua · 0:10
 
 **VISIVO.** Ada guarda la pallina *corre* sul bancone. La pallina si muove da sola. Cartello: **Continua**.
 
@@ -648,7 +630,7 @@ Deterministico: il secchio. Variabile: la pesca.
 
 ### 3.3 · Un viaggiatore in più · 0:30
 
-**VISIVO.** La pallina *corre* prende vita: diventa **Corre**, una scarpetta da corsa con gli occhi. Torna allo Spezzaparole, si mette in fila dopo Emma, riceve la sua carta dall'armadio e il numero 4 sulla schiena. Ora a cadere nel pozzo sono in quattro. Montaggio veloce dei piani, senza parole.
+**VISIVO.** La pallina *corre* prende vita: diventa **Corre**, una scarpetta da corsa con gli occhi. Torna allo Spezzaparole, si mette in fila dopo Emma, riceve la sua carta dall'armadio e il numero 4 sulla schiena. Ora a cadere nel pozzo sono in quattro. Montaggio veloce della discesa, senza parole: a ogni piano gli ingranaggi girano, si apre una botola sola e ci cadono dentro tutti e quattro.
 
 **NARRATORE.**
 > La pallina pescata prese vita, tornò dallo Spezzaparole e si mise in fila. Ora a cadere nel pozzo erano in quattro.
@@ -686,7 +668,7 @@ Si usa l'ultima riga: quella dell'ultimo token
 
 ### 3.5 · Ancora un giro · 0:22
 
-**VISIVO.** **Felice**, un piccolo sole sorridente, si mette in fila: sono in cinque. Caduta veloce. In fondo arriva Felice; le campane suonano; nel secchio sale una pallina nera lucida. Ada la pesca: **Punto**.
+**VISIVO.** **Felice**, un piccolo sole sorridente, si mette in fila: sono in cinque. Caduta veloce, di botola in botola, tutti insieme. In fondo arriva Felice; le campane suonano; nel secchio sale una pallina nera lucida. Ada la pesca: **Punto**.
 
 **NARRATORE.**
 > E poi un altro giro, con un viaggiatore in più. In fondo arrivò Felice, e dal secchio uscì un puntino.
@@ -889,10 +871,10 @@ Modelli veri: migliaia di coordinate (per esempio 4.096)
 | 2.3, 1.7 | Logit lens, letture intermedie | 11, 12 |
 | 1.5, 1.6, 2.4 | Attention, query/key, prodotto scalare, softmax, pesi del momento | 15, 16 |
 | 1.7, 2.5 | Feed-forward (ingranaggi), residuo (botole), tutti si spostano | 15 |
-| 1.8, 2.7 | Ultima riga, U, direzione | 13, 14, 17 |
-| 1.9, 2.8 | Softmax, distribuzione, campionamento | 4 |
+| 1.8, 2.6 | Ultima riga, U, direzione | 13, 14, 17 |
+| 1.9, 2.7 | Softmax, distribuzione, campionamento | 4 |
 | 3.1, 3.2 | Temperatura, determinismo | 3, 5 |
-| 2.9 | Contesto | 9, 10 |
+| 2.8 | Contesto | 9, 10 |
 | 3.3–3.7 | Ciclo, ultima riga, EOS, max_tokens | 6, 12 |
 | 3.9 | Modello = numeri, opacità | 1, 2 |
 | 4.x | Dimensioni, significato distribuito | — |
