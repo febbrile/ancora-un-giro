@@ -21,14 +21,14 @@ kit.scene('caduta', {
       '<g clip-path="url(#caduta-clip)"><g class="caduta-muri">' + blocchi + '</g></g>' +
       '<g class="caduta-al">' + '<g transform="translate(-100 -120)">' + P.al() + '</g></g>' +
       '<g class="caduta-mare">' + '<g transform="translate(-100 -120)">' + P.mare() + '</g></g>' +
-      '<g class="caduta-emma">' + '<g transform="translate(-100 -160)">' + P.emmaCade('#FE8787') + '</g></g>' +
+      '<g class="caduta-emma">' + '<g transform="translate(-100 -160)">' + P.emmaCade(P.VESTITO.rosa) + '</g></g>' +
       '</svg>' +
-      P.sott('NARRATORE', 'Il fondo dell’armadio si aprì, ed Emma cadde, cadde, cadde: giù, sempre più giù, insieme ai suoi compagni.') + '</div>'));
+      P.sott('NARRATORE', 'Il fondo dell’armadio si aprì, ed Emma cadde, cadde, cadde, insieme ai suoi compagni.') + '</div>'));
     const q = s => kit.stage.querySelector(s);
     this.muri = q('.caduta-muri');
     this.luci = [...kit.stage.querySelectorAll('.caduta-luce')];
     this.pers = [['.caduta-emma', 0, 1.0, 0], ['.caduta-al', 2.1, 0.7, 140], ['.caduta-mare', 4.2, 0.75, -110]].map(([s, ph, sc, spin]) => ({ g: q(s), ph, sc, spin }));
-    this.sub = window.PZ.subs(kit, [[0.6, 8.2]]);
+    this.sub = window.PZ.subs(kit, [[0.8, 9.0]]);
   },
   render(t) {
     const speed = lerp(300, 900, eio(seg(t, 0, 1.5)));
@@ -39,7 +39,7 @@ kit.scene('caduta', {
       l.setAttribute('cy', y.toFixed(1));
     });
     const yIn = lerp(-760, 0, eo(seg(t, 0, 1.5)));
-    const yOut = lerp(0, 1000, ei(seg(t, 7.8, 9)));
+    const yOut = lerp(0, 1000, ei(seg(t, 12.6, 14)));
     this.pers.forEach(P => {
       const th = 1.5 * t + P.ph;
       const depth = Math.sin(th);

@@ -32,15 +32,17 @@ kit.scene('notte', {
       '<path d="M1300 716 L1540 716" stroke="#6E4A33" stroke-width="10" stroke-linecap="round"/>' +
       '<path d="M1310 716 L1240 850 L1580 850 L1530 716 Z" fill="#FFE2A8" opacity=".10"/></g>' +
       '</svg></div>' +
-      '<div class="words notte-tit" style="left:120px;top:110px;width:1100px"><h1 class="line" style="font-size:112px">Il pozzo delle parole</h1><p class="sub">Episodio 1 · La discesa</p></div>' +
-      P.sott('NARRATORE', 'Quando scrivi a un’intelligenza artificiale, la risposta arriva una parola alla volta. E per ogni parola, dentro la macchina, succede un piccolo viaggio.') +
+      '<div class="words notte-tit" style="left:120px;top:110px;width:1100px"><h1 class="line" style="font-size:112px">Il pozzo delle parole</h1><p class="sub">Episodio 1 · Al mare Emma</p></div>' +
+      '<div class="monitor notte-mon" style="left:60px;top:60px;width:520px"><div class="mon-tit">MONITOR DI ADA</div><div style="font-size:26px;color:#E6FFF4">Si genera un token alla volta.</div></div>' +
+      P.sott('NARRATORE', 'Quando scrivi a un’intelligenza artificiale, la risposta arriva una parola alla volta. E per ogni parola c’è un viaggio.') +
       '</div>'));
     const q = s => kit.stage.querySelector(s);
     this.cam = q('.notte-cam').style;
     this.tit = q('.notte-tit').style;
     this.line = q('.notte-tit .line');
     this.sub = q('.notte-tit .sub').style;
-    this.sub = window.PZ.subs(kit, [[3.9, 10.8]]);
+    this.sub = window.PZ.subs(kit, [[3.6, 14.2]]);
+    this.mon = q('.notte-mon').style;
     this.stars = [...kit.stage.querySelectorAll('.notte-star')];
     this.scritto = q('.notte-scritto');
     this.cur = q('.notte-cursore');
@@ -60,6 +62,7 @@ kit.scene('notte', {
     this.scritto.textContent = txt;
     this.cur.setAttribute('x', (1336 + txt.length * 8.4).toFixed(1));
     this.cur.setAttribute('opacity', t < 5.0 ? 0 : (Math.floor(t / 0.53) % 2 ? 0.2 : 1));
+    this.mon.opacity = eo(seg(t, 14.2, 14.8));
     this.sub(t);
   },
 });

@@ -115,6 +115,59 @@ function subs(kit, wins){
     });
   };
 }
-window.PZ = { defs, emma, emmaCade, emmaSpalle, al, mare, parco, ada, adaHead, sott, fade, subs, CORALLO:'#FE8787' };
+
+const TIRATA="<path d=\"M-30 120 L10 120 M-36 150 L4 150 M-24 180 L16 180\" stroke=\"#FFF4E0\" stroke-width=\"3\" stroke-linecap=\"round\" opacity=\"0.4\"/><circle cx=\"262\" cy=\"96\" r=\"18\" fill=\"none\" stroke=\"#FFF4E0\" stroke-width=\"2\" opacity=\"0.3\"/><circle cx=\"262\" cy=\"96\" r=\"32\" fill=\"none\" stroke=\"#FFF4E0\" stroke-width=\"2\" opacity=\"0.18\"/><circle cx=\"262\" cy=\"96\" r=\"46\" fill=\"none\" stroke=\"#FFF4E0\" stroke-width=\"2\" opacity=\"0.08\"/><circle cx=\"206\" cy=\"112\" r=\"3\" fill=\"#FFF4E0\" opacity=\"0.55\"/><circle cx=\"222\" cy=\"106\" r=\"3\" fill=\"#FFF4E0\" opacity=\"0.4\"/><circle cx=\"238\" cy=\"101\" r=\"3\" fill=\"#FFF4E0\" opacity=\"0.25\"/><g transform=\"rotate(28 100 160)\"><ellipse cx=\"90\" cy=\"165\" rx=\"92\" ry=\"110\" fill=\"currentColor\" opacity=\"0.32\" filter=\"url(#pz-soft)\"/><path d=\"M92 226 L70 252\" stroke=\"#FFE9D6\" stroke-width=\"11\" stroke-linecap=\"round\" fill=\"none\"/><path d=\"M108 226 L92 258\" stroke=\"#FFE9D6\" stroke-width=\"11\" stroke-linecap=\"round\" fill=\"none\"/><ellipse cx=\"66\" cy=\"257\" rx=\"11\" ry=\"6\" fill=\"#2B2350\" transform=\"rotate(-40 66 257)\"/><ellipse cx=\"88\" cy=\"263\" rx=\"11\" ry=\"6\" fill=\"#2B2350\" transform=\"rotate(-50 88 263)\"/><path d=\"M78 146 Q56 160 40 170\" stroke=\"#FFE9D6\" stroke-width=\"11\" stroke-linecap=\"round\" fill=\"none\"/><path d=\"M122 146 Q112 176 96 196\" stroke=\"#FFE9D6\" stroke-width=\"11\" stroke-linecap=\"round\" fill=\"none\"/><rect x=\"94\" y=\"110\" width=\"12\" height=\"20\" fill=\"#FFE9D6\"/><path d=\"M100 124 C84 124 76 132 74 146 L30 210 Q52 214 64 232 Q84 226 100 236 Q120 230 140 226 L126 146 C124 132 116 124 100 124 Z\" fill=\"currentColor\"/><path d=\"M88 140 L44 206 Q54 210 60 216 L97 142 Z\" fill=\"#FFFFFF\" opacity=\"0.18\"/><path d=\"M86 126 Q100 142 114 126 Q100 132 86 126 Z\" fill=\"#FFF7EC\"/><path d=\"M104 40 C78 36 60 50 56 68 C46 70 36 74 28 76 C34 82 30 90 22 94 C32 98 34 106 30 112 C40 114 50 112 56 108 C60 116 70 118 76 110 L120 104 C130 80 126 48 104 40 Z\" fill=\"#F5C84C\"/><path d=\"M52 82 C44 86 36 86 30 90 M56 96 C48 102 40 102 32 106\" stroke=\"#D9A12E\" stroke-width=\"2\" stroke-linecap=\"round\" fill=\"none\"/><path d=\"M72 54 C62 58 54 62 46 66\" stroke=\"#FFE28A\" stroke-width=\"3.5\" stroke-linecap=\"round\" fill=\"none\" opacity=\"0.8\"/><circle cx=\"100\" cy=\"80\" r=\"40\" fill=\"#FFE9D6\"/><path d=\"M60 82 C58 52 78 38 100 38 C124 38 142 54 140 84 C136 76 132 72 128 76 C126 66 118 62 114 68 C110 58 100 56 96 64 C90 56 80 60 80 70 C74 66 66 72 66 80 C64 78 62 80 60 82 Z\" fill=\"#F5C84C\"/><path d=\"M76 50 Q100 40 124 50\" stroke=\"#FFE28A\" stroke-width=\"4\" stroke-linecap=\"round\" fill=\"none\" opacity=\"0.85\"/><path d=\"M90 60 Q94 50 102 46 M118 64 Q122 54 128 52\" stroke=\"#D9A12E\" stroke-width=\"2\" stroke-linecap=\"round\" fill=\"none\"/><polygon points=\"78,57 79.8,61.6 84.7,61.8 80.9,64.9 82.1,69.7 78,67 73.9,69.7 75.1,64.9 71.3,61.8 76.2,61.6\" fill=\"#E0475B\" stroke=\"#FFFFFF\" stroke-width=\"1\"/><circle cx=\"92\" cy=\"88\" r=\"5.2\" fill=\"#2B2350\"/><circle cx=\"119\" cy=\"88\" r=\"5.2\" fill=\"#2B2350\"/><circle cx=\"93.8\" cy=\"86\" r=\"1.7\" fill=\"#FFFFFF\"/><circle cx=\"120.8\" cy=\"86\" r=\"1.7\" fill=\"#FFFFFF\"/><circle cx=\"84\" cy=\"101\" r=\"6\" fill=\"#FF8F8F\" opacity=\"0.45\"/><circle cx=\"127\" cy=\"101\" r=\"6\" fill=\"#FF8F8F\" opacity=\"0.45\"/><path d=\"M100 104 Q107 112 115 103\" stroke=\"#2B2350\" stroke-width=\"2.6\" stroke-linecap=\"round\" fill=\"none\"/></g>";
+function emmaTirata(dress){ return '<g style="color:'+dress+'">'+TIRATA+'</g>'; }
+function perla(cls, v, col){
+  const r = (8 + 22 * Math.min(1.3, Math.abs(v))).toFixed(1);
+  return v >= 0 ? '<circle class="'+cls+'" r="'+r+'" fill="'+col+'" stroke="#FFFFFF" stroke-opacity=".4" stroke-width="2"/>' : '<circle class="'+cls+'" r="'+r+'" fill="none" stroke="'+col+'" stroke-width="4" stroke-dasharray="7 5"/>';
+}
+function mix(a, b, p){
+  const h = s => [1, 3, 5].map(i => parseInt(s.slice(i, i + 2), 16));
+  const A = h(a), B = h(b);
+  return 'rgb(' + A.map((v, i) => Math.round(v + (B[i] - v) * Math.max(0, Math.min(1, p)))).join(',') + ')';
+}
+// Bozza 3: le righe delle carte sono semi senza nome (♠ ♥ ♦, poi ♣ e ☾), disegnati come tracciati SVG.
+const NERO = '#2E2A26', ROSSO_SEME = '#C2453F';
+const SEMI_COL = [NERO, ROSSO_SEME, ROSSO_SEME, NERO, '#6B5BA8'];
+const SEMI_ICON = [
+  '<path d="M0 -15 C6 -7 15 -2 15 5 C15 11 9 14 4 11 C5 14 6 16 8 17 L-8 17 C-6 16 -5 14 -4 11 C-9 14 -15 11 -15 5 C-15 -2 -6 -7 0 -15 Z" fill="' + NERO + '"/>',
+  '<path d="M0 15 C-10 7 -15 1 -15 -5 C-15 -11 -10 -14 -6 -14 C-3 -14 -1 -12 0 -9 C1 -12 3 -14 6 -14 C10 -14 15 -11 15 -5 C15 1 10 7 0 15 Z" fill="' + ROSSO_SEME + '"/>',
+  '<path d="M0 -16 L12 0 L0 16 L-12 0 Z" fill="' + ROSSO_SEME + '"/>',
+  '<circle cx="0" cy="-7" r="6.5" fill="' + NERO + '"/><circle cx="-7" cy="3" r="6.5" fill="' + NERO + '"/><circle cx="7" cy="3" r="6.5" fill="' + NERO + '"/><path d="M-2 4 L-5 16 L5 16 L2 4 Z" fill="' + NERO + '"/>',
+  '<path d="M4 -14 A14 14 0 1 0 4 14 A10 10 0 1 1 4 -14 Z" fill="#6B5BA8"/>'];
+function seme(i, x, y, k, chiaro) { return '<g transform="translate(' + x + ' ' + y + ') scale(' + (k || 1) + ')">' + (chiaro ? SEMI_ICON[i].replace(/#2E2A26/g, '#E6FFF4') : SEMI_ICON[i]) + '</g>'; }
+function semeHTML(i) { return '<svg class="seme" viewBox="-17 -17 34 34" aria-hidden="true">' + SEMI_ICON[i].replace(/fill="#2E2A26"/g, 'fill="#E6FFF4"') + '</svg>'; }
+function fmt(v) { return (v < 0 ? '−' : '') + Math.abs(v).toFixed(2); }
+// Vettore per il monitor: «♠ 0.55 ♥ 0.07 ♦ −0.58» con i semi disegnati.
+function vecHTML(v) { return v.map((x, i) => semeHTML(i) + '&#8202;' + fmt(x)).join('&ensp;'); }
+function righeY(n) { return n === 3 ? [92, 162, 232] : Array.from({ length: n }, (_, i) => 64 + (200 / n) * (i + 0.5)); }
+function carta(o) {
+  const n = o.v.length, Y = righeY(n), h = n === 3 ? 56 : Math.min(48, 200 / n - 6), k = n === 3 ? 1 : n === 4 ? 0.85 : 0.72, fs = n === 3 ? 34 : n === 4 ? 30 : 26;
+  let r = '';
+  o.v.forEach((x, i) => {
+    const y = Y[i];
+    r += '<g class="' + (o.cls || 'carta') + '-r"><rect x="14" y="' + (y - h / 2).toFixed(1) + '" width="192" height="' + h.toFixed(1) + '" rx="10" fill="' + SEMI_COL[i] + '" fill-opacity=".08"/>' +
+      seme(i, 44, y.toFixed(1), k) +
+      '<text x="192" y="' + (y + fs * 0.35).toFixed(1) + '" text-anchor="end" font-family="JetBrains Mono, monospace" font-weight="600" font-size="' + fs + '" fill="' + (x < 0 ? '#B8332E' : '#2E2A26') + '">' + fmt(x) + '</text></g>';
+  });
+  return '<g><rect x="0" y="0" width="220" height="300" rx="18" fill="#FFFDF6" stroke="' + o.col + '" stroke-width="7"/>' +
+    '<text x="18" y="42" font-family="Fredoka, sans-serif" font-weight="600" font-size="27" fill="' + o.col + '">' + o.titolo + '</text>' + r +
+    '<text x="110" y="290" text-anchor="middle" font-family="Fredoka, sans-serif" font-size="18" fill="#7A6F60">' + (o.sotto || '') + '</text></g>';
+}
+function gettone(v) {
+  const neg = v < 0;
+  return '<g><circle r="52" fill="' + (neg ? '#8A90A8' : '#F5C84C') + '" stroke="' + (neg ? '#5B6B8C' : '#C9973F') + '" stroke-width="7"/><circle r="40" fill="none" stroke="#FFFFFF" stroke-opacity=".6" stroke-width="2" stroke-dasharray="6 5"/>' +
+    '<text y="9" text-anchor="middle" font-family="JetBrains Mono, monospace" font-weight="600" font-size="25" fill="#2E2A26">' + fmt(v) + '</text></g>';
+}
+function pill(v) {
+  const neg = v < 0;
+  return '<g><rect x="-66" y="-27" width="132" height="54" rx="27" fill="' + (neg ? '#8A90A8' : '#F5C84C') + '" stroke="' + (neg ? '#5B6B8C' : '#C9973F') + '" stroke-width="4"/><text y="11" text-anchor="middle" font-family="JetBrains Mono, monospace" font-weight="600" font-size="28" fill="#2E2A26">' + (v > 0 ? '+' : '') + fmt(v) + '</text></g>';
+}
+// Colori del vestito di Emma, calcolati da strumenti/numeri.py (il colore dei vicini).
+const VESTITO = { rosa: '#BC937F', mare: ['#BC937F', '#728EBE', '#306EDD', '#2864DC'], parco: ['#BC937F', '#67A96F', '#2FAD57', '#28AA50'] };
+// Colori delle carte dei personaggi.
+const CARTA_COL = { Al: '#139A9A', Mare: '#6E6EE6', Parco: '#2E9E4F', Emma: '#B5715C' };
+window.PZ = { carta, gettone, pill, fmt, seme, semeHTML, vecHTML, righeY, SEMI_COL, VESTITO, CARTA_COL, emmaTirata, perla, mix, defs, emma, emmaCade, emmaSpalle, al, mare, parco, ada, adaHead, sott, fade, subs, CORALLO: VESTITO.rosa };
 window.__kit = kit;
 })();

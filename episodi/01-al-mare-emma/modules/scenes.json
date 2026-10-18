@@ -1,0 +1,104 @@
+{
+  "v": 1,
+  "stage": "final",
+  "look": "Il pozzo delle parole, bozza 3: illustrazione piatta e morbida dal model sheet approvato. Dentro il pozzo notte blu, pietra e luce; fuori, il laboratorio di Ada in carta, legno e ottone. Personaggi in SVG (Emma bionda col fermaglio a stellina, il vestito prende il colore dei vicini; Ada col camice lungo; Al sassolino, Mare onda). Ritmo lento: al massimo 12 caratteri al secondo di sottotitolo e almeno 3 secondi di sole immagini per scena. Le carte: ogni parola è una carta con tre semi senza nome (♠ ♥ ♦); due carte confrontate seme per seme danno pastiglie che si sommano in un gettone (prodotto scalare); i gettoni diventano quote; con le quote si mescolano le carte. Il monitor di Ada in verde menta su petrolio per i numeri.",
+  "palettes": [
+    [
+      "#141A33",
+      "#F5C84C",
+      "#F4EEE2",
+      "#E8743B"
+    ]
+  ],
+  "theirs": 1,
+  "width": 1920,
+  "height": 1080,
+  "fps": 60,
+  "background": "#141A33",
+  "fonts": {
+    "display": {
+      "family": "Fredoka",
+      "or": "manrope",
+      "weights": [
+        400,
+        600
+      ]
+    },
+    "sans": {
+      "family": "Atkinson Hyperlegible",
+      "or": "manrope"
+    },
+    "mono": {
+      "family": "JetBrains Mono",
+      "or": "dm-mono"
+    }
+  },
+  "scenes": [
+    {
+      "id": "notte",
+      "name": "La notte e il laboratorio",
+      "dur": 18,
+      "desc": "Notte sul prato, il pozzo e il laboratorio; Ada scrive «Al mare Emma». Titolo dell'episodio."
+    },
+    {
+      "id": "spezzaparole",
+      "name": "Lo Spezzaparole",
+      "dur": 28,
+      "desc": "La frase entra nello Spezzaparole: tre token prendono vita, ricevono un numero, le lettere restano sul prato. Gag muta della parola rara."
+    },
+    {
+      "id": "armadio",
+      "name": "L'armadio",
+      "dur": 34,
+      "desc": "Ognuno prende la sua carta dal cassetto (semi ♠ ♥ ♦ senza nome) e un numero sulla schiena; sul monitor i quattro punti delle parole."
+    },
+    {
+      "id": "caduta",
+      "name": "La caduta",
+      "dur": 14,
+      "desc": "Il fondo dell'armadio si apre: Emma, Al e Mare cadono in spirale."
+    },
+    {
+      "id": "partita",
+      "name": "La partita a carte",
+      "dur": 45,
+      "desc": "Le lenti fanno lanterne e cartelli; Emma gioca la lanterna contro il cartello di Mare: 0.90 − 0.06 + 0.51 = 1.35. Poi le partite veloci con Al ed Emma."
+    },
+    {
+      "id": "nuovacarta",
+      "name": "La nuova carta",
+      "dur": 28,
+      "desc": "I gettoni diventano quote 10/70/20; con le quote si mescolano le carte e nasce la nuova carta di Emma. Pietra fissa, quote del momento."
+    },
+    {
+      "id": "cabina",
+      "name": "La cabina e la forza",
+      "dur": 22,
+      "desc": "Emma entra da sola nella cabina; una forza invisibile la tira via; il vestito passa da rosa antico ad azzurro polvere."
+    },
+    {
+      "id": "piani",
+      "name": "Sempre più giù",
+      "dur": 30,
+      "desc": "La spiaggia strana con il ritratto, il molo con «nuota», l'acqua profonda; la scia sul monitor; il pozzo fantasma con decine di piani."
+    },
+    {
+      "id": "campane",
+      "name": "Le campane del fondo",
+      "dur": 35,
+      "desc": "In fondo solo Emma: le campane suonano e la forza la tira verso le parole del mare; la partita con la campana «nuota»: 1.98 + 1.31 − 0.01 = 3.28."
+    },
+    {
+      "id": "pesca",
+      "name": "Il secchio e la pesca",
+      "dur": 32,
+      "desc": "Le campane diventano palline in un secchio che risale; fuori dal pozzo Ada pesca «nuota». Emma nuota tra le onde."
+    },
+    {
+      "id": "continua",
+      "name": "Continua",
+      "dur": 8,
+      "desc": "Ada scrive «Al parco Emma…»: cartello del prossimo episodio."
+    }
+  ]
+}
