@@ -1,0 +1,66 @@
+{
+  "v": 3,
+  "createdOnFiles": {
+    "v": 1,
+    "at": "2026-10-18T23:11:22Z"
+  },
+  "title": "Ancora un giro · design",
+  "launch": {
+    "view": "canvas"
+  },
+  "pages": [],
+  "boards": {
+    "Main.dc.html": {
+      "x": 0,
+      "y": 0,
+      "w": 1920,
+      "h": 1080,
+      "title": "I personaggi"
+    },
+    "Oggetti.dc.html": {
+      "x": 2000,
+      "y": 0,
+      "w": 1920,
+      "h": 1080,
+      "title": "Gli oggetti"
+    },
+    "LunaPark.dc.html": {
+      "x": 0,
+      "y": 1200,
+      "w": 1920,
+      "h": 1080,
+      "title": "Il luna park"
+    },
+    "Montagna.dc.html": {
+      "x": 2000,
+      "y": 1200,
+      "w": 1920,
+      "h": 1080,
+      "title": "Dentro la montagna · i fili di luce"
+    },
+    "Finestre.dc.html": {
+      "x": 0,
+      "y": 2400,
+      "w": 1920,
+      "h": 1080,
+      "title": "Le finestre e il vestito di Emma"
+    },
+    "Grammatica.dc.html": {
+      "x": 2000,
+      "y": 2400,
+      "w": 1280,
+      "h": 720,
+      "title": "Colori e caratteri"
+    }
+  },
+  "order": [
+    "Main.dc.html",
+    "Oggetti.dc.html",
+    "LunaPark.dc.html",
+    "Montagna.dc.html",
+    "Finestre.dc.html",
+    "Grammatica.dc.html"
+  ],
+  "notes": {},
+  "designSystems": []
+}
