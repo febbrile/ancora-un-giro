@@ -308,7 +308,7 @@ Poi, più veloci e senza parole, le partite con Al (gettone grigio) e con Emma s
 
 **MONITOR.**
 ```
-Prodotto scalare: 0.90 − 0.06 + 0.51 = 1.35
+q · k = 0.90 − 0.06 + 0.51 = 1.35
 Al −0.60 · Emma 0.10
 ```
 
