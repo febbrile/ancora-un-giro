@@ -1,5 +1,6 @@
 // Il suono del pozzo: un piccolo sintetizzatore Web Audio che suona la partitura di score.js.
 // Strumenti e rumori sono fatti da noi: somigliano a quelli di Motion, ma non sono identici.
+// Due stili: «calma» suona la partitura com'è; «anni 90» la suona riarrangiata da anni90.js, con voci da console.
 (function () {
   'use strict';
 
@@ -17,17 +18,28 @@
     ding: { pan: 0.15, rev: 0.5, gain: -5 }, chime: { pan: 0.15, rev: 0.55, gain: -6 }, whoosh: { pan: 0, rev: 0.3, gain: -8 },
     boing: { pan: 0, rev: 0.3, gain: -4 }, revswell: { pan: 0, rev: 0.45, gain: -8 }, roll: { pan: 0, rev: 0.2, gain: -6 },
     thud: { pan: 0, rev: 0.2, gain: -2 }, sparkle: { pan: 0.2, rev: 0.6, gain: -8 },
+    // Le voci da console dello stile anni 90.
+    'chip-lead': { pan: 0.1, rev: 0.2, gain: -7 }, 'chip-arp': { pan: -0.25, rev: 0.15, gain: -13 }, 'chip-bass': { pan: 0, rev: 0.03, gain: -4 },
+    'chip-pad': { pan: 0, rev: 0.3, gain: -15 }, 'chip-bell': { pan: 0.2, rev: 0.3, gain: -8 },
+    'chip-kick': { pan: 0, rev: 0.03, gain: -3 }, 'chip-snare': { pan: 0.05, rev: 0.12, gain: -8 }, 'chip-hat': { pan: 0.25, rev: 0.05, gain: -15 },
   };
   const ALIAS = { rhodes: 'ep', piano: 'ep', strings: 'pad', bell: 'glock', bells: 'glock', vibraphone: 'vibes', mallet: 'marimba',
     swoosh: 'whoosh', swell: 'revswell', bubble: 'pop', drop: 'thud', twinkle: 'sparkle', tap: 'click', rim: 'sidestick', stick: 'sidestick' };
   const LIVELLO = 2.0;             // volume generale prima del master (misurato: circa −18 dB RMS, come i film di Motion)
-  const SOSTENUTI = { pad: 1, ep: 1, vibes: 1, keys: 1, bass: 1 };   // note lunghe da riprendere a metà se si salta nel tempo
+  const SOSTENUTI = { pad: 1, ep: 1, vibes: 1, keys: 1, bass: 1, 'chip-pad': 1 };   // note lunghe da riprendere a metà se si salta nel tempo
 
-  function creaSuono(partitura, durata) {
+  function creaSuono(partitura, durata, stileIniziale) {
     const AC = window.AudioContext || window.webkitAudioContext;
     if (!AC) return null;
     const ctx = new AC();
-    const eventi = partitura.eventi, master = partitura.master;
+    const master = partitura.master;
+    const versioni = { calma: partitura.eventi };
+    let stile = 'calma', eventi = partitura.eventi;
+    function scegli(s) {
+      if (s === 'anni90' && !versioni.anni90) versioni.anni90 = Pozzo.anni90 ? Pozzo.anni90(partitura) : partitura.eventi;
+      stile = versioni[s] ? s : 'calma'; eventi = versioni[stile];
+    }
+    scegli(stileIniziale || 'calma');
 
     // Catena finale: master → compressore → uscita, con un riverbero condiviso.
     const uscita = ctx.createGain(); uscita.gain.value = db(master.gain + 6);
@@ -64,6 +76,20 @@
       setTimeout(() => { try { g.disconnect(); mand.disconnect(); if (pan) pan.disconnect(); } catch (e) {} }, Math.max(0, (fine - ctx.currentTime) * 1000 + 3000));
       return entra;
     }
+    // Onda a impulso (quadra quando duty = 0.5): il suono delle console.
+    const onde = {};
+    function impulso(duty) {
+      if (onde[duty]) return onde[duty];
+      const n = 40, re = new Float32Array(n), im = new Float32Array(n);
+      for (let k = 1; k < n; k++) re[k] = 2 / (k * Math.PI) * Math.sin(k * Math.PI * duty);
+      return (onde[duty] = ctx.createPeriodicWave(re, im));
+    }
+    function chip(duty, f, t, fine, out) { const o = ctx.createOscillator(); o.setPeriodicWave(impulso(duty)); o.frequency.value = f; o.connect(out); o.start(t); o.stop(fine); return o; }
+    function porta(t, d, out, livello, rilascio) {   // nota tenuta: sale, resta, si chiude
+      const g = ctx.createGain(); g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(1, t + 0.004);
+      g.gain.setTargetAtTime(livello, t + 0.004, 0.06); g.gain.setValueAtTime(livello, t + d); g.gain.linearRampToValueAtTime(0, t + d + rilascio);
+      g.connect(out); return g;
+    }
     function osc(tipo, f, t, fine, out) { const o = ctx.createOscillator(); o.type = tipo; o.frequency.value = f; o.connect(out); o.start(t); o.stop(fine); return o; }
     function inv(t, out, a, picco, tau, fine) {   // attacco, poi coda esponenziale
       const g = ctx.createGain(); g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(picco, t + a);
@@ -78,7 +104,30 @@
     // ── Strumenti ────────────────────────────────────────────────────────────────────────────────
     function nota(patch, m, t, d, amp, p) {
       const f = hz(m);
-      if (patch === 'pad') {
+      if (patch === 'chip-lead') {
+        const fine = t + d + 0.08, out = voce(p, amp * 0.5, fine), o = chip(0.25, f, t, fine, porta(t, d, out, 0.75, 0.04));
+        if (d > 0.22) {   // vibrato che arriva dopo un attimo, come nei giochi
+          const lfo = ctx.createOscillator(), pr = ctx.createGain(); lfo.frequency.value = 6;
+          pr.gain.setValueAtTime(0, t); pr.gain.linearRampToValueAtTime(0, t + 0.14); pr.gain.linearRampToValueAtTime(18, t + 0.3);
+          lfo.connect(pr).connect(o.detune); lfo.start(t); lfo.stop(fine);
+        }
+      } else if (patch === 'chip-arp') {
+        const fine = t + 0.22, out = voce(p, amp * 0.45, fine);
+        chip(0.125, f, t, fine, inv(t, out, 0.002, 1, 0.045, fine));
+      } else if (patch === 'chip-bass') {
+        const fine = t + d + 0.04, out = voce(p, amp * 0.9, fine);
+        osc('triangle', f, t, fine, porta(t, d, out, 0.85, 0.02));
+      } else if (patch === 'chip-pad') {
+        const fine = t + d + 0.5, out = voce(p, amp * 0.35, fine);
+        const g = ctx.createGain(); g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(1, t + 0.08);
+        g.gain.setTargetAtTime(0.7, t + 0.08, 0.3); g.gain.setValueAtTime(0.7, t + d); g.gain.setTargetAtTime(0, t + d, 0.1);
+        const fl = ctx.createBiquadFilter(); fl.type = 'lowpass'; fl.frequency.value = 2200; g.connect(fl).connect(out);
+        [-8, 8].forEach(c => { chip(0.5, f, t, fine, g).detune.value = c; });
+      } else if (patch === 'chip-bell') {
+        const fine = t + Math.max(d, 0.6) + 0.2, out = voce(p, amp * 0.5, fine);
+        chip(0.25, f, t, fine, inv(t, out, 0.002, 1, 0.18, fine));
+        osc('triangle', f * 2, t, fine, inv(t, out, 0.002, 0.3, 0.08, fine));
+      } else if (patch === 'pad') {
         const fine = t + d + 1.4, out = voce(p, amp * 0.42, fine);
         const g = ctx.createGain(); g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(1, t + 0.45);
         g.gain.setValueAtTime(1, t + d); g.gain.setTargetAtTime(0, t + d, 0.4);
@@ -124,7 +173,17 @@
     }
 
     function batteria(nome, t, amp, p) {
-      if (nome === 'kick') {
+      if (nome === 'chip-kick') {
+        const fine = t + 0.22, out = voce(p, amp, fine), o = osc('triangle', 180, t, fine, inv(t, out, 0.001, 1, 0.06, fine));
+        o.frequency.setValueAtTime(190, t); o.frequency.exponentialRampToValueAtTime(42, t + 0.08);
+      } else if (nome === 'chip-snare') {
+        const fine = t + 0.22, out = voce(p, amp * 0.8, fine);
+        soffio(t, fine, inv(t, out, 0.001, 1, 0.045, fine), 'bandpass', 3200, 0.8);
+        osc('triangle', 240, t, fine, inv(t, out, 0.001, 0.5, 0.025, fine));
+      } else if (nome === 'chip-hat') {
+        const fine = t + 0.08, out = voce(p, amp * 0.5, fine);
+        soffio(t, fine, inv(t, out, 0.0005, 1, 0.012, fine), 'highpass', 8000, 0.7);
+      } else if (nome === 'kick') {
         const fine = t + 0.45, out = voce(p, amp, fine), o = osc('sine', 120, t, fine, inv(t, out, 0.002, 1, 0.12, fine));
         o.frequency.setValueAtTime(130, t); o.frequency.exponentialRampToValueAtTime(45, t + 0.12);
       } else if (nome === 'sidestick' || nome === 'woodblock') {
@@ -253,6 +312,8 @@
       ctx,
       avvia,
       ferma,
+      // Cambia stile; se sta suonando, riparte da dove si trova.
+      stile(s) { const ora = this.tempo(); scegli(s); if (ora !== null) avvia(ora); return stile; },
       // Il tempo del film secondo l'orologio dell'audio (null se non sta suonando).
       tempo() { return sessione ? sessione.da + Math.max(0, ctx.currentTime - sessione.t0) : null; },
       muto(si) { muto.gain.setTargetAtTime(si ? 0 : 1, ctx.currentTime, 0.02); ritorno.gain.setTargetAtTime(si ? 0 : 0.55, ctx.currentTime, 0.02); },

@@ -41,6 +41,7 @@ sito/                            il sito statico: elenco episodi e player nostro
   index.html, guarda.html        le due pagine (guarda.html?ep=01-al-mare-emma)
   motore/kit.js                  le funzioni del kit di Motion che usano le scene, scritte da noi
   motore/suono.js                il sintetizzatore Web Audio che suona score.js
+  motore/anni90.js               riarrangia score.js come la musica di un videogioco anni 90
   motore/player.js               palco, barra del tempo, capitoli, tastiera
   episodi.json                   l'elenco degli episodi del sito
 personaggi/                      la tela di design: Emma, Ada, i compagni, gli oggetti, due fotogrammi di prova
@@ -79,6 +80,12 @@ Il sito fa girare gli stessi file di `episodi/` nel browser, senza Motion: le sc
 riscrivono. Il player nostro (`sito/motore/`) offre le stesse funzioni del kit (`kit.scene`, `kit.h`, `kit.rng`,
 `kit.typist`, `TextFx`, le curve `seg`, `eo`, `eio`, …) e suona `score.js` con un sintetizzatore suo:
 le immagini sono identiche a Motion, la musica è simile ma non uguale.
+
+La musica ha due stili, che si scelgono col pulsante ♪ (o il tasto S) e restano memorizzati:
+- **Anni 90** (quello di partenza): la stessa partitura riarrangiata da `motore/anni90.js` con voci da console.
+  Sugli accordi di `score.js` nascono arpeggi veloci, un basso che salta d'ottava, una batteria e una melodia;
+  i cambi di scena e i rumori restano quelli.
+- **Calma**: la partitura com'è, come nei film Motion.
 
 Per provarlo in locale, dalla cartella del repository:
 

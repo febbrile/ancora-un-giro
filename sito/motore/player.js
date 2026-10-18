@@ -11,6 +11,10 @@
   const barra = $('barra'), fatto = $('fatto'), pomello = $('pomello'), etichetta = $('etichetta'), orologio = $('orologio');
 
   let film = null, suono = null, tempo = 0, inCorso = false, partenza = 0, origine = 0, muto = false, trascina = false;
+  // Lo stile della musica: «anni 90» (riarrangiata) o «calma» (la partitura com'è). Si ricorda tra una visita e l'altra.
+  const STILI = { anni90: 'Anni 90', calma: 'Calma' };
+  let stile = 'anni90';
+  try { const s = localStorage.getItem('pozzo-stile'); if (STILI[s]) stile = s; } catch (e) {}
 
   const mmss = s => { s = Math.max(0, Math.floor(s)); return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); };
 
@@ -110,7 +114,7 @@
   function suona() {
     if (!film) return;
     if (tempo >= film.durata - 0.05) tempo = 0;
-    if (!suono) { try { suono = Pozzo.creaSuono(film.partitura, film.durata); if (suono) suono.muto(muto); } catch (e) { console.error(e); suono = null; } }
+    if (!suono) { try { suono = Pozzo.creaSuono(film.partitura, film.durata, stile); if (suono) suono.muto(muto); } catch (e) { console.error(e); suono = null; } }
     inCorso = true;
     origine = tempo; partenza = performance.now();
     if (suono) suono.avvia(tempo);
@@ -172,6 +176,17 @@
     $('onde-audio').setAttribute('d', muto ? 'M16 9l5 6M21 9l-5 6' : 'M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12');
     $('audio').setAttribute('aria-label', muto ? 'Rimetti l’audio' : 'Togli l’audio');
   });
+  function mostraStile() {
+    $('stile').textContent = '♪ ' + STILI[stile];
+    $('stile').setAttribute('aria-label', 'Musica: ' + STILI[stile] + '. Cambia stile');
+  }
+  mostraStile();
+  $('stile').addEventListener('click', () => {
+    stile = stile === 'anni90' ? 'calma' : 'anni90';
+    try { localStorage.setItem('pozzo-stile', stile); } catch (e) {}
+    if (suono) suono.stile(stile);
+    mostraStile();
+  });
   $('intero').addEventListener('click', () => {
     const el = $('lettore');
     if (document.fullscreenElement) document.exitFullscreen();
@@ -184,6 +199,7 @@
     else if (ev.key === 'ArrowLeft') { vai(tempo - 5); ev.preventDefault(); }
     else if (ev.key === 'ArrowRight') { vai(tempo + 5); ev.preventDefault(); }
     else if (ev.key === 'm' || ev.key === 'M') $('audio').click();
+    else if (ev.key === 's' || ev.key === 'S') $('stile').click();
     else if (ev.key === 'f' || ev.key === 'F') $('intero').click();
   });
 

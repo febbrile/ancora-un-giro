@@ -175,7 +175,7 @@
     };
     try { fn(S, T); } catch (e) { console.error('score.js:', e); }
     eventi.sort((a, b) => a.t - b.t);
-    return { eventi, master };
+    return { eventi, master, griglia: { bpm: griglia.bpm, t0: griglia.t0 } };
   }
 
   // ── Il film: carica i moduli di un episodio e li monta ──────────────────────────────────────────────
@@ -242,7 +242,7 @@
       catch (e) { console.error('scene-' + s.id + '.js init:', e); s.errore = e; }
     }
 
-    film.partitura = partitura ? componiPartitura(partitura, T) : { eventi: [], master: { gain: -6, fadeOut: 1 } };
+    film.partitura = partitura ? componiPartitura(partitura, T) : { eventi: [], master: { gain: -6, fadeOut: 1 }, griglia: { bpm: 120, t0: 0 } };
 
     let attiva = null;
     film.disegna = function (t) {
