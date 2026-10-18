@@ -12,15 +12,13 @@ Tratto dalla lezione *Come funziona un LLM: dal testo alla distribuzione di prob
 
 ## Episodi
 
-> La bozza 3 della sceneggiatura riorganizza il racconto in quattro episodi più lenti
-> (Al mare Emma · Al parco Emma · Fino alla Fine · Mille semi). L'episodio 1 è già ricostruito;
-> gli episodi 2 e 3 qui sotto sono ancora quelli della bozza 2.
+Tutti e tre gli episodi seguono la bozza 3 della sceneggiatura. L'episodio 4, «Mille semi», è scritto ma non ancora prodotto.
 
 | # | Titolo | Durata | Cosa spiega | Guarda |
 |---|---|---|---|---|
-| 1 | Al mare Emma *(bozza 3)* | 4:46 | il viaggio intero: tokenizer, carte senza nome, partita a carte, discesa a botole, campane, secchio, pesca | [apri](https://claude.ai/artifact/2SYUjC4462ypdANocGCEoq) |
-| 2 | Il primo sguardo | 3:06 | attention come partita a carte (prodotto scalare), softmax, strati, logit, temperatura, campionamento | [apri](https://claude.ai/artifact/PRKqd9xxxzQpEKizCuVcpb) |
-| 3 | Due cieli | 2:00 | la frase del parco, il ciclo autoregressivo, EOS e max_tokens, riepilogo | [apri](https://claude.ai/artifact/TjUNodB3pgkpZvFnSpgCNL) |
+| 1 | Al mare Emma | 4:46 | il viaggio intero: tokenizer, carte senza nome, partita a carte, discesa a botole, campane, secchio, pesca | [apri](https://claude.ai/artifact/2SYUjC4462ypdANocGCEoq) |
+| 2 | Al parco Emma | 4:04 | stessa carta, periscopio, partita con Parco, un'altra strada, due cieli | [apri](https://claude.ai/artifact/PRKqd9xxxzQpEKizCuVcpb) |
+| 3 | Fino alla Fine | 4:37 | termostato, stesso secchio e pesca diversa, il ciclo con Corre, Felice e Punto, EOS, max_tokens, riepilogo | [apri](https://claude.ai/artifact/TjUNodB3pgkpZvFnSpgCNL) |
 
 Personaggi e oggetti: [tela di design](https://claude.ai/artifact/4aR8fDLy9S866GTJU1Y6L3).
 

@@ -127,19 +127,29 @@ function mix(a, b, p){
   const A = h(a), B = h(b);
   return 'rgb(' + A.map((v, i) => Math.round(v + (B[i] - v) * Math.max(0, Math.min(1, p)))).join(',') + ')';
 }
-const SEMI_COL = ['#4A7BE0', '#3FAF5F', '#E5484D'];
+// Bozza 3: le righe delle carte sono semi senza nome (♠ ♥ ♦, poi ♣ e ☾), disegnati come tracciati SVG.
+const NERO = '#2E2A26', ROSSO_SEME = '#C2453F';
+const SEMI_COL = [NERO, ROSSO_SEME, ROSSO_SEME, NERO, '#6B5BA8'];
 const SEMI_ICON = [
-  '<path d="M0 -16 C8 -4 12 2 12 7 A12 12 0 0 1 -12 7 C-12 2 -8 -4 0 -16 Z" fill="#4A7BE0"/>',
-  '<path d="M-12 12 C-12 -7 3 -14 14 -14 C14 1 6 14 -12 12 Z" fill="#3FAF5F"/><path d="M-11 11 L5 -5" stroke="#2E7D46" stroke-width="2"/>',
-  '<polygon points="0,-14 3.5,-4.6 13.3,-4.3 5.6,1.8 8.2,11.3 0,5.8 -8.2,11.3 -5.6,1.8 -13.3,-4.3 -3.5,-4.6" fill="#E5484D"/>'];
+  '<path d="M0 -15 C6 -7 15 -2 15 5 C15 11 9 14 4 11 C5 14 6 16 8 17 L-8 17 C-6 16 -5 14 -4 11 C-9 14 -15 11 -15 5 C-15 -2 -6 -7 0 -15 Z" fill="' + NERO + '"/>',
+  '<path d="M0 15 C-10 7 -15 1 -15 -5 C-15 -11 -10 -14 -6 -14 C-3 -14 -1 -12 0 -9 C1 -12 3 -14 6 -14 C10 -14 15 -11 15 -5 C15 1 10 7 0 15 Z" fill="' + ROSSO_SEME + '"/>',
+  '<path d="M0 -16 L12 0 L0 16 L-12 0 Z" fill="' + ROSSO_SEME + '"/>',
+  '<circle cx="0" cy="-7" r="6.5" fill="' + NERO + '"/><circle cx="-7" cy="3" r="6.5" fill="' + NERO + '"/><circle cx="7" cy="3" r="6.5" fill="' + NERO + '"/><path d="M-2 4 L-5 16 L5 16 L2 4 Z" fill="' + NERO + '"/>',
+  '<path d="M4 -14 A14 14 0 1 0 4 14 A10 10 0 1 1 4 -14 Z" fill="#6B5BA8"/>'];
+function seme(i, x, y, k, chiaro) { return '<g transform="translate(' + x + ' ' + y + ') scale(' + (k || 1) + ')">' + (chiaro ? SEMI_ICON[i].replace(/#2E2A26/g, '#E6FFF4') : SEMI_ICON[i]) + '</g>'; }
+function semeHTML(i) { return '<svg class="seme" viewBox="-17 -17 34 34" aria-hidden="true">' + SEMI_ICON[i].replace(/fill="#2E2A26"/g, 'fill="#E6FFF4"') + '</svg>'; }
 function fmt(v) { return (v < 0 ? '−' : '') + Math.abs(v).toFixed(2); }
+// Vettore per il monitor: «♠ 0.55 ♥ 0.07 ♦ −0.58» con i semi disegnati.
+function vecHTML(v) { return v.map((x, i) => semeHTML(i) + '&#8202;' + fmt(x)).join('&ensp;'); }
+function righeY(n) { return n === 3 ? [92, 162, 232] : Array.from({ length: n }, (_, i) => 64 + (200 / n) * (i + 0.5)); }
 function carta(o) {
+  const n = o.v.length, Y = righeY(n), h = n === 3 ? 56 : Math.min(48, 200 / n - 6), k = n === 3 ? 1 : n === 4 ? 0.85 : 0.72, fs = n === 3 ? 34 : n === 4 ? 30 : 26;
   let r = '';
   o.v.forEach((x, i) => {
-    const y = 92 + i * 70;
-    r += '<g class="' + (o.cls || 'carta') + '-r"><rect x="14" y="' + (y - 28) + '" width="192" height="56" rx="10" fill="' + SEMI_COL[i] + '" fill-opacity=".12"/>' +
-      '<g transform="translate(44 ' + y + ')">' + SEMI_ICON[i] + '</g>' +
-      '<text x="192" y="' + (y + 12) + '" text-anchor="end" font-family="JetBrains Mono, monospace" font-weight="600" font-size="34" fill="' + (x < 0 ? '#B8332E' : '#2E2A26') + '">' + fmt(x) + '</text></g>';
+    const y = Y[i];
+    r += '<g class="' + (o.cls || 'carta') + '-r"><rect x="14" y="' + (y - h / 2).toFixed(1) + '" width="192" height="' + h.toFixed(1) + '" rx="10" fill="' + SEMI_COL[i] + '" fill-opacity=".08"/>' +
+      seme(i, 44, y.toFixed(1), k) +
+      '<text x="192" y="' + (y + fs * 0.35).toFixed(1) + '" text-anchor="end" font-family="JetBrains Mono, monospace" font-weight="600" font-size="' + fs + '" fill="' + (x < 0 ? '#B8332E' : '#2E2A26') + '">' + fmt(x) + '</text></g>';
   });
   return '<g><rect x="0" y="0" width="220" height="300" rx="18" fill="#FFFDF6" stroke="' + o.col + '" stroke-width="7"/>' +
     '<text x="18" y="42" font-family="Fredoka, sans-serif" font-weight="600" font-size="27" fill="' + o.col + '">' + o.titolo + '</text>' + r +
@@ -154,6 +164,98 @@ function pill(v) {
   const neg = v < 0;
   return '<g><rect x="-66" y="-27" width="132" height="54" rx="27" fill="' + (neg ? '#8A90A8' : '#F5C84C') + '" stroke="' + (neg ? '#5B6B8C' : '#C9973F') + '" stroke-width="4"/><text y="11" text-anchor="middle" font-family="JetBrains Mono, monospace" font-weight="600" font-size="28" fill="#2E2A26">' + (v > 0 ? '+' : '') + fmt(v) + '</text></g>';
 }
-window.PZ = { carta, gettone, pill, fmt, SEMI_COL, emmaTirata, perla, mix, defs, emma, emmaCade, emmaSpalle, al, mare, parco, ada, adaHead, sott, fade, subs, CORALLO:'#FE8787' };
+// I viaggiatori dell'episodio 3 (tela «I nuovi viaggiatori»), in un riquadro 200×200.
+function corre() { return '<g style="color:#2FAD57"><ellipse cx="108" cy="128" rx="84" ry="46" fill="currentColor" opacity=".28" filter="url(#pz-soft)"/><path d="M8 104 L30 104 M4 120 L28 120 M10 136 L30 136" stroke="currentColor" stroke-width="5" stroke-linecap="round" opacity=".55"/><path d="M38 138 C36 108 50 88 76 86 L100 86 C112 86 118 94 124 102 C134 114 154 116 168 120 C182 124 186 134 182 140 L38 140 Z" fill="currentColor"/><path d="M44 108 C44 98 50 92 60 90" stroke="#1D5A33" stroke-width="5" stroke-linecap="round" fill="none"/><path d="M140 118 C158 120 176 124 182 136 L150 138 C146 130 142 124 140 118 Z" fill="#FFFFFF" opacity=".85"/><path d="M86 96 L100 108 M94 92 L108 104 M102 90 L114 100" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/><rect x="32" y="136" width="156" height="20" rx="10" fill="#F4EEE2"/><path d="M44 150 L176 150" stroke="#C9C1B2" stroke-width="3" stroke-dasharray="8 6" stroke-linecap="round"/><ellipse cx="122" cy="114" rx="7" ry="8" fill="#FFFFFF"/><ellipse cx="142" cy="116" rx="7" ry="8" fill="#FFFFFF"/><circle cx="124" cy="116" r="3.6" fill="#173A24"/><circle cx="144" cy="118" r="3.6" fill="#173A24"/><path d="M126 128 Q134 134 142 128" stroke="#173A24" stroke-width="3" stroke-linecap="round" fill="none"/></g>'; }
+function felice() { return '<g style="color:#F5C84C"><circle cx="100" cy="104" r="80" fill="currentColor" opacity=".26" filter="url(#pz-soft)"/><g stroke="currentColor" stroke-width="9" stroke-linecap="round"><path d="M100 34 L100 46"/><path d="M100 162 L100 174"/><path d="M30 104 L42 104"/><path d="M158 104 L170 104"/><path d="M50 54 L59 63"/><path d="M141 145 L150 154"/><path d="M150 54 L141 63"/><path d="M59 145 L50 154"/></g><circle cx="100" cy="104" r="46" fill="currentColor"/><circle cx="84" cy="86" r="10" fill="#FFFFFF" opacity=".3"/><circle cx="74" cy="114" r="8" fill="#F28B6B" opacity=".6"/><circle cx="126" cy="114" r="8" fill="#F28B6B" opacity=".6"/><path d="M78 100 Q86 90 94 100 M106 100 Q114 90 122 100" stroke="#6B4A12" stroke-width="3.5" stroke-linecap="round" fill="none"/><path d="M84 118 Q100 134 116 118" stroke="#6B4A12" stroke-width="3.5" stroke-linecap="round" fill="none"/></g>'; }
+function punto() { return '<g style="color:#8E96C8"><ellipse cx="100" cy="124" rx="70" ry="54" fill="currentColor" opacity=".22" filter="url(#pz-soft)"/><ellipse cx="100" cy="124" rx="50" ry="44" fill="#1E1F2E"/><ellipse cx="82" cy="102" rx="16" ry="8" fill="#FFFFFF" opacity=".32" transform="rotate(-24 82 102)"/><circle cx="120" cy="96" r="3" fill="#FFFFFF" opacity=".5"/><circle cx="88" cy="124" r="6" fill="#FFFFFF"/><circle cx="112" cy="124" r="6" fill="#FFFFFF"/><circle cx="89" cy="125" r="3" fill="#1E1F2E"/><circle cx="113" cy="125" r="3" fill="#1E1F2E"/><path d="M95 142 L105 142" stroke="#8E96C8" stroke-width="3" stroke-linecap="round"/></g>'; }
+// Il laboratorio di Ada visto di lato: a sinistra il pozzo (il modello), a destra il bancone (il codice).
+const SLOT = [[88,162],[104,162],[120,162],[136,162],[152,162],[80,146],[96,146],[112,146],[128,146],[144,146],[160,146],[78,130],[94,130],[110,130],[126,130],[142,130],[158,130],[100,114],[116,114],[132,114]];
+function lab(o) {
+  o = o || {}; const g = o.luce || ['#67A96F', '#2FAD57', '#28AA50'];
+  return '<rect width="1920" height="1080" fill="#F3EADB"/><rect x="0" y="0" width="760" height="300" fill="#141A33"/><circle cx="660" cy="58" r="26" fill="#FFF1C9"/><circle cx="670" cy="52" r="24" fill="#141A33"/>' +
+    '<rect x="0" y="300" width="760" height="780" fill="#2A211C"/><path d="M0 300 Q190 290 380 300 T760 300 L760 314 L0 314 Z" fill="#2F5D3A"/>' +
+    '<rect x="230" y="300" width="300" height="780" fill="#0B0E1C"/><rect x="200" y="300" width="30" height="780" fill="#3E4A66"/><rect x="530" y="300" width="30" height="780" fill="#3E4A66"/>' +
+    '<g class="lab-luce"><ellipse cx="380" cy="520" rx="110" ry="26" fill="' + g[0] + '" opacity=".3" filter="url(#pz-soft)"/><ellipse cx="380" cy="720" rx="120" ry="28" fill="' + g[1] + '" opacity=".32" filter="url(#pz-soft)"/><ellipse cx="380" cy="1060" rx="180" ry="70" fill="' + g[2] + '" opacity=".6" filter="url(#pz-soft)"/></g>' +
+    '<rect x="180" y="272" width="400" height="40" rx="10" fill="#5B6B8C" stroke="#3E4A66" stroke-width="4"/><rect x="196" y="110" width="16" height="164" fill="#8A5A3C"/><rect x="548" y="110" width="16" height="164" fill="#8A5A3C"/><rect x="180" y="98" width="400" height="22" rx="4" fill="#8A5A3C"/><circle cx="380" cy="146" r="26" fill="#C9973F" stroke="#7A5A24" stroke-width="4"/>' +
+    '<rect x="760" y="760" width="1160" height="320" fill="#C9A27A"/><rect x="780" y="700" width="1120" height="34" rx="4" fill="#8A5A3C"/><rect x="800" y="734" width="1080" height="300" fill="#A9744F"/>' +
+    '<path d="M404 140 C560 128 800 300 968 466" stroke="#C9973F" stroke-width="4" fill="none"/><path d="M760 0 L760 1080" stroke="#E8743B" stroke-width="4" stroke-dasharray="18 12"/>' +
+    '<g transform="translate(760 54)"><rect x="-150" y="-26" width="300" height="52" rx="26" fill="#E8743B"/><text y="9" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="18" fill="#F4EEE2">← modello · fine · codice →</text></g>';
+}
+// Il secchio di vetro, con le palline nei posti fissi (classe cls-p, colori in ordine).
+function secchio(cls, colori, k) {
+  let p = ''; SLOT.forEach((sl, i) => { p += '<circle class="' + cls + '-p" cx="' + sl[0] + '" cy="' + sl[1] + '" r="8" fill="' + colori[i % colori.length] + '"/>'; });
+  return '<g class="' + cls + '"><g transform="scale(' + (k || 1.4) + ')"><path d="M60 52 Q120 -6 180 52" stroke="#8C8F99" stroke-width="4" fill="none"/>' + p +
+    '<path d="M60 52 L180 52 L168 172 Q120 182 72 172 Z" fill="#BFD7FF" fill-opacity=".2" stroke="#7C9CC9" stroke-width="3"/><path d="M70 62 L80 164" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" opacity=".3"/></g></g>';
+}
+// Una pallina pescata, con la sua parola sopra. La pallina Fine è scura con un punto bianco.
+function palla(cls, colore, parola) {
+  const fine = parola === 'Fine';
+  return '<g class="' + cls + '"><circle r="16" fill="' + (fine ? '#1E1F2E' : colore) + '"/>' + (fine ? '<circle r="5" fill="#FFFFFF"/>' : '<ellipse cx="-5" cy="-5" rx="5" ry="3" fill="#FFFFFF" opacity=".4"/>') +
+    '<text x="0" y="-30" text-anchor="middle" stroke="#FFFDF6" stroke-width="7" paint-order="stroke" font-family="Fredoka, sans-serif" font-weight="600" font-size="30" fill="#2E2A26">' + parola + '</text></g>';
+}
+// Un viaggiatore con i piedi in (0, 0).
+function viaggiatore(nome, vestito) {
+  if (nome === 'Al') return '<g transform="translate(-102 -166)">' + al() + '</g>';
+  if (nome === 'Mare') return '<g transform="translate(-100 -184)">' + mare() + '</g>';
+  if (nome === 'Parco') return '<g transform="translate(-100 -178)">' + parco() + '</g>';
+  if (nome === 'Corre') return '<g transform="translate(-110 -156)">' + corre() + '</g>';
+  if (nome === 'Felice') return '<g transform="translate(-100 -178)">' + felice() + '</g>';
+  if (nome === 'Punto') return '<g transform="translate(-100 -170)">' + punto() + '</g>';
+  return '<g transform="translate(-80 -219) scale(.8)">' + emma(vestito || '#28AA50') + '</g>';
+}
+// La discesa veloce, di botola in botola: tutta la fila cade dalla botola che i calcoli aprono.
+// o = { id, chi: [nomi], open: [tempi], scelta: [indice botola per piano], parole: [[parola, colore], ...] per stanza }
+function discesa(o) {
+  const RH = 1080, F = r => 900 + RH * r, BOT = [300, 620, 940, 1260, 1580], n = o.chi.length;
+  const X0 = j => 960 + (j - (n - 1) / 2) * 190, HX = r => BOT[o.scelta[r]];
+  const pos = (j, r) => r === 0 ? X0(j) : Math.max(140, Math.min(1780, HX(r - 1) + (j - (n - 1) / 2) * 160));
+  const id = o.id, piani = o.open.length + 1;
+  let s = '<g class="' + id + '-mondo">';
+  for (let r = 0; r < piani; r++) {
+    const oy = RH * r, sf = ['#262F60', '#1F3B2C', '#1E4630', '#1A5A34'][r % 4];
+    s += '<defs><linearGradient id="' + id + '-m' + r + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0E1226"/><stop offset="1" stop-color="' + sf + '"/></linearGradient></defs><rect x="0" y="' + oy + '" width="1920" height="' + RH + '" fill="url(#' + id + '-m' + r + ')"/>';
+    (o.parole[r] || []).forEach((w, k) => { s += '<text x="' + (260 + k * 520) + '" y="' + (oy + 300 + (k % 2) * 140) + '" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="600" font-size="' + (k === 0 ? 96 : 60) + '" fill="' + w[1] + '" opacity=".85">' + w[0] + '</text>'; });
+    s += '<rect x="0" y="' + F(r) + '" width="1920" height="180" fill="#3E4A66"/><path d="M0 ' + F(r) + ' L1920 ' + F(r) + '" stroke="#5B6B8C" stroke-width="6"/>';
+    if (r < piani - 1) BOT.forEach((h, b) => {
+      s += '<circle cx="' + h + '" cy="' + (F(r) + 92) + '" r="46" fill="#141A33"/><g transform="translate(' + h + ' ' + (F(r) + 92) + ')"><g class="' + id + '-rot" data-r="' + r + '"><circle r="26" fill="#C9973F" stroke="#7A5A24" stroke-width="4"/><path d="M0 -36 L0 36 M-36 0 L36 0 M-25 -25 L25 25 M-25 25 L25 -25" stroke="#C9973F" stroke-width="9"/><circle r="8" fill="#7A5A24"/></g></g>' +
+        '<ellipse cx="' + h + '" cy="' + (F(r) + 4) + '" rx="80" ry="20" fill="#56658A" stroke="#2A3350" stroke-width="4"/>' +
+        (b === o.scelta[r] ? '<ellipse class="' + id + '-buco" data-r="' + r + '" cx="' + h + '" cy="' + (F(r) + 4) + '" rx="0" ry="0" fill="#05060C" stroke="#7A86A8" stroke-width="5"/>' : '');
+    });
+  }
+  o.chi.forEach(nome => { s += '<g class="' + id + '-p">' + viaggiatore(nome, o.vestito) + '</g>'; });
+  s += '</g>';
+  let mondo, pers, rot, buchi;
+  return {
+    svg: s,
+    init(stage) {
+      mondo = stage.querySelector('.' + id + '-mondo'); pers = [...stage.querySelectorAll('.' + id + '-p')];
+      rot = [...stage.querySelectorAll('.' + id + '-rot')]; buchi = [...stage.querySelectorAll('.' + id + '-buco')];
+    },
+    render(t, extra) {
+      const k = window.__kit, seg = k.seg, eio = k.eio, ei = k.ei, lerp = k.lerp, eob = k.eob;
+      let cam = 0; o.open.forEach(t0 => { cam += eio(seg(t, t0 + 0.3, t0 + 1.3)); });
+      mondo.setAttribute('transform', 'translate(0 ' + (-cam * RH + (extra || 0)).toFixed(1) + ')');
+      pers.forEach((g, j) => {
+        let x = X0(j), y = F(0), rot2 = 0, sq = 0;
+        o.open.forEach((t00, r) => {
+          const t0 = t00 + (n - 1 - j) * 0.1; if (t < t0) return;
+          const a = seg(t, t0, t0 + 0.4), b = seg(t, t0 + 0.4, t0 + 1.2);
+          x = b > 0 ? lerp(HX(r), pos(j, r + 1), eio(b)) : lerp(pos(j, r), HX(r), eio(a));
+          y = lerp(F(r), F(r + 1), ei(b)) - 30 * Math.sin(Math.PI * a);
+          rot2 = t < t0 + 1.2 ? 16 * Math.sign(HX(r) - pos(j, r) || 1) : 0;
+          sq = Math.sin(Math.PI * seg(t, t0 + 1.2, t0 + 1.45));
+        });
+        g.setAttribute('transform', 'translate(' + x.toFixed(1) + ' ' + y.toFixed(1) + ') rotate(' + rot2 + ') scale(' + (1 + 0.08 * sq).toFixed(3) + ',' + (1 - 0.1 * sq).toFixed(3) + ')');
+      });
+      rot.forEach(g => { const t0 = o.open[+g.getAttribute('data-r')], on = seg(t, t0 - 1.0, t0 + 0.1); g.setAttribute('transform', 'rotate(' + (on >= 1 ? 400 : 400 * on).toFixed(1) + ')'); });
+      buchi.forEach(b => { const t0 = o.open[+b.getAttribute('data-r')], op = eob(seg(t, t0 - 0.25, t0), 1.4) * (1 - eio(seg(t, t0 + 1.6, t0 + 2.0))); b.setAttribute('rx', (90 * op).toFixed(1)); b.setAttribute('ry', (22 * op).toFixed(1)); });
+    },
+  };
+}
+// Colori del vestito di Emma, calcolati da strumenti/numeri.py (il colore dei vicini).
+const VESTITO = { rosa: '#BC937F', mare: ['#BC937F', '#728EBE', '#306EDD', '#2864DC'], parco: ['#BC937F', '#67A96F', '#2FAD57', '#28AA50'] };
+// Colori delle carte dei personaggi.
+const CARTA_COL = { Al: '#139A9A', Mare: '#6E6EE6', Parco: '#2E9E4F', Emma: '#B5715C' };
+window.PZ = { viaggiatore, discesa, lab, secchio, palla, SLOT, corre, felice, punto, carta, gettone, pill, fmt, seme, semeHTML, vecHTML, righeY, SEMI_COL, VESTITO, CARTA_COL, emmaTirata, perla, mix, defs, emma, emmaCade, emmaSpalle, al, mare, parco, ada, adaHead, sott, fade, subs, CORALLO: VESTITO.rosa };
 window.__kit = kit;
 })();

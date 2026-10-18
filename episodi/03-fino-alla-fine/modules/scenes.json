@@ -1,0 +1,104 @@
+{
+  "v": 1,
+  "stage": "final",
+  "look": "Il pozzo delle parole, bozza 3: illustrazione piatta e morbida dal model sheet approvato. Dentro il pozzo notte blu, pietra e luce; fuori, il laboratorio di Ada in carta, legno e ottone. Personaggi in SVG (Emma bionda col fermaglio a stellina, il vestito prende il colore dei vicini; Ada col camice lungo; Al sassolino, Mare onda, Parco alberello; nell'episodio 3 anche Corre, scarpetta da corsa, Felice, piccolo sole, e Punto, sassolino nero). Ritmo lento: al massimo 12 caratteri al secondo di sottotitolo e almeno 3 secondi di sole immagini per scena. La discesa nei piani è quasi muta, con botole e ingranaggi. Le carte: ogni parola è una carta con tre semi senza nome (♠ ♥ ♦); due carte confrontate seme per seme danno pastiglie che si sommano in un gettone (prodotto scalare); i gettoni diventano quote; con le quote si mescolano le carte. Il monitor di Ada in verde menta su petrolio per i numeri.",
+  "palettes": [
+    [
+      "#141A33",
+      "#F5C84C",
+      "#F4EEE2",
+      "#E8743B"
+    ]
+  ],
+  "theirs": 1,
+  "width": 1920,
+  "height": 1080,
+  "fps": 60,
+  "background": "#141A33",
+  "fonts": {
+    "display": {
+      "family": "Fredoka",
+      "or": "manrope",
+      "weights": [
+        400,
+        600
+      ]
+    },
+    "sans": {
+      "family": "Atkinson Hyperlegible",
+      "or": "manrope"
+    },
+    "mono": {
+      "family": "JetBrains Mono",
+      "or": "dm-mono"
+    }
+  },
+  "scenes": [
+    {
+      "id": "termostato",
+      "name": "Il termostato",
+      "dur": 36,
+      "desc": "Il termostato di Ada cambia solo il modo di pescare: freddo, sempre «corre»; caldo, esce «Bovary» (gag); poi a metà."
+    },
+    {
+      "id": "stessosecchio",
+      "name": "Stesso secchio, pesca diversa",
+      "dur": 24,
+      "desc": "La stessa frase dà un secchio IDENTICO; due pescate danno «corre» e «gioca»: DIVERSO."
+    },
+    {
+      "id": "viaggiatore",
+      "name": "Un viaggiatore in più",
+      "dur": 30,
+      "desc": "La pallina «corre» diventa Corre, si mette in fila con il numero 4 e cadono in quattro, di botola in botola."
+    },
+    {
+      "id": "ultimo",
+      "name": "L'ultimo della fila",
+      "dur": 30,
+      "desc": "In fondo arriva Corre: le campane suonano per l'ultimo della fila. Ada pesca «felice»."
+    },
+    {
+      "id": "giro",
+      "name": "Ancora un giro",
+      "dur": 22,
+      "desc": "Felice si mette in fila: in cinque giù per le botole; in fondo Felice, e dal secchio esce Punto."
+    },
+    {
+      "id": "fine",
+      "name": "La pallina della Fine",
+      "dur": 32,
+      "desc": "Ultimo giro con Punto: nel secchio quasi solo la pallina Fine. Ada la pesca e spegne la lampada."
+    },
+    {
+      "id": "forbice",
+      "name": "La forbice dell'orologio",
+      "dur": 20,
+      "desc": "Un'altra frase viene tagliata a metà dalla forbice: un limite di parole, fuori dal pozzo."
+    },
+    {
+      "id": "frase",
+      "name": "La frase intera",
+      "dur": 20,
+      "desc": "Sul quaderno: «Al parco Emma corre felice.» Emma corre sul prato con Corre e Felice."
+    },
+    {
+      "id": "numeri",
+      "name": "Il pozzo è fatto di numeri",
+      "dur": 30,
+      "desc": "Le pareti del pozzo spento diventano colonne di numeri fermi: armadio, ingranaggi, campane."
+    },
+    {
+      "id": "riepilogo",
+      "name": "Riepilogo",
+      "dur": 25,
+      "desc": "Il monitor di Ada, una riga alla volta: il viaggio di ogni parola."
+    },
+    {
+      "id": "continua",
+      "name": "Continua",
+      "dur": 8,
+      "desc": "Ada conta i semi della carta di Emma: ma perché solo tre?"
+    }
+  ]
+}

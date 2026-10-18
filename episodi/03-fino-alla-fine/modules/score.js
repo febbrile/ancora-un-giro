@@ -1,0 +1,71 @@
+kit.score(function (S, T) {
+  const BPM = 76, B = 60 / BPM;
+  S.tempo(BPM, { t0: 0 });
+  S.program('pad', 'pad', { rev: 0.65, gain: -2 });
+  S.program('box', 'glock', { rev: 0.5, gain: -5, pan: 0.2 });
+  S.program('mallet', 'marimba', { rev: 0.3, gain: -4, pan: -0.15 });
+  S.program('bass', 'bass', { gain: -4 });
+  S.program('keys', 'ep', { rev: 0.4, gain: -6 });
+  S.program('vib', 'vibes', { rev: 0.6, gain: -6 });
+  const C = { D: ['D3', 'F#3', 'A3', 'D4'], Bm: ['B2', 'D3', 'F#3', 'B3'], G: ['G2', 'B2', 'D3', 'G3'], A: ['A2', 'C#3', 'E3', 'A3'], Em: ['E3', 'G3', 'B3', 'E4'], Fm: ['F#2', 'A2', 'C#3', 'F#3'] };
+  const ROOT = { D: 'D2', Bm: 'B1', G: 'G1', A: 'A1', Em: 'E2', Fm: 'F#2' };
+  const ARP = { D: ['D5', 'A4', 'F#4', 'A4'], Bm: ['B4', 'F#4', 'D4', 'F#4'], G: ['B4', 'G4', 'D4', 'G4'], A: ['C#5', 'A4', 'E4', 'A4'], Em: ['B4', 'G4', 'E4', 'G4'], Fm: ['C#5', 'A4', 'F#4', 'A4'] };
+  const bt = t => t / B;
+  function sez(a, b, seq, o) {
+    o = o || {};
+    const b0 = Math.ceil(bt(a)), b1 = Math.floor(bt(b));
+    for (let x = b0, i = 0; x + 1 < b1; x += 4, i++) {
+      const c = seq[i % seq.length], len = Math.min(4, b1 - x);
+      S.chord('pad', C[c], { beat: x, beats: len, vel: o.pad || 32 });
+      if (o.mallet && len >= 4) S.pattern('mallet', o.mallet, { from: x, pitch: ARP[c], vel: o.mv || 46 });
+      if (o.bass) S.note('bass', ROOT[c], { beat: x, beats: Math.min(3, len), vel: o.bass });
+      if (o.vib && len >= 4) S.pattern('vib', 'x..x..x.', { from: x, pitch: ARP[c], vel: o.vib });
+      if (o.keys) S.chord('keys', C[c].map(n => n.replace(/(\d)$/, d => String(+d + 1))), { beat: x, beats: Math.min(3.5, len), vel: o.keys });
+    }
+  }
+  sez(T.termostato, T.stessosecchio, ['G', 'D', 'Em', 'D'], { pad: 32, keys: 30 });
+  [['D5', 1, 1], ['G5', 2, 1], ['B5', 3, 2], ['A5', 5, 1], ['G5', 6, 1], ['D5', 7, 2]].forEach(([n, b, d]) => S.note('box', n, { beat: b, beats: d, vel: 42 }));
+  sez(T.stessosecchio, T.viaggiatore, ['Em', 'Bm'], { pad: 30, vib: 28 });
+  sez(T.viaggiatore, T.ultimo, ['G', 'Bm', 'D', 'A'], { pad: 30, mallet: 'x..x..x.', mv: 40, bass: 46 });
+  sez(T.ultimo, T.giro, ['Bm', 'Em', 'G', 'D'], { pad: 30, vib: 28 });
+  sez(T.giro, T.fine, ['G', 'D', 'A', 'D'], { pad: 30, mallet: 'x.x.x.x.', mv: 40, bass: 46 });
+  sez(T.fine, T.forbice, ['Bm', 'G', 'D', 'D'], { pad: 30, keys: 30 });
+  sez(T.forbice, T.frase, ['Em', 'A'], { pad: 30 });
+  sez(T.frase, T.numeri, ['G', 'D', 'Em', 'D'], { pad: 32, mallet: 'x.x.X.x.', mv: 46, bass: 50 });
+  S.drums({ kick: 'x.......', sidestick: '....x...', shaker: 'oxoxoxox' }, { from: Math.ceil(bt(T.frase + 8.4)), repeat: 2, vel: 40 });
+  sez(T.numeri, T.riepilogo, ['Bm', 'Fm', 'G', 'Em'], { pad: 30, vib: 24 });
+  sez(T.riepilogo, T.continua, ['D', 'Bm', 'G', 'A'], { pad: 30, keys: 30 });
+  S.fx('revswell', T.continua + 3.6, { dur: 1.4 });
+  S.chord('pad', C.D, { t: T.continua + 3.8, dur: 4.0, vel: 46 });
+  S.chord('keys', ['D4', 'F#4', 'A4', 'D5'], { t: T.continua + 3.8, dur: 3.8, vel: 50 });
+  S.run('box', ['D5', 'F#5', 'A5', 'D6'], { t: T.continua + 3.5, step: 0.12, vel: 46, cresc: 10 });
+  // Rumori.
+  const te = T.termostato;
+  [13.8, 18.2, 27.6].forEach(c => S.fx('click', te + c, { vel: 46 }));
+  [15.0, 15.9, 16.8].forEach(c => S.fx('pop', te + c + 0.3, { vel: 48 }));
+  S.fx('pop', te + 20.9, { vel: 58 }); S.fx('boing', te + 21.0, { vel: 60 }); S.fx('chime', te + 21.4);
+  const ss = T.stessosecchio;
+  S.fx('whoosh', ss + 0.6, { dur: 1.6 }); S.fx('roll', ss + 2.4, { dur: 1.2, vel: 40 }); S.fx('thud', ss + 4.1, { vel: 52 });
+  S.fx('pop', ss + 7.5, { vel: 50 }); S.fx('pop', ss + 8.7, { vel: 50 }); S.fx('thud', ss + 9.3, { vel: 56 });
+  const vi = T.viaggiatore;
+  S.fx('sparkle', vi + 1.8, { vel: 54 }); S.fx('whoosh', vi + 2.6, { dur: 1.2 });
+  for (let k = 0; k < 6; k++) S.fx('tick', vi + 4.4 + k * 0.35, { vel: 26 });
+  S.fx('sparkle', vi + 7.6, { vel: 44 }); S.fx('pop', vi + 8.7, { vel: 44 });
+  [13.4, 16.4, 19.4].forEach(o => { S.fx('click', vi + o - 0.2, { vel: 44 }); S.fx('whoosh', vi + o, { dur: 1.2 }); S.fx('boing', vi + o + 1.3, { vel: 36 }); });
+  const ul = T.ultimo;
+  S.chord('box', ['A5', 'C#6', 'E6'], { t: ul + 4.8, dur: 1.5, vel: 46 }); S.chord('vib', ['F#4', 'A4', 'C#5', 'E5'], { t: ul + 5.2, dur: 3, vel: 48 });
+  S.fx('roll', ul + 12.2, { dur: 1.2, vel: 40 }); S.fx('pop', ul + 16.5, { vel: 54 }); S.fx('chime', ul + 18.0);
+  const gi = T.giro;
+  S.fx('sparkle', gi + 0.8, { vel: 54 });
+  [4.4, 6.8, 9.2].forEach(o => { S.fx('click', gi + o - 0.2, { vel: 44 }); S.fx('whoosh', gi + o, { dur: 1.2 }); S.fx('boing', gi + o + 1.3, { vel: 36 }); });
+  S.fx('roll', gi + 12.0, { dur: 1.2, vel: 40 }); S.fx('pop', gi + 14.9, { vel: 54 });
+  const fi = T.fine;
+  [3.6, 5.8, 8.0].forEach(o => { S.fx('click', fi + o - 0.2, { vel: 44 }); S.fx('whoosh', fi + o, { dur: 1.2 }); S.fx('boing', fi + o + 1.3, { vel: 36 }); });
+  S.fx('roll', fi + 10.8, { dur: 1.4, vel: 40 }); S.fx('pop', fi + 17.5, { vel: 54 }); S.fx('chime', fi + 18.4); S.fx('click', fi + 20.6, { vel: 50 });
+  const fo = T.forbice;
+  for (let k = 0; k < 14; k++) S.fx('tick', fo + 0.8 + k * 0.28, { vel: 24 });
+  S.fx('whoosh', fo + 4.6, { dur: 0.7 }); S.fx('click', fo + 5.4, { vel: 60 }); S.fx('thud', fo + 6.6, { vel: 40 });
+  S.fx('revswell', T.numeri + 2.0, { dur: 3.0 });
+  for (let k = 0; k < 6; k++) S.fx('ding', T.riepilogo + 1.0 + k * 3.0, { vel: 30 });
+  S.master({ gain: -6, fadeOut: 1.5 });
+});
