@@ -46,6 +46,9 @@ se una scena è bella ma scientificamente sbagliata, si riscrive.
     aprono collegamenti che andrebbero spiegati. L'unica eccezione è l'episodio 4, dedicato proprio a questo.
 13. **A metà pozzo ci sono spostamenti, non probabilità.** Botole, frecce e stanze mostrano direzioni calcolate;
     le probabilità nascono solo in fondo (campane e secchio) e la scelta la fa Ada pescando.
+14. **Coerenza: quello che si mostra una volta, si mostra sempre.** Ogni carta ha i suoi numeri, ogni stanza ha le sue
+    parole calcolate col periscopio, per ogni viaggiatore e in ogni episodio. Se mancano i dati, prima si dichiarano
+    in `numeri.py` e in sceneggiatura, poi si mostrano: niente scorciatoie che facciano sembrare diverso un contesto.
 
 ## Le metafore fissate
 

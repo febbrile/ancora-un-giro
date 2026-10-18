@@ -1,5 +1,6 @@
 const { seg, eo, ei, eio, eob, lerp } = kit;
 // 3.3 · Un viaggiatore in più: la pallina «corre» prende vita, si mette in fila con il numero 4, e cadono in quattro.
+const PAROLA_COL = { foglie: '#CDEFB0', altalena: '#FFE9A8', corre: '#8EE8A8', felice: '#FFD978', '.': '#C8CEE8', e: '#F7C6D9', Bovary: '#E3A58E', Fine: '#E6E6F0', nuota: '#8FB6FF' };
 const VI_X = [520, 740, 960, 1180];
 function viPrato(P) {
   return '<defs><linearGradient id="vi-cielo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0E1226"/><stop offset="1" stop-color="#26306A"/></linearGradient></defs>' +
@@ -10,7 +11,7 @@ function viPrato(P) {
 kit.scene('viaggiatore', {
   init(kit) {
     const P = window.PZ;
-    this.dis = P.discesa({ id: 'vi-d', chi: ['Al', 'Parco', 'Emma', 'Corre'], open: [13.4, 16.4, 19.4], scelta: [2, 0, 3], parole: [[], [], [], [['felice', '#FFD978'], ['.', '#C8CEE8']]], vestito: P.VESTITO.parco[3] });
+    this.dis = P.discesa({ id: 'vi-d', chi: ['Al', 'Parco', 'Emma', 'Corre'], open: [13.4, 16.4, 19.4], scelta: [2, 0, 3], parole: [[], [['foglie', PAROLA_COL['foglie']], ['altalena', PAROLA_COL['altalena']], ['corre', PAROLA_COL['corre']]], [['felice', PAROLA_COL['felice']], ['.', PAROLA_COL['.']], ['e', PAROLA_COL['e']]], [['felice', PAROLA_COL['felice']], ['.', PAROLA_COL['.']], ['e', PAROLA_COL['e']]]], vestito: P.VESTITO.parco[3] });
     let fila = '';
     ['Al', 'Parco', 'Emma'].forEach((nome, j) => {
       fila += '<g transform="translate(' + VI_X[j] + ' 800)">' + P.viaggiatore(nome, P.VESTITO.parco[3]) + '<g transform="translate(70 -40)"><circle r="20" fill="#F6E7C8" stroke="#2B2350" stroke-width="1.6" stroke-dasharray="3 2.5"/><text y="7" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="600" font-size="20" fill="#2B2350">' + (j + 1) + '</text></g></g>';
@@ -21,7 +22,7 @@ kit.scene('viaggiatore', {
       '<g class="vi-corre1">' + P.viaggiatore('Corre') + '</g><g class="vi-luce"><circle r="70" fill="#FFF4E0" opacity=".6" filter="url(#pz-soft)"/></g></g>' +
       '<g class="vi-B">' + viPrato(P) + fila +
       '<g class="vi-corre2">' + P.viaggiatore('Corre') + '</g>' +
-      '<g class="vi-carta"><g transform="scale(.36) translate(-110 -150)"><rect width="220" height="300" rx="18" fill="#FFFDF6" stroke="#2E9E4F" stroke-width="7"/><text x="18" y="42" font-family="Fredoka, sans-serif" font-weight="600" font-size="27" fill="#2E9E4F">Corre</text>' + P.seme(0, 110, 110, 1.4) + P.seme(1, 110, 170, 1.4) + P.seme(2, 110, 230, 1.4) + '</g></g>' +
+      '<g class="vi-carta"><g transform="scale(.42) translate(-110 -150)">' + P.carta({ v: [0.21, 0.48, 0.36], col: '#2E9E4F', titolo: 'Corre' }) + '</g></g>' +
       '<g class="vi-num"><circle r="20" fill="#F6E7C8" stroke="#2B2350" stroke-width="1.6" stroke-dasharray="3 2.5"/><text y="7" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="600" font-size="20" fill="#2B2350">4</text></g></g>' +
       '<g class="vi-C">' + this.dis.svg + '</g>' +
       '<g class="vi-mon"><rect x="360" y="40" width="1200" height="84" rx="16" fill="#0F2A2A" stroke="#C9973F" stroke-width="5"/>' +

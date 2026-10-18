@@ -157,12 +157,19 @@ piano 3   Δ3  ♠ −1.65 ♥ 1.08 ♦  0.64  → x3 ♠ −2.47 ♥ 2.19 ♦  
 | Termostato freddo (T = 0) | sempre nuota | sempre corre |
 | Termostato caldo (T = 3) | nuota 16% … Bovary 4.8% | corre 17% … **Bovary 4.6%** |
 
-**Episodio 3, i giri successivi.** La riga in fondo a ogni giro è inventata; il secchio è calcolato.
-```
-Al parco Emma corre ___           felice 46%   .  24%   e 10%
-Al parco Emma corre felice ___    .      69%   e  11%
-Al parco Emma corre felice. ___   Fine   91%
-```
+**Episodio 3, i giri successivi.** A ogni giro l'ultima riga è quella dell'ultimo arrivato. Le sue carte dell'armadio e i suoi spostamenti sono inventati e dichiarati; stanze e secchi sono calcolati.
+
+| Viaggiatore | Carta (armadio) | Δ1 · Δ2 · Δ3 |
+|---|---|---|
+| Corre | ♠ 0.21 ♥ 0.48 ♦ 0.36 | ♠ 0.03 ♥ −0.26 ♦ −0.22 · ♠ 0.15 ♥ −1.16 ♦ −0.98 · ♠ 0.14 ♥ −1.16 ♦ −0.99 |
+| Felice | ♠ −0.38 ♥ −0.12 ♦ −0.52 | ♠ 0.52 ♥ −0.35 ♦ 0.09 · ♠ 0.90 ♥ −0.61 ♦ 0.15 · ♠ 1.16 ♥ −0.78 ♦ 0.19 |
+| Punto | ♠ 0.47 ♥ −0.41 ♦ 0.08 | ♠ −0.22 ♥ −0.18 ♦ 0.15 · ♠ −1.00 ♥ −0.81 ♦ 0.70 · ♠ −0.99 ♥ −0.81 ♦ 0.69 |
+
+| Giro | Stanza 1 | Stanza 2 | Stanza 3 (fondo) | Secchio |
+|---|---|---|---|---|
+| Al parco Emma corre ___ | foglie, altalena, corre | felice, ., e | felice, ., e | felice 46% · . 24% · e 10% |
+| Al parco Emma corre felice ___ | felice, ., e | ., e, felice | ., e, Bovary | . 69% · e 11% |
+| Al parco Emma corre felice. ___ | ., Fine, e | Fine, ., corre | Fine, ., nuota | Fine 91% |
 
 **Episodio 4, la stessa partita con più semi** (un pozzo diverso, carte inventate):
 ```
@@ -630,7 +637,7 @@ Deterministico: il secchio. Variabile: la pesca.
 
 ### 3.3 · Un viaggiatore in più · 0:30
 
-**VISIVO.** La pallina *corre* prende vita: diventa **Corre**, una scarpetta da corsa con gli occhi. Torna allo Spezzaparole, si mette in fila dopo Emma, riceve la sua carta dall'armadio e il numero 4 sulla schiena. Ora a cadere nel pozzo sono in quattro. Montaggio veloce della discesa, senza parole: a ogni piano gli ingranaggi girano, si apre una botola sola e ci cadono dentro tutti e quattro.
+**VISIVO.** La pallina *corre* prende vita: diventa **Corre**, una scarpetta da corsa con gli occhi. Torna allo Spezzaparole, si mette in fila dopo Emma, riceve la sua carta dall'armadio e il numero 4 sulla schiena. Ora a cadere nel pozzo sono in quattro. Montaggio veloce della discesa, senza parole: a ogni piano gli ingranaggi girano, si apre una botola sola e ci cadono dentro tutti e quattro. Le stanze sono le letture del periscopio sulla riga di Corre: prato e «corre», poi «felice».
 
 **NARRATORE.**
 > La pallina pescata prese vita, tornò dallo Spezzaparole e si mise in fila. Ora a cadere nel pozzo erano in quattro.
@@ -668,7 +675,7 @@ Si usa l'ultima riga: quella dell'ultimo token
 
 ### 3.5 · Ancora un giro · 0:22
 
-**VISIVO.** **Felice**, un piccolo sole sorridente, si mette in fila: sono in cinque. Caduta veloce, di botola in botola, tutti insieme. In fondo arriva Felice; le campane suonano; nel secchio sale una pallina nera lucida. Ada la pesca: **Punto**.
+**VISIVO.** **Felice**, un piccolo sole sorridente, riceve la sua carta e si mette in fila: sono in cinque. Caduta veloce, di botola in botola, tutti insieme. In fondo arriva Felice; le campane suonano; nel secchio sale una pallina nera lucida. Ada la pesca: **Punto**.
 
 **NARRATORE.**
 > E poi un altro giro, con un viaggiatore in più. In fondo arrivò Felice, e dal secchio uscì un puntino.
@@ -682,7 +689,7 @@ Al parco Emma corre felice ___ → «.» 69%
 
 ### 3.6 · La pallina della Fine · 0:32
 
-**VISIVO.** Ultimo giro: sono in sei, Punto è l'ultimo della fila. Nel secchio che risale c'è quasi solo una pallina scura con un punto bianco: **Fine**. Ada la pesca, la guarda, sorride e spegne la lampada del pozzo.
+**VISIVO.** Ultimo giro: Punto riceve la sua carta, sono in sei, Punto è l'ultimo della fila. Le stanze della discesa: punto e Fine, poi Fine, poi solo Fine. Nel secchio che risale c'è quasi solo una pallina scura con un punto bianco: **Fine**. Ada la pesca, la guarda, sorride e spegne la lampada del pozzo.
 
 **NARRATORE.**
 > All'ultimo giro, nel secchio salì una pallina speciale: Fine. Non è un ordine. È una pallina come le altre, che il pozzo ha imparato a mettere nel secchio quando una frase è finita.
@@ -887,8 +894,8 @@ Modelli veri: migliaia di coordinate (per esempio 4.096)
 2. **Logit lens.** Tecnica reale e approssimativa; le letture dei primi strati sono strane (il ritratto di Bovary che resta appeso) e si chiariscono verso il fondo.
 3. **Assi senza nome.** Nei modelli veri una singola coordinata di solito non ha un significato leggibile. Il modellino è stato costruito ruotando tutti i vettori (vedi `strumenti/progetto_numeri/`): le partite a carte e le campane danno gli stessi risultati in qualsiasi orientamento, ed è questo che l'episodio 4 racconta.
 4. **Wv omessa** nella media pesata, come nella lezione.
-5. **Dati inventati e dichiarati:** E, le righe di U, le lanterne e i cartelli, gli spostamenti Δ, le righe finali dei giri dell'ep. 3, le carte dell'ep. 4. Tutto il resto è calcolato.
-6. **Ep. 3, i giri successivi.** Il film mostra solo la riga finale di ogni giro e il suo secchio; il percorso dei nuovi viaggiatori nei piani non è calcolato.
+5. **Dati inventati e dichiarati:** E (anche le carte di Corre, Felice e Punto), le righe di U, le lanterne e i cartelli, gli spostamenti Δ (anche quelli dei giri dell'ep. 3), le carte dell'ep. 4. Tutto il resto è calcolato.
+6. **Ep. 3, i giri successivi.** Il percorso dell'ultimo arrivato è calcolato piano per piano, come quello di Emma: le stanze della discesa sono le sue letture. Gli sguardi di questi giri non sono mostrati.
 7. **Il vocabolario giocattolo** ha 14 parole; i modelli veri tra 30.000 e 200.000.
 8. **Tutti si spostano, insieme.** Ogni strato calcola uno spostamento per ogni posizione, non solo per l'ultima, e la fila passa al piano successivo tutta insieme. Il film semplifica: si apre una sola botola, la direzione presa dai calcoli (sguardi e ingranaggio), e tutti e tre ci cadono dentro.
    - **Una stanza sola.** Sono tutti nella stessa stanza perché la stanza è la lettura della posizione di Emma; Al e Mare viaggiano con lei.

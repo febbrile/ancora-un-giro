@@ -45,7 +45,25 @@ DELTA = {
     'parco': [[0.18, 0.42, 0.44], [-0.15, 0.60, 0.95], [-0.51, 1.06, 1.70]],
 }
 
-# Episodio 3. Inventata e dichiarata: l'ultima riga in fondo al pozzo a ogni passo successivo.
+# Episodio 3. Inventate e dichiarate: le carte dell'armadio dei nuovi viaggiatori
+# e i loro spostamenti nei tre piani (sono loro l'ultima riga, a ogni giro).
+E_NUOVI = {
+    'Corre':  [0.21, 0.48, 0.36],
+    'Felice': [-0.38, -0.12, -0.52],
+    'Punto':  [0.47, -0.41, 0.08],
+}
+DELTA_GIRI = {
+    'Corre':  [[0.03, -0.26, -0.22], [0.15, -1.16, -0.98], [0.14, -1.16, -0.99]],
+    'Felice': [[0.52, -0.35, 0.09], [0.90, -0.61, 0.15], [1.16, -0.78, 0.19]],
+    'Punto':  [[-0.22, -0.18, 0.15], [-1.00, -0.81, 0.70], [-0.99, -0.81, 0.69]],
+}
+# Le stanze dei giri, lette col periscopio sulla riga dell'ultimo arrivato (piani 1, 2, 3).
+STANZE_GIRI = {
+    'Corre':  [['foglie', 'altalena', 'corre'], ['felice', '.', 'e'], ['felice', '.', 'e']],
+    'Felice': [['felice', '.', 'e'], ['.', 'e', 'felice'], ['.', 'e', 'Bovary']],
+    'Punto':  [['.', 'Fine', 'e'], ['Fine', '.', 'corre'], ['Fine', '.', 'nuota']],
+}
+# La riga in fondo al pozzo a ogni giro: è la somma qui sopra.
 PASSI = [
     ('Al parco Emma corre', [0.53, -2.10, -1.83], 'felice'),
     ('Al parco Emma corre felice', [2.20, -1.86, -0.09], '.'),
@@ -165,7 +183,16 @@ if __name__ == '__main__':
         p = secchio(tp[-1], T)
         print(f'  T={T}   Bovary {p["Bovary"]:.1%}   corre {p["corre"]:.1%}')
     assert round(secchio(tp[-1], 3)['Bovary'] * 100, 1) >= 4
-    for frase, x, attesa in PASSI:
+    for (frase, x, attesa), nome in zip(PASSI, ['Corre', 'Felice', 'Punto']):
+        # Il percorso dell'ultimo arrivato: carta dell'armadio + spostamenti = riga in fondo.
+        pos = E_NUOVI[nome]
+        print(f'  {nome}: carta', pos)
+        for n, d in enumerate(DELTA_GIRI[nome]):
+            pos = r2([a + b for a, b in zip(pos, d)])
+            stanza = top({w: dot(pos, U[w]) for w in U}, 3)
+            print(f'    piano {n + 1}', pos, 'stanza:', stanza)
+            assert stanza == STANZE_GIRI[nome][n]
+        assert pos == x
         p = secchio(x)
         print(f'  {frase} ___', x, [(w, f'{p[w]:.0%}') for w in top(p, 3)])
         assert top(p, 1)[0] == attesa

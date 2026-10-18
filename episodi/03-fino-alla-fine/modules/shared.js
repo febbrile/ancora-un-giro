@@ -214,7 +214,7 @@ function discesa(o) {
   for (let r = 0; r < piani; r++) {
     const oy = RH * r, sf = ['#262F60', '#1F3B2C', '#1E4630', '#1A5A34'][r % 4];
     s += '<defs><linearGradient id="' + id + '-m' + r + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0E1226"/><stop offset="1" stop-color="' + sf + '"/></linearGradient></defs><rect x="0" y="' + oy + '" width="1920" height="' + RH + '" fill="url(#' + id + '-m' + r + ')"/>';
-    (o.parole[r] || []).forEach((w, k) => { s += '<text x="' + (260 + k * 520) + '" y="' + (oy + 300 + (k % 2) * 140) + '" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="600" font-size="' + (k === 0 ? 96 : 60) + '" fill="' + w[1] + '" opacity=".85">' + w[0] + '</text>'; });
+    (o.parole[r] || []).forEach((w, k) => { s += '<text x="' + [360, 960, 1560][k] + '" y="' + (oy + 320 + (k % 2) * 130) + '" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="600" font-size="' + [100, 72, 60][k] + '" fill="' + w[1] + '" opacity=".85">' + (w[0] === '.' ? '«.»' : w[0]) + '</text>'; });
     s += '<rect x="0" y="' + F(r) + '" width="1920" height="180" fill="#3E4A66"/><path d="M0 ' + F(r) + ' L1920 ' + F(r) + '" stroke="#5B6B8C" stroke-width="6"/>';
     if (r < piani - 1) BOT.forEach((h, b) => {
       s += '<circle cx="' + h + '" cy="' + (F(r) + 92) + '" r="46" fill="#141A33"/><g transform="translate(' + h + ' ' + (F(r) + 92) + ')"><g class="' + id + '-rot" data-r="' + r + '"><circle r="26" fill="#C9973F" stroke="#7A5A24" stroke-width="4"/><path d="M0 -36 L0 36 M-36 0 L36 0 M-25 -25 L25 25 M-25 25 L25 -25" stroke="#C9973F" stroke-width="9"/><circle r="8" fill="#7A5A24"/></g></g>' +
