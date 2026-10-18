@@ -1,0 +1,92 @@
+{
+  "v": 1,
+  "stage": "final",
+  "look": "Il pozzo delle parole, bozza 3: illustrazione piatta e morbida dal model sheet approvato. Dentro il pozzo notte blu, pietra e luce; fuori, il laboratorio di Ada in carta, legno e ottone. Personaggi in SVG (Emma bionda col fermaglio a stellina, il vestito prende il colore dei vicini; Ada col camice lungo; Al sassolino, Mare onda, Parco alberello). Ritmo lento: al massimo 12 caratteri al secondo di sottotitolo e almeno 3 secondi di sole immagini per scena. La discesa nei piani è quasi muta, con botole e ingranaggi. Le carte: ogni parola è una carta con tre semi senza nome (♠ ♥ ♦); due carte confrontate seme per seme danno pastiglie che si sommano in un gettone (prodotto scalare); i gettoni diventano quote; con le quote si mescolano le carte. Il monitor di Ada in verde menta su petrolio per i numeri.",
+  "palettes": [
+    [
+      "#141A33",
+      "#F5C84C",
+      "#F4EEE2",
+      "#E8743B"
+    ]
+  ],
+  "theirs": 1,
+  "width": 1920,
+  "height": 1080,
+  "fps": 60,
+  "background": "#141A33",
+  "fonts": {
+    "display": {
+      "family": "Fredoka",
+      "or": "manrope",
+      "weights": [
+        400,
+        600
+      ]
+    },
+    "sans": {
+      "family": "Atkinson Hyperlegible",
+      "or": "manrope"
+    },
+    "mono": {
+      "family": "JetBrains Mono",
+      "or": "dm-mono"
+    }
+  },
+  "scenes": [
+    {
+      "id": "quaderno",
+      "name": "Il quaderno di Ada",
+      "dur": 20,
+      "desc": "La pagina di ieri, «Al mare Emma nuota»; Ada scrive «Al parco Emma» e lo Spezzaparole fa uscire Al, Parco ed Emma."
+    },
+    {
+      "id": "stessacarta",
+      "name": "La stessa carta",
+      "dur": 26,
+      "desc": "Emma apre lo stesso cassetto e riceve la stessa carta di ieri: IDENTICA. Sul monitor i quattro punti delle parole."
+    },
+    {
+      "id": "periscopio",
+      "name": "Il periscopio",
+      "dur": 26,
+      "desc": "La stanza dei ritratti; Ada guarda col periscopio: «Al parco Emma… Bovary», come ieri."
+    },
+    {
+      "id": "partita",
+      "name": "La partita con Parco",
+      "dur": 36,
+      "desc": "La stessa lanterna contro il cartello di Parco: 0.50 + 0.25 + 0.60 = 1.35, lo stesso gettone di ieri. Le quote sono uguali, ma nel mescolamento c'è Parco: la nuova carta è diversa."
+    },
+    {
+      "id": "piani",
+      "name": "Un'altra strada",
+      "dur": 46,
+      "desc": "Quasi senza parole: tante botole, se ne apre una sola dall'altra parte; la discesa nelle stanze del parco, Emma diventa verde; il ripasso accelerato."
+    },
+    {
+      "id": "campane",
+      "name": "Le campane",
+      "dur": 26,
+      "desc": "Le stesse campane suonano per un'altra parola: la partita con «corre», 0.01 + 1.27 + 1.93 = 3.21."
+    },
+    {
+      "id": "pesca",
+      "name": "Il secchio e la pesca",
+      "dur": 22,
+      "desc": "Un secchio di palline verdi: corre 44%. Ada pesca «corre»; Emma corre sul prato."
+    },
+    {
+      "id": "cieli",
+      "name": "Due cieli",
+      "dur": 32,
+      "desc": "Il cielo di Ada: una sola stella di partenza e due scie, verso il mare e verso il parco."
+    },
+    {
+      "id": "continua",
+      "name": "Continua",
+      "dur": 10,
+      "desc": "La pallina «corre» si muove da sola: e dopo, cosa viene?"
+    }
+  ]
+}

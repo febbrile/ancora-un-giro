@@ -486,7 +486,7 @@ Poi le quote, uguali a ieri. Ma quando si mescolano le carte, al posto della car
 
 **MONITOR.**
 ```
-0.50 + 0.25 + 0.60 = 1.35
+q · k = 0.50 + 0.25 + 0.60 = 1.35
 nuova carta = 0.1·Al + 0.7·Parco + 0.2·Emma
 ```
 

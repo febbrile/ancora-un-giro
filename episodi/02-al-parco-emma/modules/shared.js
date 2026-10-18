@@ -127,19 +127,29 @@ function mix(a, b, p){
   const A = h(a), B = h(b);
   return 'rgb(' + A.map((v, i) => Math.round(v + (B[i] - v) * Math.max(0, Math.min(1, p)))).join(',') + ')';
 }
-const SEMI_COL = ['#4A7BE0', '#3FAF5F', '#E5484D'];
+// Bozza 3: le righe delle carte sono semi senza nome (♠ ♥ ♦, poi ♣ e ☾), disegnati come tracciati SVG.
+const NERO = '#2E2A26', ROSSO_SEME = '#C2453F';
+const SEMI_COL = [NERO, ROSSO_SEME, ROSSO_SEME, NERO, '#6B5BA8'];
 const SEMI_ICON = [
-  '<path d="M0 -16 C8 -4 12 2 12 7 A12 12 0 0 1 -12 7 C-12 2 -8 -4 0 -16 Z" fill="#4A7BE0"/>',
-  '<path d="M-12 12 C-12 -7 3 -14 14 -14 C14 1 6 14 -12 12 Z" fill="#3FAF5F"/><path d="M-11 11 L5 -5" stroke="#2E7D46" stroke-width="2"/>',
-  '<polygon points="0,-14 3.5,-4.6 13.3,-4.3 5.6,1.8 8.2,11.3 0,5.8 -8.2,11.3 -5.6,1.8 -13.3,-4.3 -3.5,-4.6" fill="#E5484D"/>'];
+  '<path d="M0 -15 C6 -7 15 -2 15 5 C15 11 9 14 4 11 C5 14 6 16 8 17 L-8 17 C-6 16 -5 14 -4 11 C-9 14 -15 11 -15 5 C-15 -2 -6 -7 0 -15 Z" fill="' + NERO + '"/>',
+  '<path d="M0 15 C-10 7 -15 1 -15 -5 C-15 -11 -10 -14 -6 -14 C-3 -14 -1 -12 0 -9 C1 -12 3 -14 6 -14 C10 -14 15 -11 15 -5 C15 1 10 7 0 15 Z" fill="' + ROSSO_SEME + '"/>',
+  '<path d="M0 -16 L12 0 L0 16 L-12 0 Z" fill="' + ROSSO_SEME + '"/>',
+  '<circle cx="0" cy="-7" r="6.5" fill="' + NERO + '"/><circle cx="-7" cy="3" r="6.5" fill="' + NERO + '"/><circle cx="7" cy="3" r="6.5" fill="' + NERO + '"/><path d="M-2 4 L-5 16 L5 16 L2 4 Z" fill="' + NERO + '"/>',
+  '<path d="M4 -14 A14 14 0 1 0 4 14 A10 10 0 1 1 4 -14 Z" fill="#6B5BA8"/>'];
+function seme(i, x, y, k, chiaro) { return '<g transform="translate(' + x + ' ' + y + ') scale(' + (k || 1) + ')">' + (chiaro ? SEMI_ICON[i].replace(/#2E2A26/g, '#E6FFF4') : SEMI_ICON[i]) + '</g>'; }
+function semeHTML(i) { return '<svg class="seme" viewBox="-17 -17 34 34" aria-hidden="true">' + SEMI_ICON[i].replace(/fill="#2E2A26"/g, 'fill="#E6FFF4"') + '</svg>'; }
 function fmt(v) { return (v < 0 ? '−' : '') + Math.abs(v).toFixed(2); }
+// Vettore per il monitor: «♠ 0.55 ♥ 0.07 ♦ −0.58» con i semi disegnati.
+function vecHTML(v) { return v.map((x, i) => semeHTML(i) + '&#8202;' + fmt(x)).join('&ensp;'); }
+function righeY(n) { return n === 3 ? [92, 162, 232] : Array.from({ length: n }, (_, i) => 64 + (200 / n) * (i + 0.5)); }
 function carta(o) {
+  const n = o.v.length, Y = righeY(n), h = n === 3 ? 56 : Math.min(48, 200 / n - 6), k = n === 3 ? 1 : n === 4 ? 0.85 : 0.72, fs = n === 3 ? 34 : n === 4 ? 30 : 26;
   let r = '';
   o.v.forEach((x, i) => {
-    const y = 92 + i * 70;
-    r += '<g class="' + (o.cls || 'carta') + '-r"><rect x="14" y="' + (y - 28) + '" width="192" height="56" rx="10" fill="' + SEMI_COL[i] + '" fill-opacity=".12"/>' +
-      '<g transform="translate(44 ' + y + ')">' + SEMI_ICON[i] + '</g>' +
-      '<text x="192" y="' + (y + 12) + '" text-anchor="end" font-family="JetBrains Mono, monospace" font-weight="600" font-size="34" fill="' + (x < 0 ? '#B8332E' : '#2E2A26') + '">' + fmt(x) + '</text></g>';
+    const y = Y[i];
+    r += '<g class="' + (o.cls || 'carta') + '-r"><rect x="14" y="' + (y - h / 2).toFixed(1) + '" width="192" height="' + h.toFixed(1) + '" rx="10" fill="' + SEMI_COL[i] + '" fill-opacity=".08"/>' +
+      seme(i, 44, y.toFixed(1), k) +
+      '<text x="192" y="' + (y + fs * 0.35).toFixed(1) + '" text-anchor="end" font-family="JetBrains Mono, monospace" font-weight="600" font-size="' + fs + '" fill="' + (x < 0 ? '#B8332E' : '#2E2A26') + '">' + fmt(x) + '</text></g>';
   });
   return '<g><rect x="0" y="0" width="220" height="300" rx="18" fill="#FFFDF6" stroke="' + o.col + '" stroke-width="7"/>' +
     '<text x="18" y="42" font-family="Fredoka, sans-serif" font-weight="600" font-size="27" fill="' + o.col + '">' + o.titolo + '</text>' + r +
@@ -154,6 +164,14 @@ function pill(v) {
   const neg = v < 0;
   return '<g><rect x="-66" y="-27" width="132" height="54" rx="27" fill="' + (neg ? '#8A90A8' : '#F5C84C') + '" stroke="' + (neg ? '#5B6B8C' : '#C9973F') + '" stroke-width="4"/><text y="11" text-anchor="middle" font-family="JetBrains Mono, monospace" font-weight="600" font-size="28" fill="#2E2A26">' + (v > 0 ? '+' : '') + fmt(v) + '</text></g>';
 }
-window.PZ = { carta, gettone, pill, fmt, SEMI_COL, emmaTirata, perla, mix, defs, emma, emmaCade, emmaSpalle, al, mare, parco, ada, adaHead, sott, fade, subs, CORALLO:'#FE8787' };
+// I viaggiatori dell'episodio 3 (tela «I nuovi viaggiatori»), in un riquadro 200×200.
+function corre() { return '<g style="color:#2FAD57"><ellipse cx="108" cy="128" rx="84" ry="46" fill="currentColor" opacity=".28" filter="url(#pz-soft)"/><path d="M8 104 L30 104 M4 120 L28 120 M10 136 L30 136" stroke="currentColor" stroke-width="5" stroke-linecap="round" opacity=".55"/><path d="M38 138 C36 108 50 88 76 86 L100 86 C112 86 118 94 124 102 C134 114 154 116 168 120 C182 124 186 134 182 140 L38 140 Z" fill="currentColor"/><path d="M44 108 C44 98 50 92 60 90" stroke="#1D5A33" stroke-width="5" stroke-linecap="round" fill="none"/><path d="M140 118 C158 120 176 124 182 136 L150 138 C146 130 142 124 140 118 Z" fill="#FFFFFF" opacity=".85"/><path d="M86 96 L100 108 M94 92 L108 104 M102 90 L114 100" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/><rect x="32" y="136" width="156" height="20" rx="10" fill="#F4EEE2"/><path d="M44 150 L176 150" stroke="#C9C1B2" stroke-width="3" stroke-dasharray="8 6" stroke-linecap="round"/><ellipse cx="122" cy="114" rx="7" ry="8" fill="#FFFFFF"/><ellipse cx="142" cy="116" rx="7" ry="8" fill="#FFFFFF"/><circle cx="124" cy="116" r="3.6" fill="#173A24"/><circle cx="144" cy="118" r="3.6" fill="#173A24"/><path d="M126 128 Q134 134 142 128" stroke="#173A24" stroke-width="3" stroke-linecap="round" fill="none"/></g>'; }
+function felice() { return '<g style="color:#F5C84C"><circle cx="100" cy="104" r="80" fill="currentColor" opacity=".26" filter="url(#pz-soft)"/><g stroke="currentColor" stroke-width="9" stroke-linecap="round"><path d="M100 34 L100 46"/><path d="M100 162 L100 174"/><path d="M30 104 L42 104"/><path d="M158 104 L170 104"/><path d="M50 54 L59 63"/><path d="M141 145 L150 154"/><path d="M150 54 L141 63"/><path d="M59 145 L50 154"/></g><circle cx="100" cy="104" r="46" fill="currentColor"/><circle cx="84" cy="86" r="10" fill="#FFFFFF" opacity=".3"/><circle cx="74" cy="114" r="8" fill="#F28B6B" opacity=".6"/><circle cx="126" cy="114" r="8" fill="#F28B6B" opacity=".6"/><path d="M78 100 Q86 90 94 100 M106 100 Q114 90 122 100" stroke="#6B4A12" stroke-width="3.5" stroke-linecap="round" fill="none"/><path d="M84 118 Q100 134 116 118" stroke="#6B4A12" stroke-width="3.5" stroke-linecap="round" fill="none"/></g>'; }
+function punto() { return '<g style="color:#8E96C8"><ellipse cx="100" cy="124" rx="70" ry="54" fill="currentColor" opacity=".22" filter="url(#pz-soft)"/><ellipse cx="100" cy="124" rx="50" ry="44" fill="#1E1F2E"/><ellipse cx="82" cy="102" rx="16" ry="8" fill="#FFFFFF" opacity=".32" transform="rotate(-24 82 102)"/><circle cx="120" cy="96" r="3" fill="#FFFFFF" opacity=".5"/><circle cx="88" cy="124" r="6" fill="#FFFFFF"/><circle cx="112" cy="124" r="6" fill="#FFFFFF"/><circle cx="89" cy="125" r="3" fill="#1E1F2E"/><circle cx="113" cy="125" r="3" fill="#1E1F2E"/><path d="M95 142 L105 142" stroke="#8E96C8" stroke-width="3" stroke-linecap="round"/></g>'; }
+// Colori del vestito di Emma, calcolati da strumenti/numeri.py (il colore dei vicini).
+const VESTITO = { rosa: '#BC937F', mare: ['#BC937F', '#728EBE', '#306EDD', '#2864DC'], parco: ['#BC937F', '#67A96F', '#2FAD57', '#28AA50'] };
+// Colori delle carte dei personaggi.
+const CARTA_COL = { Al: '#139A9A', Mare: '#6E6EE6', Parco: '#2E9E4F', Emma: '#B5715C' };
+window.PZ = { corre, felice, punto, carta, gettone, pill, fmt, seme, semeHTML, vecHTML, righeY, SEMI_COL, VESTITO, CARTA_COL, emmaTirata, perla, mix, defs, emma, emmaCade, emmaSpalle, al, mare, parco, ada, adaHead, sott, fade, subs, CORALLO: VESTITO.rosa };
 window.__kit = kit;
 })();
