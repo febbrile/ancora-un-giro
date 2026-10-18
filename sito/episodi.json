@@ -1,0 +1,16 @@
+[
+  {
+    "n": 0,
+    "etichetta": "Prologo",
+    "cartella": "00-premi-invio",
+    "titolo": "Premi invio",
+    "racconto": "Qualcuno scrive l’inizio di una storia e preme invio. La frase vola fino a un luna park: Ada, lo Spezzaparole, il trenino, la montagna buia, la vasca delle paperelle."
+  },
+  {
+    "n": 1,
+    "etichetta": "Episodio 1",
+    "cartella": "01-dentro-la-montagna",
+    "titolo": "Dentro la montagna",
+    "racconto": "Questa volta saliamo sul trenino con Emma: fili di luce, scambi che scattano da soli, finestre sul mare. Ed Emma esce blu."
+  }
+]

@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ancora un giro</title>
+<meta name="description" content="Un cartone a episodi che racconta, con una storia, cosa succede dopo che premi invio in una chat con un’intelligenza artificiale.">
+<link rel="icon" href="paperella.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Gli stessi caratteri dei film: Fredoka per i titoli, Atkinson Hyperlegible per il resto. -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Fredoka:wght@400;600&display=swap">
+<link rel="stylesheet" href="sito.css">
+</head>
+<body>
+<header class="testata">
+  <a class="casa titolo-sito" href="./"><img class="stella" src="paperella.svg" alt="">Ancora un giro</a>
+  <span class="dove" id="dove"></span>
+</header>
+
+<main>
+  <section class="lettore" id="lettore" aria-label="Player dell'episodio">
+    <div class="schermo" id="schermo">
+      <div id="stage"></div>
+      <div class="velo" id="velo">
+        <button class="grande" id="grande" aria-label="Guarda" hidden>
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l12.5-7.5z"/></svg>
+        </button>
+        <div class="messaggio" id="messaggio">Carico l'episodio…</div>
+      </div>
+    </div>
+    <div class="comandi">
+      <button id="suona" aria-label="Riproduci">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path id="icona-suona" d="M7 4.5v15l12.5-7.5z"/></svg>
+      </button>
+      <span class="orologio" id="orologio">0:00 / 0:00</span>
+      <div class="barra" id="barra" role="slider" tabindex="0" aria-label="Posizione nel film" aria-valuemin="0" aria-valuemax="0" aria-valuenow="0">
+        <div class="binario"></div>
+        <div class="fatto" id="fatto"></div>
+        <div id="tacche"></div>
+        <div class="pomello" id="pomello"></div>
+        <div class="etichetta" id="etichetta"></div>
+      </div>
+      <button id="stile" class="stile" aria-label="Cambia musica">Anni 90</button>
+      <button id="audio" aria-label="Togli l'audio">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z" fill="currentColor" stroke="none"/><path id="onde-audio" d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg>
+      </button>
+      <button id="intero" aria-label="Schermo intero">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>
+      </button>
+    </div>
+    <ol class="capitoli" id="capitoli" aria-label="Capitoli"></ol>
+    <p class="aiuto">Spazio: riproduci o metti in pausa · ← →: cinque secondi · M: audio · S: stile della musica · F: schermo intero</p>
+  </section>
+  <nav class="vicini" id="vicini" aria-label="Altri episodi"></nav>
+</main>
+
+<script src="motore/kit.js"></script>
+<script src="motore/suono.js"></script>
+<script src="motore/anni90.js"></script>
+<script src="motore/player.js"></script>
+</body>
+</html>

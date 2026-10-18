@@ -35,7 +35,7 @@
     let elenco = [];
     try { elenco = await (await fetch('episodi.json', { cache: 'no-cache' })).json(); } catch (e) {}
     const io = elenco.find(e => e.cartella === cartella);
-    const titolo = io ? 'Episodio ' + io.n + ' · ' + io.titolo : cartella;
+    const titolo = io ? (io.etichetta || 'Episodio ' + io.n) + ' · ' + io.titolo : cartella;
     document.title = titolo + ' · Ancora un giro';
     $('dove').textContent = titolo;
     vicini(elenco, io);
@@ -66,8 +66,8 @@
     const prima = elenco.find(e => e.n === io.n - 1), dopo = elenco.find(e => e.n === io.n + 1);
     nav.innerHTML = '';
     const link = (e, testo) => { const a = document.createElement('a'); a.href = 'guarda.html?ep=' + e.cartella; a.textContent = testo; return a; };
-    nav.appendChild(prima ? link(prima, '← Episodio ' + prima.n + ': ' + prima.titolo) : document.createElement('span'));
-    if (dopo) nav.appendChild(link(dopo, 'Episodio ' + dopo.n + ': ' + dopo.titolo + ' →'));
+    nav.appendChild(prima ? link(prima, '← ' + (prima.etichetta || 'Episodio ' + prima.n) + ': ' + prima.titolo) : document.createElement('span'));
+    if (dopo) nav.appendChild(link(dopo, (dopo.etichetta || 'Episodio ' + dopo.n) + ': ' + dopo.titolo + ' →'));
   }
 
   function disegnaCapitoli() {
