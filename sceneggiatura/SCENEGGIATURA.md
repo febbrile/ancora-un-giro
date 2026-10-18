@@ -206,7 +206,7 @@ Al parco Emma corre felice. ___   Fine   91%
 | **Il Grande Armadio** | Tabella E | Cassetti di pietra; da ogni cassetto esce una carta |
 | **La toppa sulla schiena** | Posizione | Un numero cucito: 1, 2, 3 (4, 5, 6 nell'ep. 3) |
 | **La Sala degli Sguardi** | Attention | Il tavolo da gioco: lanterne e cartelli sono carte |
-| **L'ingranaggio e la botola** | Feed-forward e spostamento | Sotto ogni viaggiatore gira un ingranaggio di pietra; poi si apre una botola nel punto dove lo spostamento lo porta |
+| **Gli ingranaggi e le botole** | Feed-forward e spostamento | Ogni pavimento è pieno di botole chiuse, ognuna con il suo ingranaggio di pietra; se ne apre una sola, quella della direzione calcolata, e la fila ci cade dentro tutta insieme |
 | **Le stanze** | Logit lens | Stanze sospese, arredate con le parole più vicine |
 | **Le campane del fondo** | U | Anello di campane di pietra, una per parola |
 | **Il secchio** | Distribuzione | Secchio di vetro con palline colorate, risale con la carrucola |
@@ -339,12 +339,12 @@ nuova carta = 0.1·Al + 0.7·Mare + 0.2·Emma
 ### 1.7 · Sempre più giù · 0:44
 
 **VISIVO.** Una sequenza quasi muta: quattro piani uno sotto l'altro, e la camera scende con i viaggiatori.
-- **Il pavimento della Sala.** Sotto ognuno dei tre, dentro il pavimento di pietra, gira un piccolo ingranaggio. Poi si apre una botola: non proprio sotto i piedi, ma un po' più in là, e in un punto diverso per ognuno. Al, Mare ed Emma vengono tirati via, ognuno verso la sua botola (posa «tirata via»), e cadono.
-- **Piano 1, la spiaggia strana.** Atterrano insieme: sabbia, onde che escono dalle pareti, conchiglie appese come lampadari, il ritratto di Bovary appeso al nulla. Il vestito di Emma diventa azzurro polvere. Per un attimo la lanterna di Emma si riaccende verso i compagni: gli sguardi, senza carte. Gli ingranaggi girano, tre botole nuove, di nuovo giù.
-- **Piano 2, il molo.** Tra onde e conchiglie compare, per la prima volta, un verbo: **nuota**, su un salvagente. Il ritratto è sparito. Vestito azzurro. Sguardi, ingranaggi, botole.
+- **Il pavimento della Sala.** Il pavimento di pietra è pieno di botole chiuse, e sotto ognuna c'è un piccolo ingranaggio. Gli ingranaggi girano tutti insieme; poi se ne accende uno solo, e si apre la sua botola: è la direzione che hanno dato i calcoli. Al, Mare ed Emma vengono tirati via tutti e tre verso quella botola (posa «tirata via») e ci cadono dentro, uno dietro l'altro.
+- **Piano 1, la spiaggia strana.** Atterrano insieme: sabbia, onde che escono dalle pareti, conchiglie appese come lampadari, il ritratto di Bovary appeso al nulla. Il vestito di Emma diventa azzurro polvere. Per un attimo la lanterna di Emma si riaccende verso i compagni: gli sguardi, senza carte. Gli ingranaggi girano, si apre un'altra botola, in un altro punto, e di nuovo giù tutti e tre.
+- **Piano 2, il molo.** Tra onde e conchiglie compare, per la prima volta, un verbo: **nuota**, su un salvagente. Il ritratto è sparito. Vestito azzurro. Sguardi, ingranaggi, una botola nuova.
 - **Piano 3, il fondo.** Acqua profonda e luminosa: **nuota** grande, **gioca** più piccolo. Vestito blu mare. Qui il pavimento non si apre più.
 
-Nell'angolo, il monitor di Ada disegna la scia di Emma, una freccia per piano. Alla fine la camera si allontana finché si vedono tutti e quattro i piani del nostro pozzo, uno sotto l'altro. Il viaggio ripassa in accelerato, tre volte e sempre più veloce: tre lucine (Al, Mare, Emma) scendono di botola in botola e lasciano tre scie diverse. Nessuna parola.
+Nell'angolo, il monitor di Ada disegna la scia di Emma, una freccia per piano. Alla fine la camera si allontana finché si vedono tutti e quattro i piani del nostro pozzo, uno sotto l'altro. Il viaggio ripassa in accelerato, tre volte e sempre più veloce: tre lucine (Al, Mare, Emma) scendono di botola in botola, passano insieme dalle stesse botole e lasciano tre scie che si stringono a ogni passaggio. Nessuna parola.
 
 **NARRATORE.**
 > E da lì, giù: un piano dopo l'altro.
@@ -357,8 +357,8 @@ Ogni piano sposta tutti: x = x + Δ
 **CONCETTO.**
 - Ogni strato rifà gli sguardi (attention).
 - Poi, riga per riga, calcola uno spostamento: è il feed-forward, cioè l'ingranaggio.
-- Lo spostamento si somma a ciascuno (connessione residua): la botola si apre dove lo porta lo spostamento.
-- Vengono spostati tutti, non solo Emma.
+- Lo spostamento si somma (connessione residua): la botola che si apre è la direzione presa dai calcoli.
+- Vengono spostati tutti, non solo Emma: la fila scende unita.
 - Le stanze sono letture (logit lens).
 
 ---
@@ -496,7 +496,7 @@ nuova carta = 0.1·Al + 0.7·Parco + 0.2·Emma
 
 ### 2.5 · Un'altra strada · 0:22
 
-**VISIVO.** Gli ingranaggi girano e si aprono le botole: questa volta quella di Emma si apre **dall'altra parte**, e la forza invisibile la tira lì; anche Al e Parco cadono nelle loro. Il vestito passa da rosa antico a verde salvia. Sul monitor, in trasparenza, la scia blu di ieri; il puntino di oggi parte dallo stesso punto e va altrove.
+**VISIVO.** Gli ingranaggi girano e si apre una botola: questa volta **dall'altra parte** del pavimento. La forza invisibile tira lì Emma, Al e Parco, e cadono insieme. Il vestito passa da rosa antico a verde salvia. Sul monitor, in trasparenza, la scia blu di ieri; il puntino di oggi parte dallo stesso punto e va altrove.
 
 **NARRATORE.**
 > La nuova carta era diversa, e la forza invisibile tirò Emma da un'altra parte.
@@ -908,7 +908,7 @@ Modelli veri: migliaia di coordinate (per esempio 4.096)
 5. **Dati inventati e dichiarati:** E, le righe di U, le lanterne e i cartelli, gli spostamenti Δ, le righe finali dei giri dell'ep. 3, le carte dell'ep. 4. Tutto il resto è calcolato.
 6. **Ep. 3, i giri successivi.** Il film mostra solo la riga finale di ogni giro e il suo secchio; il percorso dei nuovi viaggiatori nei piani non è calcolato.
 7. **Il vocabolario giocattolo** ha 14 parole; i modelli veri tra 30.000 e 200.000.
-8. **Tutti si spostano.** Ogni strato calcola uno spostamento per ogni posizione, non solo per l'ultima: per questo a ogni piano si aprono tre botole e cadono tutti. Gli spostamenti di Al e Mare non sono mostrati come numeri.
+8. **Tutti si spostano, insieme.** Ogni strato calcola uno spostamento per ogni posizione, non solo per l'ultima, e la fila passa al piano successivo tutta insieme. Il film semplifica: si apre una sola botola, la direzione dei calcoli, e tutti e tre ci cadono dentro. Nel calcolo vero lo spostamento di Al e Mare non è identico a quello di Emma: per questo atterrano in punti un po' diversi, e i loro numeri non sono mostrati.
 
 ---
 

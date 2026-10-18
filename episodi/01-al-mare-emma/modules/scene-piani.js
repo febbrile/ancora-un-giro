@@ -1,10 +1,15 @@
 const { seg, eo, ei, eio, eob, lerp } = kit;
-// 1.7 · Sempre più giù: quasi senza parole. A ogni piano gira un ingranaggio sotto ognuno, si apre una botola
-// in un punto diverso per ciascuno (lo spostamento) e cadono tutti e tre nella stanza sotto.
+// 1.7 · Sempre più giù: quasi senza parole. Ogni pavimento ha tante botole, ognuna col suo ingranaggio; gli ingranaggi
+// girano, se ne apre una sola (la direzione presa dai calcoli) e ci cadono dentro tutti e tre.
 // Alla fine si vedono tutti i piani del nostro pozzo e il viaggio ripassa in accelerato, tre volte.
 const SG_RH = 1080, SG_F = r => 900 + SG_RH * r;
 const SG_X0 = [520, 860, 1180];
-const SG_H = [[440, 900, 1320], [380, 960, 1440], [340, 1020, 1520]];
+const SG_BOTOLE = [300, 620, 940, 1260, 1580];
+const SG_SCELTA = [3, 1, 3];
+const SG_OFF = [-240, -20, 200];
+const SG_HX = r => SG_BOTOLE[SG_SCELTA[r]];
+// Dove passa ognuno nella botola aperta: vicini, uno dietro l'altro.
+const SG_IN = (j, r) => SG_HX(r) + (j - 1) * 28;
 const SG_OPEN = [4.2, 14.4, 24.8];
 const SG_SGUARDI = [null, 11.0, 21.4];
 const SG_PASSI = [[35.2, 2.6], [38.2, 1.7], [40.2, 1.1]];
@@ -12,7 +17,7 @@ const SG_SCIA = ['#17B3B3', '#8787FE', '#2864DC'];
 const SG_V = [[0.55, 0.07, -0.58], [0.11, 0.50, -0.72], [-0.82, 1.11, -0.50], [-2.47, 2.19, 0.14]];
 const SG_WAVE = '<path d="M0 340 C90 310 180 330 214 392 C230 424 210 452 182 446 C160 440 160 414 180 414 C164 384 110 378 64 404 C40 418 18 436 0 446 Z"/><path d="M10 352 C90 326 170 344 204 396" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" fill="none" opacity=".55"/>';
 // Dove sta ognuno nella stanza r.
-function sgPos(j, r) { return r === 0 ? SG_X0[j] : SG_H[r - 1][j]; }
+function sgPos(j, r) { return r === 0 ? SG_X0[j] : SG_HX(r - 1) + SG_OFF[j]; }
 function sgProj(v) { const c = Math.cos(-0.5236), s = Math.sin(-0.5236), S = 120; return [1670 + S * (v[0] * c - v[1] * s), 290 - S * (v[2] * 0.95 + (v[0] * s + v[1] * c) * 0.33)]; }
 function sgIngranaggio() {
   let d = '';
@@ -74,12 +79,13 @@ kit.scene('piani', {
     const P = window.PZ, V = P.VESTITO.mare;
     let mondo = '';
     for (let r = 0; r < 4; r++) mondo += sgStanza(r);
-    // Botole e ingranaggi: tre per ogni piano che si apre.
-    for (let r = 0; r < 3; r++) SG_H[r].forEach((h, j) => {
-      const y = SG_F(r);
-      mondo += '<g class="sg-ing" data-r="' + r + '"><circle cx="' + h + '" cy="' + (y + 92) + '" r="50" fill="#141A33" stroke="#2A3350" stroke-width="6"/><circle class="sg-ingluce" cx="' + h + '" cy="' + (y + 92) + '" r="44" fill="#FFD978" opacity="0"/>' +
+    // Botole e ingranaggi: tante per ogni pavimento; se ne aprirà una sola.
+    for (let r = 0; r < 3; r++) SG_BOTOLE.forEach((h, b) => {
+      const y = SG_F(r), sc = b === SG_SCELTA[r] ? 1 : 0;
+      mondo += '<g class="sg-ing" data-r="' + r + '" data-s="' + sc + '"><circle cx="' + h + '" cy="' + (y + 92) + '" r="50" fill="#141A33" stroke="#2A3350" stroke-width="6"/><circle class="sg-ingluce" cx="' + h + '" cy="' + (y + 92) + '" r="44" fill="#FFD978" opacity="0"/>' +
         '<g transform="translate(' + h + ' ' + (y + 92) + ')"><g class="sg-rot">' + sgIngranaggio() + '</g></g></g>' +
-        '<ellipse class="sg-buco" cx="' + h + '" cy="' + (y + 4) + '" rx="0" ry="0" fill="#05060C" stroke="#7A86A8" stroke-width="5"/>';
+        '<g class="sg-cop" data-r="' + r + '" data-s="' + sc + '"><ellipse cx="' + h + '" cy="' + (y + 4) + '" rx="80" ry="20" fill="#56658A" stroke="#2A3350" stroke-width="4"/><path d="M' + (h - 50) + ' ' + (y + 4) + ' L' + (h + 50) + ' ' + (y + 4) + '" stroke="#2A3350" stroke-width="3"/></g>' +
+        (sc ? '<ellipse class="sg-buco" data-r="' + r + '" cx="' + h + '" cy="' + (y + 4) + '" rx="0" ry="0" fill="#05060C" stroke="#7A86A8" stroke-width="5"/>' : '');
     });
     // Gli sguardi: la lanterna di Emma si riaccende verso i compagni.
     let sguardi = '';
@@ -91,10 +97,10 @@ kit.scene('piani', {
     }
     mondo += sguardi;
     for (let j = 0; j < 3; j++) mondo += sgPersonaggio(P, j);
-    // Il ripasso accelerato: tre scie, di botola in botola.
+    // Il ripasso accelerato: tre scie che passano insieme dalle stesse botole.
     for (let j = 0; j < 3; j++) {
       let d = 'M' + sgPos(j, 0) + ' ' + (SG_F(0) - 90);
-      for (let r = 0; r < 3; r++) d += ' L' + SG_H[r][j] + ' ' + (SG_F(r) + 10) + ' L' + SG_H[r][j] + ' ' + (SG_F(r + 1) - 90);
+      for (let r = 0; r < 3; r++) d += ' L' + SG_IN(j, r) + ' ' + (SG_F(r) + 10) + ' L' + sgPos(j, r + 1) + ' ' + (SG_F(r + 1) - 90);
       mondo += '<path class="sg-scia" d="' + d + '" stroke="' + SG_SCIA[j] + '" stroke-width="24" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity="0"/>' +
         '<g class="sg-luce" opacity="0"><circle r="90" fill="' + SG_SCIA[j] + '" opacity=".45" filter="url(#pz-soft)"/><circle r="38" fill="#FFF4E0"/></g>';
     }
@@ -119,7 +125,8 @@ kit.scene('piani', {
     this.lun = this.scia.map(p => { try { return p.getTotalLength(); } catch (e) { return 4000; } });
     this.p = all('.sg-p').map(g => ({ g, n: g.querySelector('.sg-n'), m: g.querySelector('.sg-m'), dir: g.querySelector('.sg-dir') }));
     this.vest = [this.p[2].n.firstElementChild.firstElementChild, this.p[2].dir.firstElementChild.firstElementChild];
-    this.ing = all('.sg-ing').map(g => ({ r: +g.getAttribute('data-r'), rot: g.querySelector('.sg-rot'), luce: g.querySelector('.sg-ingluce') }));
+    this.ing = all('.sg-ing').map(g => ({ r: +g.getAttribute('data-r'), s: +g.getAttribute('data-s'), rot: g.querySelector('.sg-rot'), luce: g.querySelector('.sg-ingluce') }));
+    this.cop = all('.sg-cop').map(g => ({ g, r: +g.getAttribute('data-r'), s: +g.getAttribute('data-s') }));
     this.buchi = all('.sg-buco'); this.sg = all('.sg-sg'); this.fr = all('.sg-fr');
     this.bov = q('.sg-bov'); this.n2 = q('.sg-nuota2'); this.n3 = q('.sg-nuota3'); this.g3 = q('.sg-gioca3');
     this.sub = window.PZ.subs(kit, [[0.4, 3.6]]);
@@ -132,15 +139,15 @@ kit.scene('piani', {
     const z = eio(seg(t, 32.0, 35.0)), zs = lerp(1, 0.24, z);
     const ty = lerp(-cam * SG_RH, 20, z), tx = 960 * (1 - zs);
     this.mondo.setAttribute('transform', 'translate(' + tx.toFixed(1) + ' ' + ty.toFixed(1) + ') scale(' + zs.toFixed(4) + ')');
-    // I tre viaggiatori: fermi, poi tirati verso la botola, poi giù nella stanza sotto.
+    // I tre viaggiatori: fermi, poi tirati tutti verso la stessa botola, poi giù nella stanza sotto.
     this.p.forEach((C, j) => {
       let x = SG_X0[j], y = SG_F(0), moving = false, dirx = 1, squash = 0;
       SG_OPEN.forEach((o0, r) => {
-        const o = o0 + j * 0.12;
+        const o = o0 + (2 - j) * 0.18;
         if (t < o) return;
-        const x0 = sgPos(j, r), h = SG_H[r][j];
-        const a = seg(t, o, o + 0.6), b = seg(t, o + 0.6, o + 1.8);
-        x = lerp(x0, h, eio(a)); y = lerp(SG_F(r), SG_F(r + 1), ei(b)) - 40 * Math.sin(Math.PI * a);
+        const x0 = sgPos(j, r), h = SG_IN(j, r), x1 = sgPos(j, r + 1);
+        const a = seg(t, o, o + 0.7), b = seg(t, o + 0.7, o + 1.8);
+        x = b > 0 ? lerp(h, x1, eio(b)) : lerp(x0, h, eio(a)); y = lerp(SG_F(r), SG_F(r + 1), ei(b)) - 40 * Math.sin(Math.PI * a);
         moving = t < o + 1.8; dirx = h >= x0 ? 1 : -1;
         squash = Math.sin(Math.PI * seg(t, o + 1.8, o + 2.15));
       });
@@ -156,16 +163,19 @@ kit.scene('piani', {
     SG_OPEN.forEach((o, r) => { const k = eio(seg(t, o + 1.9, o + 2.5)); if (k > 0) col = P.mix(r === 0 ? P.VESTITO.rosa : V[r], V[r + 1], k); });
     this.vest.forEach(g => { g.style.color = col; });
     // Ingranaggi e botole.
-    this.ing.forEach((I, k) => {
-      const o = SG_OPEN[I.r], on = seg(t, o - 1.4, o + 0.2);
+    // Girano tutti gli ingranaggi; poi se ne accende uno solo, e si apre la sua botola.
+    this.ing.forEach(I => {
+      const o = SG_OPEN[I.r], on = seg(t, o - 1.6, o + 0.2);
       const ang = on <= 0 ? 0 : on >= 1 ? 480 : 480 * on;
       I.rot.setAttribute('transform', 'rotate(' + ang.toFixed(1) + ')');
-      I.luce.setAttribute('opacity', (on > 0 && on < 1 ? 0.35 + 0.15 * Math.sin(t * 12) : 0).toFixed(2));
+      const scelta = I.s ? eo(seg(t, o - 0.7, o - 0.4)) * (1 - seg(t, o + 0.8, o + 1.4)) : 0;
+      I.luce.setAttribute('opacity', (on > 0 && on < 1 ? 0.12 : 0) + scelta * (0.55 + 0.2 * Math.sin(t * 12)));
     });
-    this.buchi.forEach((b, k) => {
-      const r = Math.floor(k / 3), o = SG_OPEN[r] + (k % 3) * 0.12;
+    this.cop.forEach(C => { const o = SG_OPEN[C.r]; C.g.setAttribute('opacity', C.s ? (1 - seg(t, o - 0.3, o - 0.1)) + seg(t, o + 2.8, o + 3.0) : 1); });
+    this.buchi.forEach(b => {
+      const o = SG_OPEN[+b.getAttribute('data-r')];
       const op = eob(seg(t, o - 0.3, o), 1.4) * (1 - eio(seg(t, o + 2.4, o + 2.9)));
-      b.setAttribute('rx', (80 * op).toFixed(1)); b.setAttribute('ry', (20 * op).toFixed(1));
+      b.setAttribute('rx', (90 * op).toFixed(1)); b.setAttribute('ry', (22 * op).toFixed(1));
     });
     this.sg.forEach((g, i) => {
       const t0 = SG_SGUARDI[i + 1];
