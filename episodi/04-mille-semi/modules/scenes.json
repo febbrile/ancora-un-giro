@@ -1,0 +1,80 @@
+{
+  "v": 1,
+  "stage": "final",
+  "look": "Il pozzo delle parole, bozza 3: illustrazione piatta e morbida dal model sheet approvato. Dentro il pozzo notte blu, pietra e luce; fuori, il laboratorio di Ada in carta, legno e ottone. Personaggi in SVG (Emma bionda col fermaglio a stellina, il vestito prende il colore dei vicini; Ada col camice lungo; Al sassolino, Mare onda, Parco alberello; nell'episodio 3 anche Corre, scarpetta da corsa, Felice, piccolo sole, e Punto, sassolino nero). Ritmo lento: al massimo 12 caratteri al secondo di sottotitolo e almeno 3 secondi di sole immagini per scena. La discesa nei piani è quasi muta, con botole e ingranaggi. Le carte: ogni parola è una carta con tre semi senza nome (♠ ♥ ♦); due carte confrontate seme per seme danno pastiglie che si sommano in un gettone (prodotto scalare); i gettoni diventano quote; con le quote si mescolano le carte. Nell'episodio 4 le carte hanno più semi (♣, ☾ e poi forme senza nome) e la carta di Emma diventa un rotolo che scende in un pozzo enorme. Il monitor di Ada in verde menta su petrolio per i numeri.",
+  "palettes": [
+    [
+      "#141A33",
+      "#F5C84C",
+      "#F4EEE2",
+      "#E8743B"
+    ]
+  ],
+  "theirs": 1,
+  "width": 1920,
+  "height": 1080,
+  "fps": 60,
+  "background": "#141A33",
+  "fonts": {
+    "display": {
+      "family": "Fredoka",
+      "or": "manrope",
+      "weights": [
+        400,
+        600
+      ]
+    },
+    "sans": {
+      "family": "Atkinson Hyperlegible",
+      "or": "manrope"
+    },
+    "mono": {
+      "family": "JetBrains Mono",
+      "or": "dm-mono"
+    }
+  },
+  "scenes": [
+    {
+      "id": "domanda",
+      "name": "La domanda",
+      "dur": 18,
+      "desc": "Notte: Ada alla scrivania con la carta di Emma. E se avesse più semi?"
+    },
+    {
+      "id": "direzioni",
+      "name": "Tre semi, tre direzioni",
+      "dur": 22,
+      "desc": "Tre frecce sul quaderno; Ada cammina sulle frecce con i numeri della carta di Emma e trova il suo punto."
+    },
+    {
+      "id": "quarto",
+      "name": "Il quarto seme",
+      "dur": 34,
+      "desc": "Un pozzo a quattro semi: la quarta freccia non ci sta sul foglio. Ma la partita a carte funziona: 0.90 − 0.06 + 0.51 + 0.20 = 1.55."
+    },
+    {
+      "id": "quinto",
+      "name": "Il quinto seme",
+      "dur": 20,
+      "desc": "Cinque semi, con la luna: disegnare impossibile, giocare facilissimo. Gettone 1.37."
+    },
+    {
+      "id": "rotolo",
+      "name": "L'etichetta dei pozzi veri",
+      "dur": 45,
+      "desc": "Un pozzo vero da 4.096 semi: la lanterna di Emma si allunga in un rotolo che scende nel buio; le pastiglie fanno un gettone, 497.98."
+    },
+    {
+      "id": "senzanome",
+      "name": "Le righe senza nome",
+      "dur": 26,
+      "desc": "I semi non hanno nome; i rotoli di Mare e Onde si somigliano: pastiglie tutte dorate."
+    },
+    {
+      "id": "fine",
+      "name": "Tre semi o mille",
+      "dur": 16,
+      "desc": "Il cielo con le due scie: Emma corre sulla scia verde e saluta. Fine."
+    }
+  ]
+}

@@ -19,6 +19,7 @@ Tutti e tre gli episodi seguono la bozza 3 della sceneggiatura. L'episodio 4, «
 | 1 | Al mare Emma | 4:46 | il viaggio intero: tokenizer, carte senza nome, partita a carte, discesa a botole, campane, secchio, pesca | [apri](https://claude.ai/artifact/2SYUjC4462ypdANocGCEoq) |
 | 2 | Al parco Emma | 4:04 | stessa carta, periscopio, partita con Parco, un'altra strada, due cieli | [apri](https://claude.ai/artifact/PRKqd9xxxzQpEKizCuVcpb) |
 | 3 | Fino alla Fine | 4:37 | termostato, stesso secchio e pesca diversa, il ciclo con Corre, Felice e Punto, EOS, max_tokens, riepilogo | [apri](https://claude.ai/artifact/TjUNodB3pgkpZvFnSpgCNL) |
+| 4 | Mille semi | 3:01 | tre semi = tre direzioni, il quarto seme non ci sta sul foglio, cinque semi, il rotolo da 4.096 semi dei modelli veri, righe senza nome | [apri](https://claude.ai/artifact/X1MPgtVBoagTTNe7LhzCHB) |
 
 Personaggi e oggetti: [tela di design](https://claude.ai/artifact/4aR8fDLy9S866GTJU1Y6L3).
 

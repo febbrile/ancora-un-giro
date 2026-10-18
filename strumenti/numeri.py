@@ -77,6 +77,37 @@ CARTE_4 = {
     5: ([0.90, 0.20, -0.50, 0.40, -0.30], [1.00, -0.30, -1.02, 0.50, 0.60]),
 }
 
+# Episodio 4, il rotolo: carte di esempio di un pozzo vero, con 4.096 semi. Inventate e dichiarate:
+# numeri pseudo-casuali ripetibili (generatore di Park-Miller), uguali in questo script e nel film.
+ROTOLO_N = 4096
+
+
+def rotolo(seed, n, ampiezza):
+    """n valori a due decimali tra -ampiezza/100 e +ampiezza/100, sempre gli stessi per lo stesso seed."""
+    x, out = seed, []
+    for _ in range(n):
+        x = x * 48271 % 2147483647
+        out.append(((x % (2 * ampiezza + 1)) - ampiezza) / 100)
+    return out
+
+
+def somma(a, b):
+    return [max(-0.99, min(0.99, round(x + y + 1e-9, 2))) for x, y in zip(a, b)]
+
+
+# La lanterna di Emma e il cartello di Mare continuano le carte a cinque semi: i primi cinque semi restano quelli.
+_L = rotolo(7, ROTOLO_N - 5, 60)
+LANTERNA_ROTOLO = [0.90, 0.20, -0.50, 0.40, -0.30] + _L
+CARTELLO_ROTOLO = [1.00, -0.30, -1.02, 0.50, 0.60] + somma(_L, rotolo(11, ROTOLO_N - 5, 30))
+MARE_ROTOLO = rotolo(13, ROTOLO_N, 60)                                        # le carte di Mare e Onde,
+ONDE_ROTOLO = somma(MARE_ROTOLO, rotolo(17, ROTOLO_N, 15))                 # che si somigliano molto
+
+
+def gettone_intero(a, b):
+    """Il prodotto scalare fatto con interi (centesimi): esatto, come nel film."""
+    return sum(round(x * 100) * round(y * 100) for x, y in zip(a, b)) / 10000
+
+
 # Il vestito di Emma prende il colore dei vicini: media dei colori delle parole,
 # pesata con le probabilità della lettura del periscopio (logit lens) a temperatura 0.15.
 COLORE = {
@@ -201,5 +232,13 @@ if __name__ == '__main__':
     print('\n== Episodio 4 ==')
     for n, (a, b) in CARTE_4.items():
         print(f'  {n} semi', partita(a, b))
+
+    print('  rotolo: primi semi della lanterna', LANTERNA_ROTOLO[:6], 'del cartello', CARTELLO_ROTOLO[:6])
+    g = gettone_intero(LANTERNA_ROTOLO, CARTELLO_ROTOLO)
+    print(f'  rotolo: {ROTOLO_N} pastiglie → gettone {g:.2f}')
+    pos = sum(1 for x, y in zip(MARE_ROTOLO[:12], ONDE_ROTOLO[:12]) if x * y > 0)
+    print('  Mare e Onde: pastiglie dorate nei primi 12 semi:', pos)
+    assert g > 0 and pos >= 10
+    assert LANTERNA_ROTOLO[:5] == CARTE_4[5][0] and CARTELLO_ROTOLO[:5] == CARTE_4[5][1]
 
     print('\nTutti i numeri tornano.')

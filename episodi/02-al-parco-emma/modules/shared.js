@@ -135,7 +135,19 @@ const SEMI_ICON = [
   '<path d="M0 15 C-10 7 -15 1 -15 -5 C-15 -11 -10 -14 -6 -14 C-3 -14 -1 -12 0 -9 C1 -12 3 -14 6 -14 C10 -14 15 -11 15 -5 C15 1 10 7 0 15 Z" fill="' + ROSSO_SEME + '"/>',
   '<path d="M0 -16 L12 0 L0 16 L-12 0 Z" fill="' + ROSSO_SEME + '"/>',
   '<circle cx="0" cy="-7" r="6.5" fill="' + NERO + '"/><circle cx="-7" cy="3" r="6.5" fill="' + NERO + '"/><circle cx="7" cy="3" r="6.5" fill="' + NERO + '"/><path d="M-2 4 L-5 16 L5 16 L2 4 Z" fill="' + NERO + '"/>',
-  '<path d="M4 -14 A14 14 0 1 0 4 14 A10 10 0 1 1 4 -14 Z" fill="#6B5BA8"/>'];
+  '<path d="M5 -14 A14 14 0 1 0 5 14 A10 14 0 0 1 5 -14 Z" fill="#6B5BA8"/>'];
+// Semi senza nome oltre il quinto (episodio 4): forme semplici e colori che si ripetono.
+const SEMI_FORME = ['<path d="M0 -14 L13 10 L-13 10 Z"/>', '<rect x="-11" y="-11" width="22" height="22" rx="3"/>', '<circle r="12"/>', '<path d="M0 -15 L4 -5 L15 -5 L6 2 L9 13 L0 6 L-9 13 L-6 2 L-15 -5 L-4 -5 Z"/>',
+  '<path d="M-6 -14 L6 -14 L6 -6 L14 -6 L14 6 L6 6 L6 14 L-6 14 L-6 6 L-14 6 L-14 -6 L-6 -6 Z"/>', '<path d="M0 -15 L13 -7 L13 7 L0 15 L-13 7 L-13 -7 Z"/>', '<path d="M-14 6 L0 -12 L14 6 Z M-14 10 L14 10" stroke-width="3"/>', '<circle r="12" fill="none" stroke-width="5"/>'];
+const SEMI_TINTE = ['#2E2A26', '#C2453F', '#2F6F73', '#6B5BA8', '#C9973F', '#3379E5', '#2E9E4F', '#B5715C'];
+function semeN(i, x, y, k, chiaro) {
+  if (i < 5) return seme(i, x, y, k, chiaro);
+  const c = SEMI_TINTE[(i * 3) % SEMI_TINTE.length], f = SEMI_FORME[(i * 5) % SEMI_FORME.length];
+  return '<g transform="translate(' + x + ' ' + y + ') scale(' + (k || 1) + ')" fill="' + c + '" stroke="' + c + '">' + f + '</g>';
+}
+// Il generatore del rotolo (episodio 4), identico a quello di strumenti/numeri.py.
+function rotolo(seed, n, ampiezza) { let x = seed; const out = []; for (let i = 0; i < n; i++) { x = x * 48271 % 2147483647; out.push(((x % (2 * ampiezza + 1)) - ampiezza) / 100); } return out; }
+function sommaRot(a, b) { return a.map((x, i) => Math.max(-0.99, Math.min(0.99, Math.round((x + b[i]) * 100 + 1e-6) / 100))); }
 function seme(i, x, y, k, chiaro) { return '<g transform="translate(' + x + ' ' + y + ') scale(' + (k || 1) + ')">' + (chiaro ? SEMI_ICON[i].replace(/#2E2A26/g, '#E6FFF4') : SEMI_ICON[i]) + '</g>'; }
 function semeHTML(i) { return '<svg class="seme" viewBox="-17 -17 34 34" aria-hidden="true">' + SEMI_ICON[i].replace(/fill="#2E2A26"/g, 'fill="#E6FFF4"') + '</svg>'; }
 function fmt(v) { return (v < 0 ? '−' : '') + Math.abs(v).toFixed(2); }
@@ -256,6 +268,6 @@ function discesa(o) {
 const VESTITO = { rosa: '#BC937F', mare: ['#BC937F', '#728EBE', '#306EDD', '#2864DC'], parco: ['#BC937F', '#67A96F', '#2FAD57', '#28AA50'] };
 // Colori delle carte dei personaggi.
 const CARTA_COL = { Al: '#139A9A', Mare: '#6E6EE6', Parco: '#2E9E4F', Emma: '#B5715C' };
-window.PZ = { viaggiatore, discesa, lab, secchio, palla, SLOT, corre, felice, punto, carta, gettone, pill, fmt, seme, semeHTML, vecHTML, righeY, SEMI_COL, VESTITO, CARTA_COL, emmaTirata, perla, mix, defs, emma, emmaCade, emmaSpalle, al, mare, parco, ada, adaHead, sott, fade, subs, CORALLO: VESTITO.rosa };
+window.PZ = { semeN, rotolo, sommaRot, viaggiatore, discesa, lab, secchio, palla, SLOT, corre, felice, punto, carta, gettone, pill, fmt, seme, semeHTML, vecHTML, righeY, SEMI_COL, VESTITO, CARTA_COL, emmaTirata, perla, mix, defs, emma, emmaCade, emmaSpalle, al, mare, parco, ada, adaHead, sott, fade, subs, CORALLO: VESTITO.rosa };
 window.__kit = kit;
 })();

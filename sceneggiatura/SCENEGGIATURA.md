@@ -178,6 +178,8 @@ piano 3   Δ3  ♠ −1.65 ♥ 1.08 ♦  0.64  → x3 ♠ −2.47 ♥ 2.19 ♦  
 5 semi   0.90 − 0.06 + 0.51 + 0.20 − 0.18   = 1.37
 ```
 
+**Episodio 4, il rotolo** (carte di esempio di un pozzo con 4.096 semi, inventate e dichiarate): numeri pseudo-casuali ripetibili, generati da `strumenti/numeri.py` e uguali nel film. I primi cinque semi sono quelli delle carte a cinque semi, poi il rotolo continua. La lanterna di Emma contro il cartello di Mare dà 4.096 pastiglie e un gettone di **497.98**. Le carte di Mare e di Onde si somigliano: nei primi 12 semi le pastiglie sono tutte dorate.
+
 ---
 
 ## 6. Regole scientifiche (non negoziabili)
@@ -828,7 +830,7 @@ Poi Ada mette due carte da quattro semi sul tavolo da gioco: quattro pastiglie, 
 
 ### 4.5 · L'etichetta dei pozzi veri · 0:45
 
-**VISIVO.** Ada si avvicina a un pozzo enorme, che scende oltre il buio. Sul bordo, una targhetta d'ottone: **4.096 semi**. La carta di Emma comincia ad allungarsi: semi su semi, sempre più piccoli, finché diventa un **rotolo** che si srotola giù per il pozzo ed esce dall'inquadratura. La camera lo segue per dieci secondi, in silenzio; dal rotolo piovono pastiglie che si raccolgono in un unico gettone luminoso.
+**VISIVO.** Ada si avvicina a un pozzo enorme, che scende oltre il buio. Sul bordo, una targhetta d'ottone: **4.096 semi**. La lanterna di Emma a cinque semi comincia ad allungarsi: i primi cinque restano gli stessi, poi semi su semi, sempre più piccoli, finché diventa un **rotolo** che si srotola giù per il pozzo ed esce dall'inquadratura. La camera lo segue per dieci secondi, in silenzio; dal rotolo piovono pastiglie che si raccolgono in un unico gettone luminoso: **497.98**.
 
 **NARRATORE.**
 > Poi Ada lesse l'etichetta di un pozzo vero. C'era scritto: quattromilanovantasei semi.
@@ -847,7 +849,7 @@ Modelli veri: migliaia di coordinate (per esempio 4.096)
 
 ### 4.6 · Le righe senza nome · 0:26
 
-**VISIVO.** Ada srotola un pezzo del rotolo sul tavolo: i semi non hanno nomi, solo simboli sempre diversi. Accanto mette due carte che si somigliano molto, Mare e Onde: le loro pastiglie sono quasi tutte dorate.
+**VISIVO.** Ada srotola un pezzo del rotolo sul tavolo: i semi non hanno nomi, solo simboli sempre diversi. Accanto mette due rotoli che si somigliano molto, Mare e Onde: seme per seme, le loro pastiglie sono tutte dorate.
 
 **ADA.**
 > Che cosa vuol dire ogni seme? Preso da solo, nessuno lo sa. Conta quanto due carte si somigliano.
@@ -894,7 +896,7 @@ Modelli veri: migliaia di coordinate (per esempio 4.096)
 2. **Logit lens.** Tecnica reale e approssimativa; le letture dei primi strati sono strane (il ritratto di Bovary che resta appeso) e si chiariscono verso il fondo.
 3. **Assi senza nome.** Nei modelli veri una singola coordinata di solito non ha un significato leggibile. Il modellino è stato costruito ruotando tutti i vettori (vedi `strumenti/progetto_numeri/`): le partite a carte e le campane danno gli stessi risultati in qualsiasi orientamento, ed è questo che l'episodio 4 racconta.
 4. **Wv omessa** nella media pesata, come nella lezione.
-5. **Dati inventati e dichiarati:** E (anche le carte di Corre, Felice e Punto), le righe di U, le lanterne e i cartelli, gli spostamenti Δ (anche quelli dei giri dell'ep. 3), le carte dell'ep. 4. Tutto il resto è calcolato.
+5. **Dati inventati e dichiarati:** E (anche le carte di Corre, Felice e Punto), le righe di U, le lanterne e i cartelli, gli spostamenti Δ (anche quelli dei giri dell'ep. 3), le carte dell'ep. 4 e i valori del rotolo. Tutto il resto è calcolato.
 6. **Ep. 3, i giri successivi.** Il percorso dell'ultimo arrivato è calcolato piano per piano, come quello di Emma: le stanze della discesa sono le sue letture. Gli sguardi di questi giri non sono mostrati.
 7. **Il vocabolario giocattolo** ha 14 parole; i modelli veri tra 30.000 e 200.000.
 8. **Tutti si spostano, insieme.** Ogni strato calcola uno spostamento per ogni posizione, non solo per l'ultima, e la fila passa al piano successivo tutta insieme. Il film semplifica: si apre una sola botola, la direzione presa dai calcoli (sguardi e ingranaggio), e tutti e tre ci cadono dentro.

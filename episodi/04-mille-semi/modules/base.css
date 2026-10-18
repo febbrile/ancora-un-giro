@@ -1,0 +1,14 @@
+#stage { --ground:#141A33; --main:#F5C84C; --second:#F4EEE2; --accent:#E8743B; color:var(--second); font-family:var(--sans, system-ui, sans-serif) }
+.ground { position:absolute; inset:0; background:var(--ground); overflow:hidden }
+.words { position:absolute; margin:0; display:flex; flex-direction:column; gap:24px } .words > * { margin:0 }
+.line { font-family:var(--display, var(--sans, system-ui, sans-serif)); font-size:84px; line-height:1.05; font-weight:600 } .sub { font-size:36px; color:color-mix(in srgb, var(--second) 75%, var(--ground)) }
+.art { position:absolute; inset:0; width:100%; height:100%; overflow:visible }
+.sott { position:absolute; left:50%; bottom:58px; transform:translateX(-50%); max-width:1600px; background:color-mix(in srgb, var(--ground) 82%, transparent); border-radius:16px; padding:12px 36px 18px; display:flex; flex-direction:column; align-items:center; gap:2px; text-align:center; box-shadow:0 8px 30px rgba(0,0,0,.25) }
+.chi { font-family:var(--mono, ui-monospace, monospace); font-size:15px; letter-spacing:.1em; color:var(--main) } .chi-ada { color:var(--accent) }
+.detto { font-family:var(--display, var(--sans, system-ui, sans-serif)); font-weight:400; font-size:44px; line-height:1.3; color:var(--second); white-space:nowrap }
+.tag { position:absolute; left:56px; top:44px; font-family:var(--mono, ui-monospace, monospace); font-size:18px; color:color-mix(in srgb, var(--second) 75%, var(--ground)); background:color-mix(in srgb, var(--ground) 70%, transparent); border:1px solid color-mix(in srgb, var(--second) 18%, var(--ground)); border-radius:999px; padding:10px 20px }
+.monitor { position:absolute; background:#0F2A2A; border:6px solid #C9973F; border-radius:18px; padding:20px 24px; display:flex; flex-direction:column; gap:10px; font-family:var(--mono, ui-monospace, monospace); color:#9BE7C4; font-size:20px; line-height:1.45 } .mon-tit { font-size:15px; letter-spacing:.06em; color:#5FB89A }
+.carta { position:absolute; inset:0; background:#F3EADB }
+.fine { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; text-align:center }
+#stage text[font-family^="Fredoka"] { font-family:var(--display, var(--sans, system-ui, sans-serif)) } #stage text[font-family^="JetBrains"] { font-family:var(--mono, ui-monospace, monospace) }
+.seme { width:.85em; height:.85em; vertical-align:-.08em; display:inline-block }
