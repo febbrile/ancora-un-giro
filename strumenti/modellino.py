@@ -7,8 +7,8 @@ Nel modellino ogni passeggero è una freccia con tre coordinate senza nome. I nu
 decidono i colori dei vestiti, i paesaggi delle finestre e quante paperelle di ogni colore cadono nella vasca.
 
 Cosa è inventato (e dichiarato qui) e cosa è calcolato:
-- inventati: i biglietti (B), le paperelle (P), i fili di luce di Al e di Mare, gli scambi (S), i colori delle
-  parole (COLORE), i paesaggi delle finestre;
+- inventati: i biglietti (B), le paperelle (P), i fili di luce di Al e di Mare e quelli di Emma nei tratti 2 e 3,
+  gli scambi (S), i colori delle parole (COLORE), i paesaggi delle finestre;
 - calcolati: i fili di Emma (sguardi: query · key, poi softmax), i colori dei vestiti, le finestre, la vasca.
 """
 import json
@@ -57,6 +57,8 @@ FILI_DICHIARATI = {
     'Al':   {'Al': 1.0},
     'mare': {'Al': 0.3, 'mare': 0.7},
 }
+# Nei tratti 2 e 3 i fili di Emma sono dichiarati (quelli di Al e Mare restano come nel primo tratto).
+FILI_EMMA_TRATTI = [None, {'Al': 0.1, 'mare': 0.6, 'Emma': 0.3}, {'Al': 0.1, 'mare': 0.5, 'Emma': 0.4}]
 
 # Gli spostamenti dei tre tratti (fili di luce + scambi), per ogni passeggero.
 # Per Emma, nel primo tratto, la parte dei fili è quella calcolata; il resto è dello scambio.
@@ -155,6 +157,9 @@ def giro(frase):
             'fili': FILI_DICHIARATI.get(t, fili if t == ultimo else None),
         }
         if t == ultimo:
+            for f in FILI_EMMA_TRATTI[1:]:
+                assert abs(sum(f.values()) - 1) < 1e-9, f
+            info['fili_tratti'] = [fili] + FILI_EMMA_TRATTI[1:]
             dopo_fili = somma(B[t], porta)
             info['dopo_fili'] = colore(dopo_fili)
             info['finestre'] = [paesaggio(v) for v in tappe[1:]]
