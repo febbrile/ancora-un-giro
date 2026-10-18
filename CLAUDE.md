@@ -18,6 +18,8 @@ se una scena è bella ma scientificamente sbagliata, si riscrive.
 - **Al massimo 12 caratteri al secondo** di sottotitolo mentre una voce parla. Il pubblico include bambini.
 - **Almeno 3 secondi di sole immagini in ogni scena**: servono anche per leggere il monitor di Ada.
 - Ada legge ad alta voce **un solo numero** per volta; gli altri restano sul monitor.
+- Ogni scena deve rispettare `durata ≥ parlato/12 + monitor/15 + 3 s`: controllalo con `python3 strumenti/tempi.py`
+  dopo ogni modifica alla sceneggiatura.
 - Un episodio dura **al massimo 5 minuti** (limite dei film Motion). Meglio un episodio in più che uno troppo pieno.
 - I sottotitoli **scorrono a pezzi** di 18–48 caratteri (`chunkSub` in `shared.js`).
   Un pezzo **non finisce mai** con un articolo, una preposizione, una congiunzione o una parola con apostrofo:

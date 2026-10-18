@@ -12,6 +12,9 @@ Tratto dalla lezione *Come funziona un LLM: dal testo alla distribuzione di prob
 
 ## Episodi
 
+> La bozza 3 della sceneggiatura riorganizza il racconto in quattro episodi più lenti
+> (Al mare Emma · Al parco Emma · Fino alla Fine · Mille semi). I film qui sotto sono ancora quelli della bozza 2.
+
 | # | Titolo | Durata | Cosa spiega | Guarda |
 |---|---|---|---|---|
 | 1 | La discesa | 2:05 | tokenizer, embedding, posizione, logit lens al piano 0 | [apri](https://claude.ai/artifact/2SYUjC4462ypdANocGCEoq) |
@@ -34,7 +37,10 @@ episodi/NN-titolo/               il sorgente di ogni episodio (film Motion)
   modules/base.css               stile comune
   modules/fetched-fonts.json     elenco font gestito dal player: non modificarlo a mano
 personaggi/                      la tela di design: Emma, Ada, i compagni, gli oggetti, due fotogrammi di prova
-strumenti/numeri.py              il modellino giocattolo: verifica tutti i numeri mostrati nei film
+strumenti/numeri.py              il modellino giocattolo della bozza 3: unica fonte di tutti i numeri
+strumenti/numeri_bozza2.py       i numeri dei film attuali (bozza 2), finché non sono ricostruiti
+strumenti/tempi.py               controlla il ritmo della sceneggiatura (12 car/s, pause, 5 minuti)
+strumenti/progetto_numeri/       come sono stati trovati i numeri della bozza 3
 strumenti/sottotitoli.js         prototipo del taglio dei sottotitoli (mai finire su articolo o preposizione)
 ```
 
