@@ -1,0 +1,92 @@
+/* Ancora un giro: le pagine del sito (elenco episodi e player). */
+:root {
+  --notte: #0E1226;
+  --fondo: #141A33;
+  --pannello: #1B2244;
+  --bordo: #2C3563;
+  --oro: #F5C84C;
+  --crema: #F4EEE2;
+  --tenue: #A9B0CF;
+  --arancio: #E8743B;
+  --menta: #9BE7C4;
+  color-scheme: dark;
+}
+* { box-sizing: border-box }
+html, body { margin: 0; background: var(--notte); color: var(--crema); font-family: 'Atkinson Hyperlegible', system-ui, sans-serif; font-size: 17px; line-height: 1.5 }
+a { color: var(--oro) }
+.titolo-sito { font-family: 'Fredoka', system-ui, sans-serif; font-weight: 600; letter-spacing: .01em }
+
+/* ── Testata ─────────────────────────────────────────────────────────────── */
+.testata { display: flex; align-items: center; gap: 16px; padding: 14px 24px; border-bottom: 1px solid var(--bordo); background: var(--fondo) }
+.testata a.casa { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--crema); font-size: 20px }
+.testata .stella { width: 22px; height: 22px }
+.testata .dove { color: var(--tenue); font-size: 16px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis }
+
+/* ── Elenco degli episodi ────────────────────────────────────────────────── */
+.copertina { max-width: 980px; margin: 0 auto; padding: 56px 24px 24px }
+.copertina h1 { font-size: clamp(36px, 6vw, 60px); line-height: 1.05; margin: 0 0 16px; color: var(--oro) }
+.copertina p { font-size: 19px; color: var(--crema); max-width: 680px; margin: 0 }
+.copertina p + p { margin-top: 12px; color: var(--tenue); font-size: 17px }
+.episodi { list-style: none; max-width: 980px; margin: 0 auto; padding: 24px 24px 64px; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 18px }
+.episodi a { display: flex; flex-direction: column; gap: 8px; height: 100%; padding: 22px 22px 20px; border-radius: 18px; background: var(--fondo); border: 1px solid var(--bordo); text-decoration: none; color: var(--crema); transition: border-color .15s, transform .15s }
+.episodi a:hover, .episodi a:focus-visible { border-color: var(--oro); transform: translateY(-2px); outline: none }
+.episodi .num { font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: .1em; color: var(--arancio) }
+.episodi .nome { font-family: 'Fredoka', system-ui, sans-serif; font-weight: 600; font-size: 26px; line-height: 1.15 }
+.episodi .racconto { color: var(--tenue); font-size: 16px; flex: 1 }
+.episodi .vai { color: var(--oro); font-weight: 700; font-size: 15px }
+.piede { max-width: 980px; margin: 0 auto; padding: 0 24px 48px; color: var(--tenue); font-size: 14px }
+
+/* ── Il player ───────────────────────────────────────────────────────────── */
+.lettore { max-width: 1280px; margin: 24px auto 0; padding: 0 24px }
+.lettore:fullscreen { max-width: none; margin: 0; padding: 0; background: #000; display: flex; flex-direction: column; justify-content: center }
+.schermo { position: relative; width: 100%; aspect-ratio: 16 / 9; background: #000; border-radius: 14px 14px 0 0; overflow: hidden; cursor: pointer }
+.lettore:fullscreen .schermo { border-radius: 0; max-height: calc(100vh - 64px); width: auto; margin: 0 auto; max-width: 100% }
+#stage { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 0 0; overflow: hidden; contain: strict;
+  --display: 'Fredoka', 'Atkinson Hyperlegible', system-ui, sans-serif; --sans: 'Atkinson Hyperlegible', system-ui, sans-serif; --mono: 'JetBrains Mono', ui-monospace, monospace }
+#stage .scena { position: absolute; inset: 0; visibility: hidden }
+#stage .scena.attiva { visibility: visible }
+.velo { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; background: rgba(14, 18, 38, .55); transition: opacity .25s; text-align: center; padding: 24px }
+.velo.via { opacity: 0; pointer-events: none }
+.velo .grande { width: 96px; height: 96px; border-radius: 50%; border: 0; background: var(--oro); color: var(--fondo); display: grid; place-items: center; cursor: pointer; box-shadow: 0 10px 40px rgba(0, 0, 0, .4) }
+.velo .grande svg { width: 40px; height: 40px; margin-left: 6px }
+.velo .messaggio { font-size: 18px; color: var(--crema); max-width: 520px }
+.velo .messaggio.errore { color: #FFB4A8 }
+
+.comandi { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: var(--fondo); border: 1px solid var(--bordo); border-top: 0; border-radius: 0 0 14px 14px }
+.lettore:fullscreen .comandi { border-radius: 0; border: 0 }
+.comandi button { flex: none; width: 40px; height: 40px; border-radius: 10px; border: 0; background: transparent; color: var(--crema); display: grid; place-items: center; cursor: pointer }
+.comandi button:hover, .comandi button:focus-visible { background: var(--pannello); outline: none }
+.comandi button svg { width: 22px; height: 22px }
+.comandi button.stile { width: auto; padding: 0 12px; font: inherit; font-size: 14px; font-weight: 700; border: 1px solid var(--bordo); color: var(--oro); white-space: nowrap }
+.comandi .orologio { flex: none; font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--tenue); min-width: 96px; text-align: center }
+.barra { position: relative; flex: 1; height: 40px; cursor: pointer; touch-action: none }
+.barra .binario { position: absolute; left: 0; right: 0; top: 50%; height: 6px; margin-top: -3px; border-radius: 3px; background: var(--bordo) }
+.barra .fatto { position: absolute; left: 0; top: 50%; height: 6px; margin-top: -3px; border-radius: 3px; background: var(--oro); width: 0 }
+.barra .tacca { position: absolute; top: 50%; width: 2px; height: 12px; margin: -6px 0 0 -1px; background: var(--fondo) }
+.barra .pomello { position: absolute; top: 50%; width: 16px; height: 16px; margin: -8px 0 0 -8px; border-radius: 50%; background: var(--crema); box-shadow: 0 2px 6px rgba(0, 0, 0, .4); left: 0 }
+.barra .etichetta { position: absolute; bottom: 36px; transform: translateX(-50%); white-space: nowrap; background: var(--pannello); border: 1px solid var(--bordo); color: var(--crema); font-size: 13px; padding: 4px 10px; border-radius: 8px; pointer-events: none; opacity: 0; transition: opacity .1s }
+.barra:hover .etichetta, .barra.trascina .etichetta { opacity: 1 }
+
+.capitoli { list-style: none; margin: 18px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px }
+.capitoli button { border: 1px solid var(--bordo); background: var(--fondo); color: var(--crema); border-radius: 999px; padding: 6px 14px; font: inherit; font-size: 15px; cursor: pointer; display: flex; gap: 8px; align-items: baseline }
+.capitoli button .quando { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--tenue) }
+.capitoli button:hover, .capitoli button:focus-visible { border-color: var(--oro); outline: none }
+.capitoli button.qui { border-color: var(--oro); background: var(--pannello); color: var(--oro) }
+.lettore:fullscreen .capitoli, .lettore:fullscreen + .vicini { display: none }
+.vicini { max-width: 1280px; margin: 0 auto; padding: 24px 24px 56px; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap }
+.vicini a { text-decoration: none; font-weight: 700 }
+.aiuto { color: var(--tenue); font-size: 14px; margin: 14px 0 0 }
+
+@media (max-width: 640px) {
+  .testata { padding: 12px 16px; gap: 12px }
+  .testata a.casa { font-size: 18px; white-space: nowrap }
+  .testata .dove { font-size: 14px }
+  .lettore { padding: 0; margin-top: 0 }
+  .schermo { border-radius: 0 }
+  .comandi { border-radius: 0; border-left: 0; border-right: 0; gap: 6px; padding: 8px 10px }
+  .comandi .orologio { min-width: 0; font-size: 12px }
+  .comandi button.stile { padding: 0 8px; font-size: 12px }
+  .capitoli, .aiuto { padding: 0 16px }
+  .velo .grande { width: 72px; height: 72px }
+  .copertina, .episodi, .piede, .vicini { padding-left: 16px; padding-right: 16px }
+}

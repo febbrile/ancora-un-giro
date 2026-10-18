@@ -1,0 +1,7 @@
+{
+  "name": "ancora-un-giro-strumenti",
+  "private": true,
+  "type": "module",
+  "description": "Strumenti di verifica dei film: fotogrammi.mjs",
+  "dependencies": { "playwright-core": "1.48.2" }
+}

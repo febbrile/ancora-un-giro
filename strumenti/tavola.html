@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="it"><head><meta charset="utf-8"><title>Tavola</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Fredoka:wght@400;600&display=swap">
+<style>html,body{margin:0}#t{width:1920px;height:1080px;position:relative;overflow:hidden;font-family:'Atkinson Hyperlegible',sans-serif}
+.et{font:600 22px Fredoka,sans-serif;fill:#2B2350}.tit{font:600 44px Fredoka,sans-serif;fill:#2B2350}</style>
+</head><body><div id="t"></div>
+<!-- Le tavole dei personaggi e degli oggetti, disegnate con episodi/comune/shared.js: ?tav=personaggi|oggetti|mondo -->
+<script>window.window = window;</script>
+<script src="../episodi/comune/shared.js"></script>
+<script>
+(async () => {
+  await Promise.race([Promise.all(['600 40px Fredoka', '400 40px "Atkinson Hyperlegible"'].map(f => document.fonts.load(f).catch(() => null))), new Promise(r => setTimeout(r, 4000))]);
+  const G = window.G, M = G.MOD.mare.passeggeri, tav = new URLSearchParams(location.search).get('tav') || 'personaggi';
+  const at = (x, y, s, svg) => '<g transform="translate(' + x + ' ' + y + ') scale(' + s + ')">' + svg + '</g>';
+  const et = (x, y, txt) => '<text class="et" x="' + x + '" y="' + y + '" text-anchor="middle">' + txt + '</text>';
+  let svg = '';
+  if (tav === 'personaggi') {
+    svg += '<rect width="1920" height="1080" fill="#F3EADB"/><text class="tit" x="60" y="80">Ancora un giro · i personaggi</text>';
+    svg += '<rect x="40" y="110" width="900" height="520" rx="24" fill="#1B2257"/>';
+    svg += at(70, 160, 1.2, G.emma(M.Emma.biglietto)) + at(330, 160, 1.2, G.emma(M.Emma.dopo_fili)) + at(590, 160, 1.2, G.emmaTirata(M.Emma.tratti[0]));
+    svg += at(790, 300, 0.7, G.emma(M.Emma.tratti[2]));
+    svg += '<text class="et" x="190" y="600" text-anchor="middle" style="fill:#F6EEDD">biglietto</text><text class="et" x="450" y="600" text-anchor="middle" style="fill:#F6EEDD">dopo i fili</text><text class="et" x="710" y="600" text-anchor="middle" style="fill:#F6EEDD">tirata via</text><text class="et" x="860" y="600" text-anchor="middle" style="fill:#F6EEDD">uscita</text>';
+    svg += '<rect x="980" y="110" width="900" height="520" rx="24" fill="#1B2257"/>';
+    svg += at(1010, 230, 1.3, G.al(M.Al.biglietto)) + at(1290, 220, 1.3, G.mare(M.mare.biglietto)) + at(1580, 260, 1.5, G.paperella(G.MOD.mare.nuovo.nuota, { glow: true }));
+    svg += '<text class="et" x="1140" y="600" text-anchor="middle" style="fill:#F6EEDD">Al</text><text class="et" x="1420" y="600" text-anchor="middle" style="fill:#F6EEDD">Mare</text><text class="et" x="1660" y="600" text-anchor="middle" style="fill:#F6EEDD">passeggero nuovo</text>';
+    const pose = [['base', 'base'], ['quaderno', 'felice'], ['striscia', 'sorpresa'], ['pesca', 'chiusi'], ['disegna', 'pensa']];
+    pose.forEach((p, i) => { svg += at(60 + i * 250, 650, 1.15, G.ada(p[0], p[1], { testo: 'Al mare Emma' })) + et(175 + i * 250, 1060, 'Ada · ' + p[0]); });
+    G.MOD.mare.vasca.forEach((v, i) => { svg += at(1340 + (i % 5) * 110, 700 + Math.floor(i / 5) * 150, 0.9, G.paperella(v[2])) + et(1385 + (i % 5) * 110, 800 + Math.floor(i / 5) * 150, v[0]); });
+  } else if (tav === 'oggetti') {
+    svg += '<rect width="1920" height="1080" fill="#F3EADB"/><text class="tit" x="60" y="80">Ancora un giro · gli oggetti</text>';
+    svg += at(60, 120, 1.4, G.spezzaparole({ forbice: 1, aghi: -30, bocca: 0 })) + at(400, 120, 1.4, G.spezzaparole({ forbice: 0, aghi: 40, bocca: 1 }));
+    svg += et(220, 560, 'Spezzaparole aperta') + et(560, 560, 'chiusa, bocca accesa');
+    svg += at(760, 150, 1.4, G.biglietto('Al')) + at(760, 260, 1.4, G.biglietto('mare')) + at(760, 370, 1.4, G.biglietto('Emma')) + at(760, 480, 1.3, G.striscia('Al mare Emma'));
+    svg += '<rect x="1060" y="110" width="820" height="440" rx="24" fill="#1B2257"/>';
+    svg += at(1090, 260, 1.0, G.vagone({ primo: true, sbarra: 1 }, G.passeggero('al', M.Al.biglietto))) + at(1350, 260, 1.0, G.vagone({ sbarra: 1 }, G.passeggero('mare', M.mare.biglietto))) + at(1610, 260, 1.0, G.vagone({ sbarra: 0.2 }, G.passeggero('emma', M.Emma.biglietto)));
+    svg += at(1300, 560, 0.62, G.vagone({ sbarra: 0 }, G.passeggero('paperella', G.MOD.mare.nuovo.nuota)));
+    svg += at(60, 610, 0.62, G.telefono({ messaggi: ['Al mare Emma'], scritto: '', risposta: [220, 160] })) + at(320, 610, 0.62, G.telefono({ scritto: 'Al mare Em', cursore: true }));
+    svg += '<g transform="translate(1480 800)">' + G.insegna('Ancora un giro', 760, 200, 0) + '</g>';
+  } else if (tav === 'mondo') {
+    const T = G.treno([{ tipo: 'al', col: M.Al.biglietto }, { tipo: 'mare', col: M.mare.biglietto }, { tipo: 'emma', col: M.Emma.biglietto }], { sbarra: 1 });
+    svg += G.mondo() + '<path class="perc" d="' + G.MONDO.arrivo + '" fill="none"/><g class="treno">' + T + '</g>' +
+      '<g transform="' + G.posa(G.MONDO.ada[0], G.MONDO.ada[1], 0.28, 200, 304) + '">' + G.ada('base', 'base') + '</g>' +
+      '<g transform="' + G.posa(G.MONDO.spezzaparole[0], G.MONDO.spezzaparole[1], 0.34, 220, 300) + '">' + G.spezzaparole() + '</g>';
+  }
+  document.getElementById('t').innerHTML = '<svg width="1920" height="1080" viewBox="0 0 1920 1080">' + G.defs + svg + '</svg>';
+  if (tav === 'mondo') {
+    const p = document.querySelector('.perc'), L = p.getTotalLength();
+    G.posaTreno([...document.querySelectorAll('.g-vag')], p, L - (G.MONDO.fermo - 40));
+  }
+  window.pronto = true;
+})();
+</script></body></html>

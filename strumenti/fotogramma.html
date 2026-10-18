@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="it"><head><meta charset="utf-8"><title>Fotogramma</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Fredoka:wght@400;600&display=swap">
+<style>html,body{margin:0;background:#000}#stage{position:relative;width:1920px;height:1080px;overflow:hidden;--display:'Fredoka';--sans:'Atkinson Hyperlegible'}.scena{position:absolute;inset:0;visibility:hidden}.scena.attiva{visibility:visible}</style>
+</head><body><div id="stage"></div>
+<!-- Pagina per gli strumenti: carica un episodio col motore del sito e disegna il tempo chiesto con window.vai(t). -->
+<script src="../sito/motore/kit.js"></script>
+<script>
+(async () => {
+  const ep = new URLSearchParams(location.search).get('ep');
+  try {
+    await Promise.race([Promise.all(['400 40px Fredoka', '600 40px Fredoka', '400 40px "Atkinson Hyperlegible"'].map(f => document.fonts.load(f).catch(() => null))), new Promise(r => setTimeout(r, 4000))]);
+    const film = await Giro.carica('../episodi/' + ep, document.getElementById('stage'));
+    window.film = film;
+    window.vai = t => { film.disegna(t); return film.scene.find(s => t >= s.inizio && t < s.inizio + s.durata)?.id; };
+    window.pronto = true;
+  } catch (e) { window.errore = String(e); }
+})();
+</script></body></html>
