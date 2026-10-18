@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<title>Grammatica visiva</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&amp;family=Atkinson+Hyperlegible:wght@400;700&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#FFD978}a:hover{color:#FFE9A8}
+</style>
+</helmet>
+<div style="width: 1280px; height: 860px; box-sizing: border-box; padding: 48px 64px; background: #141A33; color: #F4EEE2; font-family: 'Atkinson Hyperlegible', sans-serif; display: flex; flex-direction: column; gap: 24px; position: relative; overflow: hidden">
+
+<svg width="0" height="0" style="position: absolute" aria-hidden="true">
+<defs>
+<filter id="soft-g" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="10"></feGaussianBlur></filter>
+</defs>
+</svg>
+
+<div style="display: flex; flex-direction: column; gap: 8px">
+<h1 style="margin: 0; font-family: Fredoka, sans-serif; font-weight: 600; font-size: 56px; line-height: 1; color: #FFF4E0">Grammatica visiva</h1>
+<p style="margin: 0; font-size: 19px; line-height: 1.45; color: #B9C0E0; max-width: 980px">Le regole che valgono in ogni scena. Se un'immagine le rispetta, il bambino vede una fiaba e l'adulto legge la scienza nello stesso fotogramma.</p>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px">
+
+<div style="background: #1B2244; border: 1px solid #2A3360; border-radius: 20px; padding: 22px; display: flex; flex-direction: column; gap: 14px">
+<div style="font-family: Fredoka, sans-serif; font-weight: 600; font-size: 22px; color: #FFF4E0">Pietra e luce: due tipi di «pesi»</div>
+<div style="display: flex; gap: 24px; align-items: center">
+<svg width="120" height="100" viewBox="0 0 120 100" role="img" aria-label="Un blocco di pietra con dei numeri incisi">
+<rect x="10" y="14" width="100" height="74" rx="10" fill="#5B6B8C" stroke="#3E4A66" stroke-width="4"></rect>
+<text x="60" y="46" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="#C8D0E6">0.80 0.05</text>
+<text x="60" y="66" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="#C8D0E6">-0.60 0.45</text>
+</svg>
+<div style="font-size: 15px; line-height: 1.45; color: #C8CEE8"><strong style="color: #FFF4E0">Pietra = parametri.</strong> Armadio, lenti, macchine, campane. Fissi dopo l'addestramento, uguali per ogni frase. Non si muovono mai da soli.</div>
+</div>
+<div style="display: flex; gap: 24px; align-items: center">
+<svg width="120" height="100" viewBox="0 0 120 100" role="img" aria-label="Una sfera di luce dorata">
+<circle cx="60" cy="50" r="40" fill="#FFD978" opacity="0.5" filter="url(#soft-g)"></circle>
+<circle cx="60" cy="50" r="22" fill="#FFE9A8"></circle>
+<circle cx="52" cy="42" r="6" fill="#FFFFFF" opacity="0.6"></circle>
+</svg>
+<div style="font-size: 15px; line-height: 1.45; color: #C8CEE8"><strong style="color: #FFF4E0">Luce = calcoli del momento.</strong> Vettori, sguardi (pesi di attention), suoni delle campane. Nascono e svaniscono con ogni frase.</div>
+</div>
+</div>
+
+<div style="background: #1B2244; border: 1px solid #2A3360; border-radius: 20px; padding: 22px; display: flex; flex-direction: column; gap: 14px">
+<div style="font-family: Fredoka, sans-serif; font-weight: 600; font-size: 22px; color: #FFF4E0">Il colore è il vettore</div>
+<div style="font-size: 15px; line-height: 1.45; color: #C8CEE8">Ogni coordinata guida un canale di colore. Gli assi con un nome sono una comodità del modellino: nei modelli veri una coordinata da sola di solito non significa niente.</div>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px">
+<div style="background: #10152B; border-radius: 14px; padding: 14px; display: flex; flex-direction: column; gap: 8px; align-items: flex-start">
+<div style="width: 100%; height: 22px; border-radius: 6px; background: #E5484D"></div>
+<div style="font-family: Fredoka, sans-serif; font-size: 17px; color: #FFF4E0">rosso = nome</div>
+<div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #9AA3C7">asse z · Emma parte corallo</div>
+</div>
+<div style="background: #10152B; border-radius: 14px; padding: 14px; display: flex; flex-direction: column; gap: 8px; align-items: flex-start">
+<div style="width: 100%; height: 22px; border-radius: 6px; background: #30A46C"></div>
+<div style="font-family: Fredoka, sans-serif; font-size: 17px; color: #FFF4E0">verde = verde</div>
+<div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #9AA3C7">asse y · al parco diventa verde</div>
+</div>
+<div style="background: #10152B; border-radius: 14px; padding: 14px; display: flex; flex-direction: column; gap: 8px; align-items: flex-start">
+<div style="width: 100%; height: 22px; border-radius: 6px; background: #3E63DD"></div>
+<div style="font-family: Fredoka, sans-serif; font-size: 17px; color: #FFF4E0">blu = acqua</div>
+<div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #9AA3C7">asse x · al mare diventa blu</div>
+</div>
+</div>
+</div>
+
+<div style="background: #1B2244; border: 1px solid #2A3360; border-radius: 20px; padding: 22px; display: flex; flex-direction: column; gap: 14px">
+<div style="font-family: Fredoka, sans-serif; font-weight: 600; font-size: 22px; color: #FFF4E0">Due mondi, un confine</div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+<div style="background: #0D1124; border: 1px solid #2A3360; border-radius: 14px; padding: 14px; display: flex; flex-direction: column; gap: 10px">
+<div style="font-family: Fredoka, sans-serif; font-size: 17px">Il pozzo · modello</div>
+<div style="display: flex; gap: 8px">
+<div style="width: 34px; height: 34px; border-radius: 8px; background: #141A33; border: 1px solid #3A4374"></div>
+<div style="width: 34px; height: 34px; border-radius: 8px; background: #1B2244"></div>
+<div style="width: 34px; height: 34px; border-radius: 8px; background: #5B6B8C"></div>
+<div style="width: 34px; height: 34px; border-radius: 8px; background: #3E4A66"></div>
+<div style="width: 34px; height: 34px; border-radius: 8px; background: #FFD978"></div>
+</div>
+<div style="font-size: 13px; color: #9AA3C7">notte, pietra, luce</div>
+</div>
+<div style="background: #F3EADB; color: #2E2A26; border-radius: 14px; padding: 14px; display: flex; flex-direction: column; gap: 10px">
+<div style="font-family: Fredoka, sans-serif; font-size: 17px">Il laboratorio · codice</div>
+<div style="display: flex; gap: 8px">
+<div style="width: 34px; height: 34px; border-radius: 8px; background: #F3EADB; border: 1px solid #CDBFA6"></div>
+<div style="width: 34px; height: 34px; border-radius: 8px; background: #2E2A26"></div>
+<div style="width: 34px; height: 34px; border-radius: 8px; background: #E8743B"></div>
+<div style="width: 34px; height: 34px; border-radius: 8px; background: #C9973F"></div>
+<div style="width: 34px; height: 34px; border-radius: 8px; background: #2F6F73"></div>
+</div>
+<div style="font-size: 13px; color: #5C5348">carta, legno, ottone</div>
+</div>
+</div>
+<div style="font-size: 14px; line-height: 1.45; color: #C8CEE8">Tokenizer, termostato, pesca e forbice stanno sempre nel mondo chiaro. Nel pozzo non entra niente di caldo e di carta.</div>
+</div>
+
+<div style="background: #1B2244; border: 1px solid #2A3360; border-radius: 20px; padding: 22px; display: flex; flex-direction: column; gap: 14px">
+<div style="font-family: Fredoka, sans-serif; font-weight: 600; font-size: 22px; color: #FFF4E0">Caratteri e monitor</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<div style="font-family: Fredoka, sans-serif; font-weight: 600; font-size: 26px; color: #FFF4E0">Fredoka · la fiaba, i titoli, i nomi</div>
+<div style="font-size: 16px; color: #C8CEE8">Atkinson Hyperlegible · didascalie e testo, leggibile anche per chi impara a leggere</div>
+</div>
+<div style="background: #0F2A2A; border: 2px solid #2F6F73; border-radius: 12px; padding: 14px 16px; font-family: 'JetBrains Mono', monospace; font-size: 14px; line-height: 1.6; color: #9BE7C4">
+<div style="color: #5FB89A">MONITOR DI ADA · piano 1</div>
+<div>x1 = x0 + Δ1 = [0.65, 0.05, 0.60]</div>
+<div>logit lens: conchiglie 0.70 · onde 0.70 · sabbia 0.64</div>
+</div>
+<div style="font-size: 13px; color: #9AA3C7">JetBrains Mono, solo per i numeri e solo sul monitor: lo strato adulto.</div>
+</div>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":860}}'>
+class Component extends DCLogic {
+renderVals() {
+return {};
+}
+}
+</script>
+</body>
+</html>

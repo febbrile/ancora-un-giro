@@ -1,0 +1,92 @@
+{
+  "v": 1,
+  "stage": "final",
+  "look": "Il pozzo delle parole: illustrazione piatta e morbida dal model sheet approvato. Dentro il pozzo notte blu, pietra e luce; fuori, il laboratorio di Ada in carta, legno e ottone. Personaggi in SVG (Emma bionda col fermaglio a stellina, vestito colore del vettore; Ada col camice lungo; Al sassolino, Mare onda, Parco alberello). Sottotitoli a battute brevi per NARRATORE e ADA; il monitor di Ada in verde menta su petrolio per i numeri. Le perline: ogni vettore come tre perline su tre binari (acqua, verde, nome), lo scontro fa scintille = prodotto scalare.",
+  "palettes": [
+    [
+      "#141A33",
+      "#F5C84C",
+      "#F4EEE2",
+      "#E8743B"
+    ]
+  ],
+  "theirs": 1,
+  "width": 1920,
+  "height": 1080,
+  "fps": 60,
+  "background": "#141A33",
+  "fonts": {
+    "display": {
+      "family": "Fredoka",
+      "or": "manrope",
+      "weights": [
+        400,
+        600
+      ]
+    },
+    "sans": {
+      "family": "Atkinson Hyperlegible",
+      "or": "manrope"
+    },
+    "mono": {
+      "family": "JetBrains Mono",
+      "or": "dm-mono"
+    }
+  },
+  "scenes": [
+    {
+      "id": "ritorno",
+      "name": "Esperimento 2",
+      "dur": 9,
+      "desc": "Titolo dell'episodio; Ada gira pagina: esperimento 2, la frase del parco riprende vita."
+    },
+    {
+      "id": "sguardo",
+      "name": "Lo sguardo al parco",
+      "dur": 16,
+      "desc": "Stanza dei Nomi identica; nella Sala la lanterna di Emma è la stessa, ma incontra il cartello di Parco: Emma prende il verde."
+    },
+    {
+      "id": "stanze",
+      "name": "Le stanze del parco",
+      "dur": 14,
+      "desc": "Una stanza-prato strana con foglie, altalena e Bovary su un ramo; poi corre e il vestito verde prato."
+    },
+    {
+      "id": "corre",
+      "name": "Al parco Emma corre",
+      "dur": 12,
+      "desc": "Campane, secchio e pesca: corre 45%, gioca 20%; Ada pesca corre."
+    },
+    {
+      "id": "cielo",
+      "name": "Un solo cielo",
+      "dur": 16,
+      "desc": "Il monitor diventa un cielo 3D: una sola stella di partenza, due scie verso il mare e verso il parco; gioca in mezzo."
+    },
+    {
+      "id": "ciclo",
+      "name": "Il viaggio ricomincia",
+      "dur": 14,
+      "desc": "La parola pescata torna in fila: quattro viaggiatori, poi altre parole, una alla volta."
+    },
+    {
+      "id": "fine",
+      "name": "La pallina Fine",
+      "dur": 12,
+      "desc": "Nel secchio sale la pallina Fine: Ada la riconosce e spegne il pozzo; la forbice dell'orologio taglia una frase a metà."
+    },
+    {
+      "id": "numeri",
+      "name": "Fatto di numeri",
+      "dur": 15,
+      "desc": "Le pareti del pozzo diventano trasparenti: colonne di numeri fermi; ogni conto si può seguire, il perché no."
+    },
+    {
+      "id": "riepilogo",
+      "name": "Il ciclo intero",
+      "dur": 12,
+      "desc": "Riepilogo del ciclo e domanda del prossimo esperimento: come si costruisce un pozzo?"
+    }
+  ]
+}

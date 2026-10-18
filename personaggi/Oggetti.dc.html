@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<title>Oggetti del pozzo e del laboratorio</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&amp;family=Atkinson+Hyperlegible:wght@400;700&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#FFD978}a:hover{color:#FFE9A8}
+</style>
+</helmet>
+<div style="width: 1680px; height: 940px; box-sizing: border-box; padding: 48px 64px; background: #141A33; color: #F4EEE2; font-family: 'Atkinson Hyperlegible', sans-serif; display: flex; flex-direction: column; gap: 28px; position: relative; overflow: hidden">
+
+<svg width="0" height="0" style="position: absolute" aria-hidden="true">
+<defs>
+<filter id="soft-o" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="12"></feGaussianBlur></filter>
+</defs>
+</svg>
+
+<div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 32px">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<h1 style="margin: 0; font-family: Fredoka, sans-serif; font-weight: 600; font-size: 56px; line-height: 1; color: #FFF4E0">Oggetti</h1>
+<p style="margin: 0; font-size: 19px; line-height: 1.45; color: #B9C0E0; max-width: 980px">Ogni oggetto dice da che parte del confine sta. Schede scure: dentro il pozzo (il modello). Schede chiare: fuori, nel laboratorio di Ada (il codice che lo usa).</p>
+</div>
+<div style="display: flex; gap: 12px">
+<div style="font-family: 'JetBrains Mono', monospace; font-size: 14px; color: #F4EEE2; background: #3E4A66; border-radius: 999px; padding: 8px 16px; white-space: nowrap">dentro il pozzo</div>
+<div style="font-family: 'JetBrains Mono', monospace; font-size: 14px; color: #2E2A26; background: #F3EADB; border-radius: 999px; padding: 8px 16px; white-space: nowrap">fuori dal pozzo</div>
+</div>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px">
+
+<div style="background: #F3EADB; color: #2E2A26; border-radius: 20px; padding: 20px; display: flex; flex-direction: column; align-items: center; gap: 8px">
+<svg width="264" height="198" viewBox="0 0 240 180" role="img" aria-label="Lo Spezzaparole: una macchina con gli occhi e una grande forbice che taglia un nastro di carta">
+<rect x="0" y="100" width="62" height="22" rx="3" fill="#F6E7C8" stroke="#C8B48F" stroke-width="1.5"></rect>
+<text x="8" y="115" font-family="JetBrains Mono, monospace" font-size="10" fill="#5C5348">Al mare Em</text>
+<rect x="40" y="62" width="120" height="100" rx="16" fill="#6D7A8F" stroke="#3E4A66" stroke-width="4"></rect>
+<circle cx="82" cy="98" r="11" fill="#FFFFFF"></circle>
+<circle cx="118" cy="98" r="11" fill="#FFFFFF"></circle>
+<circle cx="84" cy="100" r="5" fill="#2E2A26"></circle>
+<circle cx="120" cy="100" r="5" fill="#2E2A26"></circle>
+<path d="M78 132 L122 132 M78 140 L122 140" stroke="#3E4A66" stroke-width="4" stroke-linecap="round"></path>
+<circle cx="140" cy="40" r="11" fill="none" stroke="#E8743B" stroke-width="6"></circle>
+<circle cx="140" cy="76" r="11" fill="none" stroke="#E8743B" stroke-width="6"></circle>
+<path d="M150 46 L222 74" stroke="#D9DDE6" stroke-width="7" stroke-linecap="round"></path>
+<path d="M150 70 L222 42" stroke="#D9DDE6" stroke-width="7" stroke-linecap="round"></path>
+<circle cx="181" cy="58" r="4" fill="#3E4A66"></circle>
+<rect x="166" y="150" width="22" height="16" rx="3" fill="#F6E7C8" stroke="#C8B48F" stroke-width="1.5" transform="rotate(-8 177 158)"></rect>
+<rect x="194" y="140" width="22" height="16" rx="3" fill="#F6E7C8" stroke="#C8B48F" stroke-width="1.5" transform="rotate(10 205 148)"></rect>
+<rect x="214" y="158" width="22" height="16" rx="3" fill="#F6E7C8" stroke="#C8B48F" stroke-width="1.5" transform="rotate(-4 225 166)"></rect>
+</svg>
+<div style="font-family: Fredoka, sans-serif; font-weight: 600; font-size: 22px">Lo Spezzaparole</div>
+<div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #A8481E">fuori dal pozzo · tokenizer</div>
+<div style="font-size: 15px; line-height: 1.4; color: #5C5348; text-align: center">Taglia la frase in token e dà a ognuno un biglietto numerato. Le lettere restano sul prato.</div>
+</div>
+
+<div style="background: #1B2244; border: 1px solid #2A3360; border-radius: 20px; padding: 20px; display: flex; flex-direction: column; align-items: center; gap: 8px">
+<svg width="264" height="198" viewBox="0 0 240 180" role="img" aria-label="Due campane di pietra: quella di nuota è accesa e suona, quella di stira è muta">
+<path d="M70 18 L70 32 M170 18 L170 32" stroke="#8B93B8" stroke-width="3" stroke-linecap="round"></path>
+<ellipse cx="70" cy="84" rx="54" ry="60" fill="#3379E5" opacity="0.55" filter="url(#soft-o)"></ellipse>
+<path d="M42 120 L48 64 C50 40 90 40 92 64 L98 120 Q70 130 42 120 Z" fill="#5B6B8C" stroke="#3E4A66" stroke-width="3"></path>
+<path d="M42 120 L48 64 C50 40 90 40 92 64 L98 120 Q70 130 42 120 Z" fill="#3379E5" opacity="0.45"></path>
+<circle cx="70" cy="128" r="6" fill="#3E4A66"></circle>
+<path d="M22 64 Q12 84 22 104 M110 64 Q120 84 110 104" stroke="#8FB6FF" stroke-width="3" stroke-linecap="round" fill="none"></path>
+<path d="M10 56 Q-2 84 10 112 M122 56 Q134 84 122 112" stroke="#8FB6FF" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.6"></path>
+<path d="M142 120 L148 64 C150 40 190 40 192 64 L198 120 Q170 130 142 120 Z" fill="#4A5675" stroke="#3E4A66" stroke-width="3"></path>
+<circle cx="170" cy="128" r="6" fill="#3E4A66"></circle>
+<rect x="38" y="146" width="64" height="26" rx="6" fill="#24306A"></rect>
+<text x="70" y="164" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="#F4EEE2">nuota 3.27</text>
+<rect x="134" y="146" width="72" height="26" rx="6" fill="#222A4F"></rect>
+<text x="170" y="164" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="#8B93B8">stira -1.44</text>
+</svg>
+<div style="font-family: Fredoka, sans-serif; font-weight: 600; font-size: 22px; color: #FFF4E0">Le campane del fondo</div>
+<div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #8FB6FF">dentro il pozzo · parametri (matrice U)</div>
+<div style="font-size: 15px; line-height: 1.4; color: #A7AFD4; text-align: center">Una per parola. Suonano tutte insieme, tanto più forte quanto più guardano dove punta Emma.</div>
+</div>
+
+<div style="background: #1B2244; border: 1px solid #2A3360; border-radius: 20px; padding: 20px; display: flex; flex-direction: column; align-items: center; gap: 8px">
+<svg width="264" height="198" viewBox="0 0 240 180" role="img" aria-label="Un secchio di vetro con venti palline colorate, quasi metà blu">
+<path d="M120 0 L120 22" stroke="#C9973F" stroke-width="3"></path>
+<path d="M60 52 Q120 -6 180 52" stroke="#8C8F99" stroke-width="4" fill="none"></path>
+<circle cx="100" cy="114" r="8" fill="#AB70F6"></circle>
+<circle cx="116" cy="114" r="8" fill="#3379E5"></circle>
+<circle cx="132" cy="114" r="8" fill="#8A90A8"></circle>
+<circle cx="78" cy="130" r="8" fill="#28C1C1"></circle>
+<circle cx="94" cy="130" r="8" fill="#3379E5"></circle>
+<circle cx="110" cy="130" r="8" fill="#B57FF3"></circle>
+<circle cx="126" cy="130" r="8" fill="#3379E5"></circle>
+<circle cx="142" cy="130" r="8" fill="#8A90A8"></circle>
+<circle cx="158" cy="130" r="8" fill="#28C1C1"></circle>
+<circle cx="80" cy="146" r="8" fill="#3379E5"></circle>
+<circle cx="96" cy="146" r="8" fill="#28C1C1"></circle>
+<circle cx="112" cy="146" r="8" fill="#3379E5"></circle>
+<circle cx="128" cy="146" r="8" fill="#B09FF0"></circle>
+<circle cx="144" cy="146" r="8" fill="#3379E5"></circle>
+<circle cx="160" cy="146" r="8" fill="#33E57F"></circle>
+<circle cx="88" cy="162" r="8" fill="#3379E5"></circle>
+<circle cx="104" cy="162" r="8" fill="#3379E5"></circle>
+<circle cx="120" cy="162" r="8" fill="#28C1C1"></circle>
+<circle cx="136" cy="162" r="8" fill="#3379E5"></circle>
+<circle cx="152" cy="162" r="8" fill="#AB70F6"></circle>
+<path d="M60 52 L180 52 L168 172 Q120 182 72 172 Z" fill="#BFD7FF" fill-opacity="0.16" stroke="#CFE0FF" stroke-width="3"></path>
+<path d="M70 62 L80 164" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" opacity="0.3"></path>
+</svg>
+<div style="font-family: Fredoka, sans-serif; font-weight: 600; font-size: 22px; color: #FFF4E0">Il secchio</div>
+<div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #8FB6FF">uscita del modello · distribuzione</div>
+<div style="font-size: 15px; line-height: 1.4; color: #A7AFD4; text-align: center">20 palline a T = 1: 9 nuota, 4 gioca, 2 onde, una a testa per sabbia, conchiglie, corre, 2 altre.</div>
+</div>
+
+<div style="background: #F3EADB; color: #2E2A26; border-radius: 20px; padding: 20px; display: flex; flex-direction: column; align-items: center; gap: 8px">
+<svg width="264" height="198" viewBox="0 0 240 180" role="img" aria-label="Il termostato di Ada, una manopola da freddo a caldo con la lancetta su T uguale 1">
+<circle cx="120" cy="96" r="72" fill="#FBF6EC" stroke="#2E2A26" stroke-width="4"></circle>
+<path d="M73.2 123 A54 54 0 0 1 120 42" stroke="#7FC8F8" stroke-width="12" stroke-linecap="round" fill="none"></path>
+<path d="M120 42 A54 54 0 0 1 166.8 123" stroke="#E8743B" stroke-width="12" stroke-linecap="round" fill="none"></path>
+<path d="M120 96 L100 52" stroke="#2E2A26" stroke-width="5" stroke-linecap="round"></path>
+<circle cx="120" cy="96" r="10" fill="#2E2A26"></circle>
+<text x="120" y="140" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="15" font-weight="600" fill="#2E2A26">T = 1</text>
+<text x="44" y="170" text-anchor="middle" font-family="Fredoka, sans-serif" font-size="14" fill="#2F6F9F">freddo</text>
+<text x="196" y="170" text-anchor="middle" font-family="Fredoka, sans-serif" font-size="14" fill="#A8481E">caldo</text>
+</svg>
+<div style="font-family: Fredoka, sans-serif; font-weight: 600; font-size: 22px">Il termostato</div>
+<div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #A8481E">fuori dal pozzo · temperatura</div>
+<div style="font-size: 15px; line-height: 1.4; color: #5C5348; text-align: center">Freddo: vince quasi sempre la pallina più numerosa. Caldo: escono anche le più strane. Non tocca il pozzo.</div>
+</div>
+
+<div style="background: #1B2244; border: 1px solid #2A3360; border-radius: 20px; padding: 20px; display: flex; flex-direction: column; align-items: center; gap: 8px">
+<svg width="264" height="198" viewBox="0 0 240 180" role="img" aria-label="La pallina Fine, scura con un punto bianco, accanto a una pallina blu normale">
+<ellipse cx="110" cy="92" rx="56" ry="56" fill="#FFF4E0" opacity="0.12" filter="url(#soft-o)"></ellipse>
+<circle cx="110" cy="92" r="42" fill="#2B2350" stroke="#4A4378" stroke-width="3"></circle>
+<ellipse cx="94" cy="72" rx="14" ry="7" fill="#FFFFFF" opacity="0.18" transform="rotate(-25 94 72)"></ellipse>
+<circle cx="110" cy="92" r="9" fill="#FFFFFF"></circle>
+<circle cx="186" cy="118" r="22" fill="#3379E5"></circle>
+<ellipse cx="178" cy="108" rx="7" ry="4" fill="#FFFFFF" opacity="0.3" transform="rotate(-25 178 108)"></ellipse>
+<text x="110" y="160" text-anchor="middle" font-family="Fredoka, sans-serif" font-size="15" fill="#FFF4E0">Fine</text>
+<text x="186" y="160" text-anchor="middle" font-family="Fredoka, sans-serif" font-size="15" fill="#8B93B8">nuota</text>
+</svg>
+<div style="font-family: Fredoka, sans-serif; font-weight: 600; font-size: 22px; color: #FFF4E0">La pallina Fine</div>
+<div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #8FB6FF">nel vocabolario · token EOS</div>
+<div style="font-size: 15px; line-height: 1.4; color: #A7AFD4; text-align: center">Una pallina come le altre, non un ordine. Il pozzo la mette nel secchio quando la frase è completa.</div>
+</div>
+
+<div style="background: #F3EADB; color: #2E2A26; border-radius: 20px; padding: 20px; display: flex; flex-direction: column; align-items: center; gap: 8px">
+<svg width="264" height="198" viewBox="0 0 240 180" role="img" aria-label="Un orologio da muro con una forbice appesa che taglia una frase a metà">
+<circle cx="96" cy="70" r="52" fill="#FBF6EC" stroke="#2E2A26" stroke-width="4"></circle>
+<path d="M96 24 L96 32 M96 108 L96 116 M50 70 L58 70 M134 70 L142 70" stroke="#2E2A26" stroke-width="3" stroke-linecap="round"></path>
+<path d="M96 70 L96 42 M96 70 L118 80" stroke="#2E2A26" stroke-width="4" stroke-linecap="round"></path>
+<circle cx="96" cy="70" r="4" fill="#E8743B"></circle>
+<path d="M96 122 L96 136" stroke="#8C8F99" stroke-width="2"></path>
+<circle cx="88" cy="142" r="7" fill="none" stroke="#E8743B" stroke-width="4"></circle>
+<circle cx="104" cy="142" r="7" fill="none" stroke="#E8743B" stroke-width="4"></circle>
+<path d="M92 148 L120 176 M100 148 L72 176" stroke="#8C8F99" stroke-width="4" stroke-linecap="round"></path>
+<rect x="132" y="146" width="96" height="20" rx="3" fill="#F6E7C8" stroke="#C8B48F" stroke-width="1.5"></rect>
+<text x="138" y="160" font-family="JetBrains Mono, monospace" font-size="10" fill="#5C5348">verso l'alta—</text>
+<path d="M228 146 L222 151 L228 156 L222 161 L228 166" stroke="#A8481E" stroke-width="2" fill="none"></path>
+</svg>
+<div style="font-family: Fredoka, sans-serif; font-weight: 600; font-size: 22px">La forbice dell'orologio</div>
+<div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #A8481E">fuori dal pozzo · max_tokens</div>
+<div style="font-size: 15px; line-height: 1.4; color: #5C5348; text-align: center">Se una frase si interrompe a metà, è stata lei. Il pozzo non c'entra.</div>
+</div>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1680,"height":940}}'>
+class Component extends DCLogic {
+renderVals() {
+return {};
+}
+}
+</script>
+</body>
+</html>
