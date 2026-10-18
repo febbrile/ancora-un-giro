@@ -119,16 +119,16 @@ gioca       ♠ −0.36 ♥  0.67 ♦  0.38     felice    ♠ −0.31 ♥ −0.4
 | Cartello | ♠ | ♥ | ♦ | Pastiglie | Gettone |
 |---|---|---|---|---|---|
 | Mare | 1.00 | −0.30 | −1.02 | 0.90 − 0.06 + 0.51 | **1.35** |
-| Parco | 0.55 | 1.25 | −1.20 | 0.50 + 0.25 + 0.60 | **1.35** |
+| Parco | 0.60 | 1.25 | −0.32 | 0.54 + 0.25 + 0.16 | **0.95** |
 | Al | −0.40 | 0.30 | 0.60 | −0.36 + 0.06 − 0.30 | −0.60 |
 | Emma | 0.20 | 0.20 | 0.24 | 0.18 + 0.04 − 0.12 | 0.10 |
 
-- Quote (softmax): Al 0.1 · Mare/Parco 0.7 · Emma 0.2, uguali nei due viaggi.
-- Nuova carta = 0.1·Al + 0.7·(Mare o Parco) + 0.2·Emma:
-  - al mare **♠ −0.15 ♥ 0.46 ♦ −0.38**;
-  - al parco **♠ 0.40 ♥ 0.44 ♦ 0.13**.
+- Quote (softmax): al mare Al 0.1 · Mare 0.7 · Emma 0.2; al parco Al 0.1 · Parco 0.6 · Emma 0.3.
+- Nuova carta:
+  - al mare 0.1·Al + 0.7·Mare + 0.2·Emma = **♠ −0.15 ♥ 0.46 ♦ −0.38**;
+  - al parco 0.1·Al + 0.6·Parco + 0.3·Emma = **♠ 0.41 ♥ 0.39 ♦ 0.04**.
 
-Le quote sono uguali, ma le carte da mescolare no: è qui che le strade si separano.
+Carte diverse danno gettoni diversi: due cartelli fanno lo stesso gettone solo per caso, e qui non lo facciamo succedere. Cambiano le quote e cambiano le carte da mescolare: è qui che le strade si separano.
 
 **Spostamenti (ingranaggi, inventati) e posizioni:**
 ```
@@ -483,23 +483,23 @@ Piano 0: e · Bovary  (uguale a ieri)
 
 ### 2.4 · La partita con Parco · 0:36
 
-**VISIVO.** Il tavolo da gioco. Emma alza **la stessa lanterna di ieri**. Davanti, il cartello di Parco. Seme per seme: +0.50, +0.25, +0.60. Gettone: 1.35. Ada mette accanto il gettone di ieri: **uguali**.
+**VISIVO.** Il tavolo da gioco. Emma alza **la stessa lanterna di ieri**. Davanti, il cartello di Parco. Seme per seme: +0.54, +0.25, +0.16. Gettone: 0.95. Ada mette accanto il gettone di ieri, 1.35: **diversi**.
 
-Poi le quote, uguali a ieri. Ma quando si mescolano le carte, al posto della carta di Mare c'è quella di Parco: la nuova carta è diversa.
+Poi le quote: Parco 60%, Emma 30%, Al 10%. E quando si mescolano le carte, al posto della carta di Mare c'è quella di Parco: la nuova carta è diversa.
 
 **NARRATORE.**
 > Al primo piano, Emma alzò la stessa lanterna di ieri. Ma questa volta, davanti, c'era il cartello di Parco.
 
 **ADA.**
-> Stesso gettone di ieri: uno virgola trentacinque. Ma nelle carte da mescolare c'è Parco al posto di Mare.
+> Un gettone diverso da ieri: zero virgola novantacinque. E nelle carte da mescolare c'è Parco al posto di Mare.
 
 **MONITOR.**
 ```
-q · k = 0.50 + 0.25 + 0.60 = 1.35
-nuova carta = 0.1·Al + 0.7·Parco + 0.2·Emma
+q · k = 0.54 + 0.25 + 0.16 = 0.95
+nuova carta = 0.1·Al + 0.6·Parco + 0.3·Emma
 ```
 
-**CONCETTO.** Quote uguali, valori diversi: la media pesata porta dentro il contesto.
+**CONCETTO.** Carte diverse, gettoni diversi: cambiano le quote e cambiano le carte da mescolare. La media pesata porta dentro il contesto.
 
 ---
 

@@ -1,15 +1,15 @@
 const { seg, eo, ei, eio, eob, lerp } = kit;
-// 2.4 · La partita con Parco: la stessa lanterna, il cartello di Parco, lo stesso gettone di ieri.
-// Poi le quote, uguali a ieri, ma nel mescolamento c'è Parco: la nuova carta è diversa.
-const PP_Q = [0.90, 0.20, -0.50], PP_K = [0.55, 1.25, -1.20], PP_P = [0.50, 0.25, 0.60], PP_TC = [4.2, 5.8, 7.4];
+// 2.4 · La partita con Parco: la stessa lanterna, il cartello di Parco, un gettone diverso da ieri.
+// Poi le quote e il mescolamento, con Parco al posto di Mare: la nuova carta è diversa.
+const PP_Q = [0.90, 0.20, -0.50], PP_K = [0.60, 1.25, -0.32], PP_P = [0.54, 0.25, 0.16], PP_TC = [4.2, 5.8, 7.4];
 const PP_Y = [92, 162, 232].map(y => 400 + (y - 150) * 1.35);
-const PP_F = ['q · k = 0.50', 'q · k = 0.50 + 0.25', 'q · k = 0.50 + 0.25 + 0.60', 'q · k = 0.50 + 0.25 + 0.60 = 1.35'];
+const PP_F = ['q · k = 0.54', 'q · k = 0.54 + 0.25', 'q · k = 0.54 + 0.25 + 0.16', 'q · k = 0.54 + 0.25 + 0.16 = 0.95'];
 const PP_CARTE = [
   { x: 413, nome: 'Al', v: [-0.14, 0.14, 0.15], w: 0.1, q: 10, c: '#17B3B3' },
-  { x: 826, nome: 'Parco', v: [0.43, 0.59, 0.33], w: 0.7, q: 70, c: '#87FE87' },
-  { x: 1238, nome: 'Emma', v: [0.55, 0.07, -0.58], w: 0.2, q: 20, c: '#E3A58E' },
+  { x: 826, nome: 'Parco', v: [0.43, 0.59, 0.33], w: 0.6, q: 60, c: '#87FE87' },
+  { x: 1238, nome: 'Emma', v: [0.55, 0.07, -0.58], w: 0.3, q: 30, c: '#E3A58E' },
 ];
-const PP_NEW = [0.40, 0.44, 0.13], PP_IERI = [-0.15, 0.46, -0.38], PP_RY = [92, 162, 232], PP_NX = 826, PP_NY = 700;
+const PP_NEW = [0.41, 0.39, 0.04], PP_IERI = [-0.15, 0.46, -0.38], PP_RY = [92, 162, 232], PP_NX = 826, PP_NY = 700;
 function ppVal(v) {
   return '<g><rect x="-52" y="-24" width="104" height="48" rx="10" fill="#FFFDF6" stroke="#C8B48F" stroke-width="3"/><text y="10" text-anchor="middle" font-family="JetBrains Mono, monospace" font-weight="600" font-size="26" fill="' + (v < 0 ? '#B8332E' : '#2E2A26') + '">' + window.PZ.fmt(v) + '</text></g>';
 }
@@ -33,13 +33,13 @@ kit.scene('partita', {
       s += '<g class="pp-vq">' + ppVal(PP_Q[i]) + '</g><g class="pp-vk">' + ppVal(PP_K[i]) + '</g>' +
         '<text class="pp-x" x="960" y="' + (y + 14) + '" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="600" font-size="44" fill="#FFD978">×</text><g class="pp-p">' + P.pill(PP_P[i]) + '</g>';
     });
-    s += '<g class="pp-g">' + P.gettone(1.35) + '</g>' +
+    s += '<g class="pp-g">' + P.gettone(0.95) + '</g>' +
       '<g class="pp-ieri">' + P.gettone(1.35) + '<text y="88" text-anchor="middle" font-family="Fredoka, sans-serif" font-size="26" fill="#C8CEE8">ieri, con Mare</text></g>' +
-      '<text class="pp-ug" x="1070" y="752" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="600" font-size="54" fill="#FFD978">=</text></g>';
-    // C · il mescolamento: quote uguali, carte diverse.
+      '<text class="pp-ug" x="1070" y="752" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="600" font-size="54" fill="#FFD978">≠</text></g>';
+    // C · il mescolamento: quote nuove, carte diverse.
     s += '<g class="pp-C"><rect y="880" width="1920" height="200" fill="#1B2244"/><rect x="160" y="130" width="1300" height="740" rx="60" fill="#1E5A3A" opacity=".45"/>' +
       '<g class="pp-f2"><rect x="230" y="40" width="1160" height="70" rx="14" fill="#0F2A2A" stroke="#C9973F" stroke-width="5"/>' +
-      '<text x="810" y="87" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="27" fill="#9BE7C4">nuova carta = 0.1·Al + 0.7·Parco + 0.2·Emma</text></g>';
+      '<text x="810" y="87" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="27" fill="#9BE7C4">nuova carta = 0.1·Al + 0.6·Parco + 0.3·Emma</text></g>';
     PP_CARTE.forEach(c => {
       s += '<g class="pp-cc" transform="translate(' + c.x + ' 300) scale(.62) translate(-110 -150)">' + P.carta({ v: c.v, col: C[c.nome], titolo: c.nome, sotto: 'carta' }) + '</g>' +
         '<g transform="translate(' + c.x + ' 440)"><rect x="-50" y="-24" width="100" height="48" rx="24" fill="' + c.c + '"/><text y="10" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="600" font-size="28" fill="#141A33">' + c.q + '%</text></g>';
@@ -50,7 +50,7 @@ kit.scene('partita', {
       '<g class="pp-emma" style="transform-origin:1700px 880px"><g transform="translate(1620 666) scale(.8)">' + P.emma(P.VESTITO.rosa, { dx: -4 }) + '</g></g></g></svg>';
     kit.stage.append(kit.h('<div class="ground">' + s +
       P.sott('NARRATORE', 'Al primo piano, Emma alzò la stessa lanterna di ieri. Ma questa volta, davanti, c’era il cartello di Parco.') +
-      P.sott('ADA', 'Stesso gettone di ieri: uno virgola trentacinque. Ma nelle carte da mescolare c’è Parco al posto di Mare.') + '</div>'));
+      P.sott('ADA', 'Un gettone diverso da ieri: zero virgola novantacinque. E nelle carte da mescolare c’è Parco al posto di Mare.') + '</div>'));
     const all = c => [...kit.stage.querySelectorAll(c)], q = c => kit.stage.querySelector(c);
     this.B = q('.pp-B'); this.C = q('.pp-C');
     this.cq = q('.pp-cq'); this.ck = q('.pp-ck'); this.hl = all('.pp-hl'); this.vq = all('.pp-vq'); this.vk = all('.pp-vk'); this.x = all('.pp-x'); this.p = all('.pp-p');
@@ -90,7 +90,7 @@ kit.scene('partita', {
         const sx = c.x + 40, sy = 300 + (PP_RY[i] - 150) * 0.62, tx = PP_NX + 40, ty = PP_NY + (PP_RY[i] - 150) * 0.8;
         el.setAttribute('transform', 'translate(' + lerp(sx, tx, eio(p)).toFixed(1) + ' ' + (lerp(sy, ty, eio(p)) - 70 * Math.sin(Math.PI * p)).toFixed(1) + ') scale(' + (p <= 0 || p >= 1 ? 0 : 0.85).toFixed(2) + ')');
       }
-      this.cc[j].setAttribute('opacity', lerp(1, 0.45 + 0.55 * c.w / 0.7, eio(seg(t, 18.2, 18.8))).toFixed(2));
+      this.cc[j].setAttribute('opacity', lerp(1, 0.45 + 0.55 * c.w / 0.6, eio(seg(t, 18.2, 18.8))).toFixed(2));
     });
     this.rows.forEach((r, i) => r.setAttribute('opacity', eo(seg(t, 19.8 + i * 1.0, 20.2 + i * 1.0)).toFixed(2)));
     this.f2.setAttribute('opacity', eo(seg(t, 22.6, 23.2)).toFixed(2));

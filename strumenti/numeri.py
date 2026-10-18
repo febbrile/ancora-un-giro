@@ -35,9 +35,14 @@ Q_EMMA = [0.90, 0.20, -0.50]
 K = {
     'Al':    [-0.40, 0.30, 0.60],
     'mare':  [1.00, -0.30, -1.02],
-    'parco': [0.55, 1.25, -1.20],
+    'parco': [0.60, 1.25, -0.32],
     'Emma':  [0.20, 0.20, 0.24],
 }
+
+# Le quote e le carte nuove che si vedono a schermo (episodi 1 e 2). Mare e Parco danno gettoni diversi:
+# due carte diverse fanno lo stesso gettone solo per caso, e qui non lo facciamo succedere.
+QUOTE = {'mare': [0.1, 0.7, 0.2], 'parco': [0.1, 0.6, 0.3]}
+NUOVA = {'mare': [-0.15, 0.46, -0.38], 'parco': [0.41, 0.39, 0.04]}
 
 # Inventati e dichiarati: gli spostamenti dei tre piani (le cabine).
 DELTA = {
@@ -168,9 +173,10 @@ def viaggio(contesto):
         gettoni[t] = g
         print(f'  partita Emma–{t:5}', pastiglie, '→ gettone', g)
     quote = [round(p, 1) for p in softmax(list(gettoni.values()))]
-    assert quote == [0.1, 0.7, 0.2]
+    assert quote == QUOTE[contesto] and abs(sum(quote) - 1) < 1e-9
     nuova = r2([sum(q * E[t][i] for q, t in zip(quote, frase)) for i in range(3)])
     print('  quote', dict(zip(frase, quote)), '→ nuova carta', nuova)
+    assert nuova == NUOVA[contesto]
 
     # I piani: x = x + Δ, stanze lette col periscopio, colore dai vicini.
     x = E['Emma']
@@ -193,6 +199,7 @@ def viaggio(contesto):
 if __name__ == '__main__':
     tm, lm = viaggio('mare')
     tp, lp = viaggio('parco')
+    assert partita(Q_EMMA, K['mare'])[1] != partita(Q_EMMA, K['parco'])[1]
 
     # Ep. 1 e 2: stessa partenza, due strade.
     assert tm[0] == tp[0] == [0.55, 0.07, -0.58]
