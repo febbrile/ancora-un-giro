@@ -27,7 +27,7 @@ Bozza 3, 18 ottobre 2026. Sostituisce la bozza 2 (che resta nella storia del rep
 
 | Episodio | Titolo | Durata | Cuore dell'episodio |
 |---|---|---|---|
-| 1 | Al mare Emma | 4:54 | Il viaggio intero, una volta, con calma |
+| 1 | Al mare Emma | 4:48 | Il viaggio intero, una volta, con calma |
 | 2 | Al parco Emma | 4:16 | Stessa partenza, contesto diverso, strada diversa |
 | 3 | Fino alla Fine | 4:37 | Temperatura, il ciclo, l'ultima riga, EOS, max_tokens |
 | 4 | Mille semi | 3:01 | Da 3 coordinate a migliaia |
@@ -63,7 +63,7 @@ Lo strato adulto vive **sul monitor di Ada**, che si legge nei momenti senza voc
 
 | Elemento | Codifica visiva | Perché |
 |---|---|---|
-| **Parametri** (armadio E, lenti, cabine, campane U) | Pietra e metallo blu-ardesia, nelle pareti del pozzo. Non si muovono mai da soli | Fissi dopo l'addestramento |
+| **Parametri** (armadio E, lenti, ingranaggi, campane U) | Pietra e metallo blu-ardesia, nelle pareti del pozzo. Non si muovono mai da soli | Fissi dopo l'addestramento |
 | **Calcoli del momento** (carte nuove, gettoni, quote) | Luce, colore, bagliori | Nascono e muoiono a ogni frase |
 | **Il vettore di un token** | La sua **carta**: tre semi ♠ ♥ ♦, un valore per seme, i negativi in rosso | Le righe non hanno un nome |
 | **Il colore di Emma** | Il vestito prende il colore **delle parole a cui somiglia** | Il significato sta nelle direzioni, non nelle singole righe |
@@ -130,7 +130,7 @@ gioca       ♠ −0.36 ♥  0.67 ♦  0.38     felice    ♠ −0.31 ♥ −0.4
 
 Le quote sono uguali, ma le carte da mescolare no: è qui che le strade si separano.
 
-**Spostamenti (cabine, inventati) e posizioni:**
+**Spostamenti (ingranaggi, inventati) e posizioni:**
 ```
               al mare                               al parco
 partenza  x0  ♠  0.55 ♥ 0.07 ♦ −0.58               ♠ 0.55 ♥ 0.07 ♦ −0.58
@@ -206,7 +206,7 @@ Al parco Emma corre felice. ___   Fine   91%
 | **Il Grande Armadio** | Tabella E | Cassetti di pietra; da ogni cassetto esce una carta |
 | **La toppa sulla schiena** | Posizione | Un numero cucito: 1, 2, 3 (4, 5, 6 nell'ep. 3) |
 | **La Sala degli Sguardi** | Attention | Il tavolo da gioco: lanterne e cartelli sono carte |
-| **La Cabina** | Feed-forward | Cabina individuale, una macchina che stampa un biglietto |
+| **L'ingranaggio e la botola** | Feed-forward e spostamento | Sotto ogni viaggiatore gira un ingranaggio di pietra; poi si apre una botola nel punto dove lo spostamento lo porta |
 | **Le stanze** | Logit lens | Stanze sospese, arredate con le parole più vicine |
 | **Le campane del fondo** | U | Anello di campane di pietra, una per parola |
 | **Il secchio** | Distribuzione | Secchio di vetro con palline colorate, risale con la carrucola |
@@ -336,52 +336,37 @@ nuova carta = 0.1·Al + 0.7·Mare + 0.2·Emma
 
 ---
 
-### 1.7 · La cabina e la forza invisibile · 0:22
+### 1.7 · Sempre più giù · 0:46
 
-**VISIVO.** Emma entra da sola in una cabina. La macchina gira e stampa un biglietto. Si apre il pavimento: una forza che non si vede la tira via, in avanti e di lato (posa «tirata via»). Il vestito passa da rosa antico ad azzurro polvere.
+**VISIVO.** Una sequenza quasi muta: quattro piani uno sotto l'altro, e la camera scende con i viaggiatori.
+- **Il pavimento della Sala.** Sotto ognuno dei tre, dentro il pavimento di pietra, gira un piccolo ingranaggio. Poi si apre una botola: non proprio sotto i piedi, ma un po' più in là, e in un punto diverso per ognuno. Al, Mare ed Emma vengono tirati via, ognuno verso la sua botola (posa «tirata via»), e cadono.
+- **Piano 1, la spiaggia strana.** Atterrano insieme: sabbia, onde che escono dalle pareti, conchiglie appese come lampadari, il ritratto di Bovary appeso al nulla. Il vestito di Emma diventa azzurro polvere. Per un attimo la lanterna di Emma si riaccende verso i compagni: gli sguardi, senza carte. Gli ingranaggi girano, tre botole nuove, di nuovo giù.
+- **Piano 2, il molo.** Tra onde e conchiglie compare, per la prima volta, un verbo: **nuota**, su un salvagente. Il ritratto è sparito. Vestito azzurro. Sguardi, ingranaggi, botole.
+- **Piano 3, il fondo.** Acqua profonda e luminosa: **nuota** grande, **gioca** più piccolo. Vestito blu mare. Qui il pavimento non si apre più.
 
-Sul monitor il puntino di Emma scivola, lasciando una scia.
-
-**NARRATORE.**
-> Poi Emma entra da sola in una cabina, dove una macchina aggiunge ciò che il pozzo ha imparato del mondo. E una forza invisibile la tira via.
-
-**ADA.**
-> Lo strato non la rifà da capo: la sposta.
-
-**MONITOR.**
-```
-x1 = x0 + Δ1
-```
-
-**CONCETTO.** Feed-forward riga per riga; connessione residua.
-
----
-
-### 1.8 · Sempre più giù · 0:30
-
-**VISIVO.** Tre stanze, una dopo l'altra:
-- **Piano 1.** Una spiaggia dentro una stanza: pavimento di sabbia, onde che escono dalle pareti, conchiglie appese come lampadari. Appeso al nulla, il ritratto di Bovary, storto e bagnato.
-- **Piano 2.** Un molo: tra onde e conchiglie, per la prima volta, un verbo, **nuota**, scritto su un salvagente. Il ritratto è sparito.
-- **Piano 3.** Acqua profonda e luminosa: **nuota** grande, **gioca** più piccolo.
-
-A ogni piano la cabina, la forza, e il vestito sempre più blu. Al e Mare cadono sempre con Emma. La camera esce per un attimo: accanto al pozzo si vede in trasparenza un pozzo fantasma con decine di piani.
+Nell'angolo, il monitor di Ada disegna la scia di Emma, una freccia per piano. Alla fine la camera si allontana: sotto i tre piani se ne vedono in trasparenza decine di altri, un pozzo fantasma.
 
 **NARRATORE.**
-> Più scendeva, più il vestito di Emma diventava blu, come il mare. E al secondo piano comparve una parola nuova: non una cosa, ma un'azione.
+> E da lì, giù: un piano dopo l'altro.
 
 **ADA.**
 > Il mio pozzo ha tre piani. Quelli veri ne hanno decine.
 
 **MONITOR.**
 ```
-Le stanze: cosa verrebbe dopo se il pozzo finisse qui
+Ogni piano sposta tutti: x = x + Δ
 ```
 
-**CONCETTO.** Strati che affinano la direzione; logit lens come lettura; la griglia resta di tre righe.
+**CONCETTO.**
+- Ogni strato rifà gli sguardi (attention).
+- Poi, riga per riga, calcola uno spostamento: è il feed-forward, cioè l'ingranaggio.
+- Lo spostamento si somma a ciascuno (connessione residua): la botola si apre dove lo porta lo spostamento.
+- Vengono spostati tutti, non solo Emma.
+- Le stanze sono letture (logit lens).
 
 ---
 
-### 1.9 · Le campane del fondo · 0:35
+### 1.8 · Le campane del fondo · 0:35
 
 **VISIVO.** Sul fondo arriva solo Emma: Al e Mare restano un gradino più su e la salutano. Un anello di campane di pietra. La forza invisibile la tira verso uno spicchio dell'anello dove ce ne sono parecchie, tutte del mare. Dal vestito parte un'onda di luce che tocca tutte le campane nello stesso istante: *nuota* rintocca forte, *gioca* bene, *onde* piano, le altre quasi mute.
 
@@ -403,7 +388,7 @@ nuota: 1.98 + 1.31 − 0.01 = 3.28
 
 ---
 
-### 1.10 · Il secchio e la pesca · 0:32
+### 1.9 · Il secchio e la pesca · 0:32
 
 **VISIVO.** Il suono delle campane diventa una pioggia di palline in un secchio di vetro: tantissime blu (*nuota*), parecchie turchesi (*gioca*), poche di altri colori. La carrucola gira e il secchio risale fino al bancone di Ada. Una linea tratteggiata sul bancone: *fine del modello*. Ada infila la mano e pesca una pallina blu.
 
@@ -425,7 +410,7 @@ Campionamento: fuori dal modello
 
 ---
 
-### 1.11 · Continua · 0:08
+### 1.10 · Continua · 0:08
 
 **VISIVO.** Ada gira pagina sul quaderno e scrive: *Al parco Emma…* Cartello: **Continua**.
 
@@ -514,7 +499,7 @@ nuova carta = 0.1·Al + 0.7·Parco + 0.2·Emma
 
 ### 2.5 · Un'altra strada · 0:22
 
-**VISIVO.** La cabina, il biglietto, la forza invisibile: questa volta tira Emma **dall'altra parte**. Il vestito passa da rosa antico a verde salvia. Sul monitor, in trasparenza, la scia blu di ieri; il puntino di oggi parte dallo stesso punto e va altrove.
+**VISIVO.** Gli ingranaggi girano e si aprono le botole: questa volta quella di Emma si apre **dall'altra parte**, e la forza invisibile la tira lì; anche Al e Parco cadono nelle loro. Il vestito passa da rosa antico a verde salvia. Sul monitor, in trasparenza, la scia blu di ieri; il puntino di oggi parte dallo stesso punto e va altrove.
 
 **NARRATORE.**
 > La nuova carta era diversa, e la forza invisibile tirò Emma da un'altra parte.
@@ -760,7 +745,7 @@ max_tokens: un limite esterno.
 
 ### 3.9 · Il pozzo è fatto di numeri · 0:30
 
-**VISIVO.** Ada si affaccia al pozzo spento con una torcia. Le pareti diventano trasparenti: colonne di numeri, l'armadio in alto, le cabine in mezzo, le campane sul fondo. I numeri sono **fermi**. Ada passa la lente su una parete: si leggono uno per uno, ma non formano nessuna frase.
+**VISIVO.** Ada si affaccia al pozzo spento con una torcia. Le pareti diventano trasparenti: colonne di numeri, l'armadio in alto, gli ingranaggi in mezzo, le campane sul fondo. I numeri sono **fermi**. Ada passa la lente su una parete: si leggono uno per uno, ma non formano nessuna frase.
 
 **NARRATORE.**
 > Il pozzo non pensa e non sogna. È fatto solo di numeri, sistemati uno per uno durante un lunghissimo allenamento.
@@ -780,7 +765,7 @@ max_tokens: un limite esterno.
 ```
 1. Tokenizer: testo → numeri                  (fuori)
 2. Modello: numeri → secchio                  (deterministico)
-   carte → sguardi + cabine, x = x + Δ → ultima riga · U → softmax
+   carte → sguardi + ingranaggi, x = x + Δ → ultima riga · U → softmax
 3. Pesca con il termostato                    (fuori)
 4. La parola torna in fila → di nuovo al 2
 5. Stop: Fine (EOS) oppure la forbice
@@ -904,11 +889,11 @@ Modelli veri: migliaia di coordinate (per esempio 4.096)
 | 1.1 | Generazione token per token | — |
 | 1.2 | Tokenizer, indici | 7, 8 |
 | 1.3, 2.2 | Embedding, posizione, embedding uguale in ogni frase | 9, 10 |
-| 2.3, 1.8 | Logit lens, letture intermedie | 11, 12 |
+| 2.3, 1.7 | Logit lens, letture intermedie | 11, 12 |
 | 1.5, 1.6, 2.4 | Attention, query/key, prodotto scalare, softmax, pesi del momento | 15, 16 |
-| 1.7, 2.5 | Feed-forward, residuo | 15 |
-| 1.9, 2.7 | Ultima riga, U, direzione | 13, 14, 17 |
-| 1.10, 2.8 | Softmax, distribuzione, campionamento | 4 |
+| 1.7, 2.5 | Feed-forward (ingranaggi), residuo (botole), tutti si spostano | 15 |
+| 1.8, 2.7 | Ultima riga, U, direzione | 13, 14, 17 |
+| 1.9, 2.8 | Softmax, distribuzione, campionamento | 4 |
 | 3.1, 3.2 | Temperatura, determinismo | 3, 5 |
 | 2.9 | Contesto | 9, 10 |
 | 3.3–3.7 | Ciclo, ultima riga, EOS, max_tokens | 6, 12 |
@@ -926,12 +911,13 @@ Modelli veri: migliaia di coordinate (per esempio 4.096)
 5. **Dati inventati e dichiarati:** E, le righe di U, le lanterne e i cartelli, gli spostamenti Δ, le righe finali dei giri dell'ep. 3, le carte dell'ep. 4. Tutto il resto è calcolato.
 6. **Ep. 3, i giri successivi.** Il film mostra solo la riga finale di ogni giro e il suo secchio; il percorso dei nuovi viaggiatori nei piani non è calcolato.
 7. **Il vocabolario giocattolo** ha 14 parole; i modelli veri tra 30.000 e 200.000.
+8. **Tutti si spostano.** Ogni strato calcola uno spostamento per ogni posizione, non solo per l'ultima: per questo a ogni piano si aprono tre botole e cadono tutti. Gli spostamenti di Al e Mare non sono mostrati come numeri.
 
 ---
 
 ## 11. Produzione
 
-- **Cosa si riusa** dai film attuali: personaggi, laboratorio, Spezzaparole, armadio, caduta, tavolo da gioco, carte, gettoni, cabina, stanze, campane, secchio, pesca, cielo, sottotitoli a scorrimento.
+- **Cosa si riusa** dai film attuali: personaggi, laboratorio, Spezzaparole, armadio, caduta, tavolo da gioco, carte, gettoni, stanze, campane, secchio, pesca, cielo, sottotitoli a scorrimento.
 - **Cosa cambia ovunque:**
   - i semi delle carte (♠ ♥ ♦ al posto di goccia, foglia e stella);
   - le etichette del monitor (niente acqua, verde, nome);
@@ -940,6 +926,7 @@ Modelli veri: migliaia di coordinate (per esempio 4.096)
   - le durate di tutte le scene.
 - **Cosa è nuovo:**
   - Corre, Felice e Punto (vanno aggiunti alla tela dei personaggi);
+  - la discesa a botole con gli ingranaggi (al posto della cabina);
   - la gag di Bovary;
   - l'episodio 4 intero: frecce sul quaderno, il quarto asse che non ci sta, il rotolo.
 - **Ordine di lavoro proposto:**

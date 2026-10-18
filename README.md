@@ -18,7 +18,7 @@ Tratto dalla lezione *Come funziona un LLM: dal testo alla distribuzione di prob
 
 | # | Titolo | Durata | Cosa spiega | Guarda |
 |---|---|---|---|---|
-| 1 | Al mare Emma *(bozza 3)* | 4:54 | il viaggio intero: tokenizer, carte senza nome, partita a carte, piani, campane, secchio, pesca | [apri](https://claude.ai/artifact/2SYUjC4462ypdANocGCEoq) |
+| 1 | Al mare Emma *(bozza 3)* | 4:48 | il viaggio intero: tokenizer, carte senza nome, partita a carte, discesa a botole, campane, secchio, pesca | [apri](https://claude.ai/artifact/2SYUjC4462ypdANocGCEoq) |
 | 2 | Il primo sguardo | 3:06 | attention come partita a carte (prodotto scalare), softmax, strati, logit, temperatura, campionamento | [apri](https://claude.ai/artifact/PRKqd9xxxzQpEKizCuVcpb) |
 | 3 | Due cieli | 2:00 | la frase del parco, il ciclo autoregressivo, EOS e max_tokens, riepilogo | [apri](https://claude.ai/artifact/TjUNodB3pgkpZvFnSpgCNL) |
 

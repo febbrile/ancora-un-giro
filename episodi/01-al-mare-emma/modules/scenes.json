@@ -1,7 +1,7 @@
 {
   "v": 1,
   "stage": "final",
-  "look": "Il pozzo delle parole, bozza 3: illustrazione piatta e morbida dal model sheet approvato. Dentro il pozzo notte blu, pietra e luce; fuori, il laboratorio di Ada in carta, legno e ottone. Personaggi in SVG (Emma bionda col fermaglio a stellina, il vestito prende il colore dei vicini; Ada col camice lungo; Al sassolino, Mare onda). Ritmo lento: al massimo 12 caratteri al secondo di sottotitolo e almeno 3 secondi di sole immagini per scena. Le carte: ogni parola è una carta con tre semi senza nome (♠ ♥ ♦); due carte confrontate seme per seme danno pastiglie che si sommano in un gettone (prodotto scalare); i gettoni diventano quote; con le quote si mescolano le carte. Il monitor di Ada in verde menta su petrolio per i numeri.",
+  "look": "Il pozzo delle parole, bozza 3: illustrazione piatta e morbida dal model sheet approvato. Dentro il pozzo notte blu, pietra e luce; fuori, il laboratorio di Ada in carta, legno e ottone. Personaggi in SVG (Emma bionda col fermaglio a stellina, il vestito prende il colore dei vicini; Ada col camice lungo; Al sassolino, Mare onda). Ritmo lento: al massimo 12 caratteri al secondo di sottotitolo e almeno 3 secondi di sole immagini per scena. La discesa nei piani è quasi muta, con botole e ingranaggi. Le carte: ogni parola è una carta con tre semi senza nome (♠ ♥ ♦); due carte confrontate seme per seme danno pastiglie che si sommano in un gettone (prodotto scalare); i gettoni diventano quote; con le quote si mescolano le carte. Il monitor di Ada in verde menta su petrolio per i numeri.",
   "palettes": [
     [
       "#141A33",
@@ -71,16 +71,10 @@
       "desc": "I gettoni diventano quote 10/70/20; con le quote si mescolano le carte e nasce la nuova carta di Emma. Pietra fissa, quote del momento."
     },
     {
-      "id": "cabina",
-      "name": "La cabina e la forza",
-      "dur": 22,
-      "desc": "Emma entra da sola nella cabina; una forza invisibile la tira via; il vestito passa da rosa antico ad azzurro polvere."
-    },
-    {
       "id": "piani",
       "name": "Sempre più giù",
-      "dur": 30,
-      "desc": "La spiaggia strana con il ritratto, il molo con «nuota», l'acqua profonda; la scia sul monitor; il pozzo fantasma con decine di piani."
+      "dur": 46,
+      "desc": "Quasi senza parole: a ogni piano gira un ingranaggio sotto ognuno, si apre una botola diversa per ciascuno e cadono tutti e tre; spiaggia strana, molo con «nuota», acqua profonda; il pozzo fantasma."
     },
     {
       "id": "campane",

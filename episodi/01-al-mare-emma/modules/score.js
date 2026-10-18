@@ -32,9 +32,9 @@ kit.score(function (S, T) {
   sez(T.armadio, T.caduta, ['Bm', 'G', 'Em', 'Fm'], { pad: 30, vib: 32 });
   sez(T.caduta, T.partita, ['Bm', 'A'], { pad: 32, bass: 50 });
   sez(T.partita, T.nuovacarta, giro, { pad: 28, mallet: 'x...x...', mv: 38, bass: 48 });
-  sez(T.nuovacarta, T.cabina, ['G', 'D', 'Em', 'A'], { pad: 32, keys: 34 });
-  sez(T.cabina, T.piani, ['Bm', 'A'], { pad: 30, bass: 50 });
-  sez(T.piani, T.campane, giro, { pad: 32, mallet: 'x.x.X.x.', mv: 42 });
+  sez(T.nuovacarta, T.piani, ['G', 'D', 'Em', 'A'], { pad: 32, keys: 34 });
+  sez(T.piani, T.piani + 32, ['Bm', 'G', 'D', 'A'], { pad: 30, mallet: 'x..x..x.', mv: 40, bass: 46 });
+  sez(T.piani + 32, T.campane, ['Bm', 'G', 'Em', 'Fm'], { pad: 34, vib: 30 });
   sez(T.campane, T.pesca, ['Bm', 'Em', 'G', 'D'], { pad: 30, vib: 28 });
   sez(T.pesca, T.continua, ['G', 'A', 'D', 'D'], { pad: 30, keys: 32, bass: 46 });
   S.drums({ kick: 'x.......', sidestick: '....x...', shaker: 'oxoxoxox' }, { from: Math.ceil(bt(T.pesca + 26)), repeat: 1, vel: 40 });
@@ -70,13 +70,15 @@ kit.score(function (S, T) {
   S.fx('whoosh', nc + 1.4, { dur: 1.2 }); S.fx('whoosh', nc + 3.6, { dur: 1.0 });
   for (let k = 0; k < 9; k++) S.fx('tick', nc + 8.4 + k * 0.33, { vel: 28 });
   S.fx('sparkle', nc + 13.4, { vel: 50 });
-  const cb = T.cabina;
-  S.fx('thud', cb + 1.8, { vel: 44 }); S.fx('pop', cb + 5.0, { vel: 50 }); S.fx('whoosh', cb + 10.6, { dur: 3.0 });
-  S.drums({ woodblock: 'x.x.x.x.' }, { from: Math.ceil(bt(cb + 2.1)), repeat: 1, vel: 38 });
   const pi = T.piani;
-  [1.0, 1.6, 1.9].forEach(c => S.fx('boing', pi + c, { vel: 42 }));
-  S.fx('whoosh', pi + 9.4, { dur: 0.8 }); S.fx('whoosh', pi + 17.6, { dur: 1.0 });
-  S.fx('revswell', pi + 21.0, { dur: 3.0 });
+  [4.2, 14.4, 24.8].forEach(o => {
+    for (let k = 0; k < 6; k++) S.fx('tick', pi + o - 1.4 + k * 0.25, { vel: 30 });
+    S.fx('click', pi + o - 0.2, { vel: 46 });
+    S.fx('whoosh', pi + o, { dur: 1.8 });
+    [0, 0.12, 0.24].forEach(d => S.fx('boing', pi + o + 1.8 + d, { vel: 38 }));
+  });
+  [11.0, 21.4].forEach(g => S.fx('sparkle', pi + g + 0.3, { vel: 40 }));
+  S.fx('revswell', pi + 32.0, { dur: 4.0 });
   const ca = T.campane;
   S.chord('box', ['A5', 'C#6', 'E6'], { t: ca + 6.6, dur: 1.5, vel: 46 });
   S.chord('vib', ['F#4', 'A4', 'C#5', 'E5'], { t: ca + 7.2, dur: 3, vel: 50 });
