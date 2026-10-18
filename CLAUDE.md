@@ -92,6 +92,17 @@ se una scena è bella ma scientificamente sbagliata, si riscrive.
 - Testi SVG: font Fredoka per le scritte, JetBrains Mono per i numeri; la regola in `base.css` li forza.
 - Ogni scena è `kit.scene(id, { init, render(t) })`; i tempi interni usano `seg`, `eo`, `eio`.
 
+## Il sito (player nostro)
+
+- `sito/` fa girare gli stessi `episodi/*/modules` nel browser, senza Motion. Le scene **non si duplicano**:
+  una modifica a una scena vale per l'artifact e per il sito.
+- Le scene possono usare solo le funzioni del kit che `sito/motore/kit.js` offre. Se una scena ne usa una nuova,
+  prima la si aggiunge al motore (con lo stesso comportamento di Motion), poi la si usa.
+- La musica del sito la suona `sito/motore/suono.js`: stessi comandi di `score.js`, strumenti nostri.
+- Il player di Motion (`app.js`) non va mai copiato nel repository né pubblicato: è codice di Anthropic.
+- Prima di dire che il sito funziona, apri `sito/guarda.html?ep=…&t=…` con un server locale e guarda i fotogrammi.
+- In `sito/episodi.json` c'è l'elenco degli episodi: aggiornalo quando ne nasce uno nuovo.
+
 ## Verifica
 
 - Per guardare un episodio: renderer offline (`render.mjs` con playwright-core e il Chrome dell'utente), che
@@ -102,5 +113,5 @@ se una scena è bella ma scientificamente sbagliata, si riscrive.
 
 ## Repository
 
-- `sceneggiatura/` la sceneggiatura · `episodi/NN-titolo/` i film · `personaggi/` la tela · `strumenti/` script.
+- `sceneggiatura/` la sceneggiatura · `episodi/NN-titolo/` i film · `sito/` il sito statico · `personaggi/` la tela · `strumenti/` script.
 - Commit in italiano, uno per passo logico (sceneggiatura, numeri, singolo episodio).

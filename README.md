@@ -1,6 +1,6 @@
 # Il pozzo delle parole
 
-Un piccolo cartone animato in tre episodi che racconta come un LLM sceglie il prossimo token.
+Un piccolo cartone animato in quattro episodi che racconta come un LLM sceglie il prossimo token.
 Si legge su due livelli: per un bambino è la fiaba di Emma che cade in un pozzo e attraversa stanze strane;
 per un adulto è il viaggio di un vettore attraverso gli strati di un Transformer giocattolo, con numeri veri.
 
@@ -12,7 +12,8 @@ Tratto dalla lezione *Come funziona un LLM: dal testo alla distribuzione di prob
 
 ## Episodi
 
-Tutti e tre gli episodi seguono la bozza 3 della sceneggiatura. L'episodio 4, «Mille semi», è scritto ma non ancora prodotto.
+Tutti e quattro gli episodi seguono la bozza 3 della sceneggiatura. Si guardano in due modi: come artifact Motion
+su claude.ai (link nella tabella) o nel **sito**, con il player nostro (vedi sotto).
 
 | # | Titolo | Durata | Cosa spiega | Guarda |
 |---|---|---|---|---|
@@ -36,6 +37,12 @@ episodi/NN-titolo/               il sorgente di ogni episodio (film Motion)
   modules/score.js               la colonna sonora
   modules/base.css               stile comune
   modules/fetched-fonts.json     elenco font gestito dal player: non modificarlo a mano
+sito/                            il sito statico: elenco episodi e player nostro che legge episodi/*/modules
+  index.html, guarda.html        le due pagine (guarda.html?ep=01-al-mare-emma)
+  motore/kit.js                  le funzioni del kit di Motion che usano le scene, scritte da noi
+  motore/suono.js                il sintetizzatore Web Audio che suona score.js
+  motore/player.js               palco, barra del tempo, capitoli, tastiera
+  episodi.json                   l'elenco degli episodi del sito
 personaggi/                      la tela di design: Emma, Ada, i compagni, gli oggetti, due fotogrammi di prova
 strumenti/numeri.py              il modellino giocattolo della bozza 3: unica fonte di tutti i numeri
 strumenti/numeri_bozza2.py       i numeri dei film attuali (bozza 2), finché non sono ricostruiti
@@ -62,10 +69,28 @@ Questa cartella ne è la copia di sorgente, esportata il 18 ottobre 2026.
 
 - Per modificare una scena si aggiorna il documento corrispondente nello store dell'artifact
   (`modules/<file>`), poi si riallinea il file qui e si fa commit.
-- Ogni episodio ha il suo `shared.js`: gli episodi 2 e 3 condividono la stessa versione (con carte e gettoni),
-  l'episodio 1 ha la versione precedente.
+- Tutti gli episodi hanno lo stesso `shared.js`.
 - I sottotitoli si spezzano da soli in pezzi di 18–48 caratteri, senza mai chiudere un pezzo su un articolo,
   una preposizione o una congiunzione.
+
+## Il sito
+
+Il sito fa girare gli stessi file di `episodi/` nel browser, senza Motion: le scene non si copiano e non si
+riscrivono. Il player nostro (`sito/motore/`) offre le stesse funzioni del kit (`kit.scene`, `kit.h`, `kit.rng`,
+`kit.typist`, `TextFx`, le curve `seg`, `eo`, `eio`, …) e suona `score.js` con un sintetizzatore suo:
+le immagini sono identiche a Motion, la musica è simile ma non uguale.
+
+Per provarlo in locale, dalla cartella del repository:
+
+```bash
+python3 -m http.server 8765
+```
+
+poi si apre http://localhost:8765/sito/. Serve un server (anche questo): aprendo il file con doppio clic il
+browser non lascia leggere i moduli. `guarda.html?ep=01-al-mare-emma&t=40` apre il film fermo al secondo 40.
+
+Per pubblicarlo basta un hosting statico che serva tutta la cartella (per esempio GitHub Pages dalla radice):
+il sito legge i moduli da `../episodi/`.
 
 ## Regole scientifiche
 
