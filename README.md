@@ -7,6 +7,8 @@ per un adulto è il viaggio di un vettore attraverso gli strati di un Transforme
 Due frasi, un esperimento: **«Al mare Emma…»** e **«Al parco Emma…»**. Emma parte uguale in entrambe,
 la scienziata Ada legge le coordinate, gli strati la spostano, e in fondo al pozzo nasce la parola dopo.
 
+**Guardalo online: https://febbrile.github.io/il-pozzo-delle-parole/**
+
 Tratto dalla lezione *Come funziona un LLM: dal testo alla distribuzione di probabilità*
 ([appunti](https://claude.ai/artifact/8895nMYp1Dtj2HpaDCuuJE)).
 
@@ -96,8 +98,9 @@ python3 -m http.server 8765
 poi si apre http://localhost:8765/sito/. Serve un server (anche questo): aprendo il file con doppio clic il
 browser non lascia leggere i moduli. `guarda.html?ep=01-al-mare-emma&t=40` apre il film fermo al secondo 40.
 
-Per pubblicarlo basta un hosting statico che serva tutta la cartella (per esempio GitHub Pages dalla radice):
-il sito legge i moduli da `../episodi/`.
+Il sito è pubblicato con GitHub Pages dalla radice del ramo `main` di
+[febbrile/il-pozzo-delle-parole](https://github.com/febbrile/il-pozzo-delle-parole): ogni push su `main` lo aggiorna.
+Il sito legge i moduli da `../episodi/`.
 
 ## Regole scientifiche
 
