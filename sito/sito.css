@@ -52,12 +52,29 @@ a { color: var(--oro) }
 .velo .messaggio { font-size: 18px; color: var(--crema); max-width: 520px }
 .velo .messaggio.errore { color: #FFB4A8 }
 
-.comandi { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: var(--fondo); border: 1px solid var(--bordo); border-top: 0; border-radius: 0 0 14px 14px }
+.comandi { position: relative; display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: var(--fondo); border: 1px solid var(--bordo); border-top: 0; border-radius: 0 0 14px 14px }
 .lettore:fullscreen .comandi { border-radius: 0; border: 0 }
-.comandi button { flex: none; width: 40px; height: 40px; border-radius: 10px; border: 0; background: transparent; color: var(--crema); display: grid; place-items: center; cursor: pointer }
-.comandi button:hover, .comandi button:focus-visible { background: var(--pannello); outline: none }
-.comandi button svg { width: 22px; height: 22px }
-.comandi button.stile { width: auto; padding: 0 12px; font: inherit; font-size: 14px; font-weight: 700; border: 1px solid var(--bordo); color: var(--oro); white-space: nowrap }
+.comandi > button { flex: none; width: 40px; height: 40px; border-radius: 10px; border: 0; background: transparent; color: var(--crema); display: grid; place-items: center; cursor: pointer }
+.comandi > button:hover, .comandi > button:focus-visible { background: var(--pannello); outline: none }
+.comandi > button[aria-expanded="true"] { background: var(--pannello); color: var(--oro) }
+.comandi > button svg { width: 22px; height: 22px }
+
+/* Il pannello dell'audio: un canale per riga, con interruttore e volume. */
+.pannello-audio { position: absolute; right: 10px; bottom: calc(100% + 8px); z-index: 5; width: 290px; max-width: calc(100vw - 32px); display: flex; flex-direction: column; gap: 16px; padding: 16px 18px; background: var(--pannello); border: 1px solid var(--bordo); border-radius: 14px; box-shadow: 0 14px 40px rgba(0, 0, 0, .45) }
+.pannello-audio[hidden] { display: none }
+.canale .testa { display: flex; align-items: center; justify-content: space-between; gap: 12px; font-weight: 700 }
+.canale input[type=range] { display: block; width: 100%; margin: 10px 0 0; accent-color: var(--oro); cursor: pointer }
+.canale.spento input[type=range] { opacity: .4 }
+.canale.spento .nome { color: var(--tenue) }
+.interruttore { position: relative; flex: none; width: 46px; height: 26px; padding: 0; border: 0; border-radius: 13px; background: var(--bordo); cursor: pointer; transition: background .15s }
+.interruttore span { position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 50%; background: var(--tenue); transition: transform .15s, background .15s }
+.interruttore[aria-checked="true"] { background: var(--oro) }
+.interruttore[aria-checked="true"] span { transform: translateX(20px); background: var(--fondo) }
+.interruttore:focus-visible, .stili button:focus-visible { outline: 2px solid var(--crema); outline-offset: 2px }
+.stili { display: flex; gap: 6px; margin-top: 12px }
+.stili button { flex: 1; padding: 6px 8px; border: 1px solid var(--bordo); border-radius: 999px; background: var(--fondo); color: var(--crema); font: inherit; font-size: 14px; cursor: pointer }
+.stili button[aria-pressed="true"] { border-color: var(--oro); color: var(--oro) }
+.canale.spento .stili { opacity: .5 }
 .comandi .orologio { flex: none; font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--tenue); min-width: 96px; text-align: center }
 .barra { position: relative; flex: 1; height: 40px; cursor: pointer; touch-action: none }
 .barra .binario { position: absolute; left: 0; right: 0; top: 50%; height: 6px; margin-top: -3px; border-radius: 3px; background: var(--bordo) }
@@ -85,7 +102,9 @@ a { color: var(--oro) }
   .schermo { border-radius: 0 }
   .comandi { border-radius: 0; border-left: 0; border-right: 0; gap: 6px; padding: 8px 10px }
   .comandi .orologio { min-width: 0; font-size: 12px }
-  .comandi button.stile { padding: 0 8px; font-size: 12px }
+  /* Sul telefono lo schermo è basso: il pannello si apre sotto i comandi, sopra i capitoli (in schermo intero resta sopra). */
+  .pannello-audio { right: 6px; top: calc(100% + 8px); bottom: auto }
+  .lettore:fullscreen .pannello-audio { top: auto; bottom: calc(100% + 8px) }
   .capitoli, .aiuto { padding: 0 16px }
   .velo .grande { width: 72px; height: 72px }
   .copertina, .episodi, .piede, .vicini { padding-left: 16px; padding-right: 16px }

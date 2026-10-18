@@ -1,0 +1,23 @@
+{
+  "musica": {
+    "tema": {
+      "frasi": [
+        {
+          "accordi": ["D", "Bm", "G", "A"],
+          "carattere": "leggero"
+        },
+        {
+          "accordi": ["D", "Bm", "G", "A"],
+          "carattere": "vivace"
+        }
+      ]
+    },
+    "dissolvenza": 3
+  },
+  "volumi": {
+    "musica": -20,
+    "effetti": 0,
+    "voce": 0
+  },
+  "clip": []
+}

@@ -1,6 +1,11 @@
 // Il suono del pozzo: un piccolo sintetizzatore Web Audio che suona la partitura di score.js.
 // Strumenti e rumori sono fatti da noi: somigliano a quelli di Motion, ma non sono identici.
-// Due stili: «calma» suona la partitura com'è; «anni 90» la suona riarrangiata da anni90.js, con voci da console.
+// Due stili: «calma» suona la musica com'è; «anni 90» la suona riarrangiata da anni90.js, con voci da console.
+// Il suono passa per tre canali, ognuno col suo volume e il suo interruttore:
+//   musica   il tema dell'episodio (tema.js), un file audio, oppure la musica di score.js scena per scena
+//   effetti  i rumori di score.js (S.fx)
+//   voce     i file audio messi a un istante del film (per esempio una voce narrante)
+// Cosa suona in ogni canale lo dice episodi/NN-titolo/audio/tracce.json.
 (function () {
   'use strict';
 
@@ -28,28 +33,82 @@
   const LIVELLO = 2.0;             // volume generale prima del master (misurato: circa −18 dB RMS, come i film di Motion)
   const SOSTENUTI = { pad: 1, ep: 1, vibes: 1, keys: 1, bass: 1, 'chip-pad': 1 };   // note lunghe da riprendere a metà se si salta nel tempo
 
-  function creaSuono(partitura, durata, stileIniziale) {
+  const CANALI = ['musica', 'effetti', 'voce'];
+
+  // Quali canali hanno qualcosa da suonare in questo episodio.
+  function canaliPresenti(partitura, audio) {
+    audio = audio || {};
+    const ev = partitura.eventi;
+    return {
+      musica: !!(audio.musica && (audio.musica.tema || audio.musica.file)) || ev.some(e => e.tipo !== 'rumore'),
+      effetti: ev.some(e => e.tipo === 'rumore'),
+      voce: (audio.clip || []).some(c => (c.canale || 'voce') === 'voce'),
+    };
+  }
+
+  // partitura: quella di score.js · durata: del film · audio: tracce.json con `base`, la cartella da cui leggere i file.
+  function creaSuono(partitura, durata, audio, stileIniziale) {
     const AC = window.AudioContext || window.webkitAudioContext;
     if (!AC) return null;
     const ctx = new AC();
     const master = partitura.master;
-    const versioni = { calma: partitura.eventi };
-    let stile = 'calma', eventi = partitura.eventi;
+    audio = audio || {};
+    const musica = audio.musica || {};
+
+    // Gli eventi da suonare, già divisi per canale. La musica cambia con lo stile, gli effetti no.
+    const effetti = partitura.eventi.filter(e => e.tipo === 'rumore').map(e => Object.assign({}, e, { canale: 'effetti' }));
+    const arrangia = (p, s) => s === 'anni90' && Pozzo.anni90 ? Pozzo.anni90(p) : p.eventi;
+    function componi(s) {
+      let note;
+      if (musica.tema && Pozzo.tema) {          // il tema: un giro che si ripete uguale per tutto l'episodio
+        const giro = Pozzo.tema(musica.tema, partitura.griglia);
+        note = Pozzo.ripeti(arrangia(giro, s), giro.durata, durata);
+      } else if (musica.file) note = [];        // la musica è un file: la suona una clip
+      else note = arrangia(partitura, s);        // la musica di score.js, scena per scena come in Motion
+      note = note.filter(e => e.tipo !== 'rumore').map(e => Object.assign({}, e, { canale: 'musica' }));
+      return note.concat(effetti).sort((a, b) => a.t - b.t);
+    }
+    const versioni = {};
+    let stile = 'calma', eventi = [];
     function scegli(s) {
-      if (s === 'anni90' && !versioni.anni90) versioni.anni90 = Pozzo.anni90 ? Pozzo.anni90(partitura) : partitura.eventi;
-      stile = versioni[s] ? s : 'calma'; eventi = versioni[stile];
+      stile = s === 'anni90' ? 'anni90' : 'calma';
+      eventi = versioni[stile] || (versioni[stile] = componi(stile));
     }
     scegli(stileIniziale || 'calma');
 
-    // Catena finale: master → compressore → uscita, con un riverbero condiviso.
+    // Catena finale: canali → master → compressore → interruttore generale → uscita, con un riverbero condiviso.
     const uscita = ctx.createGain(); uscita.gain.value = db(master.gain + 6);
     const comp = ctx.createDynamicsCompressor(); comp.threshold.value = -8; comp.knee.value = 6; comp.ratio.value = 8; comp.attack.value = 0.003; comp.release.value = 0.2;
-    uscita.connect(comp).connect(ctx.destination);
+    const generale = ctx.createGain();
+    uscita.connect(comp).connect(generale).connect(ctx.destination);
     const riverbero = ctx.createConvolver(); riverbero.buffer = risposta(ctx, 2.6);
     const ritorno = ctx.createGain(); ritorno.gain.value = 0.55;
     riverbero.connect(ritorno).connect(uscita);
-    const muto = ctx.createGain(); muto.connect(uscita);
+    // Ogni canale ha il suo fader, prima e dopo il riverbero: spento, si spegne anche la sua coda.
+    const canali = {};
+    CANALI.forEach(n => {
+      const secco = ctx.createGain(), bagnato = ctx.createGain();
+      secco.connect(uscita); bagnato.connect(riverbero);
+      canali[n] = { secco, bagnato, volume: 1, acceso: true };
+    });
+    function regola(n) {
+      const c = canali[n], g = c.acceso ? c.volume : 0;
+      [c.secco, c.bagnato].forEach(x => x.gain.setTargetAtTime(g, ctx.currentTime, 0.03));
+    }
     const rumoreBianco = rumore(ctx, 2);
+
+    // I file audio: si caricano subito e, se il film sta già suonando, entrano al punto giusto.
+    const clip = (audio.clip || []).filter(c => c && c.file).map(c => ({
+      canale: CANALI.indexOf(c.canale) >= 0 ? c.canale : 'voce', file: c.file, da: Number(c.da) || 0, giro: !!c.giro, gain: db(Number(c.livello) || 0),
+    }));
+    if (musica.file && !musica.tema) clip.push({ canale: 'musica', file: musica.file, da: 0, giro: musica.giro !== false, gain: db(Number(musica.livello) || 0) });
+    clip.forEach(c => {
+      fetch((audio.base || '') + c.file)
+        .then(r => { if (!r.ok) throw new Error(r.status); return r.arrayBuffer(); })
+        .then(b => new Promise((ok, ko) => ctx.decodeAudioData(b, ok, ko)))
+        .then(buf => { c.buffer = buf; if (sessione) suonaClip(c, sessione); })
+        .catch(e => console.warn('audio: non riesco a caricare ' + c.file, e));
+    });
 
     let sessione = null;
     let caso = Pozzo.rng(11);
@@ -65,14 +124,16 @@
       return b;
     }
 
-    // Una voce: panorama, mandata al riverbero, e il bus della sessione (che si zittisce quando si ferma).
+    // Una voce: panorama, mandata al riverbero, e il bus del suo canale nella sessione (che si zittisce quando si ferma).
+    let canale = 'musica';
     function voce(p, amp, fine) {
+      const bus = sessione.bus[canale];
       const g = ctx.createGain(); g.gain.value = amp;
       const pan = ctx.createStereoPanner ? ctx.createStereoPanner() : null;
       const entra = pan || g;
       if (pan) { pan.pan.value = Math.max(-1, Math.min(1, p.pan || 0)); pan.connect(g); }
-      g.connect(sessione.secco);
-      const mand = ctx.createGain(); mand.gain.value = Math.max(0, Math.min(1, p.rev || 0)); g.connect(mand).connect(sessione.bagnato);
+      g.connect(bus.secco);
+      const mand = ctx.createGain(); mand.gain.value = Math.max(0, Math.min(1, p.rev || 0)); g.connect(mand).connect(bus.bagnato);
       setTimeout(() => { try { g.disconnect(); mand.disconnect(); if (pan) pan.disconnect(); } catch (e) {} }, Math.max(0, (fine - ctx.currentTime) * 1000 + 3000));
       return entra;
     }
@@ -262,6 +323,7 @@
       const nome = ALIAS[ev.patch] || ev.patch;
       const p = Object.assign({}, BASE[nome] || { pan: 0, rev: 0.3, gain: -4 }, ev.params);
       const amp = LIVELLO * db(p.gain || 0) * Math.pow(ev.vel / 127, 1.5);
+      canale = ev.canale || 'musica';
       if (ev.tipo === 'nota') nota(nome, ev.midi, t, d, amp, p);
       else if (ev.tipo === 'batteria') batteria(nome, t, amp, p);
       else effetto(nome, t, d, amp, p);
@@ -270,20 +332,29 @@
     // ── Trasporto: si suona da un punto del film, guardando poco avanti ─────────────────────────────
     function avvia(da) {
       ferma();
-      const secco = ctx.createGain(), bagnato = ctx.createGain();
-      secco.connect(muto); bagnato.connect(riverbero);
-      const t0 = ctx.currentTime + 0.06;
-      sessione = { secco, bagnato, da, t0, i: 0 };
+      const t0 = ctx.currentTime + 0.06, bus = {};
+      CANALI.forEach(n => {
+        const secco = ctx.createGain(), bagnato = ctx.createGain();
+        secco.connect(canali[n].secco); bagnato.connect(canali[n].bagnato);
+        bus[n] = { secco, bagnato };
+      });
+      sessione = { bus, da, t0, i: 0, sorgenti: [] };
       // Le note lunghe già iniziate ripartono da qui.
       eventi.forEach(ev => {
         if (ev.t < da && ev.tipo === 'nota' && SOSTENUTI[ALIAS[ev.patch] || ev.patch] && ev.t + ev.dur > da + 0.1) suona(ev, t0, ev.t + ev.dur - da);
       });
       while (sessione.i < eventi.length && eventi[sessione.i].t < da) sessione.i++;
-      // Dissolvenza finale del master.
-      const fineFilm = t0 + (durata - da), fo = master.fadeOut || 0;
-      if (fo > 0 && durata - da > 0) {
-        [secco, bagnato].forEach(g => { g.gain.setValueAtTime(1, Math.max(t0, fineFilm - fo)); g.gain.linearRampToValueAtTime(0, fineFilm); });
-      }
+      // Dissolvenza finale: quella del master per tutti, più lunga per la musica se tracce.json lo chiede.
+      const fineFilm = t0 + (durata - da), resta = durata - da;
+      CANALI.forEach(n => {
+        const fo = Math.max(master.fadeOut || 0, n === 'musica' ? Number(musica.dissolvenza) || 0 : 0);
+        if (!(fo > 0) || !(resta > 0)) return;
+        const parte = Math.min(1, resta / fo);
+        [bus[n].secco, bus[n].bagnato].forEach(g => {
+          g.gain.setValueAtTime(parte, Math.max(t0, fineFilm - fo)); g.gain.linearRampToValueAtTime(0, fineFilm);
+        });
+      });
+      clip.forEach(c => { if (c.buffer) suonaClip(c, sessione); });
       programma();
       sessione.timer = setInterval(programma, 50);
       if (ctx.state === 'suspended') ctx.resume();
@@ -298,13 +369,29 @@
         suona(ev, s.t0 + ev.t - s.da, ev.dur);
       }
     }
+    // Un file audio: parte al suo istante del film (o subito, a metà, se quell'istante è già passato).
+    function suonaClip(c, s) {
+      const ora = Math.max(s.da, ctx.currentTime - s.t0 + s.da);   // il tempo del film adesso
+      const quando = Math.max(c.da, ora);
+      let offset = quando - c.da;
+      if (c.giro) offset %= c.buffer.duration; else if (offset >= c.buffer.duration) return;
+      if (quando >= durata) return;
+      const src = ctx.createBufferSource(), g = ctx.createGain();
+      src.buffer = c.buffer; src.loop = c.giro; g.gain.value = c.gain;
+      src.connect(g).connect(s.bus[c.canale].secco);
+      src.start(s.t0 + quando - s.da, offset);
+      src.stop(s.t0 + durata - s.da + 0.1);
+      s.sorgenti.push(src);
+    }
     function ferma() {
       const s = sessione;
       if (!s) return;
       clearInterval(s.timer);
-      const ora = ctx.currentTime;
-      [s.secco, s.bagnato].forEach(g => { g.gain.cancelScheduledValues(ora); g.gain.setValueAtTime(g.gain.value, ora); g.gain.linearRampToValueAtTime(0, ora + 0.06); });
-      setTimeout(() => { try { s.secco.disconnect(); s.bagnato.disconnect(); } catch (e) {} }, 200);
+      const ora = ctx.currentTime, nodi = [];
+      CANALI.forEach(n => nodi.push(s.bus[n].secco, s.bus[n].bagnato));
+      nodi.forEach(g => { g.gain.cancelScheduledValues(ora); g.gain.setValueAtTime(g.gain.value, ora); g.gain.linearRampToValueAtTime(0, ora + 0.06); });
+      s.sorgenti.forEach(src => { try { src.stop(ora + 0.08); } catch (e) {} });
+      setTimeout(() => { nodi.forEach(g => { try { g.disconnect(); } catch (e) {} }); }, 200);
       sessione = null;
     }
 
@@ -316,9 +403,18 @@
       stile(s) { const ora = this.tempo(); scegli(s); if (ora !== null) avvia(ora); return stile; },
       // Il tempo del film secondo l'orologio dell'audio (null se non sta suonando).
       tempo() { return sessione ? sessione.da + Math.max(0, ctx.currentTime - sessione.t0) : null; },
-      muto(si) { muto.gain.setTargetAtTime(si ? 0 : 1, ctx.currentTime, 0.02); ritorno.gain.setTargetAtTime(si ? 0 : 0.55, ctx.currentTime, 0.02); },
+      muto(si) { generale.gain.setTargetAtTime(si ? 0 : 1, ctx.currentTime, 0.02); },
+      // Un canale: volume (guadagno lineare, 1 = com'è scritto) e acceso/spento.
+      canale(nome, o) {
+        const c = canali[nome];
+        if (!c) return null;
+        if (o && typeof o.volume === 'number' && isFinite(o.volume)) c.volume = Math.max(0, o.volume);
+        if (o && typeof o.acceso === 'boolean') c.acceso = o.acceso;
+        regola(nome);
+        return { volume: c.volume, acceso: c.acceso };
+      },
     };
   }
 
-  window.Pozzo = Object.assign(window.Pozzo || {}, { creaSuono });
+  window.Pozzo = Object.assign(window.Pozzo || {}, { creaSuono, canaliPresenti, CANALI });
 })();
