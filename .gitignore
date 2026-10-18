@@ -2,5 +2,6 @@
 __pycache__/
 node_modules/
 *.png
-!anteprime/*.png
+!design/*.png
 *.mp4
+fotogrammi/

@@ -1,5 +1,5 @@
-# Soggetto · Le fondamenta
-### Bozza 1, 19 ottobre 2026
+# Ancora un giro · Il soggetto
+### Le fondamenta · bozza 2, 19 ottobre 2026
 
 Questa pagina viene prima di tutto il resto. Ogni personaggio, luogo, episodio o regola nuova deve poterci stare sopra.
 Se una scelta futura contraddice questa pagina, si cambia la scelta, oppure si discute e si cambia prima questa pagina.
@@ -40,10 +40,11 @@ Sono le leggi fisiche del nostro mondo. Valgono in ogni episodio, anche quando n
 - **La vasca.** Il treno esce dalla montagna sopra la vasca della pesca. Conta solo dove passa l'ultimo vagone: da lì cadono nell'acqua le paperelle, tantissime di un colore, parecchie di un altro, poche di tutti gli altri. Ogni colore è una parola.
 - **La pesca.** Ada pesca una paperella senza guardare. Le altre scivolano via dallo scarico e la vasca torna vuota.
 - **Ancora un giro.** La paperella pescata sale in un vagone nuovo, in fondo al treno, e il treno riparte, un vagone più lungo.
+- **Si riparte dai biglietti.** Quando il treno rientra in stazione, ogni vestito torna del colore del suo biglietto. A ogni giro i colori si rifanno da capo, e con gli stessi passeggeri tornano uguali.
 - **Da dove viene la pista.** Non l'ha disegnata nessuno. Per moltissimo tempo ci sono passati milioni di treni carichi di frasi, e a ogni passaggio i binari si sono piegati un pochino. Poi la pista è stata fissata, e da allora non cambia più.
 
 ### Personaggi
-- **Ada**: piccola scienziata col camice troppo lungo e il quaderno. Lavora alla stazione e alla bancarella della pesca. **Non sale mai sul treno e non tocca niente dentro la montagna.** Guarda, ascolta, annota, pesca.
+- **Ada**: piccola scienziata col camice troppo lungo, gli occhiali tondi e il quaderno. Lavora alla stazione e alla bancarella della pesca. **Non sale mai sul treno e non tocca niente dentro la montagna.** Guarda, ascolta, annota, pesca.
 - **Lo Spezzaparole**: vecchia biglietteria con una grande forbice.
 - **Emma**: bambina fatta di luce, bionda, capelli mossi fin sopra le spalle, fermaglio a stellina. Il vestito ha il colore dei suoi vicini.
 - **Al** (sassolino) e **Mare** (onda con gli occhi): i suoi compagni di viaggio nella prima frase. Nelle altre frasi ne arrivano altri.
@@ -51,7 +52,7 @@ Sono le leggi fisiche del nostro mondo. Valgono in ogni episodio, anche quando n
 
 ## 4. Le proprietà che il mondo deve avere
 
-È la prova che il pozzo non superava del tutto. Il luna park deve contenere da sé, per come funziona, ciascuna di queste cose, senza bisogno di spiegarle.
+Il luna park deve contenere da sé, per come funziona, ciascuna di queste cose, senza bisogno di spiegarle.
 
 | Proprietà | Nel luna park | Nel modello |
 |---|---|---|
@@ -89,7 +90,7 @@ Alcuni misteri possibili, come esempio di quello che il motore produce (non è a
 1. **In scena c'è solo ciò che serve alla trama di questa puntata.** Un concetto che non la fa avanzare aspetta la sua puntata, dove diventerà la storia.
 2. **Il narratore racconta, non spiega.** Niente commenti, riassunti, mappe o lezioni.
 3. **Si presenta prima di usare.** Nessun personaggio, luogo od oggetto compare senza che lo spettatore sappia chi è o a cosa serve.
-4. **Ogni elemento appartiene al luna park.** Domanda di controllo: un bambino che c'è stato lo riconoscerebbe? Niente armadi in un pozzo.
+4. **Ogni elemento appartiene al luna park.** Domanda di controllo: un bambino che c'è stato lo riconoscerebbe? Niente oggetti messi lì perché servono alla spiegazione.
 5. **Niente formule, numeri da leggere o parole tecniche**, a meno che l'episodio non sia dedicato proprio a quella parola, e allora la parola arriva alla fine, come premio.
 6. **Ogni episodio è una storia completa**, con una domanda all'inizio e una risposta alla fine.
 
@@ -107,11 +108,12 @@ Restano quelle del progetto, tradotte nel nuovo mondo.
 6. **Alla vasca conta solo l'ultimo vagone.** L'uscita è un colore, una direzione: Emma non diventa una paperella.
 7. **Stesso treno, stesso giro.** La pista è deterministica; la pesca no; perché la pista sia fatta così non lo sa spiegare nessuno a parole.
 8. **La Fine è una paperella come le altre.** Una storia troncata è opera di qualcosa fuori dalla giostra.
-9. **Due tipi di cose**: quello che è fisso (pista, binari, scambi, colori dei biglietti) e quello che nasce a ogni giro (fili di luce, colori mescolati, paperelle).
-10. **I colori non hanno un nome.** Nessun colore vuol dire «acqua» o «nome» da solo: conta solo quanto due colori si somigliano.
-11. **Parliamo solo del nostro luna park.** Niente confronti con i modelli veri, salvo un episodio dedicato.
-12. **Nella montagna ci sono spostamenti, non probabilità.** Le paperelle nascono solo alla vasca.
-13. **Quello che si mostra una volta, si mostra sempre.** Ogni passeggero ha il suo colore, ogni finestra il suo paesaggio, calcolati in [strumenti/numeri.py](../strumenti/numeri.py).
+9. **A ogni giro si riparte dai biglietti**: in stazione ogni vestito torna del colore del suo biglietto.
+10. **Due tipi di cose**: quello che è fisso (pista, binari, scambi, colori dei biglietti) e quello che nasce a ogni giro (fili di luce, colori mescolati, paperelle).
+11. **I colori non hanno un nome.** Nessun colore vuol dire «acqua» o «nome» da solo: conta solo quanto due colori si somigliano.
+12. **Parliamo solo del nostro luna park.** Niente confronti con i modelli veri, salvo un episodio dedicato.
+13. **Nella montagna ci sono spostamenti, non probabilità.** Le paperelle nascono solo alla vasca.
+14. **Quello che si mostra una volta, si mostra sempre.** Ogni passeggero ha il suo colore, ogni finestra il suo paesaggio, calcolati in [strumenti/modellino.py](../strumenti/modellino.py).
 
 ## 8. Gli errori da non suggerire mai
 
@@ -139,16 +141,12 @@ Se una risposta è sbagliata, l'elemento non entra.
 
 ## Questioni aperte
 
-- **Il titolo della serie.** «Il pozzo delle parole» non descrive più il mondo. Tre proposte:
-  - **«Ancora un giro»** (la mia preferita): è quello che dice un bambino al luna park, ed è il cuore del meccanismo;
-  - «Il treno delle parole»;
-  - «La montagna delle parole».
-- **Il fascio di binari** va disegnato: vagoni che corrono ciascuno sul suo binario, ma restano un treno.
-- **Il trattamento dell'episodio 1** è ancora ambientato nel pozzo ([TRATTAMENTO.md](../sceneggiatura/TRATTAMENTO.md)), e così la pagina per il test. Va riscritto nel luna park prima di farlo leggere.
-- **Cosa cambia nel progetto.** Il `CLAUDE.md`, la tela dei personaggi, il sito e il nome del repository parlano ancora del pozzo. I numeri di `numeri.py` restano validi: cambia solo il modo di mostrarli.
+- **Il fascio di binari** va disegnato con cura: vagoni che corrono ciascuno sul suo binario, ma restano un treno.
+- **Il nome del repository** è ancora quello di un progetto chiuso: va cambiato su GitHub, insieme al sito pubblicato.
 
-## I prossimi file di questa cartella
-- `personaggi.md` e `luoghi.md`: schede complete, con l'episodio in cui ognuno compare.
-- `concetti.md`: tabella metafora ↔ concetto, con i prerequisiti e l'episodio in cui ogni concetto viene presentato.
-- `nuovo-episodio.md`: lo stampo per scrivere una puntata.
-- `scaletta.md`: la prima stagione, episodio per episodio.
+## Gli altri file della serie
+- [CLAUDE.md](../CLAUDE.md): le regole di lavoro.
+- [strumenti/modellino.py](../strumenti/modellino.py): i colori, le finestre e le paperelle.
+- `sceneggiatura/`: una sceneggiatura per episodio.
+- Da scrivere: `concetti.md` (metafora ↔ concetto, prerequisiti, episodio in cui ognuno viene presentato),
+  `nuovo-episodio.md` (lo stampo per scrivere una puntata) e `scaletta.md` (la prima stagione).
