@@ -54,7 +54,7 @@ kit.scene('pesca', {
     const s = 0.28, [ax, ay] = PQ_ADA, mx = 150 + 26 * giu - 6, my = 230 + 50 * giu + 6;
     return [ax - 100 * s + mx * s, ay - 304 * s + my * s];
   },
-  render(t) {
+  render(t, kit) {
     const G = this.G, m = this.m;
     m.cam.setAttribute('transform', G.camChiavi(PQ_CAM, t));
     G.animaMondo(m, t + 534);

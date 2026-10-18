@@ -52,7 +52,7 @@ kit.scene('fili', {
     this.lung = this.filiEl.map(p => p.getTotalLength());
     this.sub = G.subs(kit, [[1.0, 11.8], [13.4, 24.4]]);
   },
-  render(t) {
+  render(t, kit) {
     const G = this.G;
     this.cam.setAttribute('transform', G.camChiavi(FI_CAM, t));
     G.scorriInterno(kit, 300 * t);

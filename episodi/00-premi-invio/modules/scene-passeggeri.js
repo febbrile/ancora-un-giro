@@ -41,7 +41,7 @@ kit.scene('passeggeri', {
     this.sedili = this.vag.map((v, i) => [M.fermo + i * M.passo + 6, 816]);
     this.sub = G.subs(kit, [[0.8, 17.6]]);
   },
-  render(t) {
+  render(t, kit) {
     const G = this.G, m = this.m;
     m.cam.setAttribute('transform', G.camChiavi(PS_CAM, t));
     G.animaMondo(m, t + 86);

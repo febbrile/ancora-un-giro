@@ -60,7 +60,7 @@ kit.scene('pesca', {
     const mx = 150 + 26 * giu - 6, my = 230 + 50 * giu + 6;
     return [ax - 100 * s + mx * s, ay - 304 * s + my * s];
   },
-  render(t) {
+  render(t, kit) {
     const G = this.G, M = G.MONDO, m = this.m;
     m.cam.setAttribute('transform', G.camChiavi(PE_CAM, t));
     G.animaMondo(m, t + 164);

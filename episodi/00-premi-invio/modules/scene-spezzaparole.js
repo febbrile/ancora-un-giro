@@ -39,7 +39,7 @@ kit.scene('spezzaparole', {
     this.statoAda = ''; this.statoMac = '';
     this.sub = G.subs(kit, [[0.6, 9.6]]);
   },
-  render(t) {
+  render(t, kit) {
     const G = this.G, M = G.MONDO, m = this.m;
     m.cam.setAttribute('transform', G.camChiavi(SP_CAM, t));
     G.animaMondo(m, t + 66);

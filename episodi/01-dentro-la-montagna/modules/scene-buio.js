@@ -23,7 +23,7 @@ kit.scene('buio', {
     this.L = this.m.partenza.getTotalLength();
     this.sub = G.subs(kit, [[1.2, 10.6]]);
   },
-  render(t) {
+  render(t, kit) {
     const G = this.G, M = G.MONDO, m = this.m;
     const s = G.percorso(t, this.s0, BU_VEL);
     G.posaTreno(this.vag, m.partenza, s);

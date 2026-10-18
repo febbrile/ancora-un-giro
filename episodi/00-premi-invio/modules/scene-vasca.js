@@ -51,7 +51,7 @@ kit.scene('vasca', {
     this.stato = '';
     this.sub = G.subs(kit, [[0.8, 5.6], [7.6, 14.0], [15.0, 18.6]]);
   },
-  render(t) {
+  render(t, kit) {
     const G = this.G, M = G.MONDO, m = this.m;
     m.cam.setAttribute('transform', G.camChiavi(VS_CAM, t));
     G.animaMondo(m, t + 138);

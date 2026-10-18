@@ -42,7 +42,7 @@ kit.scene('domanda', {
     this.statoAda = ''; this.statoIns = '';
     this.sub = G.subs(kit, [[0.6, 13.6]]);
   },
-  render(t) {
+  render(t, kit) {
     const G = this.G, m = this.m;
     m.cam.setAttribute('transform', G.camChiavi(DO_CAM, t));
     G.animaMondo(m, t + 300);

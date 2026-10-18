@@ -67,7 +67,7 @@ kit.scene('finestre', {
     this.filiEl = [...kit.stage.querySelectorAll('.fn-filo')];
     this.sub = G.subs(kit, [[5.6, 11.6], [13.0, 23.0]]);
   },
-  render(t) {
+  render(t, kit) {
     const G = this.G, I = G.INTERNO;
     this.cam.setAttribute('transform', G.camChiavi(FN_CAM, t));
     // Verso la fine il treno accelera un poco.

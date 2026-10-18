@@ -40,7 +40,7 @@ kit.scene('carrozza', {
     this.statoAda = ''; this.statoMac = '';
     this.sub = G.subs(kit, [[0.8, 18.6]]);
   },
-  render(t) {
+  render(t, kit) {
     const G = this.G, M = G.MONDO, m = this.m;
     m.cam.setAttribute('transform', G.camChiavi(CR_CAM, t));
     G.animaMondo(m, t + 330);

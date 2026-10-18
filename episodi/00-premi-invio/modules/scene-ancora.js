@@ -38,7 +38,7 @@ kit.scene('ancora', {
     this.statoAda = ''; this.statoTel = ''; this.statoIns = '';
     this.sub = G.subs(kit, [[1.0, 7.4], [15.2, 19.9]]);
   },
-  render(t) {
+  render(t, kit) {
     const G = this.G, M = G.MONDO, m = this.m;
     m.cam.setAttribute('transform', G.camChiavi(AN_CAM, t));
     G.animaMondo(m, t + 190);

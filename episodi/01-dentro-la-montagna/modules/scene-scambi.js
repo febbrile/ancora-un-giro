@@ -42,7 +42,7 @@ kit.scene('scambi', {
     this.linee = q('.sc-linee');
     this.sub = G.subs(kit, [[0.6, 9.2], [10.8, 21.2]]);
   },
-  render(t) {
+  render(t, kit) {
     const G = this.G, I = G.INTERNO;
     this.cam.setAttribute('transform', G.camChiavi(SC_CAM, t));
     G.scorriInterno(kit, SC_VEL * t);

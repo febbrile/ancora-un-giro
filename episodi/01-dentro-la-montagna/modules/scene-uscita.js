@@ -47,7 +47,7 @@ kit.scene('uscita', {
     this.stato = '';
     this.sub = G.subs(kit, [[3.6, 13.2], [13.6, 24.1], [24.8, 29.2]]);
   },
-  render(t) {
+  render(t, kit) {
     const G = this.G, M = G.MONDO, m = this.m;
     m.cam.setAttribute('transform', G.camChiavi(US_CAM, t));
     G.animaMondo(m, t + 500);

@@ -37,7 +37,7 @@ kit.scene('lunapark', {
     this.stato = '';
     this.sub = G.subs(kit, [[0.8, 12.4], [13.2, 16.4], [17.0, 23.0]]);
   },
-  render(t) {
+  render(t, kit) {
     const G = this.G, M = G.MONDO, m = this.m;
     m.cam.setAttribute('transform', G.camChiavi(LP_CAM, t));
     G.animaMondo(m, t + 40);
