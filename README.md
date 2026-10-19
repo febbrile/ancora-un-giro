@@ -8,7 +8,7 @@ lo Spezzaparole la strappa in biglietti, i biglietti salgono sul trenino delle m
 il trenino sparisce in una montagna buia ed esce sopra la vasca della pesca, dove cadono le paperelle.
 Ada, una piccola scienziata, ne pesca una senza guardare: è la parola dopo. La paperella sale sul treno, e ancora un giro.
 
-**Guardalo online: https://febbrile.github.io/il-pozzo-delle-parole/** (senza accesso a claude.ai).
+**Guardalo online: https://febbrile.github.io/ancora-un-giro/** (senza accesso a claude.ai).
 
 ## Episodi
 
