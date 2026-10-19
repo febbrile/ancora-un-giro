@@ -202,6 +202,7 @@ def giro(chiave):
                 conta_k = vasca(v)[1]
                 info['finestre'].append([[w, c, '#%02x%02x%02x' % COLORE[w]] for w, c in conta_k.items()])
                 print(f'        finestra {k + 1}', conta_k)
+            USCITE[chiave] = tappe[-1]  # episodio 3: serve alla manopola
             p, conta = vasca(tappe[-1])
             assert sum(conta.values()) == PAPERELLE_IN_VASCA
             out['vasca'] = [[w, c, '#%02x%02x%02x' % COLORE[w]] for w, c in conta.items()]
@@ -253,8 +254,51 @@ def scrivi(dati):
     print('\nScritto in', f)
 
 
+# ── Episodio 3 · La manopola della bancarella ────────────────────────────────────────────────────────
+# La manopola sta sul bancone della bancarella, fuori dalla montagna: non tocca la pista né il vestito di Emma,
+# cambia solo quante paperelle di ogni colore cadono sotto l'ultimo vagone. È la temperatura: le somiglianze tra il
+# vestito e le paperelle si dividono per T prima di contarle. Sulla tacca di mezzo T = 1 e la vasca è quella di
+# sempre, uguale all'ultima finestra (le finestre sono dentro la montagna e la manopola non le vede).
+# Inventati: le tre posizioni della manopola, il biglietto di «altalena», le paperelle che Ada pesca.
+# Calcolati: le vasche, i vestiti dei passeggeri nuovi.
+MANOPOLA = {'mezzo': 1.0, 'stretta': 0.3, 'larga': 3.0}
+B['altalena'] = [0.42, 0.50, 0.02]
+# Le pesche di «Al mare Emma»: tre case con la manopola sulla tacca, due giri verso la lucina grande, uno verso le
+# lucine piccole.
+PESCHE_MANOPOLA = {'mezzo': ['nuota', 'gioca', 'corre'], 'stretta': ['nuota', 'nuota'], 'larga': ['altalena']}
+USCITE = {}  # il vestito dell'ultimo vagone all'uscita, per frase (lo riempie giro())
+
+
+def manopola(dati):
+    """Le vasche di «Al mare Emma» con la manopola nelle sue tre posizioni."""
+    print('\n== La manopola · Al mare Emma ==')
+    x, out = USCITE['mare'], {'posizioni': MANOPOLA, 'vasche': {}, 'pesche': PESCHE_MANOPOLA}
+    for pos, T in MANOPOLA.items():
+        conta = vasca(x, T=T)[1]
+        assert sum(conta.values()) == PAPERELLE_IN_VASCA
+        out['vasche'][pos] = [[w, c, '#%02x%02x%02x' % COLORE[w]] for w, c in conta.items()]
+        print(f'  {pos:7} T={T}', conta)
+    v = {pos: dict((w, c) for w, c, _ in out['vasche'][pos]) for pos in MANOPOLA}
+    # Sulla tacca di mezzo la vasca è quella di sempre.
+    assert out['vasche']['mezzo'] == dati['mare']['vasca']
+    # Verso la lucina grande cadono quasi solo paperelle del colore più numeroso.
+    assert out['vasche']['stretta'][0][0] == 'nuota' and out['vasche']['stretta'][0][1] >= 0.9 * PAPERELLE_IN_VASCA
+    # Verso le lucine piccole i colori si pareggiano: nessuno sopra un quinto, quasi tutti presenti.
+    assert out['vasche']['larga'][0][1] <= PAPERELLE_IN_VASCA / 5 and len(v['larga']) >= len(P) - 1
+    # La parola più numerosa resta la stessa: la manopola non cambia l'ordine dei colori.
+    assert all(out['vasche'][pos][0][0] == 'nuota' for pos in MANOPOLA)
+    # Ogni paperella pescata c'è davvero nella sua vasca.
+    for pos, parole in PESCHE_MANOPOLA.items():
+        for w in parole:
+            assert v[pos].get(w, 0) > 0, (pos, w)
+    out['nuovo'] = {w: colore(B[w]) for pos in PESCHE_MANOPOLA for w in PESCHE_MANOPOLA[pos]}
+    for w, c in out['nuovo'].items():
+        print(f'  passeggero nuovo «{w}»:', c)
+
+
 if __name__ == '__main__':
     dati = {k: giro(k) for k in FRASI}
     controlla(dati)
+    dati['manopola'] = manopola(dati)
     if '--scrivi' in sys.argv:
         scrivi(dati)

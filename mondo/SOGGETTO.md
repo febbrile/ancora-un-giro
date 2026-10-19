@@ -40,6 +40,7 @@ Sono le leggi fisiche del nostro mondo. Valgono in ogni episodio, anche quando n
 - **Le finestre sulla vasca.** Ogni tanto, dentro la montagna, una finestra dà sull'acqua della vasca, e il treno rallenta per guardarla. Quando passano gli altri vagoni l'acqua resta vuota; quando passa l'ultimo, si accendono **paperelle di luce**: quelle che cadrebbero se il treno uscisse lì. Quelle che somigliano al vestito dell'ultimo passeggero gli nuotano incontro. Finestra dopo finestra le paperelle cambiano, e l'ultima finestra è uguale alla vasca vera. È il momento che torna in ogni episodio: lì si vede da dove vengono le paperelle.
 - **La vasca.** Il treno esce dalla montagna sopra la vasca della pesca. Conta solo dove passa l'ultimo vagone: da lì cadono nell'acqua le paperelle, le stesse dell'ultima finestra. Cadono di luce e toccano l'acqua vere: tantissime di un colore, parecchie di un altro, poche di tutti gli altri. Ogni colore è una parola.
 - **La pesca.** Ada pesca una paperella senza guardare. Le altre scivolano via dallo scarico e la vasca torna vuota.
+- **La manopola** (episodio 3). Sul bancone della bancarella c'è una vecchia manopola d'ottone, senza scritte, con una freccia. Intorno ha un arco di lucine: da un lato una sola lucina grande, dall'altro tante lucine piccole di tutti i colori. Di solito la freccia sta sulla tacca di mezzo, e lì la vasca è uguale all'ultima finestra. La manopola non tocca la montagna: il treno fa lo stesso giro e l'ultimo vagone esce dello stesso colore. Cambia solo quello che cade sotto di lui. Girata verso la lucina grande, cadono quasi solo paperelle del colore più numeroso, e le storie vengono tutte uguali; girata verso le lucine piccole, i colori si pareggiano, anche le paperelle rare cadono spesso, e le storie diventano strane. Come la pesca, sta fuori dalla montagna. Quello che è pescato resta pescato: il treno non torna indietro.
 - **Ancora un giro.** La paperella pescata sale in un vagone nuovo, in fondo al treno, e il treno riparte, un vagone più lungo.
 - **Si riparte dai biglietti.** Quando il treno rientra in stazione, ogni vestito torna del colore del suo biglietto. A ogni giro i colori si rifanno da capo, e con gli stessi passeggeri tornano uguali.
 - **Da dove viene la pista.** Non l'ha disegnata nessuno. Per moltissimo tempo ci sono passati milioni di treni carichi di frasi, e a ogni passaggio i binari si sono piegati un pochino. Poi la pista è stata fissata, e da allora non cambia più.
@@ -69,6 +70,7 @@ Il luna park deve contenere da sé, per come funziona, ciascuna di queste cose, 
 | Tante possibilità, non una risposta | Le paperelle nella vasca | Distribuzione di probabilità |
 | La risposta prende forma strato dopo strato | Le paperelle di luce nelle finestre sulla vasca | Logit lens sull'ultima posizione |
 | L'estrazione avviene fuori | Ada pesca alla bancarella | Campionamento, fuori dal modello |
+| Quanto la pesca può sorprendere | La manopola della bancarella | Temperatura, fuori dal modello |
 
 ## 5. Il motore della serie: la curiosità di Ada
 
