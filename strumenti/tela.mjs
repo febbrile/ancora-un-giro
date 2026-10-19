@@ -113,9 +113,12 @@ fs.mkdirSync(OUT, { recursive: true });
 const posto = { 'Main.dc.html': [0, 0], 'Oggetti.dc.html': [2000, 0], 'LunaPark.dc.html': [0, 1200], 'Montagna.dc.html': [2000, 1200], 'Finestre.dc.html': [0, 2400], 'Grammatica.dc.html': [2000, 2400], 'Parco.dc.html': [0, 3600] };
 const canvas = {
   v: 3, createdOnFiles: { v: 1, at: new Date().toISOString().replace(/\.\d+Z$/, 'Z') }, title: 'Ancora un giro · design',
-  launch: { view: 'canvas' }, pages: [], boards: {}, order: Object.keys(T), notes: {}, designSystems: [],
+  launch: { view: 'canvas' }, pages: [], boards: {}, order: [], notes: {}, designSystems: [],
 };
-for (const [nome, t] of Object.entries(T)) {
+// Le tavole nell'ordine di posto (lo stesso della tela pubblicata), così la copia locale resta identica.
+for (const nome of Object.keys(posto).filter(n => T[n])) {
+  const t = T[nome];
+  canvas.order.push(nome);
   fs.writeFileSync(path.join(OUT, nome), artboard(nome, t));
   canvas.boards[nome] = { x: posto[nome][0], y: posto[nome][1], w: t.w, h: t.h, title: t.titolo };
 }

@@ -103,6 +103,9 @@ L'elenco completo, tradotto nel luna park, è nel §7 del soggetto. Le più impo
 - **Le paperelle**: una per ogni parola che può venire dopo. Quella pescata sale sul treno e diventa un passeggero.
 - I modelli dei personaggi sono nella tela di design (link nel [README](README.md)) e, in SVG, in
   `episodi/comune/shared.js`: ogni cambio di aspetto parte dalla tela e si riporta in `shared.js`.
+- **La tela pubblicata e `design/project/` sono sempre identiche.** Dopo ogni pubblicazione della tela si fa commit
+  della copia locale; se la tela cambia su claude.ai, prima si scaricano i suoi file `project/*` in `design/project/`,
+  poi si lavora. `node strumenti/tela.mjs` rigenera le tavole nello stesso ordine della tela pubblicata.
 
 ## I numeri
 
