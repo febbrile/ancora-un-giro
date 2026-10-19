@@ -17,6 +17,8 @@ Ada, una piccola scienziata, ne pesca una senza guardare: è la parola dopo. La 
 | Prologo | Premi invio | 3:26 | Il mondo e il giro intero, visto da fuori: Ada, lo Spezzaparole, i passeggeri, la montagna, la vasca, la pesca | [apri](https://claude.ai/artifact/HNCae1Yqakm6xrZYTBu4Ah) |
 | 1 | Dentro la montagna | 4:28 | Lo stesso giro, da dentro: i fili di luce, gli scambi, le finestre. Emma entra rosa ed esce blu | [apri](https://claude.ai/artifact/Neb3nYKCJBYY7oUBes7foS) |
 
+I prossimi episodi, con argomento e idea, sono nella [scaletta](mondo/SCALETTA.md).
+
 Personaggi, oggetti e luna park: [tela di design](https://claude.ai/artifact/1YpTiDnCNhg4bgh23faV33).
 
 I film e la tela sono privati finché non li condividi dal menu Share della pagina.
@@ -26,6 +28,7 @@ I film e la tela sono privati finché non li condividi dal menu Share della pagi
 ```
 CLAUDE.md                     le regole di lavoro (da leggere prima di tutto)
 mondo/SOGGETTO.md             il soggetto: la frase da lasciare, le leggi del luna park, i personaggi, le regole
+mondo/SCALETTA.md             la prima stagione: argomento, domanda e idea di ogni episodio
 sceneggiatura/NN-titolo.md    una sceneggiatura per episodio, con le note su cosa c'è sotto
 episodi/comune/               shared.js (personaggi, luna park, treno, sottotitoli) e base.css, uguali per tutti
 episodi/NN-titolo/            il sorgente di ogni film Motion: meta.json, cut.js, modules/

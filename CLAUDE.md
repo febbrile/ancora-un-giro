@@ -15,6 +15,9 @@ luna park, i personaggi, il motore della serie, le regole di racconto e scientif
 e la prova per ogni elemento nuovo. Se una scelta lo contraddice, si cambia la scelta, oppure si discute e si
 cambia prima il soggetto.
 
+[mondo/SCALETTA.md](mondo/SCALETTA.md) è la prima stagione: per ogni episodio l'argomento, la domanda di Ada,
+l'unico elemento nuovo e l'idea. Un episodio nuovo parte da lì.
+
 ## Come si lavora
 
 - **Si parla in italiano**, nei messaggi, nei testi dei film, nei commenti e nei commit.
