@@ -8,18 +8,16 @@ lo Spezzaparole la strappa in biglietti, i biglietti salgono sul trenino delle m
 il trenino sparisce in una montagna buia ed esce sopra la vasca della pesca, dove cadono le paperelle.
 Ada, una piccola scienziata, ne pesca una senza guardare: è la parola dopo. La paperella sale sul treno, e ancora un giro.
 
-**Guardalo online: https://febbrile.github.io/ancora-un-giro/** (senza accesso a claude.ai).
+**Guardalo online: https://febbrile.github.io/ancora-un-giro/**
 
 ## Episodi
 
 | | Titolo | Durata | Cosa racconta | Guarda |
 |---|---|---|---|---|
-| Prologo | Premi invio | 2:52 | Il mondo e il giro intero, visto da fuori: Ada, lo Spezzaparole, i passeggeri, la montagna, la vasca, la pesca | [apri](https://claude.ai/artifact/HNCae1Yqakm6xrZYTBu4Ah) |
-| 1 | Dentro la montagna | 3:52 | Lo stesso giro, da dentro: i fili di luce, gli scambi, le finestre sulla vasca dove si accendono le paperelle. Emma entra rosa ed esce blu | [apri](https://claude.ai/artifact/Neb3nYKCJBYY7oUBes7foS) |
+| Prologo | Premi invio | 2:52 | Il mondo e il giro intero, visto da fuori: Ada, lo Spezzaparole, i passeggeri, la montagna, la vasca, la pesca | [guarda](https://febbrile.github.io/ancora-un-giro/sito/guarda.html?ep=00-premi-invio) |
+| 1 | Dentro la montagna | 3:52 | Lo stesso giro, da dentro: i fili di luce, gli scambi, le finestre sulla vasca dove si accendono le paperelle. Emma entra rosa ed esce blu | [guarda](https://febbrile.github.io/ancora-un-giro/sito/guarda.html?ep=01-dentro-la-montagna) |
 
 Personaggi, oggetti e luna park: [tela di design](https://claude.ai/artifact/1YpTiDnCNhg4bgh23faV33).
-
-I film e la tela sono privati finché non li condividi dal menu Share della pagina.
 
 ## Struttura
 
@@ -28,7 +26,7 @@ CLAUDE.md                     le regole di lavoro (da leggere prima di tutto)
 mondo/SOGGETTO.md             il soggetto: la frase da lasciare, le leggi del luna park, i personaggi, le regole
 sceneggiatura/NN-titolo.md    una sceneggiatura per episodio, con le note su cosa c'è sotto
 episodi/comune/               shared.js (personaggi, luna park, treno, sottotitoli) e base.css, uguali per tutti
-episodi/NN-titolo/            il sorgente di ogni film Motion: meta.json, cut.js, modules/
+episodi/NN-titolo/modules/    le scene di ogni film (scenes.json, scene-<id>.js) e la musica (score.js)
 design/project/               la tela di design, generata dagli stessi disegni dei film
 sito/                         il sito statico con il player nostro
 strumenti/                    modellino, controlli, renderer dei fotogrammi, generatore della tela
@@ -44,12 +42,6 @@ python3 strumenti/modellino.py --scrivi
 Calcola colori dei vestiti, finestre e paperelle dal modellino giocattolo e li scrive in `episodi/comune/shared.js`.
 
 ```bash
-python3 strumenti/allinea.py
-```
-
-Copia `shared.js` e `base.css` comuni in ogni episodio.
-
-```bash
 python3 strumenti/tempi.py
 ```
 
@@ -59,7 +51,7 @@ Controlla il ritmo delle sceneggiature: al massimo 12 caratteri al secondo, alme
 node strumenti/controlla.mjs
 ```
 
-Controlla i film: sottotitoli, finestre, pezzi che non finiscono su parole deboli, moduli comuni.
+Controlla i film: sottotitoli, finestre, pezzi che non finiscono su parole deboli, ritmo.
 
 ```bash
 node strumenti/fotogrammi.mjs 01-dentro-la-montagna --scena fili --foglio
@@ -75,7 +67,7 @@ Rigenera la tela di design da `shared.js`.
 
 ## Il sito
 
-È pubblicato con GitHub Pages da `main`. Il sito fa girare gli stessi file di `episodi/` nel browser, senza Motion. Per provarlo, dalla cartella del repository:
+È l'unico posto dove si guardano gli episodi: è pubblicato con GitHub Pages da `main`, e pubblicare un episodio vuol dire portarlo su `main`. Per provarlo in locale, dalla cartella del repository:
 
 ```bash
 python3 -m http.server 8791
@@ -83,4 +75,4 @@ python3 -m http.server 8791
 
 poi si apre http://localhost:8791/sito/. `guarda.html?ep=00-premi-invio&t=40` apre il film fermo al secondo 40.
 
-Il suono passa per tre canali, musica, effetti e voce, con interruttore e volume nel pannello dell'audio. Tasti: **M** tutto l'audio, **N** la musica, **S** lo stile della musica. Un episodio può avere `audio/tracce.json`, letto solo dal sito, per un tema continuo, i volumi di partenza o una voce narrante.
+Il suono passa per tre canali, musica, effetti e voce, con interruttore e volume nel pannello dell'audio. Tasti: **M** tutto l'audio, **N** la musica, **S** lo stile della musica. Un episodio può avere `audio/tracce.json` per un tema continuo, i volumi di partenza o una voce narrante.

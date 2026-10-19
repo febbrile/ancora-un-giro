@@ -1,5 +1,5 @@
 // Il suono di «Ancora un giro»: un piccolo sintetizzatore Web Audio che suona la partitura di score.js.
-// Strumenti e rumori sono fatti da noi: somigliano a quelli di Motion, ma non sono identici.
+// Strumenti e rumori sono fatti da noi.
 // Due stili: «calma» suona la musica com'è; «anni 90» la suona riarrangiata da anni90.js, con voci da console.
 // Il suono passa per tre canali, ognuno col suo volume e il suo interruttore:
 //   musica   il tema dell'episodio (tema.js), un file audio, oppure la musica di score.js scena per scena
@@ -30,7 +30,7 @@
   };
   const ALIAS = { rhodes: 'ep', piano: 'ep', strings: 'pad', bell: 'glock', bells: 'glock', vibraphone: 'vibes', mallet: 'marimba',
     swoosh: 'whoosh', swell: 'revswell', bubble: 'pop', drop: 'thud', twinkle: 'sparkle', tap: 'click', rim: 'sidestick', stick: 'sidestick' };
-  const LIVELLO = 2.0;             // volume generale prima del master (misurato: circa −18 dB RMS, come i film di Motion)
+  const LIVELLO = 2.0;             // volume generale prima del master (misurato: circa −18 dB RMS)
   const SOSTENUTI = { pad: 1, ep: 1, vibes: 1, keys: 1, bass: 1, 'chip-pad': 1 };   // note lunghe da riprendere a metà se si salta nel tempo
 
   const CANALI = ['musica', 'effetti', 'voce'];
@@ -64,7 +64,7 @@
         const giro = Giro.tema(musica.tema, partitura.griglia);
         note = Giro.ripeti(arrangia(giro, s), giro.durata, durata);
       } else if (musica.file) note = [];        // la musica è un file: la suona una clip
-      else note = arrangia(partitura, s);        // la musica di score.js, scena per scena come in Motion
+      else note = arrangia(partitura, s);        // la musica di score.js, scena per scena
       note = note.filter(e => e.tipo !== 'rumore').map(e => Object.assign({}, e, { canale: 'musica' }));
       return note.concat(effetti).sort((a, b) => a.t - b.t);
     }

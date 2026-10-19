@@ -6,7 +6,7 @@
 // - il ritmo (RITMO in shared.js): nessun tratto veloce sotto un sottotitolo; dopo l'ultima battuta (o il cartello,
 //   se la scena ne ha uno: const XX_TITOLO / XX_FINE) al massimo 3 secondi prima dello stacco;
 // - nessun pezzo di sottotitolo che finisce con un articolo, una preposizione, una congiunzione o un apostrofo;
-// - l'episodio sotto i 5 minuti; shared.js e base.css uguali alla fonte comune;
+// - l'episodio sotto i 5 minuti;
 // - nessun numero a schermo nei sottotitoli.
 import fs from 'node:fs';
 import path from 'node:path';
@@ -29,7 +29,6 @@ for (const ep of eps) {
   const tot = scene.reduce((s, x) => s + x.dur, 0), code = ep.slice(0, 2);
   console.log('\n' + ep + ' · ' + Math.floor(tot / 60) + ':' + (tot % 60).toFixed(1).padStart(4, '0'));
   if (tot > MAX) male('più di 5 minuti');
-  for (const f of ['shared.js', 'base.css']) if (fs.readFileSync(path.join(dir, f), 'utf8') !== comune(f)) male(f + ' diverso da episodi/comune (python3 strumenti/allinea.py)');
   for (const s of scene) {
     const file = path.join(dir, 'scene-' + s.id + '.js');
     if (!fs.existsSync(file)) { male('manca scene-' + s.id + '.js'); continue; }

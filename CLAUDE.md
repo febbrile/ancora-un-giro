@@ -48,7 +48,7 @@ Sono gli errori che hanno fatto fallire un primo tentativo con il pubblico vero:
   interno e il `RITMO` di `shared.js` li porta al tempo vero (`t = G.tempo(ep, id, t)` in `render`, `R(id, x)` in
   `score.js`); in `scenes.json` `dur` è la durata vera. Mai accelerare mentre c'è un sottotitolo:
   `node strumenti/controlla.mjs` controlla le due cose.
-- **Un episodio dura al massimo 5 minuti** (limite dei film Motion). Meglio un episodio in più che uno troppo pieno.
+- **Un episodio dura al massimo 5 minuti.** Meglio un episodio in più che uno troppo pieno.
 - **I sottotitoli scorrono a pezzi** di 18–48 caratteri (`chunkSub` in `shared.js`). Un pezzo non finisce mai con
   un articolo, una preposizione, una congiunzione o una parola con apostrofo.
 - Le sole scritte a schermo sono i sottotitoli, il titolo e il cartello finale. Sul telefono si vede la frase della storia.
@@ -107,32 +107,25 @@ L'elenco completo, tradotto nel luna park, è nel §7 del soggetto. Le più impo
 - Se cambi un numero, cambialo lì, esegui `python3 strumenti/modellino.py` e solo dopo riporta i risultati nelle scene.
 - I numeri non vanno mai a schermo: decidono colori, quantità e posizioni.
 
-## I film (artifact Motion)
+## I film e il sito
 
-- Ogni episodio è un artifact Motion su claude.ai (link nel [README](README.md)). La versione pubblicata vive
-  nello **store dell'artifact**; `episodi/NN-titolo/` ne è la copia di sorgente.
-- Documenti dello store: `film/meta`, `film/script` (`window.CUT = kit.scenes();`), `modules/scenes.json`,
-  `modules/base.css`, `modules/shared.js`, `modules/score.js`, `modules/scene-<id>.js`.
-  `modules/fetched-fonts.json` lo gestisce il player: non toccarlo.
-- `shared.js` e `base.css` sono uguali per tutti gli episodi: la fonte è `episodi/comune/`, e
-  `python3 strumenti/allinea.py` li copia negli episodi. Non modificarli dentro un episodio.
-- Ogni scrittura su un documento esistente porta `if_version`. Modifiche allo stesso documento una alla volta, mai
-  in parallelo. Dopo ogni modifica allo store, riallinea il file in `episodi/` e fai commit.
-- Ogni scena è `kit.scene(id, { init, render(t) })`, funzione pura del tempo; i tempi interni usano `seg`, `eo`, `eio`.
+- Gli episodi si guardano solo sul nostro sito, https://febbrile.github.io/ancora-un-giro/, pubblicato con GitHub
+  Pages da `main`. Pubblicare un episodio vuol dire portarlo su `main`.
+- Ogni episodio sta in `episodi/NN-titolo/modules/`: `scenes.json` (scene, durate, misure e sfondo),
+  `scene-<id>.js` (una per scena) e `score.js` (musica ed effetti).
+- `shared.js` (personaggi, luna park, treno, sottotitoli) e `base.css` sono uguali per tutti gli episodi e stanno
+  solo in `episodi/comune/`: il motore li carica da lì.
+- Ogni scena è `kit.scene(id, { init, render(t, kit) })`, funzione pura del tempo; i tempi interni usano `seg`, `eo`, `eio`.
+  Le scene possono usare solo le funzioni che `sito/motore/kit.js` offre: se ne serve una nuova, prima la si aggiunge lì.
 - Testi SVG: Fredoka per titoli e scritte, Atkinson Hyperlegible per i sottotitoli.
 - Musica originale, in `score.js`, con gli accordi sul `pad` (il sito li usa per il suo stile «anni 90»).
-
-## Il sito
-
-- `sito/` fa girare gli stessi `episodi/*/modules` nel browser, senza Motion: le scene non si duplicano.
-- Le scene possono usare solo le funzioni del kit che `sito/motore/kit.js` offre. Se una scena ne usa una nuova,
-  prima la si aggiunge al motore (con lo stesso comportamento di Motion), poi la si usa.
-- L'audio del sito lo suona `sito/motore/suono.js` su tre canali, **musica**, **effetti** e **voce**, ognuno con volume e
-  interruttore suoi. Senza altro, la musica è quella di `score.js` scena per scena, come nei film Motion. Un episodio può
-  avere `audio/tracce.json` (solo del sito, non va nello store di Motion) per un tema continuo (`sito/motore/tema.js`),
-  i volumi di partenza o file audio a un istante del film, come una voce narrante.
-- Il player di Motion (`app.js`) non va mai copiato nel repository né pubblicato: è codice di Anthropic.
+- L'audio lo suona `sito/motore/suono.js` su tre canali, **musica**, **effetti** e **voce**, ognuno con volume e
+  interruttore suoi. Senza altro, la musica è quella di `score.js` scena per scena. Un episodio può avere
+  `audio/tracce.json` per un tema continuo (`sito/motore/tema.js`), i volumi di partenza o file audio a un istante
+  del film, come una voce narrante.
 - In `sito/episodi.json` c'è l'elenco degli episodi: aggiornalo quando ne nasce uno nuovo.
+- Prima di dire che il sito funziona, aprilo con un server locale (`python3 -m http.server 8791`, poi
+  `sito/guarda.html?ep=…&t=…`); dopo la pubblicazione, aprilo anche online.
 
 ## Verifica
 
@@ -140,10 +133,7 @@ L'elenco completo, tradotto nel luna park, è nel §7 del soggetto. Le più impo
   con il motore del sito e il Chrome dell'utente; `--foglio` li impagina in un foglio di provini.
   **Leggi i PNG** prima di dichiarare una scena finita. Nel renderer i font possono essere sostitutivi: dillo
   quando la verifica è avvenuta solo lì.
-- `node strumenti/controlla.mjs` controlla sottotitoli, finestre e moduli comuni senza aprire i film.
-- Dopo aver caricato un film su claude.ai, rendilo anche con il player vero di Motion, offline
-  (`render-offline.md` del tipo Motion): i file del player stanno nello scratchpad, mai nel repository.
-- In ogni scena `render(t, kit)` usa il `kit` che riceve: in Motion ogni scena ha il suo.
+- `node strumenti/controlla.mjs` controlla sottotitoli, finestre e ritmo senza aprire i film.
 - Per ogni scena controlla almeno l'inizio, il centro, la fine e ogni battuta:
   - testi che escono dal riquadro, etichette sovrapposte, elementi coperti o tagliati;
   - sottotitoli in anticipo o in ritardo sulle immagini;

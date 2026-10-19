@@ -1,6 +1,6 @@
 // Ancora un giro · i moduli condivisi: personaggi, oggetti, il luna park, il treno, i sottotitoli.
-// La fonte è episodi/comune/shared.js: `python3 strumenti/allinea.py` lo copia in ogni episodio.
-// Non modificarlo dentro un episodio. I disegni sono gli stessi della tela di design.
+// Vale per tutti gli episodi: il motore del sito lo carica da episodi/comune/.
+// I disegni sono gli stessi della tela di design.
 
 // ── Emma e Ada (disegni di base) ────────────────────────────────────────────────────────────────────
 const SK='#FFE9D6', HA='#F5C84C', HD='#D9A12E', HL='#FFE28A', IN='#2B2350';

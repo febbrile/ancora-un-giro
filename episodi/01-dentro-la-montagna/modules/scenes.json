@@ -1,34 +1,7 @@
 {
-  "v": 1,
-  "stage": "final",
-  "look": "Ancora un giro: illustrazione piatta e morbida, un luna park di notte (blu profondo, lampadine calde, righe rosse e crema, una montagna scura). Una sola storia raccontata dal narratore, senza formule né numeri a schermo. Personaggi in SVG: Ada, piccola scienziata col camice lungo; lo Spezzaparole, vecchia biglietteria rossa e oro con la forbice; Al sassolino, Mare onda, Emma bambina di luce bionda col fermaglio a stellina; le paperelle colorate. Ritmo lento: al massimo 12 caratteri al secondo di sottotitolo e almeno 3 secondi di sole immagini per scena.",
-  "palettes": [
-    [
-      "#0B1030",
-      "#FFD27A",
-      "#F6EEDD",
-      "#D9483B"
-    ]
-  ],
-  "theirs": 0,
   "width": 1920,
   "height": 1080,
-  "fps": 60,
   "background": "#0B1030",
-  "fonts": {
-    "display": {
-      "family": "Fredoka",
-      "or": "manrope",
-      "weights": [
-        400,
-        600
-      ]
-    },
-    "sans": {
-      "family": "Atkinson Hyperlegible",
-      "or": "manrope"
-    }
-  },
   "scenes": [
     {
       "id": "domanda",
