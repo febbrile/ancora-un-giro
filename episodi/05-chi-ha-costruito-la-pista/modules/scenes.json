@@ -1,0 +1,67 @@
+{
+  "width": 1920,
+  "height": 1080,
+  "background": "#0B1030",
+  "scenes": [
+    {
+      "id": "domanda",
+      "name": "La domanda",
+      "dur": 25,
+      "desc": "Oggi: il trenino crema sparisce nella montagna; Ada guarda i binari lucidi, piegati in mille punti, e i tre vecchi treni grigi che dormono sul binario morto. Chi ha costruito una pista così? Titolo."
+    },
+    {
+      "id": "indietro",
+      "name": "Indietro",
+      "dur": 13.4,
+      "desc": "Il tempo corre all'indietro: la luna torna indietro, la ruota gira al contrario, le luci si spengono, i binari si raddrizzano. Il parco è buio e chiuso; sulla pista ci sono i treni grigi, nuovi."
+    },
+    {
+      "id": "prova",
+      "name": "I treni di prova",
+      "dur": 31.8,
+      "desc": "Girano i treni grigi. Dalla città arrivano strisce come una nevicata; «Al mare Emma nuota» diventa quattro biglietti: Al, Mare ed Emma salgono, il quarto, blu, resta acceso sopra la vasca come una lanterna."
+    },
+    {
+      "id": "dritta",
+      "name": "La pista dritta",
+      "dur": 40,
+      "desc": "Dentro la montagna la pista è dritta: i fili non portano niente, gli scambi non spostano nessuno, le tre finestre sono uguali. Emma esce rosa, nella vasca cade un po' di tutto: solo due paperelle blu."
+    },
+    {
+      "id": "brivido",
+      "name": "Il brivido",
+      "dur": 33.6,
+      "desc": "Dalla vasca parte un brivido blu che corre all'indietro nella montagna e sposta di un capello ogni scambio. Della frase non resta niente: il treno grigio resta in stazione, vuoto."
+    },
+    {
+      "id": "notti",
+      "name": "Notti e notti",
+      "dur": 25,
+      "desc": "Montaggio: la luna gira, treni grigi con frasi di ogni tipo e lanterne verdi, turchesi, blu; dopo ogni treno un brivido. A ogni «Al mare Emma» nella vasca le paperelle blu sono di più."
+    },
+    {
+      "id": "finestre",
+      "name": "Le finestre sulla vasca",
+      "dur": 36,
+      "desc": "Una delle ultime notti: i fili portano l'azzurro, gli scambi fanno clac, le finestre diventano blu come Emma. Nella vasca tantissime paperelle blu; il brivido è piccolo."
+    },
+    {
+      "id": "apre",
+      "name": "Il parco apre",
+      "dur": 21.8,
+      "desc": "La pista si piega sempre meno e si ferma. I treni grigi vanno a dormire sul binario morto, arriva il trenino crema e il parco si accende; in città qualcuno prende il telefono."
+    },
+    {
+      "id": "oggi",
+      "name": "Oggi",
+      "dur": 26,
+      "desc": "Di nuovo oggi: Emma esce blu, Ada pesca «nuota», nessun brivido. La stessa frase dà la stessa vasca. Ada si china sui binari piegati e guarda i treni grigi: l'hanno piegata loro."
+    },
+    {
+      "id": "fine",
+      "name": "Una parola nuova",
+      "dur": 21.4,
+      "desc": "Una striscia nuova atterra in mano ad Ada: una parola mai vista. Ada guarda lo Spezzaparole: come la taglia? Fine."
+    }
+  ]
+}

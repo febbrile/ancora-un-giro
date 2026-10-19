@@ -122,7 +122,9 @@ const RITMO = {
   '04': {
     fili: [[2.0, 9.0, 5.0]], finestre: [[15.6, 21.0, 3.6], [39.6, 42.4, 2.0, 1]],
   },
-  '05': {},
+  '05': {
+    indietro: [[11.0, 16, 2.4, 1]], prova: [[29.4, 34, 2.4, 1]], brivido: [[31.2, 36, 2.4, 1]],
+  },
   '06': {},
   '07': {},
   '08': {},
@@ -1172,6 +1174,97 @@ window.G.internoLungo = function (el, corsie) {
     '<path d="M2120 ' + y + ' L4800 ' + y + '" stroke="' + C.acciaio + '" stroke-width="4" opacity=".85"/></g>').join(''));
 };
 // ── Episodio 5 ──
+// Le pieghe della pista: sopra una rotaia (l'elemento <path>), una riga lucida fatta di tanti pezzetti, ognuno spostato
+// di un capello di qua o di là, come i gradini di una scala vecchia. Si prepara una volta; d(piega) dà il tracciato,
+// con piega da 0 (dritta e liscia) a 1 (la pista di oggi). o: { da, a (tratto del binario), passo, seme }.
+window.G.pieghe = function (path, o) {
+  o = o || {};
+  const L = path.getTotalLength(), passo = o.passo || 10, r = kitRng(o.seme || 5), pezzi = [];
+  const da = o.da || 0, a = Math.min(L, o.a === undefined ? L : o.a);
+  for (let s = da; s < a - 0.5; s += passo) {
+    const p = path.getPointAtLength(s), q = path.getPointAtLength(Math.min(a, s + passo));
+    const dx = q.x - p.x, dy = q.y - p.y, n = Math.hypot(dx, dy) || 1;
+    pezzi.push({ p, q, nx: -dy / n, ny: dx / n, k: (r() - 0.5) * 2 });
+  }
+  return {
+    d(piega, alto) {
+      const h = (alto || 1.3) * piega;
+      return pezzi.map(z => { const ox = z.nx * z.k * h, oy = z.ny * z.k * h; return 'M' + (z.p.x + ox).toFixed(2) + ' ' + (z.p.y + oy).toFixed(2) + 'L' + (z.q.x + ox).toFixed(2) + ' ' + (z.q.y + oy).toFixed(2); }).join('');
+    },
+  };
+};
+// Le pieghe di tutta la pista che si vede da fuori (m: il mondo di costruisciMondo): la salita, la cima e il ponte sopra
+// la vasca, senza i pezzi nascosti dalla banchina e dalla pensilina. d(piega, alto) come G.pieghe.
+window.G.pieghePista = function (m) {
+  const p = [[m.partenza, 600, 760, 3], [m.partenza, 910, undefined, 13], [m.arrivo, 0, 340, 4]].map(([path, da, a, seme]) => window.G.pieghe(path, { da, a, seme }));
+  return { d: (piega, alto) => p.map(x => x.d(piega, alto)).join('') };
+};
+// Il brivido dei treni di prova: un'onda sottile di luce che corre lungo un binario. el: un <path> con il tratto da
+// percorrere (nel verso in cui corre l'onda), L la sua lunghezza, u da 0 (non è ancora partita) a 1 (è arrivata in fondo).
+window.G.onda = function (el, L, u, lungo) {
+  el.setAttribute('stroke-dasharray', lungo.toFixed(1) + ' ' + (L + lungo + 10).toFixed(1));
+  el.setAttribute('stroke-dashoffset', (lungo - u * (L + lungo)).toFixed(1));
+};
+// Uno scambio nel fascio di binari, dentro la montagna: il pezzo di rotaia da una corsia (yDa) all'altra (yA) e il
+// palo col disco, che gira di giro gradi. Si posa con translate(x 0); il disco ha la classe g-disco, la rotaia g-ago.
+window.G.scambio = function (yDa, yA, giro) {
+  const C = window.G.C;
+  return '<path class="g-ago" d="M0 ' + yA + ' C60 ' + yA + ' 80 ' + yDa + ' 160 ' + yDa + '" stroke="' + C.acciaio + '" stroke-width="5" fill="none"/>' +
+    '<g transform="translate(150 ' + (Math.max(yDa, yA) + 46) + ')"><rect x="-4" y="-34" width="8" height="40" fill="' + C.acciaioScuro + '"/>' +
+    '<g class="g-disco" transform="rotate(' + (giro || 0) + ' 0 -40)"><circle cy="-40" r="14" fill="' + C.rosso + '" stroke="' + C.crema + '" stroke-width="3"/><rect x="-12" y="-43" width="24" height="6" fill="' + C.crema + '"/></g></g>';
+};
+// La lanterna sopra la vasca, con intorno un alone largo e morbido che illumina l'acqua. Scatola 120×60, come G.lanterna.
+window.G.lanternaAccesa = function (testo, col, luce) {
+  luce = luce === undefined ? 1 : luce;
+  // L'alone: tanti ovali uno dentro l'altro, sempre più chiari verso il centro (senza filtri, morbido anche se piccolo).
+  let alone = '';
+  for (let k = 0; k < 7; k++) { const f = 1 - k / 7; alone += '<ellipse cx="60" cy="34" rx="' + (70 + 130 * f).toFixed(0) + '" ry="' + (44 + 80 * f).toFixed(0) + '" fill="' + mix(col, '#FFFFFF', 0.08 * k) + '" opacity="' + (0.07 * luce).toFixed(3) + '"/>'; }
+  return alone + biglietto(testo, { fondo: mix(C.crema, col, 0.35 + 0.3 * luce) }) +
+    '<path d="M4 6 L116 6" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" opacity="' + (0.5 * luce).toFixed(2) + '"/>';
+};
+// Dentro la montagna, il treno di G.interno diventa un treno di prova: vagoni grigi, senza vernice e senza lucine.
+window.G.ingrigisci = function (radice) {
+  radice.querySelectorAll('.g-int-treno .g-vag').forEach((v, i) => {
+    const pass = v.querySelector('.g-pass');
+    v.innerHTML = vagone({ primo: i === 0, sbarra: 1, grigio: true }, pass ? pass.outerHTML : '');
+  });
+};
+// I treni di prova che dormono sul binario morto, dietro la stazione: tre treni grigi vuoti, col fanale spento e la
+// polvere. DORMONO: dove sta il primo vagone di ognuno, lungo MONDO.morto. G.dormono(pathMorto, els) li posa.
+window.G.DORMONO = [940, 1220, 1500];
+window.G.treniCheDormono = function (fanale) {
+  return window.G.DORMONO.map((s, k) => '<g class="g-dorme" data-k="' + k + '">' + treno([{}, {}, {}], { grigio: true, fanale: fanale || 0, sbarra: 1 }) + '</g>').join('');
+};
+window.G.dormono = function (path, radice, polvere) {
+  const treni = [...radice.querySelectorAll('.g-dorme')].map(g => [...g.querySelectorAll('.g-vag')]);
+  treni.forEach((v, k) => {
+    posaTreno(v, path, window.G.DORMONO[k], MONDO.scala, MONDO.passoBanchina);
+    if (polvere) v.forEach((el, i) => {
+      const r = kitRng(31 + k * 7 + i);
+      let p = '';
+      for (let j = 0; j < 14; j++) p += '<circle cx="' + (20 + r() * 210).toFixed(0) + '" cy="' + (60 + r() * 70).toFixed(0) + '" r="' + (2 + r() * 5).toFixed(1) + '" fill="#B9B2A2" opacity="' + (0.18 + r() * 0.25).toFixed(2) + '"/>';
+      p += '<path d="M190 -20 Q206 0 224 -16 M196 -6 L218 -22" stroke="#C9C4B8" stroke-width="1.6" fill="none" opacity=".45"/>';
+      el.querySelector('.g-vag-in').insertAdjacentHTML('beforeend', '<g class="g-polvere">' + p + '</g>');
+    });
+  });
+  return treni;
+};
+// La città di notte, dall'alto: tetti, e le finestre delle case (classe g-finestrella, data-k), accese.
+window.G.cittaDiNotte = function (seme) {
+  const C = window.G.C, r = kitRng(seme || 14);
+  let stelle = '';
+  const finestre = ['', ''];
+  for (let i = 0; i < 70; i++) stelle += '<circle cx="' + (r() * 2100 - 90).toFixed(0) + '" cy="' + (r() * 560).toFixed(0) + '" r="' + (0.8 + r() * 1.8).toFixed(1) + '" fill="#FFF4DA" opacity="' + (0.35 + r() * 0.6).toFixed(2) + '"/>';
+  const dietro = '<path d="M-100 1080 L-100 700 L80 700 L80 660 L200 620 L320 660 L320 720 L470 720 L470 680 L560 640 L650 680 L650 740 L820 740 L820 690 L940 690 L940 650 L1020 650 L1020 720 L1200 720 L1260 680 L1320 720 L1480 720 L1480 700 L1640 700 L1640 660 L1760 660 L1760 710 L2100 710 L2100 1080 Z" fill="#171A44"/>';
+  const davanti = '<path d="M-100 1080 L-100 800 L60 800 L160 730 L260 800 L360 800 L360 740 L480 740 L480 820 L700 820 L790 760 L880 820 L1080 820 L1080 790 L1180 790 L1180 770 L1320 770 L1320 830 L1450 770 L1540 830 L1700 830 L1700 800 L2100 800 L2100 1080 Z" fill="#0F1233"/>';
+  // Le prime 30 finestre stanno sui tetti di dietro, le altre su quelli davanti.
+  for (let k = 0; k < 90; k++) {
+    const x = -40 + r() * 2000, y = k < 30 ? 730 + r() * 60 : 840 + r() * 220;
+    finestre[k < 30 ? 0 : 1] += '<rect class="g-finestrella" data-k="' + k + '" x="' + x.toFixed(0) + '" y="' + y.toFixed(0) + '" width="16" height="20" rx="2" fill="' + C.luce + '" opacity="' + (0.55 + r() * 0.35).toFixed(2) + '"/>';
+  }
+  return '<rect x="-200" y="-200" width="2400" height="1500" fill="' + C.notte1 + '"/><rect x="-200" y="0" width="2400" height="900" fill="url(#g-cielo)"/>' + stelle +
+    dietro + finestre[0] + davanti + finestre[1];
+};
 // ── Episodio 6 ──
 // ── Episodio 7 ──
 // ── Episodio 8 ──
