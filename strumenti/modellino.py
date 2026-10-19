@@ -9,13 +9,14 @@ decidono i colori dei vestiti, i paesaggi delle finestre e quante paperelle di o
 
 Cosa è inventato (e dichiarato qui) e cosa è calcolato:
 - inventati: i biglietti (B), le paperelle (P), i fili di luce di Al e del vagone di mezzo e quelli di Emma nei
-  tratti 2 e 3, gli spostamenti di Al e del vagone di mezzo (S), gli scambi di Emma (SCAMBI_EMMA), i colori delle
-  parole (COLORE), i paesaggi delle finestre;
+  tratti 2 e 3, gli spostamenti di Al e del vagone di mezzo (S), la parte fissa degli scambi e la loro forza
+  (SCAMBI_FISSI, FORZA_SCAMBI), i colori delle parole (COLORE), i paesaggi delle finestre;
 - calcolati: i fili di Emma nel primo tratto (sguardi: query · key, poi softmax), quello che i fili portano a Emma in
-  ogni tratto, i colori dei vestiti, le finestre, la vasca.
+  ogni tratto, gli scambi di Emma, i colori dei vestiti, le finestre, la vasca.
 
-Le due frasi differiscono per un solo vagone: tutto il resto (biglietti di Al ed Emma, fili dichiarati, scambi di Emma)
-è lo stesso, e la differenza la portano solo i fili di luce. Al, davanti, non guarda nessuno: è uguale nei due treni.
+Le due frasi differiscono per un solo vagone: biglietti di Al ed Emma, fili dichiarati e scambi sono gli stessi.
+La differenza entra dai fili di luce, e gli scambi, che scattano a seconda del vagone che passa, la portano avanti.
+Al, davanti, non guarda nessuno: è uguale nei due treni.
 """
 import json
 import math
@@ -76,9 +77,11 @@ S = {
     'mare':  [[-0.08, 0.10, -0.06], [-0.12, 0.15, -0.08], [-0.15, 0.18, -0.10]],
     'parco': [[-0.11, 0.20, 0.11], [-0.16, 0.30, 0.17], [-0.21, 0.38, 0.22]],
 }
-# Emma: in ogni tratto si sposta di quello che le portano i fili (calcolato) più lo scambio (dichiarato, lo stesso
-# in ogni frase). Nel modellino lo scambio di un passeggero non dipende dalla frase: il contesto entra dai fili.
-SCAMBI_EMMA = [[-0.29, -0.03, 0.24], [-0.69, 0.02, 0.69], [-1.04, 0.18, 1.09]]
+# Gli scambi di Emma: in ogni tratto, dopo i fili, lo scambio la sposta di una parte fissa (la pista di quel tratto)
+# più una spinta che dipende dal vagone che passa: per ogni parola a cui il vagone somiglia, lo scambio lo spinge un
+# po' più verso quella parola. La parte fissa è tarata perché «Al mare Emma» dia gli spostamenti di sempre.
+SCAMBI_FISSI = [[-0.44, -0.41, 0.78], [-0.61, -0.66, 1.41], [-0.47, -1.02, 1.77]]
+FORZA_SCAMBI = 0.2
 # Controllo: in «Al mare Emma» fili + scambi danno gli spostamenti di Emma di sempre.
 SPOSTAMENTI_EMMA_MARE = [[-0.44, 0.43, -0.14], [-0.93, 0.61, 0.22], [-1.65, 1.08, 0.64]]
 
@@ -87,15 +90,15 @@ PAESAGGI = [
     ('spiaggia', {'sabbia', 'conchiglie', 'onde'}),
     ('molo', {'nuota', 'onde', 'conchiglie'}),
     ('mare aperto', {'nuota', 'gioca', 'onde'}),
-    ('giardino', {'altalena', 'sabbia', 'Bovary'}),
-    ('parco giochi', {'gioca', 'corre', 'altalena'}),
-    ('prato', {'gioca', 'corre', 'nuota'}),
+    ('giardino', {'altalena', 'scivolo', 'foglie'}),
+    ('viale', {'corre', 'altalena', 'foglie'}),
+    ('prato', {'corre', 'gioca', 'foglie'}),
 ]
 
 # Le frasi del modellino, e le parole che salgono sul treno dopo la pesca.
 FRASI = {
     'mare':  (['Al', 'mare', 'Emma'], ['nuota']),
-    'parco': (['Al', 'parco', 'Emma'], ['gioca', 'corre']),
+    'parco': (['Al', 'parco', 'Emma'], ['corre', 'gioca']),
 }
 
 PAPERELLE_IN_VASCA = 40
@@ -153,6 +156,12 @@ def vasca(x, n=PAPERELLE_IN_VASCA, T=1.0):
     return p, {w: c for w, c in sorted(conta.items(), key=lambda kv: -kv[1]) if c > 0}
 
 
+def scambio(k, x):
+    """Lo scambio del tratto k sul vagone x: la parte fissa più la spinta verso le parole a cui x somiglia."""
+    spinta = [FORZA_SCAMBI * sum(max(0.0, dot(x, P[w])) * P[w][i] for w in P) for i in range(3)]
+    return r2([a + b for a, b in zip(SCAMBI_FISSI[k], spinta)])
+
+
 def tappe_di(t):
     """Il vestito di Al o del vagone di mezzo in stazione e dopo ogni tratto."""
     x, tappe = B[t], [B[t]]
@@ -179,16 +188,19 @@ def giro(chiave):
     for f in fili_tratti:
         assert abs(sum(f.values()) - 1) < 1e-9, f
 
-    # Emma, tratto per tratto: i fili le portano la media pesata dei vestiti di chi guarda, poi scatta lo scambio.
+    # Emma, tratto per tratto: i fili le portano la media pesata dei vestiti di chi guarda, poi scatta lo scambio,
+    # calcolato sul vagone così com'è dopo i fili.
     altri = {t: tappe_di(t) for t in frase[:-1]}
     x, tappe, spostamenti = B[ultimo], [B[ultimo]], []
     for k, f in enumerate(fili_tratti):
         vestiti = {**{t: altri[t][k] for t in altri}, ultimo: x}
         porta = r2([sum(f[t] * vestiti[t][i] for t in frase) for i in range(3)])
+        y = somma(x, porta)
         if k == 0:
-            dopo_fili = somma(x, porta)
-        spostamenti.append(somma(porta, SCAMBI_EMMA[k]))
-        x = somma(somma(x, porta), SCAMBI_EMMA[k])
+            dopo_fili = y
+        d = scambio(k, y)
+        spostamenti.append(somma(porta, d))
+        x = somma(y, d)
         tappe.append(x)
     if chiave == 'mare':
         assert spostamenti == SPOSTAMENTI_EMMA_MARE, spostamenti
@@ -238,8 +250,9 @@ def controlla(dati):
     lg = {w: dot(B['parco'], P[w]) for w in P}
     assert min(lg[w] for w in ('gioca', 'corre', 'altalena', 'scivolo', 'foglie')) > \
         max(lg[w] for w in ('nuota', 'onde', 'conchiglie', 'sabbia'))
-    # La paperella più probabile: «nuota» al mare, «gioca» al parco.
-    assert mare['vasca'][0][0] == 'nuota' and parco['vasca'][0][0] == 'gioca'
+    # La paperella più probabile: «nuota» al mare, «corre» al parco; al parco anche «gioca» può uscire.
+    assert mare['vasca'][0][0] == 'nuota' and parco['vasca'][0][0] == 'corre'
+    assert dict((w, c) for w, c, _ in parco['vasca']).get('gioca', 0) > 0
 
 
 def scrivi(dati):
