@@ -131,7 +131,23 @@ L'elenco completo, tradotto nel luna park, è nel §7 del soggetto. Le più impo
   interruttore suoi. Senza altro, la musica è quella di `score.js` scena per scena. Un episodio può avere
   `audio/tracce.json` per un tema continuo (`sito/motore/tema.js`), i volumi di partenza o file audio a un istante
   del film, come una voce narrante.
-- In `sito/episodi.json` c'è l'elenco degli episodi: aggiornalo quando ne nasce uno nuovo.
+- **I testi del sito raccontano, non spiegano**: dicono cosa c'è nel luna park e nei cartoni, non perché è fatto
+  così. Le regole di questo file e del soggetto servono a noi e non si citano mai sul sito.
+- **Il sito ha due mondi, separati dalla luce**: i cartoni stanno di notte, nel luna park (`body.notte`: home e
+  player); le lezioni stanno sulla carta del quaderno di Ada (`body.carta`). I colori sono quelli della tela, come
+  variabili in testa a `sito/sito.css`. I personaggi del sito non si ridisegnano: `sito/sito.js` li prende da
+  `shared.js`, con i colori del modellino, così un cambio nella tela arriva anche sul sito.
+- **Un episodio nuovo sul sito.** Il sito si costruisce da `sito/episodi.json`: niente da toccare nelle pagine.
+  1. In `sito/episodi.json` aggiungi l'episodio in fondo alla sua stagione: `n`, `etichetta`, `cartella`, `titolo`,
+     `racconto` (due righe, senza svelare la risposta) e `personaggio`, il volto della sua scheda: di solito l'elemento
+     nuovo dell'episodio. I volti sono in `VOLTI` di `sito/sito.js`: un personaggio nuovo ci entra (con i riquadri
+     `ritratto` e `intero` e il colore dal modellino) prima di finire su una scheda.
+  2. Una **stagione** nuova è un nuovo elemento della lista, con `n` (1, 2, 3…), `titolo` («Seconda stagione») ed
+     `episodi`. La home mostra una stagione alla volta, con le linguette; il player passa da una stagione all'altra.
+  3. La durata non si scrive: il sito la somma da `scenes.json`.
+  4. `node strumenti/controlla.mjs` verifica che ogni cartella `episodi/NN-*` sia in `episodi.json`, con tutti i
+     campi, un volto che esiste e i numeri in fila.
+  5. Aggiorna la tabella degli episodi nel [README](README.md).
 - La sezione da leggere, **«Come funziona un LLM»**, raccoglie le lezioni: una per file in `sito/lezioni/NN-titolo.md`
   (Markdown: titoli, paragrafi, elenchi, tabelle, codice, formule in ```latex), elencate in `sito/lezioni.json` e
   impaginate da `sito/leggi.html?l=NN-titolo`. Sono testi tecnici fuori dalla storia: le regole di racconto e del
