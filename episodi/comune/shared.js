@@ -126,7 +126,9 @@ const RITMO = {
     indietro: [[11.0, 16, 2.4, 1]], prova: [[29.4, 34, 2.4, 1]], brivido: [[31.2, 36, 2.4, 1]],
   },
   '06': { finestre: [[38.4, 44, 1.9, 1]] },
-  '07': {},
+  '07': {
+    giri: [[30.2, 34.2, 2.8, 1]], punto: [[13.6, 17.4, 2.6, 1]], finestre: [[38.0, 41.0, 2.6, 1]],
+  },
   '08': {},
   '09': {},
 };
@@ -1267,5 +1269,206 @@ window.G.cittaDiNotte = function (seme) {
 };
 // ── Episodio 6 ──
 // ── Episodio 7 ──
+// La pagina della prima sera, sul quaderno di Ada (scene «quaderno», «vasca», «fine»): a sinistra il treno di «Al mare
+// Emma» in stazione, con i colori dei biglietti; a destra la vasca di quella sera, con le sue quaranta paperelle (colori e
+// quantità dal modellino, G.MOD.mare.vasca) e, in mezzo, piccola piccola, la paperella scura. Niente scritte.
+// Pagina intera 1920×1080, come i quaderni degli episodi 1 e 2: { copertina, sinistra, destra, costa } (le due metà si
+// possono sfogliare). Accanto alla paperella scura resta il posto per la seconda, che Ada disegna alla fine: il gruppo
+// .g7-seconda (nascosta), con i tratti a matita .g7-tratto (si disegnano) e il colore .g7-colore (compare); posto = la pancia.
+window.G.primaSera = function () {
+  const G = window.G, C = G.C, D = G.MOD.mare, P = D.passeggeri, r = kitRng(71), matita = '#3A3570';
+  const altre = [];
+  let scura = null;
+  D.vasca.forEach(([w, n, col]) => { for (let k = 0; k < n; k++) { if (w === 'Fine' && !scura) scura = col; else altre.push(col); } });
+  for (let i = altre.length - 1; i > 0; i--) { const j = Math.floor(r() * (i + 1)); [altre[i], altre[j]] = [altre[j], altre[i]]; }
+  // Quattro file di undici posti; la scura in mezzo, e accanto a lei il posto vuoto per la seconda.
+  const xy = (riga, c) => [1100 + c * 52 + (riga % 2) * 20 - 10 + (r() - 0.5) * 8, 676 + riga * 46 + (r() - 0.5) * 6];
+  const libero = { '1,6': 1, '2,5': 1, '2,6': 1, '3,10': 1 };
+  let papere = '', k = 0;
+  for (let riga = 0; riga < 4; riga++) for (let c = 0; c < 11; c++) {
+    const [x, y] = xy(riga, c);
+    if (riga === 1 && c === 5) { if (scura) papere += '<g transform="translate(' + (x - 14).toFixed(1) + ' ' + (y - 24).toFixed(1) + ') scale(.29)">' + G.paperella(scura) + '</g>'; continue; }
+    if (libero[riga + ',' + c] || k >= altre.length) continue;
+    papere += '<g transform="translate(' + (x - 21).toFixed(1) + ' ' + (y - 35).toFixed(1) + ') scale(.42)">' + G.paperella(altre[k++]) + '</g>';
+  }
+  const posto = [1408, 772], s2 = 0.6;
+  const corpo = 'M26 58 C26 46 40 42 58 44 C74 46 84 40 92 30 C94 46 94 62 86 72 C78 82 60 86 44 84 C32 82 26 70 26 58 Z';
+  const seconda = '<g class="g7-seconda" opacity="0" transform="translate(' + (posto[0] - 30) + ' ' + (posto[1] - 84 * s2) + ') scale(' + s2 + ')">' +
+    '<g class="g7-colore" opacity="0">' + G.paperella(scura || '#46465a') + '</g>' +
+    '<g stroke="' + matita + '" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none">' +
+    '<path class="g7-tratto" d="' + corpo + '"/><path class="g7-tratto" d="M19 34 A17 17 0 1 1 53 34 A17 17 0 1 1 19 34"/>' +
+    '<path class="g7-tratto" d="M21 33 C12 32 7 37 9 41 C13 45 20 43 24 40"/></g></g>';
+  const omino = (x, y, col) => '<path d="M' + (x - 22) + ' ' + y + ' L' + (x + 22) + ' ' + y + ' L' + (x + 14) + ' ' + (y - 30) + ' L' + (x - 14) + ' ' + (y - 30) + ' Z" fill="' + col + '"/><circle cx="' + x + '" cy="' + (y - 46) + '" r="19" fill="#F5C84C"/><circle cx="' + x + '" cy="' + (y - 42) + '" r="13" fill="#FFE9D6"/>';
+  // A sinistra: la stazione e il treno appena salito, con Al, Mare ed Emma dei colori dei biglietti; dietro, la montagna.
+  const sinistra = '<rect x="176" y="86" width="784" height="828" rx="12" fill="' + C.crema + '"/>' +
+    '<g stroke="' + matita + '" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none">' +
+    '<path d="M736 600 L812 380 Q852 300 892 380 L936 500" opacity=".55"/><path d="M800 560 L800 520 Q822 494 850 514 L850 560" opacity=".55"/>' +
+    '<path d="M214 470 L734 470 L712 430 L236 430 Z"/><path d="M236 470 L236 690 M712 470 L712 690"/>' +
+    '<path d="M210 760 L930 760"/>' +
+    [270, 420, 570].map(x => '<path d="M' + x + ' 690 L' + (x + 130) + ' 690 L' + (x + 120) + ' 744 L' + (x + 10) + ' 744 Z"/><circle cx="' + (x + 32) + '" cy="752" r="11"/><circle cx="' + (x + 98) + '" cy="752" r="11"/>').join('') +
+    '</g>' +
+    '<ellipse cx="335" cy="664" rx="34" ry="26" fill="' + P.Al.biglietto + '"/>' +
+    '<path d="M450 690 C462 652 488 636 520 640 C534 644 532 664 518 664 C508 664 506 652 514 650" fill="none" stroke="' + P.mare.biglietto + '" stroke-width="14" stroke-linecap="round"/>' +
+    omino(635, 690, P.Emma.biglietto);
+  // A destra: la vasca di quella sera, piena di paperelle.
+  const destra = '<rect x="960" y="86" width="784" height="828" rx="12" fill="' + C.crema + '"/>' +
+    '<path d="M1046 650 L1704 650 L1678 836 Q1375 874 1072 836 Z" fill="#BFE3F0" opacity=".7"/>' +
+    '<g stroke="' + matita + '" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none">' +
+    '<path d="M1030 640 L1720 640 L1690 842 Q1375 884 1060 842 Z"/>' +
+    '<path d="M1000 420 L1760 420"/><path d="M1300 360 L1450 360 L1438 412 L1312 412 Z"/>' +
+    '<path d="M1340 450 l-8 46 M1375 452 l0 50 M1410 450 l8 46" stroke-width="5" stroke-dasharray="10 12" opacity=".6"/>' +
+    '</g>' + omino(1375, 372, P.Emma.tratti[2]) + papere + seconda;
+  return {
+    copertina: '<rect x="-200" y="-200" width="2320" height="1480" fill="#0B1030"/><rect x="150" y="60" width="1620" height="880" rx="26" fill="#2F6F73"/>',
+    sinistra, destra, posto,
+    costa: '<path d="M960 86 L960 914" stroke="' + C.cremaScura + '" stroke-width="4"/>',
+  };
+};
+// Un'uscita sopra la vasca (scene «giri», «punto», «vasca», «pesca»). Il treno esce dalla montagna; sotto l'ultimo vagone
+// cadono le paperelle (di luce, e toccano l'acqua vere); il treno si ferma in stazione, i vagoni si accostano lungo la
+// banchina (MONDO.passoBanchina) e i vestiti tornano del colore dei biglietti. Ada pesca a occhi chiusi: la paperella
+// salta, corre e sale in un vagone nuovo in fondo al treno (con t.sale), oppure resta nella sua mano. Le altre scivolano
+// via dallo scarico (da t.via). Con t.riparte il treno riparte, sale e sparisce nella montagna.
+// o: { id (unico nella scena), chi: [{ tipo, biglietto, uscita }], vasca (dal modellino), seme, parola (la pescata),
+//      nuovo (il biglietto del passeggero nuovo), angolo (la paperella Fine in un angolo della vasca), ultimaFine (le Fine
+//      scivolano via per ultime), t: { esce, vel, pesca: { giu, su, preso }, via, salta, sale, vagone, tiene, riparte, velParte } }.
+// Se la velocità non finisce a zero, il treno frena dall'ultima chiave e si ferma proprio in stazione (ferma: quando).
+// .treno, .mano, .papere: gli SVG da mettere nel mondo (.papere nella vasca, .g-vasca). Dopo costruisciMondo, monta(m);
+// render(t) muove tutto e restituisce { giu, mano: [x, y] } (da t.tiene la paperella in mano la muove la scena).
+window.G.giro7 = function (o) {
+  const G = window.G, M = G.MONDO, id = o.id, T = o.t, n = o.chi.length, ADA = [672, 896];
+  const c01 = x => Math.max(0, Math.min(1, x)), seg = (t, a, b) => c01((t - a) / (b - a)), lerp = (a, b, p) => a + (b - a) * p;
+  const eo = x => 1 - Math.pow(1 - c01(x), 3), ei = x => Math.pow(c01(x), 3);
+  const eio = x => { x = c01(x); return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; };
+  const lista = G.papereVasca(o.vasca, o.seme);
+  // La paperella Fine in un angolo, davanti a destra, da sola: le altre le lasciano un po' di posto.
+  if (o.angolo) {
+    const f = lista.findIndex(p => p.parola === 'Fine');
+    if (f >= 0) {
+      lista.forEach((p, i) => { if (i !== f && p.x > 826) p.x = 826 - (p.x - 826) * 1.5; });
+      lista[f].x = 848; lista[f].y = 883;
+    }
+  }
+  let presa = -1, bd = 1e9;
+  lista.forEach((p, i) => { const d = Math.abs(p.x - 700) + Math.abs(p.y - 880); if (p.parola === o.parola && d < bd) { bd = d; presa = i; } });
+  const colPresa = presa >= 0 ? lista[presa].col : G.C.crema;
+  const ordine = lista.map((p, i) => i).sort((a, b) => lista[a].y - lista[b].y);
+  let scintille = '';
+  for (let k = 0; k < 10; k++) scintille += '<circle r="2.4" fill="' + G.C.luce + '"/>';
+  const passeggeri = o.chi.map(c => ({ tipo: c.tipo, col: c.uscita })).concat(o.nuovo ? [{ tipo: 'paperella', col: o.nuovo }] : []);
+  const g = {
+    lista, presa, colPresa,
+    treno: '<g class="g7-treno-' + id + '">' + G.treno(passeggeri, { sbarra: 1 }) + '</g><g class="g7-scint-' + id + '" opacity="0">' + scintille + '</g>',
+    mano: '<ellipse class="g7-luce-' + id + '" rx="22" ry="18" fill="' + colPresa + '" opacity="0" filter="url(#g-soft)"/>' +
+      '<g class="g7-mano-' + id + '" opacity="0"><g transform="translate(-50 -84)"><g class="g7-pv">' + G.paperella(colPresa) + '</g>' +
+      (o.nuovo ? '<g class="g7-pb" opacity="0">' + G.paperella(o.nuovo) + '</g>' : '') + '</g></g>',
+    papere: ordine.map(i => '<g class="g7-pap-' + id + '" data-i="' + i + '" opacity="0"><g transform="translate(-50 -84)"><g class="g7-vera">' + G.paperella(lista[i].col) + '</g><g class="g7-dilu">' + G.paperellaDiLuce(lista[i].col) + '</g></g></g>').join(''),
+    monta(m) {
+      this.m = m;
+      this.vag = m.qa('.g7-treno-' + id + ' .g-vag');
+      this.passNuovo = o.nuovo ? this.vag[n].querySelector('.g-pass') : null;
+      this.manoEl = m.q('.g7-mano-' + id); this.luce = m.q('.g7-luce-' + id); this.scint = m.q('.g7-scint-' + id);
+      this.pv = m.q('.g7-mano-' + id + ' .g7-pv'); this.pb = m.q('.g7-mano-' + id + ' .g7-pb');
+      this.pap = m.qa('.g7-pap-' + id).map(el => ({ el, i: +el.dataset.i, vera: el.querySelector('.g7-vera'), luce: el.querySelector('.g7-dilu') }));
+      const path = m.arrivo;
+      this.sF = path.getTotalLength() - (M.fermo - 40);
+      this.Lp = m.partenza.getTotalLength();
+      // Se l'ultima chiave della velocità non è ferma, il treno frena da lì e si ferma proprio in stazione.
+      const [tl, vl] = T.vel[T.vel.length - 1];
+      this.vel = vl > 0 ? T.vel.concat([[tl + 2 * (this.sF - G.percorso(tl, 0, T.vel)) / vl, 0]]) : T.vel;
+      this.ferma = this.vel[this.vel.length - 1][0];
+      this.cade = lista.map(p => {
+        for (let t = T.esce; t < T.esce + 40; t += 0.02) {
+          const s = this.sAt(t), se = s - (n - 1) * this.passoA(s);
+          if (se > 0 && path.getPointAtLength(se).x <= p.x + 6) return t;
+        }
+        return T.esce + 8;
+      });
+      this.sedile = [M.fermo + n * M.passoBanchina + 6, 816];
+    },
+    sAt(t) { return Math.min(this.sF, G.percorso(t, 0, this.vel)); },
+    // Mentre arriva in stazione il treno si accosta: i vagoni passano da MONDO.passo a MONDO.passoBanchina; ripartendo, il contrario.
+    passoA(s) { return lerp(M.passo, M.passoBanchina, c01((s - (this.sF - 220)) / 220)); },
+    passoP(s) { return lerp(M.passoBanchina, M.passo, c01((s - (640 - M.fermo)) / 260)); },
+    manoAt(giu) {
+      const s = 0.28, mx = 150 + 26 * giu - 6, my = 230 + 50 * giu + 6;
+      return [ADA[0] - 100 * s + mx * s, ADA[1] - 304 * s + my * s];
+    },
+    giu(t) {
+      const Pp = T.pesca;
+      if (!Pp || t < Pp.giu - 0.6) return 0;
+      if (t < Pp.giu + 0.4) return eio(seg(t, Pp.giu - 0.6, Pp.giu + 0.4));
+      if (t < Pp.su) return 0.9 + 0.1 * Math.sin((t - Pp.giu) * 9);
+      return 1 - eio(seg(t, Pp.su, Pp.preso + 0.4));
+    },
+    render(t) {
+      const m = this.m, s = t < T.esce ? -500 : this.sAt(t);
+      const parte = T.riparte !== undefined && t >= T.riparte;
+      const nuovo = T.vagone !== undefined ? eo(seg(t, T.vagone, T.vagone + 0.6)) : 0;
+      if (!parte) {
+        const ps = this.passoA(s);
+        G.posaTreno(this.vag, m.arrivo, s, undefined, ps);
+        this.vag.forEach((el, i) => el.setAttribute('opacity', (i < n ? c01((s - i * ps - 4) / 26) : nuovo).toFixed(3)));
+        // Fermo in stazione, l'ultimo vagone della banchina piena sta in piano, sulle assi (come quando riparte).
+        const ferma = seg(s, this.sF - 150, this.sF), L = m.arrivo.getTotalLength();
+        if (ferma > 0) this.vag.forEach((el, i) => {
+          const si = Math.max(0.5, Math.min(L - 0.5, s - i * ps)), p = m.arrivo.getPointAtLength(si);
+          if (p.x > 650 || p.x < 560) return;
+          const q = m.arrivo.getPointAtLength(Math.min(L, si + 1)), q0 = m.arrivo.getPointAtLength(Math.max(0, si - 1));
+          const a = (Math.atan2(q.y - q0.y, q.x - q0.x) * 180 / Math.PI - 180) * (1 - ferma);
+          el.setAttribute('transform', 'translate(' + p.x.toFixed(2) + ' ' + lerp(p.y, 852, ferma).toFixed(2) + ') rotate(' + a.toFixed(2) + ') scale(' + M.scala + ') translate(-120 -150)');
+        });
+      } else {
+        const sp = G.percorso(t, 640 - M.fermo, T.velParte), pp = this.passoP(sp);
+        G.posaTreno(this.vag, m.partenza, sp, undefined, pp);
+        this.vag.forEach((el, i) => el.setAttribute('opacity', (c01((this.Lp - 4 - (sp - i * pp)) / 26) * (i < n ? 1 : nuovo)).toFixed(3)));
+      }
+      // In stazione i vestiti tornano del colore dei biglietti.
+      const torna = parte ? 1 : Math.round(seg(s, this.sF - 150, this.sF) * 12) / 12;
+      o.chi.forEach((c, i) => G.cambiaPasseggero(this.vag[i], c.tipo, G.mix(c.uscita, c.biglietto, torna)));
+      // Le paperelle cadono dove passa l'ultimo vagone: di luce, e toccano l'acqua vere. Poi scivolano via dallo scarico.
+      this.pap.forEach(({ el, i, vera, luce }) => {
+        const t0 = this.cade[i], p = lista[i], u = seg(t, t0, t0 + 0.55), vv = seg(u, 0.55, 1);
+        vera.setAttribute('opacity', vv.toFixed(3)); luce.setAttribute('opacity', (1 - vv).toFixed(3));
+        const tv = T.via === undefined ? 1e9 : T.via + (i % 7) * 0.12 + (o.ultimaFine && p.parola === 'Fine' ? 1.0 : 0);
+        const via = eio(seg(t, tv, tv + 1.7)), a = via * 2.4 + i;
+        const x = lerp(p.x, 772 + 8 * Math.cos(a), via);
+        const y = lerp(lerp(808, p.y, ei(u)) + (u >= 1 ? 1.2 * Math.sin(t * 2.2 + i) : 0), 884, via);
+        el.setAttribute('transform', 'translate(' + x.toFixed(2) + ' ' + y.toFixed(2) + ') scale(' + (0.16 * (u < 1 ? lerp(0.7, 1, u) : 1) * (1 - via)).toFixed(4) + ')');
+        const Pp = T.pesca;
+        el.setAttribute('opacity', t < t0 ? 0 : i === presa && Pp ? (t < Pp.su + 0.2 ? 1 : 0) : (1 - seg(via, 0.85, 1)).toFixed(3));
+      });
+      // La paperella pescata: nella mano di Ada; poi salta giù, corre lungo la banchina e sale sul vagone nuovo.
+      const giu = this.giu(t), giuQ = Math.round(giu * 40) / 40, [hx, hy] = this.manoAt(giuQ);
+      const Pp = T.pesca;
+      if (Pp && (T.tiene === undefined || t < T.tiene)) {
+        let px = hx, py = hy, pr = 0, pv = t >= Pp.su + 0.2 ? 1 : 0, cb = 0;
+        if (T.salta !== undefined && t >= T.salta) {
+          const S = T.sale, a = eo(seg(t, T.salta, T.salta + 0.6)), corsa = eio(seg(t, T.salta + 0.6, S - 0.45)), salto = eio(seg(t, S - 0.45, S));
+          const x0 = 636;
+          if (t < T.salta + 0.6) { px = lerp(hx, x0, a); py = lerp(hy, 836, a) - 30 * Math.sin(Math.PI * a); }
+          else if (t < S - 0.45) { px = lerp(x0, this.sedile[0] + 24, corsa); py = 836 - 3 * Math.abs(Math.sin(t * 12)); pr = 9 * Math.sin(t * 12); }
+          else { px = lerp(this.sedile[0] + 24, this.sedile[0], salto); py = lerp(836, this.sedile[1], salto) - 22 * Math.sin(Math.PI * salto); cb = salto; }
+          pv = t < S ? 1 : 1 - seg(t, S, S + 0.3);
+        }
+        this.manoEl.setAttribute('transform', 'translate(' + px.toFixed(2) + ' ' + py.toFixed(2) + ') rotate(' + pr.toFixed(2) + ') scale(0.16)');
+        this.manoEl.setAttribute('opacity', pv.toFixed(3));
+        if (this.pb) { this.pb.setAttribute('opacity', cb.toFixed(3)); this.pv.setAttribute('opacity', (1 - cb).toFixed(3)); }
+        const fine = T.salta !== undefined ? T.salta : T.via !== undefined ? T.via + 1.2 : Pp.preso + 3;
+        const luce = seg(t, Pp.su + 0.3, Pp.preso + 0.4) * (1 - seg(t, fine - 0.8, fine));
+        this.luce.setAttribute('cx', hx.toFixed(1)); this.luce.setAttribute('cy', (hy - 10).toFixed(1));
+        this.luce.setAttribute('opacity', (0.6 * luce).toFixed(3));
+      }
+      if (this.passNuovo) this.passNuovo.setAttribute('opacity', seg(t, T.sale - 0.05, T.sale + 0.3).toFixed(3));
+      if (T.vagone !== undefined) {
+        const sc = seg(t, T.vagone, T.vagone + 1.1);
+        this.scint.setAttribute('opacity', (sc > 0 && sc < 1 ? 1 - sc : 0).toFixed(3));
+        [...this.scint.children].forEach((c, k) => { const a = k * Math.PI / 5, d = 10 + 34 * eo(sc); c.setAttribute('cx', (this.sedile[0] + d * Math.cos(a)).toFixed(2)); c.setAttribute('cy', (838 + d * 0.6 * Math.sin(a)).toFixed(2)); });
+      }
+      return { giu: giuQ, mano: [hx, hy] };
+    },
+  };
+  return g;
+};
 // ── Episodio 8 ──
 // ── Episodio 9 ──
