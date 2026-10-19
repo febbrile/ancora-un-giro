@@ -8,6 +8,9 @@
 // - nessun pezzo di sottotitolo che finisce con un articolo, una preposizione, una congiunzione o un apostrofo;
 // - l'episodio sotto i 5 minuti;
 // - nessun numero a schermo nei sottotitoli.
+//
+// Poi controlla il sito: ogni episodio in sito/episodi.json, nella sua stagione, con i campi della scheda e un volto
+// che sito/sito.js sa disegnare; ogni lezione di sito/lezioni.json con il suo file.
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -62,5 +65,33 @@ for (const ep of eps) {
     console.log('  ✓ ' + s.id.padEnd(14) + String(s.dur).padStart(4) + ' s · ' + testi.length + ' battute · ' + (s.dur - detto).toFixed(1) + ' s di sole immagini · coda ' + coda.toFixed(1) + ' s');
   }
 }
+// Il sito: ogni episodio sta in sito/episodi.json, nella sua stagione, con tutto quello che serve alla sua scheda.
+console.log('\nsito/episodi.json');
+new Function(fs.readFileSync(path.join(RADICE, 'sito', 'sito.js'), 'utf8'))();
+const Sito = globalThis.window.Sito;
+const stagioni = JSON.parse(fs.readFileSync(path.join(RADICE, 'sito', 'episodi.json'), 'utf8'));
+const sulSito = new Set();
+if (!Array.isArray(stagioni) || !stagioni.length) male('episodi.json deve essere una lista di stagioni');
+else stagioni.forEach((s, k) => {
+  const nome = 'stagione ' + (s.n ?? '?');
+  if (s.n !== k + 1) male(nome + ': le stagioni vanno numerate 1, 2, 3… nell’ordine dell’elenco');
+  if (!s.titolo) male(nome + ': manca il titolo');
+  if (!Array.isArray(s.episodi) || !s.episodi.length) { male(nome + ': nessun episodio'); return; }
+  s.episodi.forEach((e, i) => {
+    const chi = nome + ', ' + (e.cartella || 'episodio ' + i);
+    ['n', 'cartella', 'titolo', 'racconto', 'personaggio'].forEach(c => { if (e[c] === undefined || e[c] === '') male(chi + ': manca «' + c + '»'); });
+    if (i > 0 && e.n !== s.episodi[i - 1].n + 1) male(chi + ': i numeri degli episodi devono seguire quelli prima');
+    if (e.personaggio && !Sito.PERSONAGGI.includes(e.personaggio)) male(chi + ': il personaggio «' + e.personaggio + '» non ha un volto in sito/sito.js (' + Sito.PERSONAGGI.join(', ') + ')');
+    if (sulSito.has(e.cartella)) male(chi + ': compare due volte');
+    sulSito.add(e.cartella);
+    if (e.cartella && !fs.existsSync(path.join(RADICE, 'episodi', e.cartella, 'modules', 'scenes.json'))) male(chi + ': non trovo episodi/' + e.cartella + '/modules/scenes.json');
+  });
+  console.log('  ✓ ' + (s.titolo || nome) + ' · ' + (s.episodi || []).length + ' episodi');
+});
+fs.readdirSync(path.join(RADICE, 'episodi')).filter(d => /^\d\d-/.test(d)).forEach(d => { if (!sulSito.has(d)) male('episodi/' + d + ' non è in sito/episodi.json'); });
+const lezioni = JSON.parse(fs.readFileSync(path.join(RADICE, 'sito', 'lezioni.json'), 'utf8'));
+lezioni.forEach(l => { if (!fs.existsSync(path.join(RADICE, 'sito', 'lezioni', l.file + '.md'))) male('sito/lezioni.json: non trovo sito/lezioni/' + l.file + '.md'); });
+console.log('  ✓ ' + lezioni.length + ' lezioni in sito/lezioni.json');
+
 console.log(errori ? '\n' + errori + ' problemi' : '\nTutto a posto.');
 process.exit(errori ? 1 : 0);
