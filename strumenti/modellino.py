@@ -296,9 +296,123 @@ def manopola(dati):
         print(f'  passeggero nuovo «{w}»:', c)
 
 
+# ── Episodio 4 · Il treno che ricorda: la chat e la banchina ─────────────────────────────────────────
+# La chat: «Al mare Emma» → «nuota», poi «Al parco» → «corre», poi ancora «Al parco».
+# A ogni messaggio sale sul treno tutta la chat, risposte comprese: tra un messaggio e l'altro non resta niente.
+# Sulla banchina stanno al massimo BANCHINA vagoni: se la chat è più lunga, i biglietti del principio restano giù.
+#
+# Inventati e dichiarati qui: BANCHINA, la chiave di «nuota» (K_CHAT), lo sguardo di Parco quando è l'ultimo
+# (Q_PARCO), i fili di Parco nei tratti 2 e 3 (FILI_PARCO_TRATTI), gli spostamenti di «nuota» e del secondo Al
+# (S_CHAT). Calcolati: i fili di Parco nel primo tratto, quello che gli portano, i suoi scambi, i colori, le finestre,
+# la vasca. Al, Mare ed Emma in testa al treno guardano solo avanti: fanno lo stesso viaggio dell'episodio 1.
+
+BANCHINA = 7
+CHAT = [(['Al', 'mare', 'Emma'], ['nuota']), (['Al', 'parco'], ['corre']), (['Al', 'parco'], [])]
+K_CHAT = {**K, 'nuota': [-0.10, 0.40, 0.20]}
+Q_PARCO = [4.0, 1.0, 3.2]
+FILI_PARCO_TRATTI = [None, (0.1, 0.1, 0.3, 0.1, 0.1, 0.3), (0.1, 0.1, 0.2, 0.1, 0.1, 0.4)]
+S_CHAT = {
+    'nuota': [[-0.06, 0.05, 0.00], [-0.09, 0.08, 0.01], [-0.11, 0.10, 0.01]],
+    'Al':    [[0.03, 0.06, 0.04], [0.04, 0.07, 0.05], [0.05, 0.08, 0.06]],
+}
+
+
+def tappe_emma_mare():
+    """Le tappe di Emma in «Al mare Emma», rifatte come in giro(): servono i vestiti, non solo i colori."""
+    frase = FRASI['mare'][0]
+    fili = dict(zip(frase, [round(q, 1) for q in softmax([dot(Q_EMMA, K[t]) for t in frase])]))
+    fili_tratti = [fili] + [dict(zip(frase, f)) for f in FILI_EMMA_TRATTI[1:]]
+    altri = {t: tappe_di(t) for t in frase[:-1]}
+    x, tappe = B['Emma'], [B['Emma']]
+    for k, f in enumerate(fili_tratti):
+        vestiti = {**{t: altri[t][k] for t in altri}, 'Emma': x}
+        y = somma(x, r2([sum(f[t] * vestiti[t][i] for t in frase) for i in range(3)]))
+        x = somma(y, scambio(k, y))
+        tappe.append(x)
+    return tappe
+
+
+def fili_arrotondati(pesi):
+    """Arrotonda i fili al decimo; quello che manca per fare uno va al filo più forte."""
+    f = [round(p, 1) for p in pesi]
+    f[max(range(len(f)), key=lambda i: pesi[i])] += round(1 - sum(f), 1)
+    return [round(x, 1) for x in f]
+
+
+def giro_chat(dati):
+    print('\n== La chat (episodio 4) ==')
+    out = {'banchina': BANCHINA, 'messaggi': []}
+    chat = []
+    for k, (scritto, risposta) in enumerate(CHAT):
+        striscia = chat + scritto
+        sale, giu = striscia[-BANCHINA:], striscia[:-BANCHINA]
+        out['messaggi'].append({'striscia': striscia, 'sale': sale, 'giu': giu,
+                                'biglietti': [colore(B[t]) for t in sale]})
+        print(f'  messaggio {k + 1}: sale {sale}, resta giù {giu}')
+        chat = striscia + risposta
+        assert len(sale) + len(risposta) <= BANCHINA, 'durante la risposta il treno non supera la banchina'
+    # Il secondo messaggio è quello che entra nella montagna: «Al mare Emma nuota Al parco».
+    frase = out['messaggi'][1]['sale']
+    assert frase == ['Al', 'mare', 'Emma', 'nuota', 'Al', 'parco'] and not out['messaggi'][1]['giu']
+    # Al terzo la chat non ci sta più: restano giù proprio Al e Mare, il principio.
+    assert out['messaggi'][2]['giu'] == ['Al', 'mare']
+    vestiti = [tappe_di('Al'), tappe_di('mare'), tappe_emma_mare()]
+    for t in ('nuota', 'Al'):
+        x, tappe = B[t], [B[t]]
+        for d in S_CHAT[t]:
+            x = somma(x, d)
+            tappe.append(x)
+        vestiti.append(tappe)
+    # In testa al treno, lo stesso viaggio dell'episodio 1.
+    mare = dati['mare']['passeggeri']
+    for i, t in enumerate(('Al', 'mare', 'Emma')):
+        assert [colore(v) for v in vestiti[i][1:]] == mare[t]['tratti'], t
+    # Parco, l'ultimo: i fili del primo tratto vengono da sguardo · chiave, poi softmax.
+    sguardi = [round(dot(Q_PARCO, K_CHAT[t]), 2) for t in frase]
+    fili = fili_arrotondati(softmax(sguardi))
+    print('  sguardi di Parco', sguardi, '→ fili', fili)
+    assert max(range(6), key=lambda i: fili[i]) == 2, 'il filo più forte di Parco va a Emma'
+    fili_tratti = [fili] + [list(f) for f in FILI_PARCO_TRATTI[1:]]
+    for f in fili_tratti:
+        assert abs(sum(f) - 1) < 1e-9, f
+    x, tappe = B['parco'], [B['parco']]
+    for k, f in enumerate(fili_tratti):
+        davanti = [v[k] for v in vestiti] + [x]
+        porta = r2([sum(f[j] * davanti[j][i] for j in range(6)) for i in range(3)])
+        y = somma(x, porta)
+        if k == 0:
+            dopo_fili = y
+        x = somma(y, scambio(k, y))
+        tappe.append(x)
+    passeggeri = []
+    for i, t in enumerate(frase[:-1]):
+        passeggeri.append({'parola': t, 'biglietto': colore(B[t]), 'tratti': [colore(v) for v in vestiti[i][1:]]})
+    finestre = [[[w, c, '#%02x%02x%02x' % COLORE[w]] for w, c in vasca(v)[1].items()] for v in tappe[1:]]
+    p, conta = vasca(tappe[-1])
+    vasca_parco = [[w, c, '#%02x%02x%02x' % COLORE[w]] for w, c in conta.items()]
+    assert finestre[-1] == vasca_parco
+    passeggeri.append({'parola': 'parco', 'biglietto': colore(B['parco']), 'dopo_fili': colore(dopo_fili),
+                       'tratti': [colore(v) for v in tappe[1:]], 'fili': fili, 'fili_tratti': fili_tratti,
+                       'finestre': finestre})
+    for q in passeggeri:
+        print(f"  {q['parola']:6} biglietto {q['biglietto']} → tratti {q['tratti']}")
+    print('  Parco dopo i fili', colore(dopo_fili))
+    for k, f in enumerate(finestre):
+        print(f'        finestra {k + 1}', {w: c for w, c, _ in f})
+    print('  vasca', conta)
+    print('  probabilità', {w: round(p[w], 3) for w in sorted(p, key=lambda w: -p[w])[:5]})
+    # La paperella più probabile è «corre»; un po' di mare (il blu di «nuota») c'è ancora.
+    assert vasca_parco[0][0] == 'corre'
+    out['giro'] = {'frase': frase, 'passeggeri': passeggeri, 'vasca': vasca_parco,
+                   'nuovo': {'corre': colore(B['corre'])}}
+    print('  passeggero nuovo «corre»:', colore(B['corre']))
+    return out
+
+
 if __name__ == '__main__':
     dati = {k: giro(k) for k in FRASI}
     controlla(dati)
     dati['manopola'] = manopola(dati)
+    dati['chat'] = giro_chat(dati)
     if '--scrivi' in sys.argv:
         scrivi(dati)

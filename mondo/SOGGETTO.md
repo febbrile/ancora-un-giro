@@ -44,6 +44,7 @@ Sono le leggi fisiche del nostro mondo. Valgono in ogni episodio, anche quando n
 - **Ancora un giro.** La paperella pescata sale in un vagone nuovo, in fondo al treno, e il treno riparte, un vagone più lungo.
 - **Si riparte dai biglietti.** Quando il treno rientra in stazione, ogni vestito torna del colore del suo biglietto. A ogni giro i colori si rifanno da capo, e con gli stessi passeggeri tornano uguali.
 - **Da dove viene la pista.** Non l'ha disegnata nessuno. Per moltissimo tempo ci sono passati milioni di treni carichi di frasi, e a ogni passaggio i binari si sono piegati un pochino. Poi la pista è stata fissata, e da allora non cambia più.
+- **La banchina** (episodio 4). La banchina della stazione ha una lunghezza fissa: ci stanno sette vagoni, non uno di più, tra le due sbarre a righe bianche e rosse dei suoi capi, e non si allunga mai. Quando una risposta è finita i passeggeri scendono e il treno resta vuoto: al messaggio dopo arriva alla stazione tutta la chat, risposte comprese, e risalgono tutti dal principio. Il treno non ricorda niente: porta chi sale. I biglietti prendono posto dall'ultimo vagone in avanti; se la chat è più lunga della banchina, quelli del principio restano giù, sulle assi, e il treno parte senza di loro.
 
 ### Personaggi
 - **Ada**: piccola scienziata col camice troppo lungo, gli occhiali tondi e il quaderno. Lavora alla stazione e alla bancarella della pesca. **Non sale mai sul treno e non tocca niente dentro la montagna.** Guarda, ascolta, annota, pesca.
@@ -71,6 +72,7 @@ Il luna park deve contenere da sé, per come funziona, ciascuna di queste cose, 
 | La risposta prende forma strato dopo strato | Le paperelle di luce nelle finestre sulla vasca | Logit lens sull'ultima posizione |
 | L'estrazione avviene fuori | Ada pesca alla bancarella | Campionamento, fuori dal modello |
 | Quanto la pesca può sorprendere | La manopola della bancarella | Temperatura, fuori dal modello |
+| Tra un messaggio e l'altro non resta niente, e c'è un limite | A ogni messaggio risale tutta la chat, finché c'è posto sulla banchina | Contesto, nessuno stato tra le chiamate, finestra di contesto |
 
 ## 5. Il motore della serie: la curiosità di Ada
 
