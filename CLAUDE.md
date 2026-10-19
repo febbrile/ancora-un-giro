@@ -74,7 +74,8 @@ L'elenco completo, tradotto nel luna park, è nel §7 del soggetto. Le più impo
    - **Le finestre sulla vasca** sono il momento fisso di ogni episodio: dentro la montagna una finestra dà
      sull'acqua, e solo quando passa l'ultimo vagone si accendono paperelle di luce, quelle che cadrebbero se il
      treno uscisse lì (dal modellino). Non sono vere: non cadono, non salgono sul treno, non si pescano.
-     L'ultima finestra è uguale alla vasca.
+     L'ultima finestra è uguale alla vasca quando la manopola della bancarella (episodio 3) sta sulla tacca di
+     mezzo, come di solito; girata, la manopola cambia solo la vasca, mai le finestre.
 7. **Stesso treno, stesso giro.** La pista è fissa; la pesca cambia; perché la pista sia fatta così non lo sa
    spiegare nessuno a parole.
 8. **Quando il treno torna in stazione, ogni vestito torna del colore del suo biglietto**: a ogni giro si riparte
