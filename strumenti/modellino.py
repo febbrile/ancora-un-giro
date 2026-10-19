@@ -931,6 +931,129 @@ def giro_cane(dati):
     return con_i_nomi(calcola)
 
 
+# ── Episodio 9 · Il parco più grande del mondo ────────────────────────────────────────────────────────
+#
+# Il parco immenso non si calcola con il nostro modellino: è il ritratto di un modello vero, che nessuno sa scrivere
+# a mano. Qui si dichiarano come inventati i suoi colori e il suo lago (quante paperelle cadono di ogni parola dopo
+# «Al mare Emma»); da quelli si calcolano le paperelle di luce delle finestre e i vestiti di Emma, con le stesse
+# regole del parco di Ada: il vestito prende il colore delle parole a cui somiglia (T_COLORE), e le finestre sono
+# la vasca che si avrebbe se il treno uscisse lì.
+#
+# Ogni parco ha i suoi colori: laggiù lo stesso pezzo sale con un altro vestito, e le paperelle della stessa parola
+# hanno un altro colore. Le parole del mare sono viola, quelle del parco arancio.
+
+# Il colore delle parole nel parco grande (inventato). Le parole della coda, che nel nostro modellino non ci sono,
+# prendono una tinta ciascuna, girando di un angolo d'oro intorno alla ruota dei colori.
+G_COLORE = {
+    'nuota': (130, 70, 210), 'onde': (150, 100, 220), 'conchiglie': (165, 115, 215), 'sabbia': (180, 135, 210),
+    'corre': (235, 130, 40), 'foglie': (230, 150, 60), 'altalena': (240, 165, 85), 'scivolo': (225, 140, 70),
+    'gioca': (220, 90, 160), 'felice': (90, 190, 200), 'Bovary': (120, 180, 90), 'e': (100, 165, 120),
+    '.': (172, 162, 140), 'Fine': (40, 62, 72),
+}
+# Il lago dopo «Al mare Emma» (inventato): la probabilità delle parole che conosciamo. Il resto va alla coda.
+G_LAGO = {
+    'nuota': 0.40, 'gioca': 0.12, 'onde': 0.05, 'corre': 0.04, 'conchiglie': 0.03, 'sabbia': 0.03,
+    'e': 0.02, 'felice': 0.02, 'altalena': 0.01, 'scivolo': 0.01, 'foglie': 0.01,
+    'Bovary': 0.005, '.': 0.005, 'Fine': 0.005,
+}
+# La coda: tantissime altre parole, ognuna poco probabile, sempre meno andando avanti (come 1/(i + G_CODA_PASSO)).
+G_CODA, G_CODA_PASSO = 200, 5
+# Il lago è grande: dieci volte la vasca di Ada.
+G_PAPERELLE = 400
+# Le cime della montagna, una per tratto, ognuna con la sua finestra sulla vasca.
+G_CIME = 24
+# Le finestre: la finestra k mostra il lago «schiacciato» verso il piatto, con forza (k/G_CIME)^2. Per molte cime le
+# paperelle di luce restano di tutti i colori; la parola di uscita viene fuori verso la fine. L'ultima è il lago.
+G_ESPONENTE_FINESTRE = 2
+# I biglietti nel parco grande (inventati), e i vestiti di Al e Mare all'uscita.
+G_BIGLIETTI = {'Al': '#c98a6a', 'mare': '#8f6fc4', 'Emma': '#b5b08a'}
+G_USCITA = {'Al': '#c4876e', 'mare': '#8a6ccc'}
+# I fili di Emma (inventati): il più forte va a Mare, come nel parco di Ada.
+G_FILI_EMMA = {'Al': 0.15, 'mare': 0.6, 'Emma': 0.25}
+# La paperella che Ada pesca al lago, e che sul telefono diventa «nuota».
+G_PESCA = 'nuota'
+
+
+def g_tinta(i):
+    """Il colore della parola i della coda: tinte che girano di un angolo d'oro, chiare e poco sature."""
+    h = (i * 137.508) % 360 / 360
+    l, s = 0.62, 0.45
+    def f(n):
+        k = (n + h * 12) % 12
+        return l - s * min(l, 1 - l) * max(-1, min(k - 3, 9 - k, 1))
+    return tuple(round(255 * f(n)) for n in (0, 8, 4))
+
+
+def parco_grande():
+    print('\n== Il parco più grande del mondo: «Al mare Emma» ==')
+    colori = dict(G_COLORE)
+    p = dict(G_LAGO)
+    resto = 1 - sum(p.values())
+    assert resto > 0
+    pesi = [1 / (i + G_CODA_PASSO) for i in range(1, G_CODA + 1)]
+    for i, w in enumerate(pesi, 1):
+        p[f'coda{i}'] = resto * w / sum(pesi)
+        colori[f'coda{i}'] = g_tinta(i)
+    assert abs(sum(p.values()) - 1) < 1e-9
+
+    def conta(q, n=G_PAPERELLE):
+        quote = {w: q[w] * n for w in q}
+        c = {w: int(quote[w]) for w in q}
+        for w in sorted(q, key=lambda w: -(quote[w] - c[w]))[:n - sum(c.values())]:
+            c[w] += 1
+        return {w: k for w, k in sorted(c.items(), key=lambda kv: -kv[1]) if k > 0}
+
+    def schiaccia(s, T=1.0):
+        """Il lago con forza s (0 = tutte le parole uguali, 1 = il lago vero), alla temperatura T."""
+        e = {w: math.exp(s * math.log(p[w]) / T) for w in p}
+        z = sum(e.values())
+        return {w: e[w] / z for w in e}
+
+    def vestito(s):
+        q = schiaccia(s, T_COLORE)
+        return '#%02x%02x%02x' % tuple(round(sum(q[w] * colori[w][i] for w in q)) for i in range(3))
+
+    def hex_(w):
+        return '#%02x%02x%02x' % colori[w]
+
+    lago = conta(p)
+    finestre, emma = [], []
+    for k in range(1, G_CIME + 1):
+        s = (k / G_CIME) ** G_ESPONENTE_FINESTRE
+        c = conta(schiaccia(s))
+        finestre.append([[w, n, hex_(w)] for w, n in c.items()])
+        emma.append(vestito(s))
+        alto = list(c.items())[:3]
+        print(f'  finestra {k:2}: {len(c):3} colori, i primi {alto}, Emma {emma[-1]}')
+    assert finestre[-1] == [[w, n, hex_(w)] for w, n in lago.items()], 'l\'ultima finestra deve essere uguale al lago'
+
+    # Le cose che la storia dà per vere.
+    primo = list(lago)[0]
+    assert primo == G_PESCA == 'nuota', primo
+    assert sum(lago.values()) == G_PAPERELLE
+    # Più colori di quanti se ne possano contare: molti più che nella vasca di Ada.
+    assert len(lago) > 3 * len(P), len(lago)
+    # Tantissime di un colore, parecchie di un altro, poche di tutti gli altri.
+    valori = list(lago.values())
+    assert valori[0] > 2 * valori[1] and valori[1] > 2 * valori[2]
+    # Per molte cime le finestre restano di tutti i colori: a metà montagna ci sono ancora tutte le parole, e nessuna
+    # ha più di una paperella di luce su quaranta.
+    meta = finestre[G_CIME // 2 - 1]
+    assert len(meta) == len(p) and max(n for _, n, _ in meta) <= G_PAPERELLE // 40
+    # Ogni parco ha i suoi colori: nessun vestito né paperella uguale a quelli del parco di Ada, nemmeno la Fine.
+    assert all(G_COLORE[w] != COLORE[w] for w in G_COLORE) and G_BIGLIETTI['Emma'] != colore(B['Emma'])
+
+    print('  lago', len(lago), 'colori:', dict(list(lago.items())[:12]), '…')
+    print('  Emma: biglietto', G_BIGLIETTI['Emma'], '→ all\'uscita', emma[-1], '; paperella pescata', G_PESCA, hex_(G_PESCA))
+    return {
+        'frase': ['Al', 'mare', 'Emma'],
+        'biglietti': G_BIGLIETTI, 'uscita': {**G_USCITA, 'Emma': emma[-1]},
+        'fili_emma': G_FILI_EMMA, 'emma_finestre': emma,
+        'finestre': finestre, 'lago': [[w, n, hex_(w)] for w, n in lago.items()],
+        'pesca': [G_PESCA, hex_(G_PESCA)],
+    }
+
+
 if __name__ == '__main__':
     dati = {k: giro(k) for k in FRASI}
     controlla(dati)
@@ -941,5 +1064,6 @@ if __name__ == '__main__':
     dati['finisce'] = finisce(dati)
     controlla_finisce(dati['finisce'])
     dati['cane'] = giro_cane(dati)
+    parco_grande()
     if '--scrivi' in sys.argv:
         scrivi(dati)
