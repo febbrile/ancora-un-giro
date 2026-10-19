@@ -688,6 +688,87 @@ def giro_zampiru(dati):
     return out
 
 
+# ── Episodio 7 · Come finisce la storia ─────────────────────────────────────────────────────────────
+# La risposta a «Al mare Emma», giro dopo giro: «nuota e gioca.», poi la paperella Fine.
+# Il primo giro è «Al mare Emma» di sempre. A ogni giro la paperella pescata sale nell'ultimo vagone.
+# All'ultimo giro il treno ha sette vagoni: riempie la banchina dell'episodio 4, e nessun biglietto resta giù.
+#
+# Inventati e dichiarati: i biglietti delle parole nuove (B_FINE) e gli spostamenti dei tre tratti di ogni passeggero
+# nuovo (S_FINE), come per Al e Mare. Calcolati: i vestiti, le finestre e la vasca di ogni giro.
+# Si guarda sempre avanti: chi siede davanti non sa chi gli siederà dietro, quindi un passeggero ha gli stessi colori
+# in tutti i giri, da quando sale. In ogni giro cambia solo l'ultimo vagone, ed è lui a riempire la vasca.
+# La paperella Fine è una paperella come le altre (P['Fine'], il colore della notte): nessuno la mette nella vasca,
+# ci cade come le altre, tante o poche a seconda di dove passa l'ultimo vagone.
+
+# I biglietti delle parole nuove (le altre sono in B).
+B_FINE = {
+    'e':      [0.50, -0.05, -0.33],
+    '.':      [0.70, -0.61, -0.02],
+}
+# Gli spostamenti dei tre tratti (fili di luce + scambi) di ogni passeggero nuovo.
+S_FINE = {
+    'nuota':  [[0.46, -0.22, -0.31], [0.54, -0.27, -0.35], [0.54, -0.26, -0.36]],
+    'e':      [[-0.67, 0.76, 0.71], [-0.79, 0.89, 0.82], [-0.79, 0.89, 0.83]],
+    'gioca':  [[0.15, -0.70, -0.41], [0.72, -1.41, 0.24], [0.44, -0.68, 0.54]],
+    '.':      [[-0.44, -0.35, 0.32], [-0.52, -0.41, 0.38], [-0.51, -0.41, 0.37]],
+}
+# Le paperelle che Ada pesca, una per giro.
+PESCATE_FINE = ['nuota', 'e', 'gioca', '.', 'Fine']
+
+
+def finisce(dati):
+    """I giri della risposta, fino alla paperella Fine."""
+    print('\n== Al mare Emma nuota e gioca. (episodio 7) ==')
+    biglietti = {**B, **B_FINE}
+    out = {'storia': PESCATE_FINE, 'passeggeri': {}, 'giri': []}
+    # Il primo giro è quello di sempre: Emma nell'ultimo vagone.
+    mare = dati['mare']
+    out['giri'].append({'ultimo': 'Emma', 'finestre': mare['passeggeri']['Emma']['finestre'],
+                        'vasca': mare['vasca'], 'pescata': PESCATE_FINE[0]})
+    print('  giro 1 · ultimo Emma  → vasca', dict((w, c) for w, c, _ in mare['vasca']))
+    for n, (ultimo, pescata) in enumerate(zip(PESCATE_FINE, PESCATE_FINE[1:]), start=2):
+        x, tappe = biglietti[ultimo], []
+        for d in S_FINE[ultimo]:
+            x = somma(x, d)
+            tappe.append(x)
+        out['passeggeri'][ultimo] = {'biglietto': colore(biglietti[ultimo]), 'tratti': [colore(v) for v in tappe]}
+        finestre = [[[w, c, '#%02x%02x%02x' % COLORE[w]] for w, c in vasca(v)[1].items()] for v in tappe]
+        g = {'ultimo': ultimo, 'finestre': finestre, 'vasca': finestre[-1], 'pescata': pescata}
+        out['giri'].append(g)
+        conta = dict((w, c) for w, c, _ in g['vasca'])
+        print(f'  giro {n} · ultimo «{ultimo}»: biglietto', out['passeggeri'][ultimo]['biglietto'],
+              '→ tratti', out['passeggeri'][ultimo]['tratti'])
+        for k, f in enumerate(finestre[:-1]):
+            print(f'        finestra {k + 1}', dict((w, c) for w, c, _ in f))
+        print('        vasca', conta, '→ Ada pesca', f'«{pescata}»')
+    return out
+
+
+def controlla_finisce(fine):
+    """Le cose che l'episodio 7 dà per vere."""
+    vasche = [dict((w, c) for w, c, _ in g['vasca']) for g in fine['giri']]
+    fini = [v.get('Fine', 0) for v in vasche]
+    print('  paperelle Fine giro dopo giro:', fini)
+    # La paperella Fine c'è sempre stata, rara: in ogni vasca ce n'è almeno una.
+    assert all(f >= 1 for f in fini), fini
+    # Nei primi tre giri è una sola; poi, quando la frase si completa, ne cadono sempre di più.
+    assert fini[:3] == [1, 1, 1] and fini[2] < fini[3] < fini[4], fini
+    # All'ultimo giro è la paperella più numerosa, ma non l'unica.
+    assert list(vasche[-1])[0] == 'Fine' and len(vasche[-1]) > 1
+    # Ogni paperella pescata è tra le più numerose della sua vasca: niente di forzato.
+    for v, g in zip(vasche, fine['giri']):
+        assert v[g['pescata']] == max(v.values()), (g['pescata'], v)
+    # Dove Ada pesca il punto, le paperelle Fine sono già di più, ma non abbastanza da uscire per forza.
+    assert vasche[3]['.'] > vasche[3]['Fine'] > 1
+    # Il treno non supera mai la banchina: all'ultimo giro (Al, Mare, Emma e i passeggeri nuovi) la riempie.
+    assert 3 + len(fine['passeggeri']) == BANCHINA, len(fine['passeggeri'])
+    # All'ultimo giro, finestra dopo finestra, le paperelle Fine di luce aumentano.
+    f_fin = [dict((w, c) for w, c, _ in f).get('Fine', 0) for f in fine['giri'][-1]['finestre']]
+    assert f_fin == sorted(f_fin) and f_fin[0] < f_fin[-1], f_fin
+    # Il passeggero «nuota» ha il vestito della paperella pescata nel prologo.
+    assert fine['passeggeri']['nuota']['biglietto'] == colore(B['nuota'])
+
+
 if __name__ == '__main__':
     dati = {k: giro(k) for k in FRASI}
     controlla(dati)
@@ -695,5 +776,7 @@ if __name__ == '__main__':
     dati['chat'] = giro_chat(dati)
     dati['addestramento'] = addestramento(dati)
     dati['zampiru'] = giro_zampiru(dati)  # episodio 6
+    dati['finisce'] = finisce(dati)
+    controlla_finisce(dati['finisce'])
     if '--scrivi' in sys.argv:
         scrivi(dati)
