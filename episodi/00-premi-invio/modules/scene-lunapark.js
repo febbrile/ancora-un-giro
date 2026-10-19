@@ -38,6 +38,7 @@ kit.scene('lunapark', {
     this.sub = G.subs(kit, [[0.8, 12.4], [13.2, 16.4], [17.0, 23.0]]);
   },
   render(t, kit) {
+    t = window.G.tempo('00', 'lunapark', t);
     const G = this.G, M = G.MONDO, m = this.m;
     m.cam.setAttribute('transform', G.camChiavi(LP_CAM, t));
     G.animaMondo(m, t + 40);

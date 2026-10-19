@@ -61,6 +61,7 @@ kit.scene('pesca', {
     return [ax - 100 * s + mx * s, ay - 304 * s + my * s];
   },
   render(t, kit) {
+    t = window.G.tempo('00', 'pesca', t);
     const G = this.G, M = G.MONDO, m = this.m;
     m.cam.setAttribute('transform', G.camChiavi(PE_CAM, t));
     G.animaMondo(m, t + 164);

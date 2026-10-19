@@ -41,6 +41,7 @@ kit.scene('carrozza', {
     this.sub = G.subs(kit, [[0.8, 18.6]]);
   },
   render(t, kit) {
+    t = window.G.tempo('01', 'carrozza', t);
     const G = this.G, M = G.MONDO, m = this.m;
     m.cam.setAttribute('transform', G.camChiavi(CR_CAM, t));
     G.animaMondo(m, t + 330);

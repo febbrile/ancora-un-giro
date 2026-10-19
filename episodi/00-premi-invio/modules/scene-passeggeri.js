@@ -42,6 +42,7 @@ kit.scene('passeggeri', {
     this.sub = G.subs(kit, [[0.8, 17.6]]);
   },
   render(t, kit) {
+    t = window.G.tempo('00', 'passeggeri', t);
     const G = this.G, m = this.m;
     m.cam.setAttribute('transform', G.camChiavi(PS_CAM, t));
     G.animaMondo(m, t + 86);

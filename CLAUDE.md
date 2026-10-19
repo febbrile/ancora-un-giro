@@ -46,7 +46,12 @@ Sono gli errori che hanno fatto fallire un primo tentativo con il pubblico vero:
 - **Al massimo 12 caratteri al secondo** di sottotitolo mentre una voce parla.
 - **Almeno 3 secondi di sole immagini in ogni scena.** Ogni scena rispetta `durata ≥ parlato/12 + 3 s`:
   controllalo con `python3 strumenti/tempi.py` dopo ogni modifica a una sceneggiatura.
-- **Un episodio dura al massimo 5 minuti** (limite dei film Motion). Meglio un episodio in più che uno troppo pieno.
+- **Nessuna pausa morta prima di uno stacco.** Dopo l'ultima battuta (o il cartello) una scena dura al massimo
+  3 secondi: dove nessuno parla la scena accelera, soprattutto alla fine. Le scene scrivono i tempi in tempo
+  interno e il `RITMO` di `shared.js` li porta al tempo vero (`t = G.tempo(ep, id, t)` in `render`, `R(id, x)` in
+  `score.js`); in `scenes.json` `dur` è la durata vera. Mai accelerare mentre c'è un sottotitolo:
+  `node strumenti/controlla.mjs` controlla le due cose.
+- **Un episodio dura al massimo 5 minuti.** Meglio un episodio in più che uno troppo pieno.
 - **I sottotitoli scorrono a pezzi** di 18–48 caratteri (`chunkSub` in `shared.js`). Un pezzo non finisce mai con
   un articolo, una preposizione, una congiunzione o una parola con apostrofo.
 - Le sole scritte a schermo sono i sottotitoli, il titolo e il cartello finale. Sul telefono si vede la frase della storia.
@@ -64,8 +69,12 @@ L'elenco completo, tradotto nel luna park, è nel §7 del soggetto. Le più impo
    binario e il suo spostamento; tutti i vagoni attraversano tutti i tratti.
 5. **Si guarda sempre avanti**: i fili di luce vanno da ogni passeggero a chi gli siede davanti e a sé stesso, mai
    a chi sta dietro.
-6. **Alla vasca conta solo l'ultimo vagone.** Le paperelle nascono solo lì: nella montagna ci sono spostamenti,
+6. **Alla vasca conta solo l'ultimo vagone.** Le paperelle vere nascono solo lì: nella montagna ci sono spostamenti,
    non probabilità. Emma non diventa una paperella.
+   - **Le finestre sulla vasca** sono il momento fisso di ogni episodio: dentro la montagna una finestra dà
+     sull'acqua, e solo quando passa l'ultimo vagone si accendono paperelle di luce, quelle che cadrebbero se il
+     treno uscisse lì (dal modellino). Non sono vere: non cadono, non salgono sul treno, non si pescano.
+     L'ultima finestra è uguale alla vasca.
 7. **Stesso treno, stesso giro.** La pista è fissa; la pesca cambia; perché la pista sia fatta così non lo sa
    spiegare nessuno a parole.
 8. **Quando il treno torna in stazione, ogni vestito torna del colore del suo biglietto**: a ogni giro si riparte
@@ -73,8 +82,8 @@ L'elenco completo, tradotto nel luna park, è nel §7 del soggetto. Le più impo
 9. **La pista non l'ha progettata nessuno**: si è piegata sotto milioni di treni carichi di frasi, poi è stata fissata.
 10. **I colori non hanno un nome**: conta solo quanto due colori si somigliano.
 11. **Parliamo solo del nostro luna park.** Niente confronti con i modelli veri, salvo un episodio dedicato.
-12. **Quello che si mostra una volta, si mostra sempre.** Ogni passeggero ha i suoi colori, ogni finestra il suo
-    paesaggio, ogni vasca le sue paperelle, in ogni episodio. Se mancano i dati, prima si dichiarano nel modellino,
+12. **Quello che si mostra una volta, si mostra sempre.** Ogni passeggero ha i suoi colori, ogni finestra le sue
+    paperelle di luce, ogni vasca le sue paperelle, in ogni episodio. Se mancano i dati, prima si dichiarano nel modellino,
     poi si mostrano.
 
 ## Personaggi
@@ -87,46 +96,41 @@ L'elenco completo, tradotto nel luna park, è nel §7 del soggetto. Le più impo
   stellina sulla frangia. Il vestito ha il colore del suo biglietto, poi quello che le danno i fili e gli scambi.
   Quando uno scambio la sposta usa la posa **«tirata via»** (va avanti, capelli e vestito restano indietro).
   Niente frecce disegnate su di lei.
-- **Al** (sassolino) e **Mare** (onda con gli occhi): i compagni di viaggio della prima frase.
-- **Parco** (alberello con gli occhi e due rametti): il compagno di viaggio di «Al parco Emma» (episodio 2).
+- **Al** (sassolino) e **Mare** (onda con gli occhi): i compagni di viaggio della prima frase. Occhi grandi e
+  bordo chiaro, perché si leggano anche piccoli; nel vagone la testa sta sempre sopra la sponda.
+- **Parco** (alberello con gli occhi e due rametti): il compagno di viaggio di «Al parco Emma» (episodio 2), disegnato
+  come Al e Mare.
 - **Le paperelle**: una per ogni parola che può venire dopo. Quella pescata sale sul treno e diventa un passeggero.
 - I modelli dei personaggi sono nella tela di design (link nel [README](README.md)) e, in SVG, in
   `episodi/comune/shared.js`: ogni cambio di aspetto parte dalla tela e si riporta in `shared.js`.
 
 ## I numeri
 
-- I colori dei vestiti, i paesaggi delle finestre e le paperelle nella vasca vengono da un modellino giocattolo
+- I colori dei vestiti, le paperelle di luce delle finestre e le paperelle nella vasca vengono da un modellino giocattolo
   coerente: **un'unica fonte**, [strumenti/modellino.py](strumenti/modellino.py). Inventati solo i valori che il
   modellino dichiara come inventati; tutto il resto si calcola.
 - Se cambi un numero, cambialo lì, esegui `python3 strumenti/modellino.py` e solo dopo riporta i risultati nelle scene.
 - I numeri non vanno mai a schermo: decidono colori, quantità e posizioni.
 
-## I film (artifact Motion)
+## I film e il sito
 
-- Ogni episodio è un artifact Motion su claude.ai (link nel [README](README.md)). La versione pubblicata vive
-  nello **store dell'artifact**; `episodi/NN-titolo/` ne è la copia di sorgente.
-- Documenti dello store: `film/meta`, `film/script` (`window.CUT = kit.scenes();`), `modules/scenes.json`,
-  `modules/base.css`, `modules/shared.js`, `modules/score.js`, `modules/scene-<id>.js`.
-  `modules/fetched-fonts.json` lo gestisce il player: non toccarlo.
-- `shared.js` e `base.css` sono uguali per tutti gli episodi: la fonte è `episodi/comune/`, e
-  `python3 strumenti/allinea.py` li copia negli episodi. Non modificarli dentro un episodio.
-- Ogni scrittura su un documento esistente porta `if_version`. Modifiche allo stesso documento una alla volta, mai
-  in parallelo. Dopo ogni modifica allo store, riallinea il file in `episodi/` e fai commit.
-- Ogni scena è `kit.scene(id, { init, render(t) })`, funzione pura del tempo; i tempi interni usano `seg`, `eo`, `eio`.
+- Gli episodi si guardano solo sul nostro sito, https://febbrile.github.io/ancora-un-giro/, pubblicato con GitHub
+  Pages da `main`. Pubblicare un episodio vuol dire portarlo su `main`.
+- Ogni episodio sta in `episodi/NN-titolo/modules/`: `scenes.json` (scene, durate, misure e sfondo),
+  `scene-<id>.js` (una per scena) e `score.js` (musica ed effetti).
+- `shared.js` (personaggi, luna park, treno, sottotitoli) e `base.css` sono uguali per tutti gli episodi e stanno
+  solo in `episodi/comune/`: il motore li carica da lì.
+- Ogni scena è `kit.scene(id, { init, render(t, kit) })`, funzione pura del tempo; i tempi interni usano `seg`, `eo`, `eio`.
+  Le scene possono usare solo le funzioni che `sito/motore/kit.js` offre: se ne serve una nuova, prima la si aggiunge lì.
 - Testi SVG: Fredoka per titoli e scritte, Atkinson Hyperlegible per i sottotitoli.
 - Musica originale, in `score.js`, con gli accordi sul `pad` (il sito li usa per il suo stile «anni 90»).
-
-## Il sito
-
-- `sito/` fa girare gli stessi `episodi/*/modules` nel browser, senza Motion: le scene non si duplicano.
-- Le scene possono usare solo le funzioni del kit che `sito/motore/kit.js` offre. Se una scena ne usa una nuova,
-  prima la si aggiunge al motore (con lo stesso comportamento di Motion), poi la si usa.
-- L'audio del sito lo suona `sito/motore/suono.js` su tre canali, **musica**, **effetti** e **voce**, ognuno con volume e
-  interruttore suoi. Senza altro, la musica è quella di `score.js` scena per scena, come nei film Motion. Un episodio può
-  avere `audio/tracce.json` (solo del sito, non va nello store di Motion) per un tema continuo (`sito/motore/tema.js`),
-  i volumi di partenza o file audio a un istante del film, come una voce narrante.
-- Il player di Motion (`app.js`) non va mai copiato nel repository né pubblicato: è codice di Anthropic.
+- L'audio lo suona `sito/motore/suono.js` su tre canali, **musica**, **effetti** e **voce**, ognuno con volume e
+  interruttore suoi. Senza altro, la musica è quella di `score.js` scena per scena. Un episodio può avere
+  `audio/tracce.json` per un tema continuo (`sito/motore/tema.js`), i volumi di partenza o file audio a un istante
+  del film, come una voce narrante.
 - In `sito/episodi.json` c'è l'elenco degli episodi: aggiornalo quando ne nasce uno nuovo.
+- Prima di dire che il sito funziona, aprilo con un server locale (`python3 -m http.server 8791`, poi
+  `sito/guarda.html?ep=…&t=…`); dopo la pubblicazione, aprilo anche online.
 
 ## Verifica
 
@@ -134,10 +138,7 @@ L'elenco completo, tradotto nel luna park, è nel §7 del soggetto. Le più impo
   con il motore del sito e il Chrome dell'utente; `--foglio` li impagina in un foglio di provini.
   **Leggi i PNG** prima di dichiarare una scena finita. Nel renderer i font possono essere sostitutivi: dillo
   quando la verifica è avvenuta solo lì.
-- `node strumenti/controlla.mjs` controlla sottotitoli, finestre e moduli comuni senza aprire i film.
-- Dopo aver caricato un film su claude.ai, rendilo anche con il player vero di Motion, offline
-  (`render-offline.md` del tipo Motion): i file del player stanno nello scratchpad, mai nel repository.
-- In ogni scena `render(t, kit)` usa il `kit` che riceve: in Motion ogni scena ha il suo.
+- `node strumenti/controlla.mjs` controlla sottotitoli, finestre e ritmo senza aprire i film.
 - Per ogni scena controlla almeno l'inizio, il centro, la fine e ogni battuta:
   - testi che escono dal riquadro, etichette sovrapposte, elementi coperti o tagliati;
   - sottotitoli in anticipo o in ritardo sulle immagini;

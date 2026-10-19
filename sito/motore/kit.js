@@ -1,4 +1,4 @@
-// Il motore di «Ancora un giro»: le stesse funzioni del kit di Claude Motion che usano le nostre scene, scritte da noi.
+// Il motore di «Ancora un giro»: le funzioni del kit che usano le nostre scene.
 // Le scene (episodi/NN-titolo/modules) restano identiche: qui si caricano, si montano e si disegnano al tempo t.
 (function () {
   'use strict';
@@ -77,7 +77,7 @@
   // Dal testo HTML al primo elemento.
   function h(html) { const t = document.createElement('template'); t.innerHTML = String(html).trim(); return t.content.firstElementChild; }
 
-  // ── La partitura: gli stessi comandi di Motion (S.chord, S.pattern, …) diventano una lista di eventi ──
+  // ── La partitura: i comandi di score.js (S.chord, S.pattern, …) diventano una lista di eventi ──
   const NOTA = { C: 0, D: 2, E: 4, F: 5, G: 7, A: 9, B: 11 };
   function midi(p) {
     if (typeof p === 'number') return Math.round(p);
@@ -185,7 +185,7 @@
     return r.text();
   }
 
-  // Esegue un modulo con `kit` a portata di mano, come fa Motion.
+  // Esegue un modulo con `kit` a portata di mano.
   function esegui(kit, nome, codice) {
     try { new Function('kit', codice + '\n//# sourceURL=giro/' + nome)(kit); }
     catch (e) { console.error(nome + ':', e); throw new Error('Errore nel modulo ' + nome + ': ' + e.message); }
@@ -195,8 +195,11 @@
     const base = cartella.replace(/\/$/, '') + '/';
     const elenco = JSON.parse(await testo(base + 'modules/scenes.json'));
     const scene = elenco.scenes;
+    // shared.js e base.css sono uguali per tutti gli episodi: stanno in episodi/comune/.
+    const comune = base + '../comune/';
     const nomi = ['shared.js'].concat(scene.map(s => 'scene-' + s.id + '.js'), ['score.js']);
-    const [css, ...codici] = await Promise.all([testo(base + 'modules/base.css')].concat(nomi.map(n => testo(base + 'modules/' + n).catch(() => null))));
+    const dove = n => n === 'shared.js' ? comune + n : base + 'modules/' + n;
+    const [css, ...codici] = await Promise.all([testo(comune + 'base.css')].concat(nomi.map(n => testo(dove(n)).catch(() => null))));
 
     const defs = {};
     let partitura = null;

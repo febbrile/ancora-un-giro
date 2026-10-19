@@ -1,9 +1,0 @@
-#stage { --ground:#0B1030; --main:#FFD27A; --second:#F6EEDD; --accent:#D9483B; color:var(--second); font-family:var(--sans, system-ui, sans-serif) }
-.ground { position:absolute; inset:0; background:var(--ground); overflow:hidden }
-.words { position:absolute; margin:0; display:flex; flex-direction:column; gap:24px } .words > * { margin:0 }
-.line { font-family:var(--display, var(--sans, system-ui, sans-serif)); font-size:96px; line-height:1.05; font-weight:600 } .sub { font-size:38px; color:color-mix(in srgb, var(--second) 80%, var(--ground)) }
-.art { position:absolute; inset:0; width:100%; height:100%; overflow:hidden }
-.sott { position:absolute; left:50%; bottom:52px; transform:translateX(-50%); max-width:1640px; background:rgba(9,12,36,.8); border-radius:20px; padding:14px 42px 18px; display:flex; flex-direction:column; align-items:center; gap:4px; text-align:center; box-shadow:0 8px 30px rgba(0,0,0,.3) }
-.chi { font-family:var(--display, var(--sans, system-ui, sans-serif)); font-weight:600; font-size:20px; letter-spacing:.14em; color:#FF9E8A }
-.detto { font-family:var(--sans, system-ui, sans-serif); font-size:46px; line-height:1.3; color:var(--second); white-space:nowrap }
-#stage text[font-family^="Fredoka"] { font-family:var(--display, var(--sans, system-ui, sans-serif)) } #stage text[font-family^="Atkinson"] { font-family:var(--sans, system-ui, sans-serif) }

@@ -5,18 +5,22 @@ non torna.
 Con `--scrivi` riporta i risultati in episodi/comune/shared.js, tra i segni `// <modellino>` e `// </modellino>`.
 
 Nel modellino ogni passeggero è una freccia con tre coordinate senza nome. I numeri non vanno mai a schermo:
-decidono i colori dei vestiti, i paesaggi delle finestre e quante paperelle di ogni colore cadono nella vasca.
+decidono i colori dei vestiti, le paperelle di luce nelle finestre e quante paperelle di ogni colore cadono nella vasca.
 
 Cosa è inventato (e dichiarato qui) e cosa è calcolato:
 - inventati: i biglietti (B), le paperelle (P), i fili di luce di Al e del vagone di mezzo e quelli di Emma nei
   tratti 2 e 3, gli spostamenti di Al e del vagone di mezzo (S), la parte fissa degli scambi e la loro forza
-  (SCAMBI_FISSI, FORZA_SCAMBI), i colori delle parole (COLORE), i paesaggi delle finestre;
+  (SCAMBI_FISSI, FORZA_SCAMBI), i colori delle parole (COLORE);
 - calcolati: i fili di Emma nel primo tratto (sguardi: query · key, poi softmax), quello che i fili portano a Emma in
   ogni tratto, gli scambi di Emma, i colori dei vestiti, le finestre, la vasca.
 
 Le due frasi differiscono per un solo vagone: biglietti di Al ed Emma, fili dichiarati e scambi sono gli stessi.
 La differenza entra dai fili di luce, e gli scambi, che scattano a seconda del vagone che passa, la portano avanti.
 Al, davanti, non guarda nessuno: è uguale nei due treni.
+
+Le finestre sulla vasca: dopo ogni tratto, quando passa l'ultimo vagone, nell'acqua si accendono le paperelle
+che cadrebbero se il treno uscisse lì (la stessa vasca, calcolata con il vestito di quel momento). L'ultima
+finestra è uguale alla vasca vera.
 """
 import json
 import math
@@ -85,16 +89,6 @@ FORZA_SCAMBI = 0.2
 # Controllo: in «Al mare Emma» fili + scambi danno gli spostamenti di Emma di sempre.
 SPOSTAMENTI_EMMA_MARE = [[-0.44, 0.43, -0.14], [-0.93, 0.61, 0.22], [-1.65, 1.08, 0.64]]
 
-# I paesaggi delle finestre: si riconoscono dalle tre parole più vicine all'ultimo vagone.
-PAESAGGI = [
-    ('spiaggia', {'sabbia', 'conchiglie', 'onde'}),
-    ('molo', {'nuota', 'onde', 'conchiglie'}),
-    ('mare aperto', {'nuota', 'gioca', 'onde'}),
-    ('giardino', {'altalena', 'scivolo', 'foglie'}),
-    ('viale', {'corre', 'altalena', 'foglie'}),
-    ('prato', {'corre', 'gioca', 'foglie'}),
-]
-
 # Le frasi del modellino, e le parole che salgono sul treno dopo la pesca.
 FRASI = {
     'mare':  (['Al', 'mare', 'Emma'], ['nuota']),
@@ -130,19 +124,6 @@ def colore(x):
     p = softmax([dot(x, P[w]) for w in P], T_COLORE)
     c = [sum(pi * COLORE[w][i] for pi, w in zip(p, P)) for i in range(3)]
     return '#%02x%02x%02x' % tuple(round(v) for v in c)
-
-
-def vicini(x, n=3):
-    lg = {w: dot(x, P[w]) for w in P}
-    return sorted(lg, key=lambda w: -lg[w])[:n]
-
-
-def paesaggio(x):
-    v = set(vicini(x))
-    for nome, parole in PAESAGGI:
-        if v == parole:
-            return nome
-    raise SystemExit(f'Nessun paesaggio per le parole {sorted(v)}: dichiaralo in PAESAGGI.')
 
 
 def vasca(x, n=PAPERELLE_IN_VASCA, T=1.0):
@@ -213,13 +194,18 @@ def giro(chiave):
                 'fili': fili,
                 'fili_tratti': fili_tratti,
                 'dopo_fili': colore(dopo_fili),
-                'finestre': [paesaggio(v) for v in tappe[1:]],
             }
             print('  Emma: biglietto', info['biglietto'], '→ dopo i fili', info['dopo_fili'], '→ tratti', info['tratti'])
-            print('        finestre', info['finestre'], [vicini(v) for v in tappe[1:]])
+            # Le finestre: la vasca che si avrebbe dopo ogni tratto.
+            info['finestre'] = []
+            for k, v in enumerate(tappe[1:]):
+                conta_k = vasca(v)[1]
+                info['finestre'].append([[w, c, '#%02x%02x%02x' % COLORE[w]] for w, c in conta_k.items()])
+                print(f'        finestra {k + 1}', conta_k)
             p, conta = vasca(tappe[-1])
             assert sum(conta.values()) == PAPERELLE_IN_VASCA
             out['vasca'] = [[w, c, '#%02x%02x%02x' % COLORE[w]] for w, c in conta.items()]
+            assert info['finestre'][-1] == out['vasca'], 'l\'ultima finestra deve essere uguale alla vasca'
             out['probabilita'] = {w: round(p[w], 3) for w in sorted(p, key=lambda w: -p[w])[:5]}
             print('  vasca', conta)
             print('  probabilità', out['probabilita'])

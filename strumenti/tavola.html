@@ -43,7 +43,10 @@
     [PP.parco.biglietto].concat(PP.parco.tratti).forEach((c, i) => { svg += at(70 + i * 240, 170, 1.15, G.parco(c, { ciao: i === 3 ? -60 : 0 })); });
     svg += at(1060, 140, 0.9, G.emma(PP.Emma.biglietto)) + at(1240, 140, 0.9, G.emma(PP.Emma.dopo_fili)) + at(1420, 140, 0.9, G.emmaTirata(PP.Emma.tratti[0])) + at(1660, 140, 0.9, G.emma(PP.Emma.tratti[2]));
     svg += at(80, 600, 0.9, G.vagone({ primo: true, sbarra: 1 }, G.passeggero('al', PP.Al.biglietto))) + at(300, 600, 0.9, G.vagone({ sbarra: 1 }, G.passeggero('parco', PP.parco.biglietto, { ciao: -70 }))) + at(520, 600, 0.9, G.vagone({ sbarra: 1 }, G.passeggero('emma', PP.Emma.biglietto)));
-    PP.Emma.finestre.forEach((n, i) => { svg += at(780 + i * 380, 560, 0.95, G.finestra(n, i + 1)); });
+    PP.Emma.finestre.forEach((conta, i) => {
+      const papere = G.papereFinestra(conta, 21 + i).map(p => '<g transform="translate(' + p.x.toFixed(1) + ' ' + p.y.toFixed(1) + ') scale(.34) translate(-50 -84)">' + G.paperellaDiLuce(p.col) + '</g>').join('');
+      svg += at(780 + i * 380, 560, 0.95, G.finestra('p' + i).replace('<g class="g-fin-papere"></g>', '<g>' + papere + '</g>'));
+    });
     Q.vasca.forEach((v, i) => { svg += at(80 + i * 110, 900, 0.9, G.paperella(v[2])) + et(125 + i * 110, 1000, v[0]); });
     svg += at(820, 830, 0.12, G.salotto(G.telefono({ messaggi: ['Al parco Emma'] }), { muro: ['#203A3F', '#35585A', '#3D5E6E'] })) + at(1080, 830, 0.12, G.salotto(G.telefono({ messaggi: ['Al mare Emma'] })));
     svg += at(1400, 800, 0.9, G.vagone({ sbarra: 0 }, G.passeggero('paperella', Q.nuovo.corre))) + at(1640, 800, 0.9, G.vagone({ sbarra: 0 }, G.passeggero('paperella', Q.nuovo.gioca)));

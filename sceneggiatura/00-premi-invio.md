@@ -5,11 +5,11 @@
 **Cosa presenta.** Il mondo: il luna park, Ada, lo Spezzaparole, i passeggeri, il treno, la montagna, la vasca, la pesca.
 **Cosa resta un mistero.** Cosa succede dentro la montagna (episodio 1).
 
-Durata: 3:26 · Voci: narratore, Ada.
+Durata: 2:52 · Voci: narratore, Ada.
 
 ---
 
-### invio · Premi invio · 0:18
+### invio · Premi invio · 0:15.6
 
 **VISIVO.** Sera, un salotto con una lampada calda. In primo piano due mani tengono un telefono. Sullo schermo, una chat: le dita scrivono *Al mare Emma*, poi premono il tasto di invio. Il messaggio sale nella chat.
 
@@ -18,7 +18,7 @@ Durata: 3:26 · Voci: narratore, Ada.
 
 ---
 
-### volo · Il volo · 0:14
+### volo · Il volo · 0:10.4
 
 **VISIVO.** Le tre parole si staccano dallo schermo e diventano una striscia di carta. La striscia esce dalla finestra e vola sopra i tetti, nella notte, verso delle luci colorate lontane.
 
@@ -27,7 +27,7 @@ Durata: 3:26 · Voci: narratore, Ada.
 
 ---
 
-### lunapark · Il luna park · 0:26
+### lunapark · Il luna park · 0:25.2
 
 **VISIVO.** Un luna park acceso nella notte: una ruota panoramica, i tendoni, le lucine. In mezzo, le montagne russe: i binari salgono, scendono e spariscono dentro una grande montagna scura. La camera scende fino alla stazione. Sulla banchina c'è **Ada**: camice troppo lungo, occhiali tondi, quaderno sotto il braccio. La striscia di carta le atterra in mano. Ada la legge.
 
@@ -42,7 +42,7 @@ Durata: 3:26 · Voci: narratore, Ada.
 
 ---
 
-### spezzaparole · Lo Spezzaparole · 0:20
+### spezzaparole · Lo Spezzaparole · 0:12.6
 
 **VISIVO.** Sulla banchina c'è una vecchia biglietteria rossa e oro, con due quadranti tondi e una grande forbice di lato: lo **Spezzaparole**. Ada infila la striscia nella fessura in alto. *Zac, zac*: dalla bocca della biglietteria escono tre biglietti, uno per pezzo: «Al», «mare», «Emma».
 
@@ -51,7 +51,7 @@ Durata: 3:26 · Voci: narratore, Ada.
 
 ---
 
-### passeggeri · I passeggeri · 0:28
+### passeggeri · I passeggeri · 0:20.6
 
 **VISIVO.** Il trenino è fermo in stazione: tre vagoni tondi, color crema, con la sbarra di sicurezza alzata. I tre biglietti volano verso i sedili e, appena li toccano, prendono vita, uno alla volta. Nel primo vagone **Al**, un sassolino tondo. Nel secondo **Mare**, un'onda con gli occhi. Nell'ultimo **Emma**, una bambina fatta di luce, bionda, con un fermaglio a stellina: il suo vestito è rosa antico. Le sbarre si abbassano.
 
@@ -60,7 +60,7 @@ Durata: 3:26 · Voci: narratore, Ada.
 
 ---
 
-### partenza · La partenza · 0:24
+### partenza · La partenza · 0:20.6
 
 **VISIVO.** Ada resta sulla banchina. Il trenino parte da solo: nel primo vagone non c'è nessuno alla guida, solo un fanale acceso. Sale piano la prima salita, scende di colpo, curva e sparisce nella bocca buia della montagna. Da fuori si sentono le ruote e, ogni tanto, un *clac* nel buio. Ada ascolta.
 
@@ -69,7 +69,7 @@ Durata: 3:26 · Voci: narratore, Ada.
 
 ---
 
-### vasca · La vasca · 0:26
+### vasca · La vasca · 0:21.2
 
 **VISIVO.** Accanto ai binari, la bancarella della pesca: un tendone a righe e una vasca d'acqua vuota. Il treno esce dall'altra bocca della montagna, proprio sopra la vasca. Mentre passa l'ultimo vagone, nell'acqua cadono le paperelle: tantissime blu, parecchie turchesi, poche di tanti altri colori. Il treno scivola in stazione e si ferma.
 
@@ -78,7 +78,7 @@ Durata: 3:26 · Voci: narratore, Ada.
 
 ---
 
-### pesca · La pesca · 0:26
+### pesca · La pesca · 0:23
 
 **VISIVO.** Ada si avvicina alla vasca, chiude gli occhi e infila la mano tra le paperelle. Ne tira fuori una: una luce blu le illumina il viso. Le altre paperelle scivolano via dallo scarico e la vasca torna vuota. La paperella le salta di mano, corre lungo la banchina e si siede in un vagone nuovo, dietro Emma. Stacco sul telefono, nel salotto: sotto *Al mare Emma* compare una parola nuova (troppo piccola per leggerla).
 
@@ -87,7 +87,7 @@ Durata: 3:26 · Voci: narratore, Ada.
 
 ---
 
-### ancora · Ancora un giro · 0:24
+### ancora · Ancora un giro · 0:23.2
 
 **VISIVO.** Le sbarre si abbassano e il treno riparte, un vagone più lungo: sparisce di nuovo nella montagna. Sul telefono la storia si allunga ancora, riga dopo riga. Ada si sporge dalla banchina e guarda la montagna buia. Titolo: **Ancora un giro**.
 
