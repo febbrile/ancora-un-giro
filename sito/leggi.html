@@ -11,15 +11,38 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Fredoka:wght@400;600&family=JetBrains+Mono:wght@400&display=swap">
 <link rel="stylesheet" href="sito.css">
 </head>
-<body>
+<!-- Le lezioni stanno sulla carta del quaderno di Ada: fuori dalla notte dei cartoni. -->
+<body class="carta">
 <header class="testata">
-  <a class="casa titolo-sito" href="./"><img class="stella" src="paperella.svg" alt="">Ancora un giro</a>
-  <span class="dove" id="dove">Come funziona un LLM</span>
+  <div class="contenitore">
+    <a class="marchio" href="./"><img src="paperella.svg" alt="">Ancora un giro</a>
+    <span class="dove" id="dove">Come funziona un LLM</span>
+    <nav class="porte" aria-label="Sezioni">
+      <a href="./#cartoni">Cartoni</a>
+      <a href="./#lezioni" aria-current="page">Lezioni</a>
+      <a class="lunga" href="./#mondo">Il luna park</a>
+    </nav>
+  </div>
 </header>
 <main>
-  <article class="articolo" id="articolo"><p class="tenue">Carico la lezione…</p></article>
+  <div class="lezione">
+    <aside class="margine" aria-label="Il quaderno">
+      <div class="ada figura" data-figura="ada"></div>
+      <nav class="sommario" id="sommario" aria-label="In questa lezione"></nav>
+      <nav class="altre" id="altre" aria-label="Le lezioni"></nav>
+    </aside>
+    <article class="articolo" id="articolo"><p class="tenue">Carico la lezione…</p></article>
+  </div>
   <nav class="vicini" id="vicini" aria-label="Altre lezioni"></nav>
 </main>
+<footer class="piede-sito">
+  <div class="contenitore">
+    <a class="marchio" href="./"><img src="paperella.svg" alt="">Ancora un giro</a>
+    <p><a href="https://github.com/febbrile/ancora-un-giro">Il progetto su GitHub</a></p>
+  </div>
+</footer>
+<script src="../episodi/comune/shared.js"></script>
+<script src="sito.js"></script>
 <script src="leggi.js"></script>
 </body>
 </html>

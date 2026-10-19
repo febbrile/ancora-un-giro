@@ -88,6 +88,36 @@
     if (k < elenco.length - 1) nav.appendChild(link(elenco[k + 1], elenco[k + 1].titolo + ' →'));
   }
 
+  // Nel margine: tutte le lezioni, con quella aperta segnata.
+  function altre(elenco, k) {
+    if (elenco.length < 2) return;
+    $('altre').innerHTML = '<p>Le lezioni</p><ol>' + elenco.map((e, i) => '<li><a href="leggi.html?l=' + e.file + '"' +
+      (i === k ? ' aria-current="page"' : '') + '>' + esc(e.titolo) + '</a></li>').join('') + '</ol>';
+  }
+
+  // L'indice della lezione sta nel margine (sul computer) e sotto il titolo (sul telefono);
+  // nel margine si accende la sezione che si sta leggendo.
+  function sommario(indice) {
+    if (indice.length < 2) return;
+    const voci = '<p>In questa lezione</p><ol>' + indice.map(v => '<li><a href="#' + v.id + '">' + riga(v.testo) + '</a></li>').join('') + '</ol>';
+    $('sommario').innerHTML = voci;
+    const breve = document.createElement('nav');
+    breve.className = 'sommario sommario-breve';
+    breve.setAttribute('aria-label', 'In questa lezione');
+    breve.innerHTML = voci;
+    articolo.querySelector('h1').after(breve);
+    const link = [...$('sommario').querySelectorAll('a')], titoli = indice.map(v => document.getElementById(v.id));
+    const segna = () => {
+      let k = 0;
+      titoli.forEach((t, i) => { if (t.getBoundingClientRect().top < 140) k = i; });
+      link.forEach((a, i) => a.classList.toggle('qui', i === k));
+    };
+    addEventListener('scroll', segna, { passive: true });
+    segna();
+  }
+
+  document.querySelectorAll('[data-figura]').forEach(v => { v.innerHTML = Sito.volto(v.dataset.figura, { intero: true }); });
+
   (async function () {
     let elenco;
     try { elenco = await (await fetch('lezioni.json', { cache: 'no-cache' })).json(); }
@@ -102,14 +132,9 @@
     } catch (e) { articolo.innerHTML = '<p>Non riesco a leggere la lezione.</p>'; return; }
 
     const { html, indice } = markdown(testo);
-    articolo.innerHTML = '<p class="num">' + esc((lezione.etichetta || 'Lezione ' + lezione.n).toUpperCase()) + '</p>' + html;
-    if (indice.length > 1) {
-      const nav = document.createElement('nav');
-      nav.className = 'sommario';
-      nav.setAttribute('aria-label', 'In questa lezione');
-      nav.innerHTML = '<p>In questa lezione</p><ol>' + indice.map(v => '<li><a href="#' + v.id + '">' + riga(v.testo) + '</a></li>').join('') + '</ol>';
-      articolo.querySelector('h1').after(nav);
-    }
+    articolo.innerHTML = '<p class="num etichetta">' + esc((lezione.etichetta || 'Lezione ' + lezione.n).toUpperCase()) + '</p>' + html;
+    sommario(indice);
+    altre(elenco, k);
     document.title = lezione.titolo + ' · Come funziona un LLM · Ancora un giro';
     $('dove').textContent = 'Come funziona un LLM · ' + (lezione.etichetta || 'Lezione ' + lezione.n);
     formule();

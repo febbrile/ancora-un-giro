@@ -4,51 +4,171 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Ancora un giro</title>
-<meta name="description" content="Un cartone a episodi che racconta, con una storia, cosa succede dopo che premi invio in una chat con un’intelligenza artificiale.">
+<meta name="description" content="Un cartone a episodi: cosa succede quando scrivi a un’intelligenza artificiale e premi invio.">
 <link rel="icon" href="paperella.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Fredoka:wght@400;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Fredoka:wght@400;600&family=JetBrains+Mono:wght@400&display=swap">
 <link rel="stylesheet" href="sito.css">
 </head>
-<body>
+<body class="notte">
 <header class="testata">
-  <a class="casa titolo-sito" href="./"><img class="stella" src="paperella.svg" alt="">Ancora un giro</a>
+  <div class="contenitore">
+    <a class="marchio" href="./"><img src="paperella.svg" alt="">Ancora un giro</a>
+    <nav class="porte" aria-label="Sezioni">
+      <a href="#cartoni">Cartoni</a>
+      <a href="#lezioni">Lezioni</a>
+      <a class="lunga" href="#mondo">Il luna park</a>
+    </nav>
+  </div>
 </header>
+
 <main>
   <section class="copertina">
-    <h1 class="titolo-sito">Ancora un giro</h1>
-    <p>Quando scrivi a un’intelligenza artificiale e premi invio, la tua frase parte per un viaggio: fa un giro sulle montagne russe di un luna park e torna con una parola in più.</p>
-    <p>Un cartone a episodi per chi non sa niente di come funziona: una storia sola, da guardare dall’inizio.</p>
+    <div class="contenitore">
+      <div class="testo">
+        <h1>Ancora un giro</h1>
+        <p class="attacco">Quando scrivi a un’intelligenza artificiale e premi invio, la tua frase parte per un viaggio: fa un giro sulle montagne russe di un luna park e torna con una parola in più.</p>
+        <p class="sotto">Un cartone a episodi su quello che succede dietro lo schermo. Si comincia dal prologo, anche insieme ai bambini.</p>
+        <div class="bottoni">
+          <a class="bottone primario" id="inizia" href="#cartoni"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l12.5-7.5z"/></svg>Guarda il prologo</a>
+          <a class="bottone secondario" href="#lezioni">Leggi come funziona</a>
+        </div>
+      </div>
+      <div class="luna-park" id="luna-park"></div>
+    </div>
   </section>
-  <section class="sezione" id="guarda">
-    <h2>Gli episodi</h2>
+
+  <section class="progetto" id="mondo">
+    <div class="contenitore">
+      <p class="etichetta">Il luna park</p>
+      <h2>Di notte, dietro lo schermo, c’è un luna park</h2>
+      <p class="intro">Ogni volta che qualcuno scrive e preme invio, la sua frase arriva lì e fa un giro sulle montagne russe. A ogni giro si allunga di una parola, finché la risposta è finita.</p>
+      <ul class="pilastri">
+        <li><span class="volto" data-volto="ada"></span><div><h3>Ada</h3><p>Una piccola scienziata col camice troppo lungo e il quaderno. Lavora alla stazione e alla pesca, e vuole sapere cosa succede dentro la montagna.</p></div></li>
+        <li><span class="volto" data-volto="spezzaparole"></span><div><h3>Lo Spezzaparole</h3><p>La vecchia biglietteria della stazione. Con la sua grande forbice strappa la frase in biglietti, uno per pezzo.</p></div></li>
+        <li><span class="volto" data-volto="emma"></span><div><h3>Emma</h3><p>Un biglietto che prende vita sul trenino: una bambina fatta di luce. Durante il giro il suo vestito cambia colore.</p></div></li>
+        <li><span class="volto" data-volto="paperella"></span><div><h3>Le paperelle</h3><p>Nuotano nella vasca della pesca, una per ogni parola che può venire dopo. Ada ne pesca una senza guardare.</p></div></li>
+      </ul>
+      <div class="promessa">
+        <img src="paperella.svg" alt="">
+        <div>
+          <p>Il giro, in una frase</p>
+          <blockquote>«Una macchina che non pensa calcola, un pezzo alla volta, quanto è probabile ogni parola che può venire dopo. Se ne pesca una, e si ricomincia.»</blockquote>
+        </div>
+      </div>
+    </div>
   </section>
-  <ol class="episodi" id="episodi"></ol>
-  <p class="piede">Dietro la storia c’è un modellino coerente: i colori e le paperelle vengono da calcoli veri.</p>
-  <section class="sezione" id="lezioni">
-    <h2>Come funziona un LLM</h2>
-    <p>Le lezioni da leggere: quello che succede davvero dopo che premi invio, spiegato passo per passo, con i numeri.</p>
+
+  <section class="cartoni" id="cartoni" aria-labelledby="titolo-cartoni">
+    <div class="contenitore">
+      <div class="testa">
+        <div>
+          <p class="etichetta">Da guardare</p>
+          <h2 id="titolo-cartoni">I cartoni</h2>
+          <p>Si comincia dal prologo, e si va avanti un giro alla volta.</p>
+        </div>
+        <div class="stagioni" id="stagioni" role="tablist" aria-label="Stagioni"></div>
+      </div>
+      <ol class="binario" id="episodi" role="tabpanel" aria-live="polite"></ol>
+    </div>
   </section>
-  <ol class="episodi" id="elenco-lezioni"></ol>
+
+  <section class="quaderno" id="lezioni" aria-labelledby="titolo-lezioni">
+    <div class="contenitore">
+      <div class="ada figura" data-figura="ada"></div>
+      <div>
+        <p class="etichetta">Da leggere</p>
+        <h2 id="titolo-lezioni">Come funziona un LLM</h2>
+        <p class="intro">Le lezioni da leggere: quello che succede davvero dopo che premi invio, spiegato passo per passo, con i numeri.</p>
+        <p class="nota">Gli aspetti tecnici e matematici, per chi vuole sapere cosa c’è sotto il luna park.</p>
+        <ol class="indice" id="elenco-lezioni"></ol>
+      </div>
+    </div>
+  </section>
 </main>
+
+<footer class="piede-sito">
+  <div class="contenitore">
+    <a class="marchio" href="./"><img src="paperella.svg" alt="">Ancora un giro</a>
+    <p><a href="https://github.com/febbrile/ancora-un-giro">Il progetto su GitHub</a></p>
+  </div>
+</footer>
+
+<script src="../episodi/comune/shared.js"></script>
+<script src="sito.js"></script>
 <script>
-// Due elenchi con le stesse schede: gli episodi da guardare e le lezioni da leggere.
-async function schede(id, file, errore, scheda) {
-  const ol = document.getElementById(id);
-  let elenco = [];
-  try { elenco = await (await fetch(file, { cache: 'no-cache' })).json(); } catch (e) { ol.textContent = errore; return; }
-  elenco.forEach(e => {
-    const li = document.createElement('li'), a = document.createElement('a'), [href, parti] = scheda(e);
-    a.href = href;
-    parti.forEach(([cls, testo]) => { const s = document.createElement('span'); s.className = cls; s.textContent = testo; a.appendChild(s); });
-    li.appendChild(a); ol.appendChild(li);
+(function () {
+  'use strict';
+  const $ = id => document.getElementById(id);
+  const el = (tag, cls, testo) => { const e = document.createElement(tag); if (cls) e.className = cls; if (testo) e.textContent = testo; return e; };
+
+  // I volti fissi della pagina (pilastri, Ada del quaderno).
+  document.querySelectorAll('[data-volto]').forEach(v => {
+    v.innerHTML = Sito.volto(v.dataset.volto);
+    v.style.setProperty('--tinta', Sito.colore(v.dataset.volto));
   });
-}
-schede('episodi', 'episodi.json', 'Non riesco a leggere l’elenco degli episodi.', e => ['guarda.html?ep=' + e.cartella,
-  [['num', (e.etichetta || 'Episodio ' + e.n).toUpperCase()], ['nome', e.titolo], ['racconto', e.racconto], ['vai', 'Guarda →']]]);
-schede('elenco-lezioni', 'lezioni.json', 'Non riesco a leggere l’elenco delle lezioni.', e => ['leggi.html?l=' + e.file,
-  [['num', (e.etichetta || 'Lezione ' + e.n).toUpperCase()], ['nome', e.titolo], ['racconto', e.sommario], ['vai', 'Leggi →']]]);
+  document.querySelectorAll('[data-figura]').forEach(v => { v.innerHTML = Sito.volto(v.dataset.figura, { intero: true }); });
+
+  // La copertina: il luna park dei film, alla stazione. Il treno «Al mare Emma» aspetta con i vestiti del colore dei biglietti.
+  (function lunaPark() {
+    const M = G.MOD.mare.passeggeri, ns = 'http://www.w3.org/2000/svg';
+    const [ax, ay] = G.MONDO.ada, [sx, sy] = G.MONDO.spezzaparole;
+    $('luna-park').innerHTML = '<svg viewBox="140 490 780 440" role="img" aria-label="Il luna park di notte: Ada e lo Spezzaparole alla stazione, il trenino con Al, Mare ed Emma, la montagna buia e la vasca delle paperelle.">' +
+      G.defs + G.mondo({ seme: 3 }) + '<path id="pista" d="' + G.MONDO.partenza + '" fill="none"/>' +
+      '<g id="treno">' + G.treno([{ tipo: 'al', col: M.Al.biglietto }, { tipo: 'mare', col: M.mare.biglietto }, { tipo: 'emma', col: M.Emma.biglietto }]) + '</g>' +
+      '<g transform="' + G.posa(sx + 26, sy, 0.3, 220, 300) + '">' + G.spezzaparole({ forbice: 0.6 }) + '</g>' +
+      '<g transform="' + G.posaAda(ax + 25, ay, 0.3) + '">' + G.ada('quaderno', 'felice') + '</g></svg>';
+    const vagoni = [...document.querySelectorAll('#treno .g-vag')];
+    G.posaTreno(vagoni, $('pista'), 340);
+  })();
+
+  // I cartoni: una stagione alla volta (si sceglie con le linguette, e si ricorda nell'indirizzo: #stagione-2).
+  Sito.episodi().then(({ stagioni, tutti }) => {
+    if (tutti.length) $('inizia').href = 'guarda.html?ep=' + tutti[0].cartella;
+    const linguette = stagioni.map((s, k) => {
+      const b = el('button', '', Sito.nomeStagione(s));
+      b.setAttribute('role', 'tab'); b.id = 'stagione-' + s.n; b.setAttribute('aria-controls', 'episodi');
+      b.addEventListener('click', () => { mostra(k); history.replaceState(null, '', '#stagione-' + s.n); });
+      b.addEventListener('keydown', e => {
+        const d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+        if (d) { const j = (k + d + stagioni.length) % stagioni.length; mostra(j); linguette[j].focus(); }
+      });
+      $('stagioni').appendChild(b);
+      return b;
+    });
+    function mostra(k) {
+      linguette.forEach((b, j) => { b.setAttribute('aria-selected', String(j === k)); b.tabIndex = j === k ? 0 : -1; });
+      $('episodi').setAttribute('aria-labelledby', linguette[k].id);
+      const ol = $('episodi');
+      ol.innerHTML = '';
+      stagioni[k].episodi.forEach(e => {
+        const li = el('li', 'fermata'), a = el('a'), corpo = el('div', 'corpo'), piede = el('div', 'piedino');
+        const col = Sito.colore(e.personaggio);
+        li.style.setProperty('--colore-ep', col);
+        li.style.setProperty('--colore-ep-chiaro', 'color-mix(in srgb, ' + col + ' 55%, #FFFFFF)');
+        a.href = 'guarda.html?ep=' + e.cartella;
+        const v = el('span', 'volto'); v.innerHTML = Sito.volto(e.personaggio);
+        const quanto = el('span', 'quanto');
+        Sito.durata(e.cartella).then(d => { if (d) quanto.textContent = Sito.mmss(d); });
+        piede.append(quanto, el('span', 'vai', 'Guarda →'));
+        corpo.append(el('p', 'etichetta', Sito.etichetta(e)), el('h3', '', e.titolo), el('p', 'racconto', e.racconto), piede);
+        a.append(v, corpo); li.appendChild(a); ol.appendChild(li);
+      });
+    }
+    const daIndirizzo = stagioni.findIndex(s => location.hash === '#stagione-' + s.n);
+    mostra(Math.max(0, daIndirizzo));
+    if (daIndirizzo >= 0) requestAnimationFrame(() => $('cartoni').scrollIntoView({ behavior: 'instant' }));
+  }).catch(() => { $('episodi').textContent = 'Non riesco a leggere l’elenco degli episodi.'; });
+
+  // Le lezioni, come l'indice di un quaderno.
+  fetch('lezioni.json', { cache: 'no-cache' }).then(r => r.json()).then(elenco => elenco.forEach(l => {
+    const li = el('li'), a = el('a');
+    a.href = 'leggi.html?l=' + l.file;
+    a.append(el('span', 'etichetta', l.etichetta || 'Lezione ' + l.n), el('span', 'nome', l.titolo), el('span', 'vai', 'Leggi →'), el('span', 'racconto', l.sommario));
+    li.appendChild(a); $('elenco-lezioni').appendChild(li);
+  })).catch(() => { $('elenco-lezioni').textContent = 'Non riesco a leggere l’elenco delle lezioni.'; });
+})();
 </script>
 </body>
 </html>

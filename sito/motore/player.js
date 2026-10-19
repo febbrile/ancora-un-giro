@@ -39,13 +39,15 @@
   }
 
   async function avvio() {
-    let elenco = [];
-    try { elenco = await (await fetch('episodi.json', { cache: 'no-cache' })).json(); } catch (e) {}
-    const io = elenco.find(e => e.cartella === cartella);
-    const titolo = io ? (io.etichetta || 'Episodio ' + io.n) + ' · ' + io.titolo : cartella;
+    // L'elenco degli episodi, per stagioni (sito/episodi.json, letto da sito.js).
+    let catalogo = { stagioni: [], tutti: [] };
+    try { catalogo = await Sito.episodi(); } catch (e) { console.warn('episodi.json:', e); }
+    const io = catalogo.tutti.find(e => e.cartella === cartella);
+    const titolo = io ? Sito.etichetta(io) + ' · ' + io.titolo : cartella;
     document.title = titolo + ' · Ancora un giro';
     $('dove').textContent = titolo;
-    vicini(elenco, io);
+    vicini(catalogo, io);
+    dietro(catalogo, io);
 
     try {
       await caratteri();
@@ -76,14 +78,51 @@
     return t;
   }
 
-  function vicini(elenco, io) {
+  // L'episodio prima e quello dopo, anche a cavallo di due stagioni.
+  function vicini(catalogo, io) {
     const nav = $('vicini');
     if (!io) return;
-    const prima = elenco.find(e => e.n === io.n - 1), dopo = elenco.find(e => e.n === io.n + 1);
-    nav.innerHTML = '';
+    const prima = catalogo.tutti[io.i - 1], dopo = catalogo.tutti[io.i + 1];
+    const nome = e => (e.s !== io.s ? Sito.nomeStagione(e.s) + ' · ' : '') + Sito.etichetta(e) + ': ' + e.titolo;
     const link = (e, testo) => { const a = document.createElement('a'); a.href = 'guarda.html?ep=' + e.cartella; a.textContent = testo; return a; };
-    nav.appendChild(prima ? link(prima, '← ' + (prima.etichetta || 'Episodio ' + prima.n) + ': ' + prima.titolo) : document.createElement('span'));
-    if (dopo) nav.appendChild(link(dopo, (dopo.etichetta || 'Episodio ' + dopo.n) + ': ' + dopo.titolo + ' →'));
+    nav.innerHTML = '';
+    nav.appendChild(prima ? link(prima, '← ' + nome(prima)) : document.createElement('span'));
+    if (dopo) nav.appendChild(link(dopo, nome(dopo) + ' →'));
+  }
+
+  // Sotto il player: di cosa parla l'episodio, e la fila degli episodi della sua stagione.
+  function dietro(catalogo, io) {
+    if (!io) return;
+    const el = (tag, cls, testo) => { const e = document.createElement(tag); if (cls) e.className = cls; if (testo) e.textContent = testo; return e; };
+    const volto = e => { const v = el('span', 'volto'); v.innerHTML = Sito.volto(e.personaggio); return v; };
+    const tinta = (nodo, e) => nodo.style.setProperty('--colore-ep', Sito.colore(e.personaggio));
+
+    const dc = $('di-cosa'), testo = el('div');
+    tinta(dc, io);
+    testo.append(el('p', 'etichetta', (catalogo.stagioni.length > 1 ? Sito.nomeStagione(io.s) + ' · ' : '') + Sito.etichetta(io)), el('h2', '', io.titolo), el('p', '', io.racconto));
+    dc.append(volto(io), testo);
+    dc.hidden = false;
+
+    const fila = $('fila'), h = el('h2', '', Sito.nomeStagione(io.s)), ol = el('ol');
+    h.appendChild(el('span', '', io.s.episodi.length === 1 ? 'un episodio' : io.s.episodi.length + ' episodi'));
+    io.s.episodi.forEach(e => {
+      const li = el('li'), a = el('a'), t = el('div');
+      tinta(li, e);
+      a.href = 'guarda.html?ep=' + e.cartella;
+      t.append(el('p', 'etichetta', Sito.etichetta(e)), el('strong', '', e.titolo));
+      if (e === io) { a.setAttribute('aria-current', 'page'); t.appendChild(el('span', 'ora', 'Stai guardando')); }
+      a.append(volto(e), t); li.appendChild(a); ol.appendChild(li);
+    });
+    fila.append(h, ol);
+    if (catalogo.stagioni.length > 1) {
+      const tutte = el('a', 'tutte', 'Tutte le stagioni →');
+      tutte.href = './#stagione-' + io.s.n;
+      fila.appendChild(tutte);
+    }
+    fila.hidden = false;
+    const qui = ol.querySelector('[aria-current]');
+    // La fila parte con l'episodio che si guarda in mezzo, così si vedono anche quello prima e quello dopo.
+    if (qui) ol.scrollLeft = qui.parentNode.offsetLeft - ol.offsetLeft - (ol.clientWidth - qui.parentNode.offsetWidth) / 2;
   }
 
   function disegnaCapitoli() {
