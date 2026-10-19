@@ -1471,4 +1471,59 @@ window.G.giro7 = function (o) {
   return g;
 };
 // ── Episodio 8 ──
+// Ada con la testa girata di ang gradi (fa no, alza gli occhi): stesso disegno di G.ada, la testa ruota sul collo.
+// Con expr 'accigliata' Ada aggrotta la fronte: sopracciglia giù e bocca all'ingiù.
+window.G.adaTesta8 = function (expr) {
+  const h = window.G.adaTesta(expr);
+  if (expr !== 'accigliata') return h;
+  return h.replace('M92 106 Q100 112 108 106', 'M92 109 Q100 104 108 109') +
+    '<path d="M74 67 Q86 64 97 72 M126 67 Q114 64 103 72" stroke="#3A2418" stroke-width="3.6" stroke-linecap="round" fill="none"/>';
+};
+window.G.adaGira = function (pose, expr, o, ang) {
+  const G = window.G, corpo = G.ada(pose, expr, o).replace(G.adaTesta(expr), '');
+  return '<g>' + corpo + '<g transform="rotate(' + (ang || 0).toFixed(1) + ' 100 124)">' + G.adaTesta8(expr) + '</g></g>';
+};
+// Ada seduta (su una traversina, sul bordo della vasca): il camice si piega, le gambe pendono davanti.
+// Stessa scatola di G.ada: con G.posaAda(x, y) il sedile sta nel punto (x, y). o.testa: la testa girata (gradi).
+window.G.adaSeduta = function (pose, expr, o) {
+  o = o || {};
+  const G = window.G, testa = G.adaTesta8(expr), corpo = G.ada(pose, expr, o).replace(G.adaTesta(expr), '');
+  const gambe = '<path d="M88 292 Q84 316 86 338 M112 292 Q116 316 114 338" stroke="#2E2A26" stroke-width="11" stroke-linecap="round" fill="none"/>' +
+    '<ellipse cx="82" cy="342" rx="12" ry="6.5" fill="#6E4630"/><ellipse cx="118" cy="342" rx="12" ry="6.5" fill="#6E4630"/>';
+  return '<g>' + gambe + '<g transform="translate(0 58) translate(0 128) scale(1 .66) translate(0 -128)">' + corpo + '</g>' +
+    '<g transform="translate(0 58) rotate(' + (o.testa || 0).toFixed(1) + ' 100 124)">' + testa + '</g></g>';
+};
+// I treni di prova che dormono sul binario morto (oggi): tre treni grigi di tre vagoni, col fanale spento, e accanto
+// all'ultimo la pila di traversine dove si siede Ada (il sedile è in (-95, 835)). Coordinate del mondo.
+window.G.treniDormono = function () {
+  const G = window.G, M = G.MONDO, C = G.C;
+  let grigi = '';
+  [-820, -580, -340].forEach(x0 => { for (let i = 2; i >= 0; i--) grigi += '<g transform="translate(' + (x0 + i * M.passo) + ' 858) scale(' + M.scala + ') translate(-120 -150)">' + G.vagone({ primo: i === 0, sbarra: 1, grigio: true, fanale: 0 }, '') + '</g>'; });
+  return grigi + '<rect x="-124" y="846" width="58" height="12" rx="2" fill="' + C.legnoScuro + '"/><rect x="-120" y="835" width="50" height="11" rx="2" fill="' + C.legno + '"/>' +
+    '<path d="M-116 840 L-78 840 M-120 852 L-72 852" stroke="' + C.legnoScuro + '" stroke-width="1.5" opacity=".6"/>';
+};
+// La striscia arrotolata, come arriva dal cielo: un rotolino di carta. Centrata in (0, 0), lunga 120.
+window.G.rotolo = function () {
+  const C = window.G.C;
+  return '<g><rect x="-60" y="-14" width="120" height="28" rx="14" fill="' + C.crema + '" stroke="' + C.cremaScura + '" stroke-width="3"/>' +
+    '<ellipse cx="60" cy="0" rx="7" ry="14" fill="' + C.cremaScura + '"/><ellipse cx="60" cy="0" rx="3" ry="7" fill="#B9A887"/>' +
+    '<path d="M-48 -6 L40 -6" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" opacity=".5"/></g>';
+};
+// Il quaderno di Ada aperto, a tutto schermo: la copertina verde, due pagine color crema con la piega in mezzo.
+// sinistra, destra: i disegni delle due pagine, in coordinate dello schermo (pagina sinistra x 176–960, destra 960–1744).
+window.G.quadernoAperto = function (sinistra, destra) {
+  const C = window.G.C;
+  return '<rect x="-200" y="-200" width="2320" height="1480" fill="#0B1030"/>' +
+    '<rect x="150" y="60" width="1620" height="880" rx="26" fill="#2F6F73"/><rect x="176" y="86" width="1568" height="828" rx="12" fill="' + C.crema + '"/>' +
+    '<path d="M960 86 L960 914" stroke="' + C.cremaScura + '" stroke-width="4"/>' + (sinistra || '') + (destra || '');
+};
+// Emma disegnata a matita sul quaderno: il vestito del suo colore, i capelli, la faccina. I piedi in (x, y), scala s.
+window.G.schizzoEmma = function (x, y, col, s) {
+  s = s || 1;
+  return '<g transform="translate(' + x + ' ' + y + ') scale(' + s + ')"><path d="M-40 0 L40 0 L24 -60 L-24 -60 Z" fill="' + col + '" stroke="#3A3570" stroke-width="5" stroke-linejoin="round"/>' +
+    '<path d="M-14 0 L-14 22 M14 0 L14 22" stroke="#3A3570" stroke-width="6" stroke-linecap="round"/>' +
+    '<circle cx="0" cy="-90" r="36" fill="#F5C84C" stroke="#3A3570" stroke-width="4"/><circle cx="0" cy="-84" r="25" fill="#FFE9D6"/>' +
+    '<circle cx="-9" cy="-86" r="3.2" fill="#3A3570"/><circle cx="9" cy="-86" r="3.2" fill="#3A3570"/><path d="M-8 -74 Q0 -68 8 -74" stroke="#3A3570" stroke-width="3" fill="none" stroke-linecap="round"/>' +
+    '<path d="M-22 -112 l3 -7 l3 7 l7 1 l-6 4 l2 7 l-6 -4 l-6 4 l2 -7 l-6 -4 Z" fill="#E0475B"/></g>';
+};
 // ── Episodio 9 ──
