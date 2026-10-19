@@ -17,6 +17,8 @@ Ada, una piccola scienziata, ne pesca una senza guardare: è la parola dopo. La 
 | Prologo | Premi invio | 2:52 | Il mondo e il giro intero, visto da fuori: Ada, lo Spezzaparole, i passeggeri, la montagna, la vasca, la pesca | [guarda](https://febbrile.github.io/ancora-un-giro/sito/guarda.html?ep=00-premi-invio) |
 | 1 | Dentro la montagna | 3:52 | Lo stesso giro, da dentro: i fili di luce, gli scambi, le finestre sulla vasca dove si accendono le paperelle. Emma entra rosa ed esce blu | [guarda](https://febbrile.github.io/ancora-un-giro/sito/guarda.html?ep=01-dentro-la-montagna) |
 
+I prossimi episodi, con argomento e idea, sono nella [scaletta](mondo/SCALETTA.md).
+
 Personaggi, oggetti e luna park: [tela di design](https://claude.ai/artifact/1YpTiDnCNhg4bgh23faV33).
 
 ## Struttura
@@ -24,6 +26,7 @@ Personaggi, oggetti e luna park: [tela di design](https://claude.ai/artifact/1Yp
 ```
 CLAUDE.md                     le regole di lavoro (da leggere prima di tutto)
 mondo/SOGGETTO.md             il soggetto: la frase da lasciare, le leggi del luna park, i personaggi, le regole
+mondo/SCALETTA.md             la prima stagione: argomento, domanda e idea di ogni episodio
 sceneggiatura/NN-titolo.md    una sceneggiatura per episodio, con le note su cosa c'è sotto
 episodi/comune/               shared.js (personaggi, luna park, treno, sottotitoli) e base.css, uguali per tutti
 episodi/NN-titolo/modules/    le scene di ogni film (scenes.json, scene-<id>.js) e la musica (score.js)

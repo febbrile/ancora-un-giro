@@ -79,13 +79,7 @@ Ogni episodio è un **mistero** che Ada indaga da fuori, con i suoi strumenti, s
 - usa solo elementi già presentati;
 - finisce con una risposta, cioè una storia completa, e magari con la domanda dell'episodio dopo.
 
-Alcuni misteri possibili, come esempio di quello che il motore produce (non è ancora la scaletta):
-- Cosa succede dentro la montagna? Il primo viaggio con Emma.
-- Perché con «al parco» il treno fa una strada diversa?
-- Perché la paperella non è sempre dello stesso colore?
-- Perché certe parole arrivano alla biglietteria e ne escono in tanti biglietti?
-- Chi ha costruito la pista?
-- Come fa la storia a finire?
+La scaletta della prima stagione, episodio per episodio, è in [SCALETTA.md](SCALETTA.md).
 
 ## 6. Regole di racconto
 
@@ -149,5 +143,6 @@ Se una risposta è sbagliata, l'elemento non entra.
 - [CLAUDE.md](../CLAUDE.md): le regole di lavoro.
 - [strumenti/modellino.py](../strumenti/modellino.py): i colori, le finestre e le paperelle.
 - `sceneggiatura/`: una sceneggiatura per episodio.
-- Da scrivere: `concetti.md` (metafora ↔ concetto, prerequisiti, episodio in cui ognuno viene presentato),
-  `nuovo-episodio.md` (lo stampo per scrivere una puntata) e `scaletta.md` (la prima stagione).
+- [SCALETTA.md](SCALETTA.md): la prima stagione, episodio per episodio.
+- Da scrivere: `concetti.md` (metafora ↔ concetto, prerequisiti, episodio in cui ognuno viene presentato)
+  e `nuovo-episodio.md` (lo stampo per scrivere una puntata).
