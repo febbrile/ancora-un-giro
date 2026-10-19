@@ -1,0 +1,55 @@
+{
+  "width": 1920,
+  "height": 1080,
+  "background": "#0B1030",
+  "scenes": [
+    {
+      "id": "vuoto",
+      "name": "Il treno vuoto",
+      "dur": 25.4,
+      "desc": "Il trenino di «Al mare Emma nuota» si ferma lungo la banchina; sul telefono è arrivata la risposta. I passeggeri tornano biglietti e il vento se li porta via. Ada guarda il treno vuoto e si chiede come fa a sapere di cosa si parlava. Titolo."
+    },
+    {
+      "id": "striscia",
+      "name": "La striscia lunga",
+      "dur": 27.8,
+      "desc": "Nel salotto si scrive «Al parco». Dalla finestra parte una striscia lunghissima, che si srotola nel cielo come la coda di un aquilone. Ada la prende al volo e la legge camminando: c'è tutta la chat."
+    },
+    {
+      "id": "banchina",
+      "name": "Risalgono tutti",
+      "dur": 28.4,
+      "desc": "Lo Spezzaparole strappa la striscia: i biglietti risalgono tutti, ognuno col colore del suo biglietto. Si vede la banchina intera, con le due sbarre a righe: ci stanno sette vagoni."
+    },
+    {
+      "id": "fili",
+      "name": "Il filo più lungo",
+      "dur": 30.8,
+      "desc": "Il treno parte e sparisce nella montagna. Dentro, i fili di luce: in testa come la prima volta; Parco, in fondo, guarda fino a Emma, e un po' del suo rosa scorre fino a lui."
+    },
+    {
+      "id": "finestre",
+      "name": "Le finestre sulla vasca",
+      "dur": 38.2,
+      "desc": "Scambi e finestre: per tutto il treno l'acqua resta vuota; passa Parco e si accendono le paperelle di luce, finestra dopo finestra più verdi."
+    },
+    {
+      "id": "pesca",
+      "name": "L'ultimo posto",
+      "dur": 27,
+      "desc": "Il treno esce sopra la vasca: sotto Parco cadono paperelle verdi. Ada pesca «corre»: la paperella prende l'ultimo posto della banchina. Sul telefono compare «corre»."
+    },
+    {
+      "id": "giu",
+      "name": "Troppo lunga",
+      "dur": 33.4,
+      "desc": "I passeggeri scendono. Si scrive di nuovo «Al parco»: la striscia è più lunga della banchina. I biglietti salgono dall'ultimo vagone in avanti; Al e Mare restano giù, e il treno parte senza di loro."
+    },
+    {
+      "id": "pista",
+      "name": "La pista",
+      "dur": 23.4,
+      "desc": "Ada raccoglie i due biglietti e li mette nel quaderno. Il treno sparisce nella montagna; Ada guarda la pista e si chiede chi l'ha costruita. Fine."
+    }
+  ]
+}

@@ -119,7 +119,9 @@ const RITMO = {
     finestre: [[41.0, 46, 2.6, 1]], mare: [[17.4, 28, 2.6, 1]], pesca: [[21.8, 28, 2.4, 1]],
   },
   '03': {},
-  '04': {},
+  '04': {
+    fili: [[2.0, 9.0, 5.0]], finestre: [[15.6, 21.0, 3.6], [39.6, 42.4, 2.0, 1]],
+  },
   '05': {},
   '06': {},
   '07': {},
@@ -1114,6 +1116,61 @@ window.G.pescata = function (o) {
   return P;
 };
 // ── Episodio 4 ──
+// Ada col braccio destro alzato (episodio 4): per prendere al volo la striscia, per salutare. a: quanto dondola (gradi).
+window.G.adaSaluta = function (expr, a) {
+  const braccio = '<g transform="rotate(' + (a || 0).toFixed(1) + ' 130 156)"><path d="M124 150 Q146 118 152 78 L170 80 Q168 124 140 166 Z" fill="' + AC + '" stroke="' + AI + '" stroke-width="2.5" stroke-linejoin="round"/>' +
+    '<circle cx="161" cy="72" r="7" fill="' + AS + '"/></g>';
+  return '<g>' + adaBody + slL + braccio + adaTesta(expr) + '</g>';
+};
+// La striscia lunga (episodio 4): un nastro di carta che corre lungo una linea [[x, y], …], dalla lunghezza a alla b,
+// con le parole in fila: parole = [[testo, s], …], ognuna centrata alla lunghezza s della linea (fuori dal nastro non
+// si vede). alto: l'altezza del nastro. o.luce(k): quanto brilla la parola k (0..1); o.onda(s): quanto il nastro si
+// scosta dalla linea, di traverso, alla lunghezza s (il vento). o.scala(k): quanto è grande la parola k (1 di solito).
+window.G.linea = function (punti) {
+  const L = [0];
+  for (let i = 1; i < punti.length; i++) L.push(L[i - 1] + Math.hypot(punti[i][0] - punti[i - 1][0], punti[i][1] - punti[i - 1][1]));
+  const at = s => {
+    s = Math.max(0, Math.min(L[L.length - 1], s));
+    let i = 1;
+    while (i < L.length - 1 && L[i] < s) i++;
+    const a = punti[i - 1], b = punti[i], u = (s - L[i - 1]) / Math.max(1e-6, L[i] - L[i - 1]);
+    return [a[0] + (b[0] - a[0]) * u, a[1] + (b[1] - a[1]) * u, Math.atan2(b[1] - a[1], b[0] - a[0]) * 180 / Math.PI];
+  };
+  return { punti, L, lung: L[L.length - 1], at };
+};
+window.G.nastro = function (linea, a, b, parole, alto, o) {
+  o = o || {};
+  a = Math.max(0, a); b = Math.min(linea.lung, b);
+  if (b - a < 0.5) return '';
+  // Il punto alla lunghezza s, scostato di traverso dall'onda.
+  const su = s => {
+    const p = linea.at(s), dd = o.onda ? o.onda(s) : 0, r = p[2] * Math.PI / 180;
+    return [p[0] - Math.sin(r) * dd, p[1] + Math.cos(r) * dd];
+  };
+  const pts = [], n = Math.max(2, Math.ceil((b - a) / 5));
+  for (let i = 0; i <= n; i++) pts.push(su(a + (b - a) * i / n));
+  const d = 'M' + pts.map(p => p[0].toFixed(1) + ' ' + p[1].toFixed(1)).join(' L');
+  let out = '<path d="' + d + '" fill="none" stroke="' + C.cremaScura + '" stroke-width="' + (alto + 2.4).toFixed(1) + '" stroke-linejoin="round"/>' +
+    '<path d="' + d + '" fill="none" stroke="' + C.crema + '" stroke-width="' + alto.toFixed(1) + '" stroke-linejoin="round"/>';
+  parole.forEach(([testo, s], k) => {
+    const sc = o.scala ? o.scala(k) : 1, w = alto * 0.17 * testo.length * sc;
+    if (s - w < a || s + w > b) return;
+    const [x, y] = su(s), p0 = su(Math.max(a, s - 3)), p1 = su(Math.min(b, s + 3));
+    const ang = Math.atan2(p1[1] - p0[1], p1[0] - p0[0]) * 180 / Math.PI, r = ang > 90 || ang < -90 ? ang - 180 : ang, lu = o.luce ? o.luce(k) : 0;
+    out += '<g transform="translate(' + x.toFixed(1) + ' ' + y.toFixed(1) + ') rotate(' + r.toFixed(1) + ') scale(' + sc.toFixed(3) + ')">' +
+      (lu > 0 ? '<ellipse rx="' + (w + alto * 0.5).toFixed(1) + '" ry="' + (alto * 0.62).toFixed(1) + '" fill="' + C.luce + '" opacity="' + (0.75 * lu).toFixed(2) + '" filter="url(#g-glow)"/>' : '') +
+      '<text y="' + (alto * 0.2).toFixed(1) + '" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="600" font-size="' + (alto * 0.56).toFixed(1) + '" fill="' + C.inchiostro + '">' + testo + '</text></g>';
+  });
+  return out;
+};
+// Il buio della montagna per i treni lunghi (episodio 4): il fondo e i binari di interno() continuano oltre il bordo
+// destro, fin dove arriva la camera che segue l'ultimo vagone. el: il gruppo che contiene interno(), già sul palco.
+window.G.internoLungo = function (el, corsie) {
+  [...el.querySelectorAll('rect')].slice(0, 2).forEach(r => { r.setAttribute('x', '-3000'); r.setAttribute('width', '9000'); });
+  const binari = el.querySelector('.g-int-binari');
+  if (binari) binari.insertAdjacentHTML('beforeend', (corsie || [INTERNO.ruote]).map(y => '<g class="g-oltre-corsia"><path d="M2120 ' + (y + 6) + ' L4800 ' + (y + 6) + '" stroke="' + C.legnoScuro + '" stroke-width="14" stroke-dasharray="6 22" class="g-traversine"/>' +
+    '<path d="M2120 ' + y + ' L4800 ' + y + '" stroke="' + C.acciaio + '" stroke-width="4" opacity=".85"/></g>').join(''));
+};
 // ── Episodio 5 ──
 // ── Episodio 6 ──
 // ── Episodio 7 ──
