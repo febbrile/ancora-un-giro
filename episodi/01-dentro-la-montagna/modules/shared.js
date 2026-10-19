@@ -166,6 +166,25 @@ function mare(col) {
     '<circle cx="76" cy="136" r="4" fill="#1C1F4A"/><circle cx="98" cy="130" r="4" fill="#1C1F4A"/>' +
     '<path d="M76 152 Q88 160 100 148" stroke="#1C1F4A" stroke-width="3" stroke-linecap="round" fill="none"/></g>';
 }
+// Parco: un alberello tondo con gli occhi e due rametti. La chioma ha il colore del vestito. Scatola 200×180.
+// o.ciao: l'angolo (gradi) del rametto destro, che saluta.
+function parco(col, o) {
+  o = o || {};
+  const foglia = (x, y, r) => '<g transform="rotate(' + r + ' ' + x + ' ' + y + ')"><ellipse cx="' + x + '" cy="' + y + '" rx="15" ry="8" fill="currentColor"/><ellipse cx="' + x + '" cy="' + y + '" rx="15" ry="8" fill="#FFFFFF" opacity=".18"/><path d="M' + (x - 12) + ' ' + y + ' L' + (x + 12) + ' ' + y + '" stroke="#000000" stroke-width="2" opacity=".25"/></g>';
+  return '<g style="color:' + col + '"><ellipse cx="100" cy="100" rx="88" ry="70" fill="currentColor" opacity=".35" filter="url(#g-soft)"/>' +
+    '<rect x="90" y="126" width="20" height="54" rx="6" fill="' + C.legno + '"/><path d="M96 140 L96 176" stroke="' + C.legnoScuro + '" stroke-width="3" stroke-linecap="round" opacity=".5"/>' +
+    '<circle cx="70" cy="100" r="34" fill="currentColor"/><circle cx="130" cy="100" r="34" fill="currentColor"/>' +
+    '<circle cx="100" cy="72" r="40" fill="currentColor"/><circle cx="100" cy="108" r="38" fill="currentColor"/>' +
+    '<ellipse cx="100" cy="132" rx="52" ry="14" fill="#000000" opacity=".12"/>' +
+    '<ellipse cx="80" cy="56" rx="18" ry="8" fill="#FFFFFF" opacity=".25" transform="rotate(-20 80 56)"/>' +
+    '<path d="M56 86 q6 -6 12 0 M124 70 q6 -6 12 0 M138 112 q6 -6 12 0" stroke="#000000" stroke-width="2.5" stroke-linecap="round" fill="none" opacity=".12"/>' +
+    '<ellipse cx="86" cy="98" rx="9" ry="10" fill="#FFFFFF"/><ellipse cx="114" cy="98" rx="9" ry="10" fill="#FFFFFF"/>' +
+    '<circle cx="88" cy="100" r="4.5" fill="#1C1F4A"/><circle cx="116" cy="100" r="4.5" fill="#1C1F4A"/>' +
+    '<circle cx="89.5" cy="98" r="1.5" fill="#FFFFFF"/><circle cx="117.5" cy="98" r="1.5" fill="#FFFFFF"/>' +
+    '<path d="M91 118 Q100 126 109 118" stroke="#1C1F4A" stroke-width="3" stroke-linecap="round" fill="none"/>' +
+    '<path d="M56 134 Q38 134 24 118" stroke="' + C.legno + '" stroke-width="7" stroke-linecap="round" fill="none"/>' + foglia(16, 110, 40) +
+    '<g transform="rotate(' + (o.ciao || 0) + ' 144 134)"><path d="M144 134 Q162 134 176 118" stroke="' + C.legno + '" stroke-width="7" stroke-linecap="round" fill="none"/>' + foglia(184, 110, -40) + '</g></g>';
+}
 // La paperella guarda a sinistra; scatola 100×90, la pancia tocca y = 84.
 function paperella(col, o) {
   o = o || {};
@@ -267,12 +286,13 @@ function vagone(o, dentro) {
     '<g class="g-sbarra" transform="rotate(' + (-105 * (1 - sb)).toFixed(1) + ' 30 40)"><rect x="24" y="30" width="126" height="11" rx="5.5" fill="' + C.oro + '" stroke="' + C.legnoScuro + '" stroke-width="2.5"/></g>' +
     '</g>';
 }
-// Chi siede nel vagone: tipo 'emma' | 'al' | 'mare' | 'paperella', col il colore del vestito.
+// Chi siede nel vagone: tipo 'emma' | 'al' | 'mare' | 'parco' | 'paperella', col il colore del vestito.
 function passeggero(tipo, col, o) {
   o = o || {};
   if (tipo === 'emma') return '<g transform="translate(62 -100) scale(.8)">' + (o.tirata ? emmaTirata(col) : emma(col, { mouth: o.bocca })) + '</g>';
   if (tipo === 'al') return '<g transform="translate(54 -70) scale(.85)">' + al(col) + '</g>';
   if (tipo === 'mare') return '<g transform="translate(56 -72) scale(.85)">' + mare(col) + '</g>';
+  if (tipo === 'parco') return '<g transform="translate(56 -78) scale(.85)">' + parco(col, { ciao: o.ciao }) + '</g>';
   if (tipo === 'paperella') return '<g transform="translate(80 -32) scale(1.1)">' + paperella(col, { glow: true }) + '</g>';
   return '';
 }
@@ -345,8 +365,11 @@ function salotto(dentroTelefono, o) {
     '<path d="M-40 800 Q300 770 640 800 Q980 770 1320 800 Q1660 770 1960 800" stroke="#5A2F48" stroke-width="10" fill="none"/>' +
     '<path d="M640 800 L640 1080 M1320 800 L1320 1080" stroke="#5A2F48" stroke-width="8"/>';
   const dita = [520, 590, 660].map(y => '<rect x="704" y="' + y + '" width="58" height="54" rx="27" fill="' + C.pelle + '" stroke="' + C.pelleScura + '" stroke-width="2"/>').join('');
-  return '<defs><linearGradient id="g-muro" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#34203F"/><stop offset="1" stop-color="#5A3550"/></linearGradient></defs>' +
-    '<rect x="-200" y="-200" width="2320" height="1480" fill="url(#g-muro)"/>' + finestra + lampada + divano +
+  // o.muro: i colori di un'altra casa, [muro in alto, muro in basso, divano].
+  const mu = o.muro || ['#34203F', '#5A3550'], id = 'g-muro' + (o.muro ? '-' + mu[0].slice(1) : '');
+  const div = o.muro && mu[2] ? divano.replace(/#6E3D58/g, mu[2]).replace(/#5A2F48/g, mix(mu[2], '#000000', 0.18)) : divano;
+  return '<defs><linearGradient id="' + id + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="' + mu[0] + '"/><stop offset="1" stop-color="' + mu[1] + '"/></linearGradient></defs>' +
+    '<rect x="-200" y="-200" width="2320" height="1480" fill="url(#' + id + ')"/>' + finestra + lampada + div +
     '<g transform="translate(' + SALOTTO.tel[0] + ' ' + SALOTTO.tel[1] + ') scale(' + SALOTTO.s + ')">' + (o.telefono || '') + (dentroTelefono || '') + '</g>' + dita;
 }
 // Il cartello del titolo, con le lampadine intorno: centrato in (0, 0).
@@ -562,6 +585,29 @@ function paesaggio(nome) {
     '<path d="M0 148 L250 148 L250 166 L0 166 Z" fill="' + C.legno + '"/><path d="M0 154 L250 154" stroke="#B98058" stroke-width="2"/>' +
     '<g fill="#FFC93C" stroke="#D99A1C" stroke-width="2"><path d="M196 146 q-6 -14 10 -18 l26 6 q8 4 0 10 Z"/><path d="M222 146 q-6 -14 10 -18 l20 6 q8 4 0 10 Z"/></g>' +
     '<path d="M150 140 q14 -10 28 0" stroke="#E0475B" stroke-width="3" fill="none"/><circle cx="154" cy="140" r="7" fill="#9FE7F5" stroke="#2B2350" stroke-width="2.5"/><circle cx="173" cy="140" r="7" fill="#9FE7F5" stroke="#2B2350" stroke-width="2.5"/>';
+  if (nome === 'giardino') return '<rect width="360" height="260" fill="#D6EBD3"/><rect width="360" height="90" fill="#BFE0C4"/>' +
+    '<path d="M0 150 Q60 120 120 140 Q200 110 280 136 Q330 124 360 132 L360 260 L0 260 Z" fill="#8CCB8E"/>' +
+    '<rect x="44" y="98" width="12" height="70" fill="' + C.legno + '"/><circle cx="50" cy="84" r="34" fill="#4FA866"/><circle cx="30" cy="100" r="22" fill="#4FA866"/><circle cx="72" cy="100" r="24" fill="#4FA866"/>' +
+    '<rect x="300" y="92" width="12" height="76" fill="' + C.legno + '"/><circle cx="306" cy="78" r="36" fill="#5DB572"/><circle cx="330" cy="98" r="22" fill="#5DB572"/>' +
+    '<path d="M0 190 Q120 170 240 186 Q300 194 360 182 L360 260 L0 260 Z" fill="#6DBB78"/>' +
+    '<g stroke="' + C.legnoScuro + '" stroke-width="6" stroke-linecap="round" fill="none"><path d="M110 210 L140 120 L170 210 M126 210 L150 120 L176 200"/><path d="M140 120 L210 120"/><path d="M196 120 L228 210 M210 120 L240 204"/></g>' +
+    '<path d="M162 124 L162 176 M182 124 L182 176" stroke="#5A4A3A" stroke-width="2.5"/><rect x="154" y="174" width="36" height="8" rx="3" fill="' + C.rosso + '"/>' +
+    '<g transform="translate(250 150)"><path d="M0 64 L0 0 M16 64 L16 0 M0 14 L16 14 M0 30 L16 30 M0 46 L16 46" stroke="' + C.oro + '" stroke-width="4" stroke-linecap="round"/><path d="M14 0 Q46 6 66 64 L54 66 Q38 18 14 12 Z" fill="' + C.rosso + '"/></g>' +
+    '<g fill="#4FA866"><ellipse cx="90" cy="60" rx="7" ry="4" transform="rotate(30 90 60)"/><ellipse cx="236" cy="70" rx="7" ry="4" transform="rotate(-25 236 70)"/></g>';
+  if (nome === 'viale') return '<rect width="360" height="260" fill="#CFEBCB"/><rect width="360" height="100" fill="#B6E0BA"/>' +
+    '<path d="M150 112 L210 112 L320 260 L40 260 Z" fill="#E8DDB8"/><path d="M0 112 L150 112 L40 260 L0 260 Z M210 112 L360 112 L360 260 L320 260 Z" fill="#59B868"/>' +
+    [[22, 70, 52], [92, 84, 34], [138, 98, 20], [338, 70, 52], [268, 84, 34], [222, 98, 20]].map(([x, y, r]) =>
+      '<rect x="' + (x - r * 0.14) + '" y="' + y + '" width="' + (r * 0.28) + '" height="' + (r * 1.6) + '" fill="' + C.legno + '"/><circle cx="' + x + '" cy="' + y + '" r="' + r + '" fill="#36A552"/><circle cx="' + (x - r * 0.4) + '" cy="' + (y - r * 0.3) + '" r="' + (r * 0.35) + '" fill="#FFFFFF" opacity=".12"/>').join('') +
+    '<path d="M300 104 L300 170 M326 104 L326 170" stroke="#5A4A3A" stroke-width="2.5"/><rect x="292" y="168" width="42" height="8" rx="3" fill="' + C.oro + '"/>' +
+    '<g fill="#2FA048"><ellipse cx="120" cy="150" rx="7" ry="4" transform="rotate(30 120 150)"/><ellipse cx="180" cy="186" rx="7" ry="4" transform="rotate(-20 180 186)"/><ellipse cx="230" cy="140" rx="6" ry="3.5" transform="rotate(50 230 140)"/><ellipse cx="160" cy="226" rx="8" ry="4.5" transform="rotate(10 160 226)"/></g>';
+  if (nome === 'prato') return '<rect width="360" height="260" fill="#C9EDD0"/><rect width="360" height="110" fill="#A8E0B4"/>' +
+    '<circle cx="290" cy="50" r="22" fill="#FFF4C2"/>' +
+    '<path d="M0 130 Q90 96 180 120 Q270 140 360 108 L360 260 L0 260 Z" fill="#43B35A"/>' +
+    '<path d="M0 176 Q120 150 230 170 Q300 182 360 160 L360 260 L0 260 Z" fill="#2E9F4A"/>' +
+    '<g stroke="#1F8A3C" stroke-width="2.5" stroke-linecap="round"><path d="M40 210 l4 -12 M48 214 l2 -14 M300 220 l-3 -12 M310 216 l2 -13 M170 236 l3 -12"/></g>' +
+    '<g transform="translate(206 196)"><circle r="20" fill="#FFFFFF"/><path d="M-20 0 A20 20 0 0 1 20 0 Z" fill="' + C.rosso + '"/><circle r="20" fill="none" stroke="#C9C1B0" stroke-width="2"/></g>' +
+    '<path d="M30 84 Q90 70 150 86 M60 104 Q120 92 180 106" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" fill="none" opacity=".6"/>' +
+    '<g fill="#2FA048"><ellipse cx="160" cy="80" rx="7" ry="4" transform="rotate(30 160 80)"/><ellipse cx="196" cy="96" rx="6" ry="3.5" transform="rotate(-30 196 96)"/><ellipse cx="96" cy="66" rx="6" ry="3.5" transform="rotate(60 96 66)"/></g>';
   return '<defs><linearGradient id="g-mare-prof" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3D86F0"/><stop offset="1" stop-color="#123A9A"/></linearGradient></defs>' +
     '<rect width="360" height="260" fill="url(#g-mare-prof)"/>' +
     '<path d="M60 0 L120 0 L60 260 L10 260 Z M170 0 L210 0 L190 260 L150 260 Z M270 0 L320 0 L340 260 L280 260 Z" fill="#FFFFFF" opacity=".12"/>' +
@@ -614,7 +660,7 @@ function testa(i, tipo, dy) {
 // La sommità della testa (da qui partono e arrivano i fili tra due passeggeri).
 function cima(i, tipo, dy) {
   const S = INTERNO.scala, x0 = INTERNO.centri[i] - 120 * S, y0 = INTERNO.ruote - 150 * S + (dy || 0);
-  const l = tipo === 'emma' ? [142, -70] : tipo === 'paperella' ? [120, -24] : [141, -16];
+  const l = tipo === 'emma' ? [142, -70] : tipo === 'paperella' ? [120, -24] : tipo === 'parco' ? [141, -34] : [141, -16];
   return [x0 + l[0] * S, y0 + l[1] * S];
 }
 // Fa scorrere il mondo dell'interno: d = distanza percorsa (pixel dello schermo).
@@ -638,7 +684,7 @@ const MOD = {"mare": {"frase": ["Al", "mare", "Emma"], "passeggeri": {"Al": {"bi
 
 window.G = {
   C, defs, MOD, MONDO, mix, tappa, fade, cam, camChiavi, posa, unico,
-  emma, emmaTirata, al, mare, paperella, ada, adaTesta,
+  emma, emmaTirata, al, mare, parco, paperella, ada, adaTesta,
   biglietto, striscia, spezzaparole, vagone, passeggero, telefono, bolle, insegna, salotto, SALOTTO,
   mondo, papereVasca, treno, posaTreno, sbarre, cambiaPasseggero, rng: kitRng, percorso, costruisciMondo, animaMondo, nascondiInMontagna, posaAda,
   paesaggio, finestra, INTERNO, interno, interniDefs, testa, cima, scorriInterno,
