@@ -130,7 +130,7 @@ const RITMO = {
     giri: [[30.2, 34.2, 2.8, 1]], punto: [[13.6, 17.4, 2.6, 1]], finestre: [[38.0, 41.0, 2.6, 1]],
   },
   '08': {},
-  '09': {},
+  '09': { collina: [[11.6, 15.0, 2.4, 1]] },
 };
 // Dove si trova il tempo interno dentro un tratto, dopo tau secondi veri.
 function nelTratto(x0, x1, r, fine, tau) {
@@ -1527,3 +1527,388 @@ window.G.schizzoEmma = function (x, y, col, s) {
     '<path d="M-22 -112 l3 -7 l3 7 l7 1 l-6 4 l2 7 l-6 -4 l-6 4 l2 -7 l-6 -4 Z" fill="#E0475B"/></g>';
 };
 // ── Episodio 9 ──
+// Il parco più grande del mondo: oltre la collina, dietro la ruota panoramica (da lontano se ne vedono le luci: laggiu).
+// Ha tutto quello che ha il parco di Ada, ma enorme: una stazione lunga come una strada, uno Spezzaparole alto come un
+// palazzo, treni senza guidatore che girano senza fermarsi mai (alcuni lunghissimi), una montagna sola fatta di tante
+// cime in fila fino alle nuvole (una per tratto, come le finestre di G.MOD.grande), una vasca grande come un lago con la
+// sua bancarella, e dietro la stazione file e file di treni di prova grigi su un binario morto. Intorno, una città di luci.
+// Il parco è disegnato nelle misure di quello di Ada (Ada è alta 85, un vagone è lungo 80), con il suolo a y = 1000.
+// G.paesaggio mette insieme il parco di Ada, la collina col sentiero e, oltre la collina, il parco immenso, a scala
+// PARCO.scala; G.costruisciPaesaggio lo monta in una scena e G.animaPaesaggio lo fa vivere (strisce, forbice, treni).
+(function () {
+  const G = window.G, C = G.C, mix = G.mix;
+  const PARCO = {
+    // Il parco nel paesaggio: il punto (x, y) del parco sta in (origine + x · scala, origine + y · scala).
+    scala: 0.5, origine: [4400, 520],
+    suolo: 1000, orizzonte: 440,
+    // La pedana della stazione; lo Spezzaparole (x, y dei piedi, scala), con la fessura e la bocca.
+    stazione: [-520, 2900], spezza: [-120, 1000, 2], fessura: [-140, 520], boccaSpezza: [-140, 826],
+    // I binari: l'andata (davanti, verso la prima cima) e il ritorno (dal lago alla stazione, sopra il ponte).
+    // I treni girano dietro lo Spezzaparole (giro), entrano nella bocca della prima cima ed escono da quella dell'ultima.
+    andata: 1000, ritorno: 952, passo: 86, vagone: 1 / 3, giro: -200, bocca: 3150, uscita: 7300,
+    // Il lago (cx, cy, rx, ry), Ada alla bancarella, lo scarico, dove si ferma Emma dopo il lago, la ringhiera.
+    lago: [6300, 1060, 900, 90], ada: [5430, 1092], scarico: [5522, 1096], fermata: 5230, ringhiera: 1046,
+    // Il binario morto dei treni di prova, dietro la stazione: da x a x.
+    morto: [-1900, -600],
+    // Nel paesaggio: il cancello del parco di Ada, il sentiero sulla collina, la cima.
+    cancello: [1990, 868], cima: [2550, 558],
+    sentiero: [[1990, 870], [2190, 824], [2100, 770], [2340, 702], [2262, 650], [2480, 594], [2550, 560]],
+  };
+  // Dal parco al paesaggio.
+  PARCO.inP = (x, y) => [PARCO.origine[0] + x * PARCO.scala, PARCO.origine[1] + y * PARCO.scala];
+  // Una chiave di camera scritta nelle misure del parco: (x, y) del parco al centro, ingrandimento z rispetto al parco.
+  PARCO.chiave = (t, x, y, z, da) => { const [px, py] = PARCO.inP(x, y), k = { t, cx: px, cy: py, z: z / PARCO.scala }; if (da !== undefined) k.da = da; return k; };
+
+  // ── Le cime ──────────────────────────────────────────────────────────────────────────────────────
+  // Ventiquattro cime, una per tratto, in fila come un ferro di cavallo: la prima e l'ultima vicine e grandissime, quelle
+  // di mezzo lontane, tra le nuvole. Ogni cima è la montagna del parco di Ada, ingrandita.
+  const CIME = [];
+  for (let k = 0, rc = G.rng(77); k < 24; k++) {
+    const d = Math.sin(Math.PI * k / 23), s = (1 - 0.66 * d) * (0.92 + 0.16 * rc()), xl = 4000 + k * 3800 / 23;
+    CIME.push({ k, d, s, x: 5900 + (xl - 5900) * (1 - 0.22 * d) + (rc() - 0.5) * 120 * d, base: 1000 - 250 * d, alta: 2972 * s });
+  }
+  PARCO.cime = CIME;
+  const MONTE = 'M872 900 L896 760 Q936 640 1006 560 L1076 468 Q1146 330 1240 282 Q1300 254 1352 300 L1446 404 Q1524 486 1566 604 L1626 760 L1656 900 Z';
+  function picco(c) {
+    const tr = 'translate(' + c.x.toFixed(1) + ' ' + c.base.toFixed(1) + ') scale(' + (2.8 * c.s).toFixed(3) + ' ' + (4.6 * c.s).toFixed(3) + ') translate(-1264 -900)';
+    return '<g transform="' + tr + '">' +
+      '<path d="' + MONTE + '" fill="url(#g-montagna)" stroke="#4E447F" stroke-width="2.5" stroke-opacity="' + (1 - 0.8 * c.d).toFixed(2) + '" vector-effect="non-scaling-stroke"/>' +
+      '<path d="M1240 282 Q1300 254 1352 300 L1446 404 Q1524 486 1566 604 L1626 760 L1656 900 L1420 900 Q1430 700 1360 560 Q1300 420 1240 282 Z" fill="' + C.mont1 + '" opacity=".6"/>' +
+      '<path d="M1006 560 L1076 468 Q1146 330 1240 282 Q1180 400 1120 520 Q1080 600 1010 660 Z" fill="' + C.mont3 + '" opacity=".55"/>' +
+      '<path d="M1190 330 L1214 302 L1240 282 L1226 320 Z M1100 620 L1140 600 L1150 640 Z M1300 700 L1350 680 L1356 730 Z M1480 640 L1510 630 L1516 668 Z" fill="' + C.mont3 + '" opacity=".7"/>' +
+      (c.d > 0.05 ? '<path d="' + MONTE + '" fill="#4A3F7E" opacity="' + (0.7 * c.d).toFixed(2) + '"/>' : '') + '</g>';
+  }
+  // Una nuvola a fumetto, larga w.
+  function nuvola(x, y, w, op) {
+    const r = w / 5, c = (cx, cy, rr, f) => '<circle cx="' + cx.toFixed(0) + '" cy="' + cy.toFixed(0) + '" r="' + rr.toFixed(0) + '" fill="' + f + '"/>';
+    return '<g opacity="' + op.toFixed(2) + '"><ellipse cx="' + x.toFixed(0) + '" cy="' + y.toFixed(0) + '" rx="' + (w / 2).toFixed(0) + '" ry="' + (r * 0.8).toFixed(0) + '" fill="#3A3266"/>' +
+      c(x - w * 0.24, y - r * 0.5, r, '#3A3266') + c(x + 0.02 * w, y - r * 0.9, r * 1.3, '#3A3266') + c(x + w * 0.25, y - r * 0.4, r * 1.05, '#3A3266') +
+      c(x - w * 0.26, y - r * 0.7, r * 0.7, '#4A3F7E') + c(x - 0.02 * w, y - r * 1.25, r * 0.9, '#4A3F7E') + c(x + w * 0.22, y - r * 0.75, r * 0.7, '#4A3F7E') + '</g>';
+  }
+  // Tanti cerchietti in un solo tracciato (luci lontane, stelle).
+  function puntini(lista) { return lista.map(([x, y, r]) => 'M' + (x - r).toFixed(1) + ' ' + y.toFixed(1) + 'a' + r.toFixed(1) + ' ' + r.toFixed(1) + ' 0 1 0 ' + (2 * r).toFixed(1) + ' 0a' + r.toFixed(1) + ' ' + r.toFixed(1) + ' 0 1 0 ' + (-2 * r).toFixed(1) + ' 0').join(''); }
+  const binario = (d, w) => '<path d="' + d + '" stroke="' + C.legnoScuro + '" stroke-width="' + (12 * (w || 1)) + '" stroke-dasharray="' + (3 * (w || 1)) + ' ' + (7 * (w || 1)) + '" fill="none"/><path d="' + d + '" stroke="' + C.acciaio + '" stroke-width="' + (4 * (w || 1)) + '" fill="none"/>';
+
+  // ── I treni ──────────────────────────────────────────────────────────────────────────────────────
+  // Un passeggero visto da lontano: lo stesso disegno, senza l'alone (che costa).
+  function lieve(tipo, col, o) { return G.passeggero(tipo, col, o).replace(/<ellipse[^>]*filter="url\(#g-soft\)"\/>/g, ''); }
+  PARCO.lieve = lieve;
+  // I treni che girano: le lunghezze, uno dietro l'altro, con il loro spazio. Alcuni lunghissimi.
+  const TRENI = [3, 5, 2, 4, 38, 3, 6, 2, 4, 3, 22, 5, 3, 4, 2, 7, 3], SPAZIO = 260, VEL = 240;
+  const GIRO_A = PARCO.bocca - PARCO.giro, GIRO_B = PARCO.uscita - PARCO.giro;
+  const GIRO = TRENI.reduce((s, n) => s + n * PARCO.passo + SPAZIO, 0);
+  // Dove sta, sul giro, il punto u: sull'andata (verso destra), dentro la montagna (null) o sul ritorno (verso sinistra).
+  function luogo(u) {
+    u = ((u % GIRO) + GIRO) % GIRO;
+    if (u < GIRO_A) { const x = PARCO.giro + u; return { a: 1, x, y: PARCO.andata, op: Math.max(0, Math.min(1, (PARCO.bocca - x) / 30)) }; }
+    const ur = u - (GIRO - GIRO_B);
+    if (ur < 0) return null;
+    const x = PARCO.uscita - ur;
+    return { a: 0, x, y: PARCO.ritorno, op: Math.max(0, Math.min(1, (PARCO.uscita - x) / 30)) };
+  }
+  PARCO.luogo = luogo;
+  // Dove comincia ogni treno sul giro (al tempo 0), e lo sfasamento del tempo che mette la testa del treno j nel punto x
+  // dell'andata al tempo t della scena (da sommare al tempo passato a G.animaPaesaggio).
+  const INIZI = [];
+  TRENI.reduce((u, n) => { INIZI.push(u); return u - n * PARCO.passo - SPAZIO; }, 0);
+  PARCO.quando = (j, x, t) => { const per = GIRO / VEL; return ((((x - PARCO.giro - INIZI[j]) / VEL - t) % per) + per) % per; };
+  // La posa di un vagone: centro delle ruote in (x, y), verso destra (dx = 1) o sinistra (dx = -1), a scala s.
+  PARCO.posaVagone = (x, y, dx, s) => 'translate(' + x.toFixed(1) + ' ' + y.toFixed(1) + ') scale(' + (-dx * (s || PARCO.vagone)).toFixed(4) + ' ' + (s || PARCO.vagone).toFixed(4) + ') translate(-120 -150)';
+  function vagoniGiro() {
+    const r = G.rng(913), lago = G.MOD.grande.lago, tipi = ['sasso', 'pezzo', 'sasso', 'al', 'pezzo', 'mare', 'sasso', 'parco'];
+    let out = '', u0 = 0;
+    TRENI.forEach((n, j) => {
+      for (let i = 0; i < n; i++) {
+        const tipo = tipi[Math.floor(r() * tipi.length)], col = lago[Math.floor(r() * lago.length)][2];
+        out += '<g class="pi-vag" data-u="' + (u0 - i * PARCO.passo) + '" display="none">' +
+          G.vagone({ primo: i === 0, sbarra: 1 }, '<g class="g-pass">' + lieve(tipo, col, { forma: Math.floor(r() * 3), strappo: '' }) + '</g>') + '</g>';
+      }
+      u0 -= n * PARCO.passo + SPAZIO;
+    });
+    return out;
+  }
+  // Un vagone grigio visto da lontano (per le file dei treni di prova): sagoma, striscia, ruote.
+  const GRIGIO_LONTANO = '<path d="M176 64 L178 -6 Q179 -24 198 -24 L210 -24 Q230 -24 230 -6 L228 64 Z" fill="#6A6C77"/>' +
+    '<path d="M4 66 Q2 56 12 56 L226 58 Q238 58 236 70 L228 120 Q225 134 210 134 L36 134 Q18 134 14 120 Z" fill="#8C8E99" stroke="#5E606C" stroke-width="4"/>' +
+    '<path d="M11 86 L233 86 L230 110 L16 110 Z" fill="#73757F"/><circle cx="62" cy="136" r="15" fill="#2A2440"/><circle cx="180" cy="136" r="15" fill="#2A2440"/>';
+
+  // ── I disegni che servono (da mettere nei defs della scena) ─────────────────────────────────────────
+  // Le paperelle leggere (per le centinaia del lago e delle finestre): il corpo prende il colore dal fill di <use>.
+  const CORPO = '<path d="M26 58 C26 46 40 42 58 44 C74 46 84 40 92 30 C94 46 94 62 86 72 C78 82 60 86 44 84 C32 82 26 70 26 58 Z"/><circle cx="36" cy="34" r="17"/>' +
+    '<path d="M21 33 C12 32 7 37 9 41 C13 45 20 43 24 40 Z" fill="#F39A2B"/><circle cx="31" cy="30" r="3.4" fill="' + C.inchiostro + '"/><circle cx="32" cy="29" r="1.2" fill="#FFFFFF"/>';
+  PARCO.defs = '<defs>' +
+    '<radialGradient id="g-pi-alone"><stop offset="0" stop-color="#FF9E5E" stop-opacity=".42"/><stop offset=".55" stop-color="#FF9E5E" stop-opacity=".14"/><stop offset="1" stop-color="#FF9E5E" stop-opacity="0"/></radialGradient>' +
+    '<linearGradient id="g-pi-collina" gradientUnits="userSpaceOnUse" x1="0" y1="560" x2="0" y2="1180"><stop offset="0" stop-color="#22265E"/><stop offset=".5" stop-color="#1A1C4A"/><stop offset="1" stop-color="#15132C"/></linearGradient>' +
+    '<radialGradient id="g-pi-luce"><stop offset="0" stop-color="#FFD27A" stop-opacity=".5"/><stop offset="1" stop-color="#FFD27A" stop-opacity="0"/></radialGradient>' +
+    '<g id="g-pi-grigio">' + GRIGIO_LONTANO + '</g>' +
+    // La paperella vera, e quella di luce (trasparente, con l'alone e il bordo bianco).
+    '<g id="g-pi-papv">' + CORPO + '<path d="M50 60 C58 51 72 53 76 61 C70 68 57 69 50 60 Z" fill="#000000" opacity=".2"/><ellipse cx="33" cy="25" rx="7" ry="3.2" fill="#FFFFFF" opacity=".35" transform="rotate(-20 33 25)"/></g>' +
+    '<g id="g-pi-papl" opacity=".85"><ellipse cx="54" cy="58" rx="58" ry="42" opacity=".32"/>' + CORPO +
+    '<path d="M26 58 C26 46 40 42 58 44 C74 46 84 40 92 30 C94 46 94 62 86 72 C78 82 60 86 44 84 C32 82 26 70 26 58 Z" fill="none" stroke="#FFFFFF" stroke-width="5" opacity=".7"/></g>' +
+    '</defs>';
+
+  // ── Il parco immenso ─────────────────────────────────────────────────────────────────────────────
+  // o: { treni (i treni che girano), strisce }. Gli strati da riempire o muovere: .pi-ritorno e .pi-andata (i treni),
+  // .pi-spezza (lo Spezzaparole), .pi-biglietti, .pi-papere (le paperelle del lago), .pi-davanti (Ada e chi le sta
+  // vicino), .pi-nuvole, .pi-luccica.
+  G.parcoImmenso = function (o) {
+    o = o || {};
+    const r = G.rng(901), O = PARCO.orizzonte, S = PARCO.suolo;
+    // Il chiarore del parco, la pianura fino all'orizzonte, piena di luci, e la città all'orizzonte.
+    const alone = '<ellipse cx="3200" cy="560" rx="7600" ry="1500" fill="url(#g-pi-alone)"/>';
+    let tetti = 'M-3400 ' + O;
+    for (let x = -3400; x < 12000;) { const w = 14 + r() * 40, h = 4 + r() * 22 * (r() < 0.15 ? 2.4 : 1); tetti += ' L' + x.toFixed(0) + ' ' + (O - h).toFixed(1) + ' L' + (x + w).toFixed(0) + ' ' + (O - h).toFixed(1); x += w; }
+    tetti += ' L12000 ' + O + ' Z';
+    const luci = [[], [], [], []];
+    for (let i = 0; i < 1800; i++) {
+      const u = Math.pow(r(), 1.7), y = O + 6 + (S + 10 - O) * u, x = -3400 + r() * 15400;
+      luci[Math.floor(r() * 4)].push([x, y, 1.4 + 3.6 * u]);
+    }
+    for (let i = 0; i < 300; i++) luci[i % 4].push([-3400 + r() * 15400, O - 2 - r() * 18, 1.4]);
+    const COL = [[C.luce, 0.85], [C.luce2, 0.7], ['#FFF4DA', 0.6], ['#F08C78', 0.55]];
+    const pianura = '<path d="' + tetti + '" fill="#1A1A48"/><rect x="-3400" y="' + O + '" width="15400" height="' + (S + 30 - O) + '" fill="#141537"/>' +
+      luci.map((l, k) => '<path d="' + puntini(l) + '" fill="' + COL[k][0] + '" opacity="' + COL[k][1] + '"/>').join('');
+    // Le cime, dalla più lontana alla più vicina, ognuna con la sua nuvola in cima; poi le nuvole più vicine.
+    const ordine = CIME.slice().sort((a, b) => b.d - a.d);
+    let monti = '';
+    ordine.forEach(c => {
+      monti += picco(c);
+      const top = c.base - c.alta;
+      if (c.d < 0.45 || c.k % 3 === 1) monti += nuvola(c.x + (r() - 0.5) * 300 * c.s, top + (c.d < 0.45 ? 120 : -60) * c.s, (c.d < 0.45 ? 1100 : 900) * c.s, 0.8 + 0.15 * c.d);
+    });
+    let nuvole = '';
+    for (let i = 0; i < 14; i++) { const x = 2600 + r() * 6800, y = -2300 + r() * 500; nuvole += nuvola(x, y, 800 + r() * 1000, 0.5 + r() * 0.3); }
+    // Le bocche: quella della prima cima (l'andata entra) e quella dell'ultima (il ritorno esce, sopra il lago).
+    const bocca = (x, y, h) => '<path d="M' + (x - 64) + ' ' + (y + 4) + ' L' + (x - 64) + ' ' + (y - h + 40) + ' Q' + (x - 30) + ' ' + (y - h - 6) + ' ' + (x + 16) + ' ' + (y - h + 6) + ' Q' + (x + 60) + ' ' + (y - h + 18) + ' ' + (x + 64) + ' ' + (y - h + 50) + ' L' + (x + 64) + ' ' + (y + 4) + ' Z" fill="' + C.buio + '" stroke="#4E447F" stroke-width="9"/>' +
+      [[-64, -h + 40, C.luce], [-36, -h + 2, C.luce2], [8, -h - 4, C.luce], [46, -h + 12, C.luce2], [64, -h + 50, C.luce]].map(([dx, dy, f]) => '<circle cx="' + (x + dx) + '" cy="' + (y + dy) + '" r="8" fill="' + f + '"/>').join('');
+    const bocche = bocca(PARCO.bocca, S, 120) + bocca(PARCO.uscita, PARCO.ritorno, 116);
+    // Il binario morto: file e file di treni di prova grigi, addormentati, fino all'orizzonte.
+    let morto = '';
+    const [m0, m1] = PARCO.morto;
+    for (let f = 11; f >= 1; f--) {
+      const y = S - 26 * f, s = PARCO.vagone * (1 - 0.05 * f), passo = PARCO.passo * s * 3, x1 = m1 - 30 * f, x0 = m0 - 400;
+      let v = '';
+      for (let x = x1 - 40 * s * 3; x > x0; x -= passo) v += '<use href="#g-pi-grigio" transform="translate(' + x.toFixed(1) + ' ' + y + ') scale(' + s.toFixed(3) + ') translate(-120 -150)"/>';
+      morto += '<g opacity="' + (1 - 0.07 * f).toFixed(2) + '">' + binario('M' + x0 + ' ' + y + ' L' + x1 + ' ' + y, 1 - 0.05 * f) +
+        '<rect x="' + (x1 - 4) + '" y="' + (y - 22) + '" width="10" height="26" rx="3" fill="' + C.legnoScuro + '"/>' + v + '</g>';
+    }
+    let primaFila = '';
+    for (let x = m1 - 40; x > m0 - 400; x -= PARCO.passo) primaFila += '<g transform="' + PARCO.posaVagone(x, S, -1) + '">' + G.vagone({ grigio: true, fanale: 0, sbarra: 1 }, '') + '</g>';
+    morto += binario('M' + (m0 - 400) + ' ' + S + ' L' + m1 + ' ' + S) + '<rect x="' + (m1 - 2) + '" y="' + (S - 26) + '" width="12" height="30" rx="3" fill="' + C.legnoScuro + '"/>' + primaFila;
+    // Il ritorno: dall'ultima cima, sul ponte sopra il lago, fino alla stazione.
+    let pali = '';
+    for (let x = 5420; x < 7240; x += 180) pali += '<rect x="' + x + '" y="' + (PARCO.ritorno + 4) + '" width="12" height="52" fill="' + C.legnoScuro + '"/>';
+    const ritorno = pali + '<rect x="5380" y="' + (PARCO.ritorno + 2) + '" width="1880" height="9" fill="' + C.legno + '"/>' + binario('M' + PARCO.giro + ' ' + PARCO.ritorno + ' L' + PARCO.uscita + ' ' + PARCO.ritorno);
+    // La stazione lunga come una strada: pensilina a righe, lampadine, colonne, pedana.
+    const [s0, s1] = PARCO.stazione;
+    let righe = '', colonne = '';
+    for (let x = s0 - 20, k = 0; x < s1 + 20; x += 40, k++) righe += '<path d="M' + x + ' 660 L' + (x + 40) + ' 660 L' + (x + 40) + ' 702 Q' + (x + 20) + ' 720 ' + x + ' 702 Z" fill="' + (k % 2 ? C.crema : C.rosso) + '"/>';
+    const lampadine = [];
+    for (let x = s0; x < s1 + 20; x += 40) lampadine.push([x, 714, 5.5]);
+    for (let x = s0 + 20; x < s1; x += 340) colonne += '<line x1="' + x + '" y1="704" x2="' + x + '" y2="990"/>';
+    const pensilina = '<g stroke="' + C.legnoScuro + '" stroke-width="14">' + colonne + '</g>' +
+      '<path d="M' + (s0 - 40) + ' 660 L' + (s1 + 40) + ' 660 L' + (s1 + 20) + ' 636 Q' + ((s0 + s1) / 2) + ' 598 ' + (s0 - 20) + ' 636 Z" fill="' + C.rossoScuro + '"/>' + righe +
+      '<path class="pi-lampadine" d="' + puntini(lampadine) + '" fill="' + C.luce + '"/>';
+    const pedana = '<rect x="' + s0 + '" y="988" width="' + (s1 - s0) + '" height="34" fill="' + C.legno + '"/><rect x="' + s0 + '" y="988" width="' + (s1 - s0) + '" height="8" fill="#B98058"/>' +
+      binario('M' + PARCO.giro + ' ' + PARCO.andata + ' L' + (PARCO.bocca + 40) + ' ' + PARCO.andata);
+    // Il lago, col bordo di legno come la vasca di Ada, e la sua bancarella sulla riva, col tendone più alto.
+    const [lx, ly, lrx, lry] = PARCO.lago;
+    let onde = '', lucc = '';
+    for (let k = 0; k < 4; k++) { const yy = ly - 34 + k * 22, w = lrx * Math.sqrt(Math.max(0, 1 - Math.pow((yy - ly) / lry, 2))) - 40; onde += 'M' + (lx - w).toFixed(0) + ' ' + yy + ' q30 -8 60 0 t60 0 t60 0 M' + (lx - w * 0.3).toFixed(0) + ' ' + (yy + 6) + ' q30 -8 60 0 t60 0 M' + (lx + w * 0.4).toFixed(0) + ' ' + yy + ' q30 -8 60 0 t60 0 t60 0'; }
+    for (let k = 0; k < 40; k++) { const a = r() * Math.PI * 2, q = Math.sqrt(r()) * 0.9; lucc += '<ellipse cx="' + (lx + lrx * q * Math.cos(a)).toFixed(0) + '" cy="' + (ly + lry * q * Math.sin(a)).toFixed(0) + '" rx="' + (6 + r() * 10).toFixed(0) + '" ry="2" fill="#FFFFFF" opacity="0"/>'; }
+    const lago = '<ellipse cx="' + lx + '" cy="' + ly + '" rx="' + lrx + '" ry="' + lry + '" fill="url(#g-acqua)" stroke="' + C.legnoScuro + '" stroke-width="8"/>' +
+      '<path d="' + onde + '" stroke="#FFFFFF" stroke-width="3" fill="none" opacity=".22"/><g class="pi-luccica">' + lucc + '</g>' +
+      '<ellipse cx="' + PARCO.scarico[0] + '" cy="' + PARCO.scarico[1] + '" rx="16" ry="5" fill="#0E2A3E" stroke="' + C.legnoScuro + '" stroke-width="3"/>';
+    const [ax, ay] = PARCO.ada;
+    let falde = '';
+    for (let x = ax - 140, k = 0; x < ax + 120; x += 26, k++) falde += '<path d="M' + x + ' 830 L' + (x + 26) + ' 830 L' + (x + 26) + ' 860 Q' + (x + 13) + ' 874 ' + x + ' 860 Z" fill="' + (k % 2 ? C.crema : C.rosso) + '"/>';
+    const lampTenda = [];
+    for (let x = ax - 130; x < ax + 120; x += 26) lampTenda.push([x, 870, 4]);
+    const bancarella = '<g stroke="' + C.legnoScuro + '" stroke-width="9"><line x1="' + (ax - 128) + '" y1="830" x2="' + (ax - 128) + '" y2="1074"/><line x1="' + (ax + 106) + '" y1="830" x2="' + (ax + 106) + '" y2="1072"/></g>' +
+      '<path d="M' + (ax - 160) + ' 832 L' + (ax + 140) + ' 832 L' + (ax + 100) + ' 788 Q' + (ax - 10) + ' 730 ' + (ax - 120) + ' 788 Z" fill="' + C.rossoScuro + '"/>' +
+      '<circle cx="' + (ax - 10) + '" cy="752" r="9" fill="' + C.oro + '"/>' + falde + '<path d="' + puntini(lampTenda) + '" fill="' + C.luce + '"/>' +
+      // Il bancone con la manopola (episodio 3), e il palo con la bandierina.
+      '<rect x="' + (ax - 96) + '" y="' + (ay - 30) + '" width="56" height="40" fill="' + C.legnoScuro + '"/><rect x="' + (ax - 100) + '" y="' + (ay - 34) + '" width="64" height="7" rx="2" fill="' + C.legno + '" stroke="' + C.legnoScuro + '" stroke-width="2"/>' +
+      '<g transform="translate(' + (ax - 68) + ' ' + (ay - 12) + ') scale(.13)">' + G.manopola(0) + '</g>' +
+      '<line x1="' + (ax - 150) + '" y1="' + (ay + 8) + '" x2="' + (ax - 150) + '" y2="' + (ay - 40) + '" stroke="' + C.legnoScuro + '" stroke-width="6"/>' +
+      '<circle cx="' + (ax - 150) + '" cy="' + (ay - 54) + '" r="19" fill="' + C.crema + '" stroke="' + C.oro + '" stroke-width="4"/>' +
+      '<g transform="translate(' + (ax - 164) + ' ' + (ay - 66) + ') scale(.27)">' + G.paperella('#FFD23F') + '</g>';
+    // La ringhiera davanti alla stazione.
+    let paletti = '';
+    for (let x = s0 - 80; x < s1 + 100; x += 26) paletti += 'M' + x + ' ' + PARCO.ringhiera + ' L' + x + ' ' + (PARCO.ringhiera - 38);
+    const ringhiera = '<path d="' + paletti + '" stroke="' + C.legnoScuro + '" stroke-width="4"/><path d="M' + (s0 - 90) + ' ' + (PARCO.ringhiera - 36) + ' L' + (s1 + 110) + ' ' + (PARCO.ringhiera - 36) + ' M' + (s0 - 90) + ' ' + (PARCO.ringhiera - 16) + ' L' + (s1 + 110) + ' ' + (PARCO.ringhiera - 16) + '" stroke="' + C.legno + '" stroke-width="6"/>' +
+      '<path d="M' + (s0 - 90) + ' ' + (PARCO.ringhiera - 38) + ' L' + (s1 + 110) + ' ' + (PARCO.ringhiera - 38) + '" stroke="' + C.oro + '" stroke-width="3"/>';
+    // Il suolo davanti e la città che non finisce mai, più vicina, sotto il parco.
+    let case_ = '';
+    [[1300, 60, 120, '#17193F', 0.5], [1480, 100, 180, '#14163A', 0.6], [1740, 150, 260, '#111334', 0.7], [2100, 220, 380, '#0F1130', 0.8], [2600, 320, 520, '#0D0F2B', 0.85]].forEach(([yb, h0, w0, col, lum]) => {
+      let p = 'M-3400 ' + yb, fin = [];
+      for (let x = -3400; x < 12000;) {
+        const w = w0 * (0.6 + r() * 0.8), h = h0 * (0.6 + r() * 0.9), tetto = r() < 0.4;
+        p += ' L' + x.toFixed(0) + ' ' + (yb - h).toFixed(0) + (tetto ? ' L' + (x + w / 2).toFixed(0) + ' ' + (yb - h - w * 0.3).toFixed(0) : '') + ' L' + (x + w).toFixed(0) + ' ' + (yb - h).toFixed(0);
+        for (let k = 0; k < 4; k++) if (r() < lum * 0.6) fin.push('M' + (x + w * (0.15 + 0.2 * k)).toFixed(0) + ' ' + (yb - h * (0.3 + 0.4 * r())).toFixed(0) + ' h' + (w * 0.1).toFixed(0) + ' v' + (h * 0.14).toFixed(0) + ' h' + (-w * 0.1).toFixed(0) + ' Z');
+        x += w + 6;
+      }
+      p += ' L12000 5200 L-3400 5200 Z';
+      case_ += '<path d="' + p + '" fill="' + col + '"/><path d="' + fin.join('') + '" fill="' + C.luce + '" opacity=".75"/>';
+    });
+    const suolo = '<rect x="-3400" y="1018" width="15400" height="3400" fill="' + C.terra + '"/><path d="M-3400 1018 L12000 1018" stroke="#2A2650" stroke-width="5"/>';
+    const [zx, zy, zs] = PARCO.spezza;
+    return '<g class="pi-parco-in">' + alone + pianura + '<g class="pi-monti">' + monti + '</g><g class="pi-nuvole">' + nuvole + '</g>' + bocche +
+      morto + ritorno + '<g class="pi-ritorno">' + (o.treni ? vagoniGiro() : '') + '</g>' +
+      pensilina + pedana + '<g class="pi-andata"></g>' +
+      '<g class="pi-spezza" transform="' + G.posa(zx, zy, zs, 220, 300) + '">' + G.spezzaparole({}) + '</g><g class="pi-biglietti"></g>' +
+      suolo + lago + '<g class="pi-papere"></g>' + bancarella + ringhiera + '<g class="pi-davanti"></g>' + case_ + '</g>';
+  };
+
+  // ── Il paesaggio: il parco di Ada, la collina, il parco immenso ──────────────────────────────────────
+  // o: le opzioni di G.mondo (laggiu, manopola, banchina, morto…) e di G.parcoImmenso (treni), più strisce (il numero
+  // di strisce che volano verso lo Spezzaparole gigante; 0 nessuna).
+  G.paesaggio = function (o) {
+    o = o || {};
+    const r = G.rng(907);
+    const stelle = [[], [], []];
+    for (let i = 0; i < 300; i++) stelle[i % 3].push([1920 + r() * 9800, -1700 + r() * 2300, 0.8 + r() * 1.8]);
+    const [cx, cy] = PARCO.cancello;
+    // La collina: dal cancello del parco di Ada sale fino alla cima, poi scende verso la pianura. Il profilo è fatto di
+    // curve (da, c1, c2, a): i ciuffi d'erba ci stanno sopra.
+    const PROFILO = [[[1880, 872], [2040, 864], [2170, 760], [2300, 650]], [[2300, 650], [2400, 590], [2480, 556], [2550, 552]],
+      [[2550, 552], [2650, 548], [2760, 602], [2880, 690]], [[2880, 690], [3020, 792], [3220, 930], [3520, 1010]],
+      [[3520, 1010], [3760, 1074], [4000, 1180], [4300, 1400]]];
+    const collina = 'M1500 3200 L1500 1010 C1660 990 1790 920 1880 872 ' + PROFILO.map(c => 'C' + c[1].join(' ') + ' ' + c[2].join(' ') + ' ' + c[3].join(' ')).join(' ') + ' L4300 3200 Z';
+    let ciuffi = '';
+    PROFILO.forEach(c => { for (let k = 0; k < 14; k++) { const [x, y] = bez(c, (k + 0.5) / 14); ciuffi += 'M' + x.toFixed(0) + ' ' + (y + 5).toFixed(0) + ' q3 -12 6 -2 q3 -14 6 0 q3 -10 5 2'; } });
+    const sentiero = PARCO.sentiero.map((p, i) => (i ? 'L' : 'M') + p[0] + ' ' + p[1]).join(' ');
+    let archi = '';
+    for (let k = 0; k < 8; k++) archi += '<rect x="' + (cx - 48 + k * 12) + '" y="734" width="12" height="18" fill="' + (k % 2 ? C.crema : C.rosso) + '"/>';
+    const lampCanc = [];
+    for (let k = 0; k <= 8; k++) lampCanc.push([cx - 48 + k * 12, 730 - 10 * Math.sin(Math.PI * k / 8), 4]);
+    const cancello = '<g class="pi-cancello"><g stroke="' + C.legnoScuro + '" stroke-width="10"><line x1="' + (cx - 48) + '" y1="870" x2="' + (cx - 48) + '" y2="740"/><line x1="' + (cx + 48) + '" y1="870" x2="' + (cx + 48) + '" y2="740"/></g>' +
+      '<path d="M' + (cx - 58) + ' 754 L' + (cx + 58) + ' 754 L' + (cx + 52) + ' 730 Q' + cx + ' 706 ' + (cx - 52) + ' 730 Z" fill="' + C.rossoScuro + '"/>' + archi +
+      '<path d="' + puntini(lampCanc) + '" fill="' + C.luce + '"/></g>';
+    // Le strisce che volano verso lo Spezzaparole gigante.
+    let strisce = '';
+    for (let k = 0; k < (o.strisce === undefined ? 44 : o.strisce); k++) strisce += '<g class="pi-str" opacity="0"><g transform="translate(-150 -22)">' + G.striscia('', 300) + '</g></g>';
+    return '<rect x="-2400" y="-4000" width="16500" height="4000" fill="' + C.notte1 + '"/><rect x="3880" y="0" width="10200" height="900" fill="url(#g-cielo)"/><rect x="-2400" y="900" width="16500" height="3400" fill="' + C.terra + '"/>' +
+      G.mondo(o) +
+      stelle.map((l, k) => '<path d="' + puntini(l) + '" fill="#FFF4DA" opacity="' + [0.8, 0.55, 0.35][k] + '"/>').join('') +
+      '<path d="M1880 760 Q2600 700 3400 734 Q4400 772 5400 728 Q6600 690 7800 736 Q9000 772 10400 730 L14000 740 L14000 1300 L1880 1300 Z" fill="#171A44"/>' +
+      '<g class="pi-parco" transform="translate(' + PARCO.origine[0] + ' ' + PARCO.origine[1] + ') scale(' + PARCO.scala + ')">' + G.parcoImmenso(o) + '</g>' +
+      '<path d="' + collina + '" fill="url(#g-pi-collina)"/><path d="' + collina.replace(/^M1500 3200 L1500 1010 C1660 990 1790 920 1880 872 /, 'M1880 872 ').replace(/ L4300 3200 Z$/, '') + '" fill="none" stroke="#2E3270" stroke-width="5"/>' +
+      '<path d="' + ciuffi + '" stroke="#2E5A3E" stroke-width="3" fill="none" stroke-linecap="round"/>' +
+      '<path d="' + sentiero + '" stroke="#3E3A72" stroke-width="12" fill="none" stroke-linecap="round" stroke-linejoin="round"/>' + cancello +
+      '<g class="pi-strisce">' + strisce + '</g>';
+  };
+  // Monta il paesaggio in una scena, come G.costruisciMondo: sopra sta nella camera, davanti fuori.
+  G.costruisciPaesaggio = function (kit, sopra, o) {
+    o = o || {};
+    const pre = o.pre || 'p';
+    kit.stage.append(kit.h(G.unico('<div class="ground"><svg class="art" viewBox="0 0 1920 1080">' + G.defs + PARCO.defs +
+      '<g class="g-cam">' + G.paesaggio(o) + '<path class="g-p-partenza" d="' + G.MONDO.partenza + '" fill="none"/>' +
+      '<path class="g-p-arrivo" d="' + G.MONDO.arrivo + '" fill="none"/>' + (sopra || '') + '</g>' + (o.davanti || '') + '</svg>' + (o.html || '') + '</div>', pre).replace(/href="#g-/g, 'href="#' + pre + '-g-')));
+    const q = sel => kit.stage.querySelector(sel), qa = sel => [...kit.stage.querySelectorAll(sel)];
+    return { cam: q('.g-cam'), ruota: q('.g-ruota'), partenza: q('.g-p-partenza'), arrivo: q('.g-p-arrivo'), parco: q('.pi-parco'), q, qa };
+  };
+  // Le strisce: da dove partono (a sinistra sopra il parco di Ada, dal cielo, da destra, dalla città davanti), per dove
+  // passano, quanto sono grandi, quanto ci mettono.
+  function voli(n) {
+    const r = G.rng(915), [fx, fy] = PARCO.inP(PARCO.fessura[0], PARCO.fessura[1]), lista = [];
+    for (let k = 0; k < n; k++) {
+      const da = k % 11 < 4 ? 'sinistra' : k % 11 < 6 ? 'cielo' : k % 11 < 8 ? 'destra' : 'basso';
+      let p, s0, dur;
+      if (da === 'sinistra') { const x = -700 + r() * 500, y = 200 + r() * 220; p = [[x, y], [x + 1500, y - 40 + r() * 80], [fx - 1300, 170 + r() * 160], [fx, fy]]; s0 = 0.16; dur = 10 + r() * 3; }
+      else if (da === 'cielo') { const x = 3800 + r() * 5000, y = -1500 - r() * 300; p = [[x, y], [x - 300, y + 700], [fx + (r() - 0.5) * 1200, fy - 700], [fx, fy]]; s0 = 0.12; dur = 7 + r() * 3; }
+      else if (da === 'destra') { const x = 10200 + r() * 600, y = -300 + r() * 900; p = [[x, y], [x - 2200, y - 500], [fx + 1500, fy - 600], [fx, fy]]; s0 = 0.12; dur = 8 + r() * 3; }
+      else { const x = 3900 + r() * 5600, y = 1650 + r() * 300; p = [[x, y], [x + (r() - 0.5) * 600, y - 700], [fx + (r() - 0.5) * 800, fy - 500], [fx, fy]]; s0 = 0.12; dur = 7 + r() * 3; }
+      lista.push({ p, s0, dur, fase: r() * dur, giro: r() * 6.28 });
+    }
+    return lista;
+  }
+  const bez = (p, u) => { const a = 1 - u; return [0, 1].map(k => a * a * a * p[0][k] + 3 * a * a * u * p[1][k] + 3 * a * u * u * p[2][k] + u * u * u * p[3][k]); };
+  PARCO.bez = bez;
+  // Fa vivere il paesaggio al tempo t. o: { treni: true | 'andata' | 'ritorno' | false, biglietti, forbice (false: ferma) }.
+  G.animaPaesaggio = function (m, t, o) {
+    o = o || {};
+    const c = m.__pi || (m.__pi = (() => {
+      const strisce = m.qa('.pi-str');
+      return {
+        strisce, voli: voli(strisce.length), vag: m.qa('.pi-vag').map(el => ({ el, u: +el.dataset.u, dove: null })),
+        andata: m.q('.pi-andata'), ritorno: m.q('.pi-ritorno'), spezza: m.q('.pi-spezza'), biglietti: m.q('.pi-biglietti'),
+        nuvole: m.q('.pi-nuvole'), lucc: m.qa('.pi-luccica ellipse'), stato: '', cache: {}, bigl: null,
+      };
+    })());
+    G.animaMondo(m, t + 900);
+    // Le strisce: arrivano a ondate, senza fermarsi mai.
+    c.strisce.forEach((el, k) => {
+      const v = c.voli[k], u = ((t + v.fase) % v.dur) / v.dur, e = u * u * (3 - 2 * u) * 0.35 + u * 0.65;
+      const [x, y] = bez(v.p, e), s = v.s0 + (0.0615 - v.s0) * e;
+      el.setAttribute('transform', 'translate(' + x.toFixed(1) + ' ' + (y + 14 * Math.sin(t * 2 + v.giro)).toFixed(1) + ') rotate(' + (10 * Math.sin(t * 1.6 + v.giro)).toFixed(1) + ') skewX(' + (8 * Math.sin(t * 5 + v.giro)).toFixed(1) + ') scale(' + s.toFixed(4) + ')');
+      el.setAttribute('opacity', Math.min(1, u / 0.06, (1 - u) / 0.04).toFixed(3));
+    });
+    // Lo Spezzaparole gigante: la forbice non si ferma mai (zac zac zac), gli aghi girano, la bocca si accende.
+    if (c.spezza) {
+      const lav = o.forbice === false ? 0 : 1;
+      const forbice = Math.round((0.6 - 0.6 * lav * Math.pow(Math.abs(Math.sin(t * Math.PI * 1.6)), 6)) * 10) / 10;
+      const aghi = Math.round(lav * 60 * Math.sin(t * 4) / 10) * 10, bocca = Math.round(lav * (0.5 + 0.5 * Math.sin(t * 9)) * 4) / 4;
+      const k = forbice + '|' + aghi + '|' + bocca;
+      if (k !== c.stato) { c.spezza.innerHTML = c.cache[k] || (c.cache[k] = G.spezzaparole({ forbice, aghi, bocca })); c.stato = k; }
+    }
+    // I biglietti volano dalla bocca sui sedili dei treni dell'andata.
+    if (c.biglietti) {
+      if (!c.bigl && o.biglietti) {
+        let h = '';
+        for (let k = 0; k < 10; k++) h += '<g opacity="0"><g transform="translate(-60 -30)">' + G.biglietto('') + '</g></g>';
+        c.biglietti.innerHTML = h; c.bigl = [...c.biglietti.children];
+      }
+      if (c.bigl) c.bigl.forEach((b, k) => {
+        if (!o.biglietti) { b.setAttribute('opacity', 0); return; }
+        const u = ((t + k * 0.23) % 2.3) / 1.5, [bx, by] = PARCO.boccaSpezza, tx = 160 + ((k * 137) % 700), ty = 958;
+        if (u > 1) { b.setAttribute('opacity', 0); return; }
+        const e = u * u * (3 - 2 * u), x = bx + (tx - bx) * e, y = by + (ty - by) * e - 160 * Math.sin(Math.PI * e);
+        b.setAttribute('transform', 'translate(' + x.toFixed(1) + ' ' + y.toFixed(1) + ') rotate(' + (-30 * e + 10 * Math.sin(k)).toFixed(1) + ') scale(.26)');
+        b.setAttribute('opacity', Math.min(1, u / 0.1, (1 - u) / 0.12).toFixed(3));
+      });
+    }
+    // I treni che girano: ogni vagone al suo posto sul giro; quelli dentro la montagna non si vedono.
+    const qT = o.treni === undefined ? true : o.treni;
+    c.vag.forEach(v => {
+      const L = qT ? luogo(v.u + VEL * t) : null, vis = L && (qT === true || (qT === 'andata' && L.a) || (qT === 'ritorno' && !L.a));
+      if (!vis) { if (v.dove !== 'no') { v.el.setAttribute('display', 'none'); v.dove = 'no'; } return; }
+      const dove = L.a ? 'a' : 'r';
+      if (v.dove !== dove) { (L.a ? c.andata : c.ritorno).appendChild(v.el); v.el.setAttribute('display', 'inline'); v.dove = dove; }
+      v.el.setAttribute('transform', PARCO.posaVagone(L.x, L.y + 1.2 * Math.sin(t * 7 + v.u), L.a ? 1 : -1));
+      v.el.setAttribute('opacity', L.op.toFixed(2));
+    });
+    // Le nuvole vanno piano; il lago luccica.
+    if (c.nuvole) c.nuvole.setAttribute('transform', 'translate(' + (60 * Math.sin(t * 0.05)).toFixed(1) + ' 0)');
+    c.lucc.forEach((e, k) => e.setAttribute('opacity', (0.5 * Math.max(0, Math.sin(t * 1.3 + k * 2.1))).toFixed(2)));
+  };
+  // Le paperelle del lago: [{ parola, col, x, y }], sparse sotto il ponte, mescolate in modo ripetibile.
+  G.papereLago = function (lago, seme) {
+    const r = G.rng(seme || 41), lista = [], [lx, ly, lrx, lry] = PARCO.lago;
+    lago.forEach(([w, n, col]) => { for (let k = 0; k < n; k++) lista.push({ parola: w, col }); });
+    for (let i = lista.length - 1; i > 0; i--) { const j = Math.floor(r() * (i + 1)); [lista[i], lista[j]] = [lista[j], lista[i]]; }
+    lista.forEach(p => {
+      p.x = 5470 + r() * 1680;
+      const h = lry * Math.sqrt(Math.max(0, 1 - Math.pow((p.x - lx) / lrx, 2)));
+      p.y = ly - h * 0.6 + 10 + r() * (h * 1.45 - 10);
+    });
+    return lista;
+  };
+  // Il quaderno di Ada, aperto sul giro dell'episodio 1 (scatola 1920×1080): a sinistra la montagna e il treno che entra
+  // con la sua Emma rosa, a destra Emma che esce blu e la vasca piena di paperelle blu. I colori sono quelli del parco di
+  // Ada (G.MOD.mare).
+  G.quadernoAda = function () {
+    const D = G.MOD.mare, P = D.passeggeri, rosa = P.Emma.biglietto, blu = P.Emma.tratti[2];
+    const omino = (x, y, col) => '<path d="M' + (x - 26) + ' ' + y + ' L' + (x + 26) + ' ' + y + ' L' + (x + 16) + ' ' + (y - 34) + ' L' + (x - 16) + ' ' + (y - 34) + ' Z" fill="' + col + '"/><circle cx="' + x + '" cy="' + (y - 52) + '" r="22" fill="#F5C84C"/><circle cx="' + x + '" cy="' + (y - 48) + '" r="15" fill="#FFE9D6"/>';
+    const papere = G.papereVasca(D.vasca).slice(0, 9).map((q, i) => '<g transform="translate(' + (1150 + i * 52) + ' ' + (760 + (i % 2) * 18) + ') scale(.4)">' + G.paperella(q.col) + '</g>').join('');
+    return '<rect x="150" y="60" width="1620" height="880" rx="26" fill="#2F6F73"/><rect x="176" y="86" width="1568" height="828" rx="12" fill="' + C.crema + '"/>' +
+      '<path d="M960 86 L960 914" stroke="' + C.cremaScura + '" stroke-width="4"/>' +
+      '<g stroke="#3A3570" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none">' +
+      '<path d="M260 820 L470 470 Q560 330 640 320 Q720 320 800 470 L900 820"/><path d="M500 520 Q520 470 560 480 L560 520"/>' +
+      '<path d="M220 420 Q360 380 500 500"/><path d="M300 410 L380 410 L380 450 L300 450 Z M390 430 L470 430 L470 470 L390 470 Z"/>' +
+      '<path d="M1020 640 L1180 300 Q1260 200 1340 200 Q1420 210 1500 330 L1700 640"/><path d="M1100 640 L1100 590 Q1130 550 1170 580 L1170 640"/>' +
+      '<path d="M1180 620 L1300 620 L1300 660 L1180 660 Z M1310 620 L1430 620 L1430 660 L1310 660 Z"/><path d="M1120 760 L1640 760 L1610 860 Q1380 890 1150 860 Z"/>' +
+      '</g>' + omino(440, 400, rosa) + omino(1400, 610, blu) + papere;
+  };
+  G.PARCO = PARCO;
+})();
