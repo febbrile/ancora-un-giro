@@ -1,0 +1,61 @@
+{
+  "width": 1920,
+  "height": 1080,
+  "background": "#0B1030",
+  "scenes": [
+    {
+      "id": "domanda",
+      "name": "La domanda",
+      "dur": 20,
+      "desc": "Ada, alla bancarella, guarda il disegno dell'altra volta: la vasca piena di paperelle verdi e le due paperelle pescate, una verde e una turchese. Perché non esce sempre la stessa paperella? Titolo."
+    },
+    {
+      "id": "case",
+      "name": "Tre case",
+      "dur": 22,
+      "desc": "La città di notte: da tre case diverse si scrive tre volte «Al mare Emma». Tre strisce volano sui tetti e atterrano in mano ad Ada."
+    },
+    {
+      "id": "treni",
+      "name": "Tre treni",
+      "dur": 22.4,
+      "desc": "Lo Spezzaparole strappa le tre frasi; i biglietti salgono su tre trenini uguali: Al, Mare ed Emma, rosa antico. I treni partono da soli e spariscono nella montagna."
+    },
+    {
+      "id": "finestre",
+      "name": "Le finestre sulla vasca",
+      "dur": 38.4,
+      "desc": "Dentro la montagna il primo treno fa il giro: fili, scambi, finestre sempre più blu. Il secondo e il terzo lo rifanno identico, come un'eco: le stesse paperelle di luce, negli stessi posti."
+    },
+    {
+      "id": "pesche",
+      "name": "Tre pesche",
+      "dur": 48.4,
+      "desc": "Tre volte Emma esce blu e la vasca si riempie uguale. Ada pesca a occhi chiusi: nuota, gioca, corre. Sulle tre case compaiono tre parole diverse."
+    },
+    {
+      "id": "manopola",
+      "name": "La manopola",
+      "dur": 42.6,
+      "desc": "Sul bancone c'è una vecchia manopola d'ottone, con la freccia nel mezzo. Ada la gira verso la lucina grande: Emma esce dello stesso blu, ma nella vasca cadono quasi solo paperelle blu. Nuota, e ancora nuota."
+    },
+    {
+      "id": "larga",
+      "name": "Dall'altro lato",
+      "dur": 27.6,
+      "desc": "Ada gira la manopola verso le lucine piccole: Emma è blu come sempre, ma nella vasca i colori si pareggiano. Ada pesca una paperella verde chiaro: altalena."
+    },
+    {
+      "id": "resta",
+      "name": "Resta pescato",
+      "dur": 16.2,
+      "desc": "La paperella verde chiaro sale sul vagone nuovo; Ada fa un passo per riprenderla, ma il treno riparte e non torna indietro. Ada riporta la manopola nel mezzo."
+    },
+    {
+      "id": "ancora",
+      "name": "Ancora",
+      "dur": 24.0,
+      "desc": "In una delle tre case qualcuno legge la storia di Emma, e scrive ancora. Una striscia nuova vola al luna park; Ada guarda la montagna. Fine."
+    }
+  ]
+}

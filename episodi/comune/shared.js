@@ -997,6 +997,122 @@ window.G = {
 // ── I disegni di un solo episodio ───────────────────────────────────────────────────────────────────
 // Qui sotto ogni episodio aggiunge a window.G, nella sua sezione, i disegni che servono solo a lui.
 // ── Episodio 3 ──
+// Un'uscita con la pesca, come nell'episodio 2, da ripetere più volte nella stessa scena: il treno esce dalla montagna,
+// sotto l'ultimo vagone cadono le paperelle (di luce, e toccano l'acqua vere), il treno si ferma in stazione e i vestiti
+// tornano del colore dei biglietti; Ada pesca a occhi chiusi, la paperella salta, corre e sale su un vagone nuovo; le
+// altre scivolano via; poi (se o.t.riparte) il treno riparte, sale e sparisce nella montagna.
+// o: { id (unico nella scena), chi: [{ tipo, biglietto, uscita }], vasca, seme, parola (quella pescata), nuovo (colore),
+//      t: { esce, vel ([[t, v], …] dall'uscita), pesca: { giu, su, preso }, salta, sale, vagone, via, riparte: [a, b] } }.
+// pescata.treno, .mano e .papere sono gli SVG da mettere nel mondo (le papere nella vasca, .g-vasca); dopo
+// costruisciMondo si chiama monta(m); render(t) muove tutto e restituisce quanto Ada ha la mano giù (per la sua posa).
+window.G.pescata = function (o) {
+  const G = window.G, M = G.MONDO, id = o.id, T = o.t, ADA = [672, 896];
+  const lista = G.papereVasca(o.vasca, o.seme);
+  let presa = -1, bd = 1e9;
+  lista.forEach((p, i) => { const d = Math.abs(p.x - 700) + Math.abs(p.y - 880); if (p.parola === o.parola && d < bd) { bd = d; presa = i; } });
+  const colPresa = presa >= 0 ? lista[presa].col : G.C.crema;
+  const ordine = lista.map((p, i) => i).sort((a, b) => lista[a].y - lista[b].y);
+  let scintille = '';
+  for (let k = 0; k < 10; k++) scintille += '<circle r="2.4" fill="' + G.C.luce + '"/>';
+  const passeggeri = o.chi.map(c => ({ tipo: c.tipo, col: c.uscita })).concat(o.nuovo ? [{ tipo: 'paperella', col: o.nuovo }] : []);
+  const P = {
+    lista, presa, colPresa,
+    treno: '<g class="pv-treno-' + id + '">' + G.treno(passeggeri, { sbarra: 1 }) + '</g><g class="pv-scint-' + id + '" opacity="0">' + scintille + '</g>',
+    mano: '<ellipse class="pv-luce-' + id + '" rx="22" ry="18" fill="' + colPresa + '" opacity="0" filter="url(#g-soft)"/>' +
+      '<g class="pv-mano-' + id + '" opacity="0"><g transform="translate(-50 -84)">' + G.paperella(colPresa) + '</g></g>',
+    papere: ordine.map(i => '<g class="pv-pap-' + id + '" data-i="' + i + '" opacity="0"><g transform="translate(-50 -84)"><g class="pv-vera">' + G.paperella(lista[i].col) + '</g><g class="pv-dilu">' + G.paperellaDiLuce(lista[i].col) + '</g></g></g>').join(''),
+    monta(m) {
+      this.m = m;
+      this.vag = m.qa('.pv-treno-' + id + ' .g-vag');
+      this.passNuovo = o.nuovo ? this.vag[this.vag.length - 1].querySelector('.g-pass') : null;
+      this.manoEl = m.q('.pv-mano-' + id); this.luce = m.q('.pv-luce-' + id); this.scint = m.q('.pv-scint-' + id);
+      this.pap = m.qa('.pv-pap-' + id).map(el => ({ el, i: +el.dataset.i, vera: el.querySelector('.pv-vera'), luce: el.querySelector('.pv-dilu') }));
+      const path = m.arrivo;
+      this.sF = path.getTotalLength() - (M.fermo - 40);
+      const sAt = t => Math.min(this.sF, G.percorso(t, 0, T.vel));
+      const ultimo = o.chi.length - 1;
+      this.cade = lista.map(p => {
+        for (let t = T.esce; t < T.esce + 30; t += 0.02) { const se = sAt(t) - ultimo * M.passo; if (se > 0 && path.getPointAtLength(se).x <= p.x + 6) return t; }
+        return T.esce + 8;
+      });
+      this.sedile = [M.fermo + o.chi.length * M.passo + 6, 816];
+      this.statoPass = '';
+    },
+    // Quanto Ada ha la mano nella vasca (0..1).
+    giu(t) {
+      const Pp = T.pesca;
+      if (t < Pp.giu - 0.6) return 0;
+      if (t <= Pp.giu + 0.4) return eio(seg(t, Pp.giu - 0.6, Pp.giu + 0.4));
+      if (t < Pp.su) return 0.9 + 0.1 * Math.sin((t - Pp.giu) * 9);
+      return 1 - eio(seg(t, Pp.su, Pp.preso + 0.4));
+    },
+    manoAt(giu) {
+      const s = 0.28, mx = 150 + 26 * giu - 6, my = 230 + 50 * giu + 6;
+      return [ADA[0] - 100 * s + mx * s, ADA[1] - 304 * s + my * s];
+    },
+    render(t) {
+      const m = this.m, Pp = T.pesca;
+      // Il treno: esce, si ferma in stazione; poi, se riparte, sale la salita e sparisce nella montagna.
+      const s = Math.min(this.sF, G.percorso(t, 0, T.vel));
+      const vedi = t >= T.esce - 0.05;
+      if (!T.riparte || t < T.riparte[0]) {
+        G.posaTreno(this.vag, m.arrivo, vedi ? s : -500);
+        G.nascondiInMontagna(this.vag, m.arrivo, vedi ? s : -500, { inizio: true });
+      } else {
+        const sp = lerp(640 - M.fermo, 2400, ei(seg(t, T.riparte[0], T.riparte[1])));
+        G.posaTreno(this.vag, m.partenza, sp);
+        G.nascondiInMontagna(this.vag, m.partenza, sp, { fine: true });
+      }
+      const torna = Math.round(seg(s, this.sF - 150, this.sF) * 12) / 12;
+      const k = String(torna);
+      if (k !== this.statoPass) { o.chi.forEach((c, i) => G.cambiaPasseggero(this.vag[i], c.tipo, G.mix(c.uscita, c.biglietto, torna))); this.statoPass = k; }
+      // Il vagone nuovo compare dietro l'ultimo, con le scintille; la paperella ci sale.
+      if (o.nuovo) {
+        const nv = this.vag[this.vag.length - 1];
+        const vis = eo(seg(t, T.vagone, T.vagone + 0.6));
+        if (!T.riparte || t < T.riparte[0]) nv.setAttribute('opacity', vis.toFixed(3));
+        this.passNuovo.setAttribute('opacity', seg(t, T.sale - 0.05, T.sale + 0.3).toFixed(3));
+        const sc = seg(t, T.vagone, T.vagone + 1.1);
+        this.scint.setAttribute('opacity', (sc > 0 && sc < 1 ? 1 - sc : 0).toFixed(3));
+        [...this.scint.children].forEach((c, n) => { const a = n * Math.PI / 5, d = 10 + 34 * eo(sc); c.setAttribute('cx', (this.sedile[0] + d * Math.cos(a)).toFixed(2)); c.setAttribute('cy', (838 + d * 0.6 * Math.sin(a)).toFixed(2)); });
+      }
+      // Le paperelle cadono dove passa l'ultimo vagone; dopo la pesca scivolano via dallo scarico.
+      this.pap.forEach(({ el, i, vera, luce }) => {
+        const t0 = this.cade[i], p = lista[i];
+        if (t < t0) { el.setAttribute('opacity', 0); return; }
+        const u = seg(t, t0, t0 + 0.55), vv = seg(u, 0.55, 1);
+        vera.setAttribute('opacity', vv.toFixed(3)); luce.setAttribute('opacity', (1 - vv).toFixed(3));
+        const via = eio(seg(t, T.via + (i % 7) * 0.12, T.via + 1.6 + (i % 7) * 0.12)), a = via * 2.4 + i;
+        const x = lerp(p.x, 772 + 8 * Math.cos(a), via);
+        const y = lerp(lerp(808, p.y, ei(u)) + (u >= 1 ? 1.2 * Math.sin(t * 2.2 + i) : 0), 884, via);
+        el.setAttribute('transform', 'translate(' + x.toFixed(2) + ' ' + y.toFixed(2) + ') scale(' + (0.16 * (u < 1 ? lerp(0.7, 1, u) : 1) * (1 - via)).toFixed(4) + ')');
+        el.setAttribute('opacity', i === presa ? (t < Pp.su + 0.2 ? 1 : 0) : (1 - seg(via, 0.85, 1)).toFixed(3));
+      });
+      // La paperella pescata: in mano ad Ada, poi salta giù e corre al vagone nuovo.
+      const giu = Math.round(this.giu(t) * 40) / 40, [hx, hy] = this.manoAt(giu);
+      let px = hx, py = hy, pr = 0, pv = t >= Pp.su + 0.2 ? 1 : 0;
+      if (T.salta !== undefined && t >= T.salta) {
+        const a = eo(seg(t, T.salta, T.salta + 0.7)), corsa = eio(seg(t, T.salta + 0.7, T.sale - 0.5)), salto = eio(seg(t, T.sale - 0.5, T.sale));
+        if (t < T.salta + 0.7) { px = lerp(hx, 636, a); py = lerp(hy, 836, a) - 30 * Math.sin(Math.PI * a); }
+        else if (t < T.sale - 0.5) { px = lerp(636, this.sedile[0] + 24, corsa); py = 836 - 3 * Math.abs(Math.sin(t * 12)); pr = 9 * Math.sin(t * 12); }
+        else { px = lerp(this.sedile[0] + 24, this.sedile[0], salto); py = lerp(836, this.sedile[1], salto) - 22 * Math.sin(Math.PI * salto); }
+        pv = t < T.sale ? 1 : 1 - seg(t, T.sale, T.sale + 0.3);
+      }
+      this.manoEl.setAttribute('transform', 'translate(' + px.toFixed(2) + ' ' + py.toFixed(2) + ') rotate(' + pr.toFixed(2) + ') scale(0.16)');
+      this.manoEl.setAttribute('opacity', pv.toFixed(3));
+      const luce = seg(t, Pp.su + 0.3, Pp.preso + 0.4) * (1 - seg(t, (T.salta || Pp.preso + 3) - 0.8, (T.salta || Pp.preso + 3)));
+      this.luce.setAttribute('cx', hx.toFixed(1)); this.luce.setAttribute('cy', (hy - 10).toFixed(1));
+      this.luce.setAttribute('opacity', (0.6 * luce).toFixed(3));
+      return giu;
+    },
+  };
+  const seg = (t, a, b) => Math.max(0, Math.min(1, (t - a) / (b - a)));
+  const lerp = (a, b, p) => a + (b - a) * p;
+  const eo = x => 1 - Math.pow(1 - Math.max(0, Math.min(1, x)), 3);
+  const ei = x => Math.pow(Math.max(0, Math.min(1, x)), 3);
+  const eio = x => { x = Math.max(0, Math.min(1, x)); return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; };
+  return P;
+};
 // ── Episodio 4 ──
 // ── Episodio 5 ──
 // ── Episodio 6 ──
