@@ -769,6 +769,168 @@ def controlla_finisce(fine):
     assert fine['passeggeri']['nuota']['biglietto'] == colore(B['nuota'])
 
 
+# ── Episodio 8 · La paperella sbagliata ──────────────────────────────────────────────────────────────
+# «Il cane di Emma si chiama»: una domanda su un cane che non c'è. Nessun treno di prova ha mai portato il cane di
+# Emma, ma dopo «si chiama» ha portato tanti nomi di cani: la pista porta lì, e la vasca si riempie lo stesso.
+# Le paperelle sono probabilità, e le probabilità fanno sempre uno: la vasca non resta mai vuota.
+#
+# I nomi da cane sono paperelle come le altre. Nel modellino entrano solo per questa frase: con 14 parole in tutto,
+# ogni parola in più sposta un poco le altre. Nelle frasi già girate cambierebbe di un capello il vestito di Al, che
+# sta vicino al centro dove tutti i colori si mescolano, e nella vasca del mare, che sta sul filo dell'arrotondamento,
+# una paperella passerebbe da «onde» a «felice». Il controllo qui sotto verifica le cose che contano: nel mondo con i
+# nomi Emma fa lo stesso viaggio, con gli stessi colori, e nelle vasche del mare e del parco non cade nessun nome.
+# Inventati: i nomi e i loro colori, i biglietti dei passeggeri nuovi, i fili di luce dichiarati, gli spostamenti dei
+# primi cinque passeggeri, la paperella pescata.
+# Calcolati: i fili di «chiama» nel primo tratto, gli scambi di «chiama» (la stessa pista di sempre, `scambio()`),
+# i colori dei vestiti, le finestre, la vasca.
+NOMI = {
+    'Briciola': [0.40, -0.80, 0.85], 'Fido':    [0.39, -0.81, 0.85], 'Pallino':  [0.41, -0.79, 0.85],
+    'Birba':    [0.39, -0.80, 0.84], 'Macchia': [0.40, -0.82, 0.83], 'Biscotto': [0.38, -0.80, 0.84],
+}
+COLORE_NOMI = {
+    'Briciola': (214, 150, 92), 'Fido': (176, 118, 76), 'Pallino': (232, 182, 96),
+    'Birba': (204, 128, 104), 'Macchia': (158, 112, 84), 'Biscotto': (226, 162, 118),
+}
+B_CANE = {
+    'Il':     [0.10, -0.05, 0.05],
+    'cane':   [0.55, -0.45, 0.45],
+    'di':     [0.05, 0.02, -0.05],
+    'si':     [0.00, -0.15, 0.20],
+    'chiama': [-0.10, 0.40, -0.45],
+    'Briciola': [0.36, -0.70, 0.78],  # il biglietto della paperella pescata, quando sale sul treno
+}
+FRASE_CANE = ['Il', 'cane', 'di', 'Emma', 'si', 'chiama']
+# I fili di «chiama», l'ultimo vagone, nel primo tratto: query · key con chi gli siede davanti e con sé stesso.
+Q_CHIAMA = [0.90, -0.60, 0.80]
+K_CANE = {'Il': [-0.60, 0.20, -0.40], 'cane': [1.10, -0.70, 1.00], 'di': [-0.60, 0.30, -0.40],
+          'Emma': K['Emma'], 'si': [0.20, -0.10, 0.30], 'chiama': [0.80, -0.60, 0.70]}
+# Nei tratti 2 e 3 i fili di «chiama» sono dichiarati, nell'ordine della frase.
+FILI_CHIAMA_TRATTI = [None, (0.0, 0.4, 0.0, 0.1, 0.1, 0.4), (0.0, 0.3, 0.0, 0.1, 0.1, 0.5)]
+# I fili degli altri passeggeri (si guarda sempre avanti) e i loro spostamenti nei tre tratti.
+FILI_CANE = {
+    'Il':   {'Il': 1.0},
+    'cane': {'Il': 0.4, 'cane': 0.6},
+    'di':   {'Il': 0.1, 'cane': 0.6, 'di': 0.3},
+    'Emma': {'Il': 0.1, 'cane': 0.2, 'di': 0.2, 'Emma': 0.5},
+    'si':   {'Il': 0.1, 'cane': 0.3, 'di': 0.0, 'Emma': 0.2, 'si': 0.4},
+}
+S_CANE = {
+    'Il':   [[0.02, -0.02, 0.02], [0.03, -0.03, 0.03], [0.03, -0.04, 0.04]],
+    'cane': [[0.05, -0.06, 0.05], [0.06, -0.08, 0.07], [0.08, -0.10, 0.08]],
+    'di':   [[0.06, -0.06, 0.08], [0.08, -0.08, 0.10], [0.10, -0.10, 0.12]],
+    'Emma': [[0.04, -0.05, 0.08], [0.06, -0.08, 0.12], [0.08, -0.10, 0.15]],
+    'si':   [[0.06, -0.08, 0.08], [0.08, -0.10, 0.12], [0.10, -0.14, 0.14]],
+}
+PESCA_CANE = 'Briciola'
+
+
+def con_i_nomi(f):
+    """Esegue f nel mondo in cui i nomi da cane sono tra le paperelle, poi rimette le paperelle com'erano."""
+    for w in NOMI:
+        assert w not in P, w
+    for t, v in B_CANE.items():
+        assert B.get(t, v) == v, t
+    prima_p, prima_c = dict(P), dict(COLORE)
+    P.update(NOMI)
+    COLORE.update(COLORE_NOMI)
+    try:
+        return f()
+    finally:
+        P.clear()
+        P.update(prima_p)
+        COLORE.clear()
+        COLORE.update(prima_c)
+
+
+def giro_cane(dati):
+    """Il giro di «Il cane di Emma si chiama»."""
+    import contextlib
+    import io
+
+    def calcola():
+        # Nel mondo con i nomi Emma fa lo stesso viaggio (gli scambi non la spingono verso nessun nome, che le sta
+        # sempre lontano) e nelle vasche del mare e del parco non cade nessun nome.
+        with contextlib.redirect_stdout(io.StringIO()):
+            rifatti = {k: giro(k) for k in FRASI}
+        for k in FRASI:
+            assert not any(w in NOMI for w, _, _ in rifatti[k]['vasca']), k
+            for campo in ('biglietto', 'dopo_fili', 'tratti'):
+                assert rifatti[k]['passeggeri']['Emma'][campo] == dati[k]['passeggeri']['Emma'][campo], (k, campo)
+
+        frase = FRASE_CANE
+        print(f'\n== {" ".join(frase)} ==')
+        bigl = {t: B_CANE.get(t, B.get(t)) for t in frase}
+        ultimo = frase[-1]
+        sguardi = {t: round(dot(Q_CHIAMA, K_CANE[t]), 2) for t in frase}
+        fili = dict(zip(frase, [round(q, 1) for q in softmax(list(sguardi.values()))]))
+        assert abs(sum(fili.values()) - 1) < 1e-9, fili
+        print('  sguardi di «chiama»', sguardi, '→ fili', fili)
+        fili_tratti = [fili] + [dict(zip(frase, f)) for f in FILI_CHIAMA_TRATTI[1:]]
+        for f in fili_tratti:
+            assert abs(sum(f.values()) - 1) < 1e-9, f
+        # Si guarda sempre avanti: i fili dichiarati vanno solo a chi siede davanti, o a sé stessi.
+        for t, f in FILI_CANE.items():
+            assert set(f) <= set(frase[:frase.index(t) + 1]) and abs(sum(f.values()) - 1) < 1e-9, t
+
+        altri = {}
+        for t in frase[:-1]:
+            x, tappe = bigl[t], [bigl[t]]
+            for d in S_CANE[t]:
+                x = somma(x, d)
+                tappe.append(x)
+            altri[t] = tappe
+        x, tappe = bigl[ultimo], [bigl[ultimo]]
+        for k, f in enumerate(fili_tratti):
+            vestiti = {**{t: altri[t][k] for t in altri}, ultimo: x}
+            porta = r2([sum(f[t] * vestiti[t][i] for t in frase) for i in range(3)])
+            y = somma(x, porta)
+            if k == 0:
+                dopo_fili = y
+            x = somma(y, scambio(k, y))
+            tappe.append(x)
+
+        out = {'frase': frase, 'passeggeri': {}}
+        for t in frase[:-1]:
+            out['passeggeri'][t] = {'biglietto': colore(bigl[t]), 'tratti': [colore(v) for v in altri[t][1:]],
+                                    'fili': FILI_CANE[t]}
+            print(f'  {t:6}: biglietto', out['passeggeri'][t]['biglietto'], '→ tratti', out['passeggeri'][t]['tratti'])
+        info = {'biglietto': colore(bigl[ultimo]), 'tratti': [colore(v) for v in tappe[1:]], 'fili': fili,
+                'fili_tratti': fili_tratti, 'dopo_fili': colore(dopo_fili), 'finestre': []}
+        print('  chiama: biglietto', info['biglietto'], '→ dopo i fili', info['dopo_fili'], '→ tratti', info['tratti'])
+        for k, v in enumerate(tappe[1:]):
+            conta_k = vasca(v)[1]
+            info['finestre'].append([[w, c, '#%02x%02x%02x' % COLORE[w]] for w, c in conta_k.items()])
+            print(f'        finestra {k + 1}', conta_k)
+        out['passeggeri'][ultimo] = info
+        p, conta = vasca(tappe[-1])
+        out['vasca'] = [[w, c, '#%02x%02x%02x' % COLORE[w]] for w, c in conta.items()]
+        out['probabilita'] = {w: round(p[w], 3) for w in sorted(p, key=lambda w: -p[w])[:8]}
+        print('  vasca', conta)
+        print('  probabilità', out['probabilita'])
+        out['pesca'] = PESCA_CANE
+        out['nuovo'] = {PESCA_CANE: colore(B_CANE[PESCA_CANE])}
+        print(f'  passeggero nuovo «{PESCA_CANE}»:', out['nuovo'][PESCA_CANE])
+
+        # Le cose che la storia dà per vere.
+        # Emma sale con il vestito di sempre.
+        assert out['passeggeri']['Emma']['biglietto'] == dati['mare']['passeggeri']['Emma']['biglietto']
+        # Il filo più forte di «chiama» va a Cane.
+        assert max(fili, key=fili.get) == 'cane'
+        # La vasca si riempie lo stesso: tutte le paperelle, come sempre, quasi tutte nomi da cane.
+        assert sum(conta.values()) == PAPERELLE_IN_VASCA
+        assert sum(c for w, c in conta.items() if w in NOMI) >= 0.8 * PAPERELLE_IN_VASCA
+        # Nessun nome è molto più forte degli altri: i nomi sono almeno cinque e il primo non arriva a un quarto.
+        assert sum(1 for w in conta if w in NOMI) >= 5 and max(conta.values()) <= PAPERELLE_IN_VASCA / 4
+        # La prima finestra è di tutti i colori; l'ultima è uguale alla vasca.
+        assert max(c for _, c, _ in info['finestre'][0]) <= 5
+        assert info['finestre'][-1] == out['vasca']
+        # La paperella pescata c'è davvero nella vasca.
+        assert conta.get(PESCA_CANE, 0) > 0
+        return out
+
+    return con_i_nomi(calcola)
+
+
 if __name__ == '__main__':
     dati = {k: giro(k) for k in FRASI}
     controlla(dati)
@@ -778,5 +940,6 @@ if __name__ == '__main__':
     dati['zampiru'] = giro_zampiru(dati)  # episodio 6
     dati['finisce'] = finisce(dati)
     controlla_finisce(dati['finisce'])
+    dati['cane'] = giro_cane(dati)
     if '--scrivi' in sys.argv:
         scrivi(dati)
