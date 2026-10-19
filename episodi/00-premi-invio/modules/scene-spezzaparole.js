@@ -40,6 +40,7 @@ kit.scene('spezzaparole', {
     this.sub = G.subs(kit, [[0.6, 9.6]]);
   },
   render(t, kit) {
+    t = window.G.tempo('00', 'spezzaparole', t);
     const G = this.G, M = G.MONDO, m = this.m;
     m.cam.setAttribute('transform', G.camChiavi(SP_CAM, t));
     G.animaMondo(m, t + 66);

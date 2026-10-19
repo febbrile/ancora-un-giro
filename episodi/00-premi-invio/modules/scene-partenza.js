@@ -28,6 +28,7 @@ kit.scene('partenza', {
     this.sub = G.subs(kit, [[0.8, 9.6], [14.6, 17.8]]);
   },
   render(t, kit) {
+    t = window.G.tempo('00', 'partenza', t);
     const G = this.G, M = G.MONDO, m = this.m;
     m.cam.setAttribute('transform', G.camChiavi(PT_CAM, t));
     G.animaMondo(m, t + 114);

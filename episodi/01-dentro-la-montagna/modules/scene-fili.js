@@ -36,7 +36,7 @@ kit.scene('fili', {
     let fili = '', punti = '';
     this.fili = pesi.map(([i, j, w], k) => {
       let d;
-      if (i === j) { const a = G.testa(i, tipi[i]), rx = i === 2 ? 50 : 44, ry = i === 2 ? 58 : 40; d = 'M' + (a[0] - rx) + ' ' + a[1] + ' a' + rx + ' ' + ry + ' 0 1 0 ' + (2 * rx) + ' 0 a' + rx + ' ' + ry + ' 0 1 0 ' + (-2 * rx) + ' 0'; }
+      if (i === j) d = G.anello(i, tipi[i]);
       else { const a = G.cima(i, tipi[i]), b = G.cima(j, tipi[j]), mx = (a[0] + b[0]) / 2, my = Math.min(a[1], b[1]) - 80 - 0.12 * Math.abs(a[0] - b[0]); d = 'M' + b[0] + ' ' + b[1] + ' Q' + mx + ' ' + my + ' ' + a[0] + ' ' + a[1]; }
       const ww = i === j ? 0.45 * w : w;
       const quanti = i === 2 && i !== j ? Math.max(1, Math.round(w * 9)) : 0;
@@ -53,6 +53,7 @@ kit.scene('fili', {
     this.sub = G.subs(kit, [[1.0, 11.8], [13.4, 24.4]]);
   },
   render(t, kit) {
+    t = window.G.tempo('01', 'fili', t);
     const G = this.G;
     this.cam.setAttribute('transform', G.camChiavi(FI_CAM, t));
     G.scorriInterno(kit, 300 * t);

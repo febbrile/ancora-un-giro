@@ -52,6 +52,7 @@ kit.scene('quaderno', {
     this.sub = G.subs(kit, [[11.0, 14.8], [15.2, 21.2]]);
   },
   render(t, kit) {
+    t = window.G.tempo('01', 'quaderno', t);
     const G = this.G, m = this.m;
     m.cam.setAttribute('transform', G.camChiavi(QU_CAM, t));
     G.animaMondo(m, t + 564);

@@ -1,16 +1,16 @@
 # Episodio 1 · Dentro la montagna
 
 **La domanda.** Cosa succede dentro la montagna? (È la domanda con cui finisce il prologo.)
-**La risposta.** Dentro la montagna i passeggeri si passano i colori lungo fili di luce, gli scambi li spostano un poco alla volta e il vestito di Emma diventa blu come il mare. Per questo dalla vasca escono soprattutto paperelle blu.
-**Cosa presenta.** Una cosa sola: il viaggio dentro la montagna (fili di luce e scambi, con le finestre che si aprono sul paesaggio).
+**La risposta.** Dentro la montagna i passeggeri si passano i colori lungo fili di luce, gli scambi li spostano un poco alla volta e il vestito di Emma diventa blu come il mare. Dalle finestre sulla vasca si vedono le paperelle prendere forma, finestra dopo finestra, sempre più simili a Emma: all'uscita cadono proprio quelle.
+**Cosa presenta.** Una cosa sola: il viaggio dentro la montagna (fili di luce e scambi, con le finestre sulla vasca).
 **Cosa dà per scontato.** Tutto il prologo: Ada, lo Spezzaparole, i passeggeri, il treno, la vasca, la pesca.
 **Cosa lascia per dopo.** E se la frase fosse diversa? (Il parco, episodio 2.)
 
-Durata: 4:28 · Voci: narratore, Ada.
+Durata: 3:52 · Voci: narratore, Ada.
 
 ---
 
-### domanda · La domanda · 0:24
+### domanda · La domanda · 0:20.6
 
 **VISIVO.** Notte al luna park. Ada è alla bancarella della pesca col quaderno aperto: ci ha disegnato la montagna, con un grande punto di domanda sopra. Il trenino sparisce nella bocca buia; dal buio arrivano dei *clac*. Ada alza gli occhi dal quaderno e guarda la montagna. Titolo: **Dentro la montagna**.
 
@@ -19,7 +19,7 @@ Durata: 4:28 · Voci: narratore, Ada.
 
 ---
 
-### carrozza · In carrozza · 0:28
+### carrozza · In carrozza · 0:21.6
 
 **VISIVO.** Alla stazione arriva una striscia di carta: *Al mare Emma*. Lo Spezzaparole fa *zac, zac*, e tre biglietti volano sui sedili. Al, Mare ed Emma prendono vita, uno dietro l'altro. Primo piano su Emma, nell'ultimo vagone: il suo vestito è rosa antico. Le sbarre si abbassano.
 
@@ -28,7 +28,7 @@ Durata: 4:28 · Voci: narratore, Ada.
 
 ---
 
-### buio · Nel buio · 0:16
+### buio · Nel buio · 0:13.6
 
 **VISIVO.** Il treno parte da solo. Sale piano la prima salita, scende di colpo e la camera entra con lui nella bocca della montagna. Buio. Solo il fanale del primo vagone e la luce dei tre passeggeri.
 
@@ -37,7 +37,7 @@ Durata: 4:28 · Voci: narratore, Ada.
 
 ---
 
-### fili · I fili di luce · 0:36
+### fili · I fili di luce · 0:27.4
 
 **VISIVO.** Nel buio, tra i passeggeri si accendono fili di luce, sottili come capelli. Tutti guardano avanti: da Emma partono fili verso Mare e verso Al, da Mare un filo verso Al, e ognuno ha un piccolo anello di luce intorno a sé. Il filo tra Emma e Mare brilla come una lampadina, quello tra Emma e Al si vede appena. Lungo i fili scorrono i colori: un po' dell'azzurro di Mare arriva a Emma, e il suo vestito passa dal rosa a un lilla grigio.
 
@@ -49,7 +49,7 @@ Durata: 4:28 · Voci: narratore, Ada.
 
 ---
 
-### scambi · Gli scambi · 0:34
+### scambi · Gli scambi · 0:24.2
 
 **VISIVO.** Davanti al treno i binari si aprono in un fascio largo di binari paralleli, che luccicano nel buio. I vagoni si separano un poco: ognuno corre sul suo binario, ma restano in fila. Arriva il primo scambio: *clac, clac, clac*. Ogni vagone passa su un binario vicino, ognuno da una parte diversa. Nessuna leva, nessuna mano: gli scambi scattano da soli al passaggio. Emma è tirata via (va avanti, capelli e vestito restano indietro), e quando il vagone si raddrizza il suo vestito è azzurro polvere.
 
@@ -61,37 +61,56 @@ Durata: 4:28 · Voci: narratore, Ada.
 
 ---
 
-### finestre · Le finestre · 0:42
+### finestre · Le finestre sulla vasca · 0:48.8
 
-**VISIVO.** Il giro continua, più veloce: fili di luce, scambi, fili di luce, scambi. Ogni tanto nella parete della montagna si apre una finestra ad arco, e il treno le passa davanti.
-- **Prima finestra**: una spiaggia strana, con sabbia, conchiglie e onde. Emma è azzurro polvere.
-- **Seconda finestra**: un molo di legno; in fondo al molo, un paio di pinne e degli occhialini. Emma è azzurra.
-- **Terza finestra**: il mare aperto, profondo e luminoso. Emma è blu, del blu del mare.
+**VISIVO.** Nella parete della montagna si apre una grande finestra ad arco: dietro c'è l'acqua scura della vasca, con il bordo di legno. Il treno rallenta davanti alla finestra, fin quasi a fermarsi.
+- **Prima finestra.** Passa Al: l'acqua resta vuota. Passa Mare: niente. Passa Emma, l'ultimo vagone, e nell'acqua si accendono una dopo l'altra paperelle di luce, trasparenti e luminose, di tutti i colori: rosse, gialle, verdi, azzurre. Quelle che somigliano al vestito di Emma le nuotano un po' incontro.
+- Il treno riparte veloce: fili di luce, scambi (*clac, clac, clac*), il vestito di Emma diventa azzurro.
+- **Seconda finestra.** Stessa scena: con Al e Mare niente, con Emma le paperelle. Adesso le azzurre e le blu sono di più.
+- Ancora fili di luce e scambi: Emma diventa blu.
+- **Terza finestra.** La camera si avvicina. Le paperelle di luce sono quasi tutte blu, e corrono verso Emma.
+
+In fondo al tunnel si accende la luce dell'uscita.
+
+**NARRATORE.**
+> Ogni tanto la montagna ha una finestra sulla vasca.
+
+**NARRATORE.**
+> Passa Al, passa Mare: l'acqua resta vuota.
+
+**NARRATORE.**
+> Passa Emma, e nell'acqua si accendono paperelle di luce, di tutti i colori.
 
 **NARRATORE.**
 > E il giro continua: fili di luce, scambi, fili di luce, scambi.
 
 **NARRATORE.**
-> Ogni tanto la montagna ha una finestra. A ogni finestra, il paesaggio somiglia un po' di più al vestito di Emma.
+> A ogni finestra, le paperelle somigliano un po' di più al vestito di Emma.
+
+**NARRATORE.**
+> All'ultima finestra sono quasi tutte blu, come Emma.
 
 ---
 
-### uscita · L'uscita · 0:34
+### uscita · L'uscita · 0:31.8
 
-**VISIVO.** Una luce in fondo al tunnel: il treno esce dalla montagna, proprio sopra la vasca della pesca. Passano Al e Mare, e non succede niente. Passa l'ultimo vagone, quello di Emma, e sotto di lui cadono le paperelle: tantissime blu, parecchie turchesi, poche di tanti altri colori. Ada, alla bancarella, vede passare Emma tutta blu e spalanca gli occhi.
-
-**NARRATORE.**
-> Il treno esce dalla montagna sopra la vasca. Dove passa l'ultimo vagone, quello di Emma, cadono le paperelle.
+**VISIVO.** Una luce in fondo al tunnel: il treno esce dalla montagna, proprio sopra la vasca della pesca. Passano Al e Mare, e non succede niente. Passa l'ultimo vagone, quello di Emma, e sotto di lui cadono le paperelle: partono di luce, come nella finestra, e quando toccano l'acqua sono vere. Tantissime blu, poche di tanti altri colori: la vasca è uguale all'ultima finestra. Ada, alla bancarella, vede passare Emma tutta blu e spalanca gli occhi.
 
 **NARRATORE.**
-> Tantissime blu, parecchie turchesi, poche di tutti gli altri colori. La montagna non ha scelto niente: ha riempito una vasca.
+> Il treno esce dalla montagna sopra la vasca. Sotto l'ultimo vagone, quello di Emma, cadono le paperelle.
+
+**NARRATORE.**
+> Sono quelle dell'ultima finestra, ma adesso sono vere.
+
+**NARRATORE.**
+> La montagna non ha scelto niente: ha riempito una vasca.
 
 **ADA.**
 > È entrata rosa, ed è uscita blu come il mare!
 
 ---
 
-### pesca · La pesca · 0:30
+### pesca · La pesca · 0:23
 
 **VISIVO.** Il treno scivola in stazione e si ferma; i vestiti tornano piano del colore dei biglietti (Emma di nuovo rosa antico). Ada chiude gli occhi, infila la mano nella vasca e tira fuori una paperella blu. La paperella le salta di mano e corre a sedersi in un vagone nuovo, dietro Emma. Stacco sul telefono, nel salotto: sotto *Al mare Emma* compare la parola *nuota*.
 
@@ -106,7 +125,7 @@ Durata: 4:28 · Voci: narratore, Ada.
 
 ---
 
-### quaderno · Il quaderno · 0:24
+### quaderno · Il quaderno · 0:21
 
 **VISIVO.** Ada disegna sul quaderno, senza scritte: il treno che entra con Emma rosa, il treno che esce con Emma blu, la vasca piena di paperelle blu. Sorride. Le sbarre si abbassano e il trenino riparte, un vagone più lungo. Ada guarda il disegno e poi la montagna, pensierosa. Cartello: **Fine**.
 
@@ -129,13 +148,18 @@ Durata: 4:28 · Voci: narratore, Ada.
 | Gli scambi che scattano da soli, a seconda di chi passa | Feed-forward: lo spostamento dipende dal vettore di quella posizione |
 | «Emma resta Emma», il vagone che si sposta | Connessione residua `x = x + Δ` |
 | Fili e scambi, poi di nuovo fili e scambi | Gli strati, tre nel modellino |
-| Le finestre | Logit lens sull'ultima posizione: spiaggia, molo, mare aperto |
+| Le finestre sulla vasca | Logit lens sull'ultima posizione, dopo ogni strato: la distribuzione che si avrebbe se il modello finisse lì |
+| Con Al e Mare l'acqua resta vuota | Per la parola dopo conta solo l'ultima posizione |
+| Le paperelle di luce che nuotano incontro a Emma | Le parole il cui vettore somiglia di più a quello di Emma prendono più probabilità |
+| L'ultima finestra è uguale alla vasca | Dopo l'ultimo strato, il logit lens è l'uscita vera |
 | Le paperelle cadono solo sotto l'ultimo vagone | In uscita si usa l'ultima posizione |
 | «La montagna non ha scelto niente» | Il modello calcola una distribuzione; la scelta è fuori |
 | I vestiti che tornano rosa in stazione | A ogni giro si riparte dagli embedding |
 
-- **Colori** da [strumenti/modellino.py](../strumenti/modellino.py). Emma: `#bc937f` in stazione, `#8c8eab` dopo i fili, poi `#728ebe` (spiaggia), `#306edd` (molo), `#2864dc` (mare aperto). Al: `#429096` → `#409493` → `#3d998e` → `#3b9e87`. Mare: `#4681d7` → `#427edb` → `#3d79de` → `#3975df`. Il passeggero nuovo: `#2f73d4`.
+- **Colori** da [strumenti/modellino.py](../strumenti/modellino.py). Emma: `#bc937f` in stazione, `#8c8eab` dopo i fili, poi `#728ebe`, `#306edd`, `#2864dc` (uno per finestra). Al: `#429096` → `#409493` → `#3d998e` → `#3b9e87`. Mare: `#4681d7` → `#427edb` → `#3d79de` → `#3975df`. Il passeggero nuovo: `#2f73d4`.
 - **Nei tratti 2 e 3** fili e scambi si vedono in un colpo solo, in montaggio: il colore cambia una volta per tratto.
+- **Le finestre** (40 paperelle di luce ciascuna, dal modellino): la prima di tutti i colori (nessuna parola sopra le 4 paperelle), la seconda con «nuota» a 7, la terza uguale alla vasca («nuota» 18, «gioca» 7, «onde» 4…).
 - **La vasca** è la stessa del prologo: stessa frase, stessa vasca.
+- **Il ritmo**: dove nessuno parla le scene accelerano, soprattutto prima dello stacco (il `RITMO` in `shared.js`). Le durate qui sono quelle vere.
 - **Al, davanti, ha solo il suo anello di luce**: non ha nessuno davanti.
 - **Cosa non diciamo**: i nomi veri, perché la pista è fatta così, perché la pesca può dare un'altra paperella.

@@ -23,6 +23,7 @@ kit.scene('invio', {
     this.sub = G.subs(kit, [[0.8, 10.6], [11.0, 13.6]]);
   },
   render(t, kit) {
+    t = window.G.tempo('00', 'invio', t);
     const G = this.G;
     // Camera: si avvicina piano al messaggio.
     const z = lerp(1, 1.16, eio(seg(t, 12.5, 18)));

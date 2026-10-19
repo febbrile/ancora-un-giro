@@ -97,6 +97,58 @@ function subs(kit, wins){
 }
 
 
+// ── Il ritmo ────────────────────────────────────────────────────────────────────────────────────────
+// Dove nessuno parla, una scena può andare più veloce: soprattutto alla fine, prima dello stacco.
+// RITMO[episodio][scena] = [[x0, x1, r, fine], …]: il tratto di tempo interno da x0 a x1 dura r secondi veri.
+// Con fine (l'ultimo tratto, fino allo stacco) parte a velocità normale e accelera; senza, rallenta di nuovo alla fine.
+// Le scene scrivono i loro tempi in tempo interno (t = G.tempo(ep, id, t) all'inizio di render); la musica usa G.reale.
+// In scenes.json dur è la durata vera. Mai un tratto veloce mentre c'è un sottotitolo (lo controlla controlla.mjs).
+const RITMO = {
+  '00': {
+    invio: [[14.0, 18, 1.6, 1]], volo: [[7.8, 14, 2.6, 1]], lunapark: [[23.4, 26, 1.8, 1]],
+    spezzaparole: [[10.0, 20, 2.6, 1]], passeggeri: [[18.0, 28, 2.6, 1]], partenza: [[18.2, 24, 2.4, 1]],
+    vasca: [[19.0, 26, 2.2, 1]], pesca: [[20.8, 26, 2.2, 1]], ancora: [[20.6, 24, 2.6, 1]],
+  },
+  '01': {
+    domanda: [[14.0, 19.0, 2.6], [21.4, 24, 1.6, 1]], carrozza: [[19.0, 28, 2.6, 1]], buio: [[11.0, 16, 2.6, 1]],
+    fili: [[24.8, 36, 2.6, 1]], scambi: [[21.6, 34, 2.6, 1]], pesca: [[20.6, 30, 2.4, 1]],
+    finestre: [[46.2, 51, 2.6, 1]], uscita: [[29.6, 34, 2.2, 1]], quaderno: [[1.0, 10.0, 6.0]],
+  },
+};
+// Dove si trova il tempo interno dentro un tratto, dopo tau secondi veri.
+function nelTratto(x0, x1, r, fine, tau) {
+  if (fine) { const c = (x1 - x0 - r) / (r * r); return x0 + tau + c * tau * tau; }
+  const s = tau / r, s2 = s * s, s3 = s2 * s;
+  return (2 * s3 - 3 * s2 + 1) * x0 + (s3 - 2 * s2 + s) * r + (-2 * s3 + 3 * s2) * x1 + (s3 - s2) * r;
+}
+// Dal tempo vero della scena al tempo interno.
+function tempo(ep, id, t) {
+  const tr = (RITMO[ep] || {})[id] || [];
+  let acc = 0;
+  for (const [x0, x1, r, fine] of tr) {
+    const a = x0 - acc;
+    if (t < a) return t + acc;
+    if (t <= a + r) return nelTratto(x0, x1, r, fine, t - a);
+    acc += x1 - x0 - r;
+  }
+  return t + acc;
+}
+// Dal tempo interno al tempo vero (per la musica e i rumori).
+function reale(ep, id, x) {
+  const tr = (RITMO[ep] || {})[id] || [];
+  let acc = 0;
+  for (const [x0, x1, r, fine] of tr) {
+    if (x < x0) return x - acc;
+    if (x <= x1) {
+      let lo = 0, hi = r;
+      for (let k = 0; k < 40; k++) { const m = (lo + hi) / 2; if (nelTratto(x0, x1, r, fine, m) < x) lo = m; else hi = m; }
+      return x0 - acc + (lo + hi) / 2;
+    }
+    acc += x1 - x0 - r;
+  }
+  return x - acc;
+}
+
 // ── Colori del mondo ────────────────────────────────────────────────────────────────────────────────
 const C = {
   notte1: '#0B1030', notte2: '#1B2257', orizzonte: '#4A3A7A', luce: '#FFD27A', luce2: '#FFB45E',
@@ -151,20 +203,24 @@ function posa(x, y, s, w, piedi) { return 'translate(' + (x - w / 2 * s).toFixed
 // ── Personaggi ──────────────────────────────────────────────────────────────────────────────────────
 // Emma, Al e Mare: il colore del vestito (o della luce) arriva da fuori, dal modellino.
 function emmaTirata(dress) { return '<g style="color:' + dress + '">' + TIRATA + '</g>'; }
+// Due occhi grandi, bianchi con la pupilla: si leggono anche quando il passeggero è piccolo.
+function occhi(x1, y1, x2, y2) {
+  const o = (x, y) => '<ellipse cx="' + x + '" cy="' + y + '" rx="10" ry="11.5" fill="#FFFFFF"/><circle cx="' + (x + 2) + '" cy="' + (y + 2) + '" r="5.5" fill="#1C1F4A"/><circle cx="' + (x + 4) + '" cy="' + (y - 1) + '" r="1.8" fill="#FFFFFF"/>';
+  return o(x1, y1) + o(x2, y2);
+}
 function al(col) {
   return '<g style="color:' + col + '"><ellipse cx="102" cy="122" rx="78" ry="58" fill="currentColor" opacity=".35" filter="url(#g-soft)"/>' +
-    '<path d="M40 130 C36 96 70 72 108 72 C146 72 168 100 164 130 C160 156 130 166 100 166 C66 166 44 158 40 130 Z" fill="currentColor"/>' +
-    '<ellipse cx="82" cy="96" rx="24" ry="8" fill="#FFFFFF" opacity=".25" transform="rotate(-15 82 96)"/>' +
-    '<path d="M78 120 Q86 126 94 120 M110 120 Q118 126 126 120" stroke="#0E2E33" stroke-width="3" stroke-linecap="round" fill="none"/>' +
-    '<path d="M97 140 L107 140" stroke="#0E2E33" stroke-width="3" stroke-linecap="round"/></g>';
+    '<path d="M40 130 C36 96 70 72 108 72 C146 72 168 100 164 130 C160 156 130 166 100 166 C66 166 44 158 40 130 Z" fill="currentColor" stroke="' + C.crema + '" stroke-width="4" stroke-opacity=".9"/>' +
+    '<ellipse cx="82" cy="94" rx="24" ry="8" fill="#FFFFFF" opacity=".3" transform="rotate(-15 82 94)"/>' +
+    occhi(86, 118, 120, 118) +
+    '<path d="M94 142 Q103 150 112 142" stroke="#0E2E33" stroke-width="4" stroke-linecap="round" fill="none"/></g>';
 }
 function mare(col) {
   return '<g style="color:' + col + '"><ellipse cx="100" cy="124" rx="86" ry="58" fill="currentColor" opacity=".35" filter="url(#g-soft)"/>' +
-    '<path d="M22 170 C40 120 70 82 120 72 C160 64 186 88 182 116 C178 140 150 146 140 128 C132 114 146 102 156 108 C150 92 128 90 112 104 C92 122 96 158 122 170 Z" fill="currentColor"/>' +
+    '<path d="M22 170 C40 120 70 82 120 72 C160 64 186 88 182 116 C178 140 150 146 140 128 C132 114 146 102 156 108 C150 92 128 90 112 104 C92 122 96 158 122 170 Z" fill="currentColor" stroke="' + C.crema + '" stroke-width="4" stroke-opacity=".9" stroke-linejoin="round"/>' +
     '<path d="M58 116 C78 88 102 76 128 72" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round" fill="none" opacity=".6"/>' +
-    '<ellipse cx="74" cy="134" rx="8" ry="9" fill="#FFFFFF"/><ellipse cx="96" cy="128" rx="8" ry="9" fill="#FFFFFF"/>' +
-    '<circle cx="76" cy="136" r="4" fill="#1C1F4A"/><circle cx="98" cy="130" r="4" fill="#1C1F4A"/>' +
-    '<path d="M76 152 Q88 160 100 148" stroke="#1C1F4A" stroke-width="3" stroke-linecap="round" fill="none"/></g>';
+    occhi(72, 134, 98, 128) +
+    '<path d="M74 154 Q88 164 102 150" stroke="#1C1F4A" stroke-width="4" stroke-linecap="round" fill="none"/></g>';
 }
 // La paperella guarda a sinistra; scatola 100×90, la pancia tocca y = 84.
 function paperella(col, o) {
@@ -249,32 +305,43 @@ function spezzaparole(o) {
     '</g>';
 }
 // Un vagone visto di lato, che guarda a sinistra. Scatola 240×150: le ruote toccano y = 150.
+// La sponda è bassa (y = 60), così chi siede si vede dalla testa alla vita; lo schienale imbottito sta dietro.
 // o: { primo, sbarra (0 alzata .. 1 abbassata), ruote (gradi), striscia (colore) }; dentro: il passeggero.
+const SBARRA = [30, 58];
 function vagone(o, dentro) {
   o = o || {};
   const sb = o.sbarra === undefined ? 1 : o.sbarra, rr = o.ruote || 0;
-  const ruota = cx => '<g transform="rotate(' + rr + ' ' + cx + ' 134)"><circle cx="' + cx + '" cy="134" r="16" fill="#2A2440"/><path d="M' + (cx - 11) + ' 134 L' + (cx + 11) + ' 134 M' + cx + ' 123 L' + cx + ' 145" stroke="' + C.acciaioScuro + '" stroke-width="3"/><circle cx="' + cx + '" cy="134" r="5" fill="' + C.acciaio + '"/></g>';
+  const ruota = cx => '<g transform="rotate(' + rr + ' ' + cx + ' 136)"><circle cx="' + cx + '" cy="136" r="15" fill="#2A2440" stroke="' + C.acciaioScuro + '" stroke-width="3"/><path d="M' + (cx - 10) + ' 136 L' + (cx + 10) + ' 136 M' + cx + ' 126 L' + cx + ' 146" stroke="' + C.acciaio + '" stroke-width="3"/><circle cx="' + cx + '" cy="136" r="4.5" fill="' + C.oro + '"/></g>';
+  const lampadine = [48, 92, 136, 180].map(x => '<circle cx="' + x + '" cy="98" r="5" fill="' + C.luce + '"/><circle cx="' + x + '" cy="98" r="9" fill="' + C.luce + '" opacity=".25"/>').join('');
   return '<g>' +
-    '<path d="M180 46 L180 0 Q180 -14 194 -14 L214 -14 Q228 -14 228 0 L226 60 Z" fill="' + C.rossoScuro + '"/>' +
+    // Lo schienale: alto e imbottito, dietro al passeggero.
+    '<path d="M176 64 L178 -6 Q179 -24 198 -24 L210 -24 Q230 -24 230 -6 L228 64 Z" fill="' + C.rossoScuro + '"/>' +
+    '<path d="M188 -8 L188 56 M204 -12 L204 56 M219 -8 L219 56" stroke="' + C.rosso + '" stroke-width="5" stroke-linecap="round"/>' +
     (dentro || '') +
-    (o.primo ? '<ellipse cx="2" cy="62" rx="30" ry="16" fill="' + C.luce + '" opacity=".35" filter="url(#g-glow)"/>' : '') +
-    '<path d="M12 40 L228 40 Q236 40 234 48 L224 116 Q222 130 208 130 L34 130 Q20 130 18 116 L8 48 Q6 40 12 40 Z" fill="' + C.crema + '" stroke="' + C.legnoScuro + '" stroke-width="3"/>' +
-    '<path d="M11 64 L231 64 L229 84 L14 84 Z" fill="' + (o.striscia || C.rosso) + '"/>' +
-    '<circle cx="50" cy="74" r="4" fill="' + C.luce + '"/><circle cx="120" cy="74" r="4" fill="' + C.luce + '"/><circle cx="190" cy="74" r="4" fill="' + C.luce + '"/>' +
-    (o.primo ? '<circle cx="14" cy="58" r="9" fill="' + C.luce + '" stroke="' + C.legnoScuro + '" stroke-width="2"/>' : '') +
-    '<rect x="230" y="96" width="22" height="8" rx="3" fill="' + C.acciaioScuro + '"/>' +
-    ruota(62) + ruota(178) +
-    '<g class="g-sbarra" transform="rotate(' + (-105 * (1 - sb)).toFixed(1) + ' 30 40)"><rect x="24" y="30" width="126" height="11" rx="5.5" fill="' + C.oro + '" stroke="' + C.legnoScuro + '" stroke-width="2.5"/></g>' +
+    (o.primo ? '<ellipse cx="0" cy="84" rx="34" ry="18" fill="' + C.luce + '" opacity=".35" filter="url(#g-glow)"/>' : '') +
+    // La scocca: un guscio arrotondato, il muso davanti più alto.
+    '<path d="M4 66 Q2 56 12 56 L226 58 Q238 58 236 70 L228 120 Q225 134 210 134 L36 134 Q18 134 14 120 Z" fill="' + C.crema + '" stroke="' + C.legnoScuro + '" stroke-width="3" stroke-linejoin="round"/>' +
+    '<path d="M8 66 L232 68" stroke="' + C.oro + '" stroke-width="7" stroke-linecap="round"/>' +
+    '<path d="M11 86 L233 86 L230 110 L16 110 Z" fill="' + (o.striscia || C.rosso) + '"/>' +
+    lampadine +
+    (o.primo ? '<circle cx="12" cy="80" r="10" fill="' + C.luce + '" stroke="' + C.legnoScuro + '" stroke-width="2.5"/><circle cx="9" cy="77" r="3" fill="#FFFFFF"/>' : '') +
+    '<rect x="230" y="112" width="22" height="8" rx="3" fill="' + C.acciaioScuro + '"/>' +
+    '<rect x="30" y="128" width="190" height="10" rx="5" fill="' + C.legnoScuro + '"/>' +
+    ruota(62) + ruota(180) +
+    '<g class="g-sbarra" transform="rotate(' + (-105 * (1 - sb)).toFixed(1) + ' ' + SBARRA[0] + ' ' + SBARRA[1] + ')"><rect x="22" y="' + (SBARRA[1] - 7) + '" width="96" height="11" rx="5.5" fill="' + C.oro + '" stroke="' + C.legnoScuro + '" stroke-width="2.5"/></g>' +
     '</g>';
 }
 // Chi siede nel vagone: tipo 'emma' | 'al' | 'mare' | 'paperella', col il colore del vestito.
+// Tutti hanno il centro a x ≈ 140, davanti allo schienale; la testa sta sopra la sponda.
+const POSTO = {
+  emma: 'translate(62 -100) scale(.8)', al: 'translate(38 -100)', mare: 'translate(34 -118)', paperella: 'translate(80 -20) scale(1.1)',
+};
 function passeggero(tipo, col, o) {
   o = o || {};
-  if (tipo === 'emma') return '<g transform="translate(62 -100) scale(.8)">' + (o.tirata ? emmaTirata(col) : emma(col, { mouth: o.bocca })) + '</g>';
-  if (tipo === 'al') return '<g transform="translate(54 -70) scale(.85)">' + al(col) + '</g>';
-  if (tipo === 'mare') return '<g transform="translate(56 -72) scale(.85)">' + mare(col) + '</g>';
-  if (tipo === 'paperella') return '<g transform="translate(80 -32) scale(1.1)">' + paperella(col, { glow: true }) + '</g>';
-  return '';
+  if (!POSTO[tipo]) return '';
+  const dentro = tipo === 'emma' ? (o.tirata ? emmaTirata(col) : emma(col, { mouth: o.bocca })) :
+    tipo === 'al' ? al(col) : tipo === 'mare' ? mare(col) : paperella(col, { glow: true });
+  return '<g transform="' + POSTO[tipo] + '">' + dentro + '</g>';
 }
 // Il telefono con la chat. Scatola 360×700. o.scritto: il testo nel campo; o.messaggi: le bolle già inviate.
 function bolle(messaggi) {
@@ -475,7 +542,7 @@ function treno(passeggeri, o) {
 function sbarre(els, v) {
   els.forEach((el, i) => {
     const b = el.querySelector('.g-sbarra'), x = typeof v === 'function' ? v(i) : v;
-    if (b) b.setAttribute('transform', 'rotate(' + (-105 * (1 - x)).toFixed(1) + ' 30 40)');
+    if (b) b.setAttribute('transform', 'rotate(' + (-105 * (1 - x)).toFixed(1) + ' ' + SBARRA[0] + ' ' + SBARRA[1] + ')');
   });
 }
 // Ridisegna il passeggero di un vagone (per cambiargli il colore o farlo comparire).
@@ -546,34 +613,41 @@ function nascondiInMontagna(els, path, s, o) {
 function posaAda(x, y, s) { return posa(x, y, s || 0.28, 200, 304); }
 
 // ── Dentro la montagna ──────────────────────────────────────────────────────────────────────────────
-// I paesaggi delle finestre (scatola 360×260): si riconoscono dal colore e dagli oggetti, senza scritte.
-function paesaggio(nome) {
-  if (nome === 'spiaggia') return '<rect width="360" height="260" fill="#CFE2F3"/><rect width="360" height="110" fill="#A9CBEB"/>' +
-    '<path d="M0 118 Q45 104 90 118 T180 118 T270 118 T360 118 L360 172 L0 172 Z" fill="#7DAEDD"/>' +
-    '<path d="M30 126 q12 -14 24 0 M130 132 q12 -14 24 0 M240 124 q12 -14 24 0" stroke="#FFFFFF" stroke-width="4" fill="none" stroke-linecap="round"/>' +
-    '<path d="M0 170 Q90 150 180 168 Q270 186 360 162 L360 260 L0 260 Z" fill="#E9D3A6"/>' +
-    '<path d="M180 200 q-20 -40 20 -48 q30 0 10 30 q-10 14 -24 0" stroke="#7DAEDD" stroke-width="7" fill="none" stroke-linecap="round"/>' +
-    '<g fill="#F2B8A8" stroke="#D98E7E" stroke-width="2"><path d="M60 226 q-18 -22 6 -32 q22 -6 22 18 q-2 16 -28 14 Z"/><path d="M290 214 q-14 -18 6 -26 q18 -4 18 14 q-2 14 -24 12 Z"/></g>' +
-    '<path d="M110 236 l6 -14 l6 14 l-15 -9 h18 Z" fill="#F29A6B"/>';
-  if (nome === 'molo') return '<rect width="360" height="260" fill="#BFD8F2"/><rect width="360" height="96" fill="#8FBDEB"/>' +
-    '<rect y="104" width="360" height="156" fill="#3F7FD9"/>' +
-    '<path d="M0 140 q20 -10 40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 M0 200 q20 -10 40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0" stroke="#A9CCF4" stroke-width="3" fill="none"/>' +
-    '<g fill="' + C.legnoScuro + '"><rect x="40" y="160" width="10" height="70"/><rect x="120" y="160" width="10" height="70"/><rect x="200" y="160" width="10" height="70"/></g>' +
-    '<path d="M0 148 L250 148 L250 166 L0 166 Z" fill="' + C.legno + '"/><path d="M0 154 L250 154" stroke="#B98058" stroke-width="2"/>' +
-    '<g fill="#FFC93C" stroke="#D99A1C" stroke-width="2"><path d="M196 146 q-6 -14 10 -18 l26 6 q8 4 0 10 Z"/><path d="M222 146 q-6 -14 10 -18 l20 6 q8 4 0 10 Z"/></g>' +
-    '<path d="M150 140 q14 -10 28 0" stroke="#E0475B" stroke-width="3" fill="none"/><circle cx="154" cy="140" r="7" fill="#9FE7F5" stroke="#2B2350" stroke-width="2.5"/><circle cx="173" cy="140" r="7" fill="#9FE7F5" stroke="#2B2350" stroke-width="2.5"/>';
-  return '<defs><linearGradient id="g-mare-prof" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3D86F0"/><stop offset="1" stop-color="#123A9A"/></linearGradient></defs>' +
-    '<rect width="360" height="260" fill="url(#g-mare-prof)"/>' +
-    '<path d="M60 0 L120 0 L60 260 L10 260 Z M170 0 L210 0 L190 260 L150 260 Z M270 0 L320 0 L340 260 L280 260 Z" fill="#FFFFFF" opacity=".12"/>' +
-    '<g fill="none" stroke="#CFE6FF" stroke-width="2.5" opacity=".8"><circle cx="90" cy="200" r="6"/><circle cx="100" cy="170" r="4"/><circle cx="250" cy="150" r="7"/><circle cx="262" cy="118" r="4"/><circle cx="300" cy="210" r="5"/></g>' +
-    '<path d="M0 30 q30 -14 60 0 t60 0 t60 0 t60 0 t60 0 t60 0" stroke="#9CC8FF" stroke-width="4" fill="none" opacity=".7"/>';
-}
-// Una finestra ad arco nella parete: il paesaggio dentro, la cornice di roccia intorno. id: unico nella scena.
-function finestra(nome, id) {
-  return '<g><clipPath id="g-fin-' + id + '"><path d="M0 260 L0 100 Q0 0 180 0 Q360 0 360 100 L360 260 Z"/></clipPath>' +
-    '<g clip-path="url(#g-fin-' + id + ')">' + paesaggio(nome).replace(/g-mare-prof/g, 'g-mare-prof-' + id) + '</g>' +
-    '<path d="M0 260 L0 100 Q0 0 180 0 Q360 0 360 100 L360 260 Z" fill="none" stroke="' + C.mont3 + '" stroke-width="18"/>' +
+// Le finestre sulla vasca (scatola 360×260): una finestra ad arco nella parete, e dietro l'acqua della vasca,
+// con il bordo di legno in basso. Quando passa l'ultimo vagone, nell'acqua si accendono paperelle di luce
+// (le mette la scena dentro .g-fin-papere): quelle che cadrebbero se il treno uscisse lì. id: unico nella scena.
+function finestra(id) {
+  const arco = 'M0 260 L0 100 Q0 0 180 0 Q360 0 360 100 L360 260 Z';
+  return '<g><clipPath id="g-fin-' + id + '"><path d="' + arco + '"/></clipPath>' +
+    '<g clip-path="url(#g-fin-' + id + ')">' +
+    '<linearGradient id="g-fin-acqua-' + id + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#21557A"/><stop offset="1" stop-color="#0F2C4A"/></linearGradient>' +
+    '<rect width="360" height="260" fill="url(#g-fin-acqua-' + id + ')"/>' +
+    '<path d="M-10 70 q22 -10 44 0 t44 0 t44 0 t44 0 t44 0 t44 0 t44 0 t44 0 t44 0 M-10 130 q22 -10 44 0 t44 0 t44 0 t44 0 t44 0 t44 0 t44 0 t44 0 t44 0 M-10 190 q22 -10 44 0 t44 0 t44 0 t44 0 t44 0 t44 0 t44 0 t44 0 t44 0" stroke="#7FC4E0" stroke-width="3" fill="none" opacity=".35"/>' +
+    '<g class="g-fin-papere"></g>' +
+    '<rect y="226" width="360" height="40" fill="' + C.legno + '"/><path d="M0 228 L360 228" stroke="' + C.oro + '" stroke-width="6"/>' +
+    '</g>' +
+    '<path d="' + arco + '" fill="none" stroke="' + C.mont3 + '" stroke-width="18"/>' +
     '<path d="M-14 262 L374 262" stroke="' + C.mont2 + '" stroke-width="16" stroke-linecap="round"/></g>';
+}
+// Le paperelle di luce di una finestra: conta = [[parola, quante, colore], …] dal modellino. Ognuna ha il suo posto
+// (x, y: dove sta la pancia, nella scatola della finestra) e il momento in cui si accende (0..1, in ordine sparso).
+function papereFinestra(conta, seme) {
+  const r = kitRng(seme || 7), lista = [];
+  conta.forEach(([w, n, col]) => { for (let k = 0; k < n; k++) lista.push({ parola: w, col }); });
+  for (let i = lista.length - 1; i > 0; i--) { const j = Math.floor(r() * (i + 1)); [lista[i], lista[j]] = [lista[j], lista[i]]; }
+  const col = 10, righe = Math.ceil(lista.length / col);
+  lista.forEach((p, i) => {
+    const riga = Math.floor(i / col), c = i % col;
+    p.x = 26 + c * 32 + (riga % 2) * 14 + (r() - 0.5) * 10;
+    p.y = 92 + riga * (100 / Math.max(1, righe - 1)) + (r() - 0.5) * 8;
+    p.quando = r();
+  });
+  return lista;
+}
+// La paperella di luce: come una paperella, ma trasparente e con l'alone (non è vera: non cade e non si pesca).
+function paperellaDiLuce(col) {
+  return '<g opacity=".82"><ellipse cx="54" cy="56" rx="62" ry="46" fill="' + col + '" opacity=".55" filter="url(#g-soft)"/>' +
+    paperella(col) + '<path d="M26 58 C26 46 40 42 58 44 C74 46 84 40 92 30 C94 46 94 62 86 72 C78 82 60 86 44 84 C32 82 26 70 26 58 Z" fill="none" stroke="#FFFFFF" stroke-width="4" opacity=".7"/></g>';
 }
 // L'interno: il treno grande, che corre verso sinistra. Il treno sta fermo nell'inquadratura, il mondo scorre.
 // Vagoni a scala 1.25, ruote a y = 770, centri a x = 470, 820, 1170 (Al, Mare, Emma).
@@ -605,17 +679,25 @@ function interno(passeggeri, o) {
     '<g class="g-int-vicino">' + vicino + '</g>';
 }
 const interniDefs = '<defs><linearGradient id="g-interno" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0B0920"/><stop offset=".7" stop-color="#151230"/><stop offset="1" stop-color="#0A0818"/></linearGradient></defs>';
-// Il centro della testa di un passeggero nell'interno (per i fili di luce).
+// Il centro di un passeggero nell'interno (per l'anello di luce intorno a sé).
+const CENTRO = { emma: [142, -36], al: [140, 19], mare: [136, 0], paperella: [120, 17] };
 function testa(i, tipo, dy) {
   const S = INTERNO.scala, x0 = INTERNO.centri[i] - 120 * S, y0 = INTERNO.ruote - 150 * S + (dy || 0);
-  const l = tipo === 'emma' ? [142, -36] : tipo === 'paperella' ? [120, 0] : [141, 4];
+  const l = CENTRO[tipo] || CENTRO.al;
   return [x0 + l[0] * S, y0 + l[1] * S];
 }
 // La sommità della testa (da qui partono e arrivano i fili tra due passeggeri).
+const CIMA = { emma: [142, -70], al: [140, -26], mare: [150, -48], paperella: [120, -7] };
 function cima(i, tipo, dy) {
   const S = INTERNO.scala, x0 = INTERNO.centri[i] - 120 * S, y0 = INTERNO.ruote - 150 * S + (dy || 0);
-  const l = tipo === 'emma' ? [142, -70] : tipo === 'paperella' ? [120, -24] : [141, -16];
+  const l = CIMA[tipo] || CIMA.al;
   return [x0 + l[0] * S, y0 + l[1] * S];
+}
+// L'anello di luce intorno a un passeggero (il filo verso sé stesso): il tracciato SVG.
+const ANELLO = { emma: [50, 58], al: [66, 52], mare: [70, 54], paperella: [50, 40] };
+function anello(i, tipo, dy) {
+  const a = testa(i, tipo, dy), r = ANELLO[tipo] || ANELLO.al, rx = r[0], ry = r[1];
+  return 'M' + (a[0] - rx) + ' ' + a[1] + ' a' + rx + ' ' + ry + ' 0 1 0 ' + (2 * rx) + ' 0 a' + rx + ' ' + ry + ' 0 1 0 ' + (-2 * rx) + ' 0';
 }
 // Fa scorrere il mondo dell'interno: d = distanza percorsa (pixel dello schermo).
 function scorriInterno(kit, d) {
@@ -633,7 +715,7 @@ function sottotitolo(chi, testo) {
 }
 
 // <modellino> generato da strumenti/modellino.py: non modificare a mano
-const MOD = {"mare": {"frase": ["Al", "mare", "Emma"], "passeggeri": {"Al": {"biglietto": "#429096", "tratti": ["#409493", "#3d998e", "#3b9e87"], "fili": {"Al": 1.0}}, "mare": {"biglietto": "#4681d7", "tratti": ["#427edb", "#3d79de", "#3975df"], "fili": {"Al": 0.3, "mare": 0.7}}, "Emma": {"biglietto": "#bc937f", "tratti": ["#728ebe", "#306edd", "#2864dc"], "fili": {"Al": 0.1, "mare": 0.7, "Emma": 0.2}, "fili_tratti": [{"Al": 0.1, "mare": 0.7, "Emma": 0.2}, {"Al": 0.1, "mare": 0.6, "Emma": 0.3}, {"Al": 0.1, "mare": 0.5, "Emma": 0.4}], "dopo_fili": "#8c8eab", "finestre": ["spiaggia", "molo", "mare aperto"]}}, "vasca": [["nuota", 18, "#2864dc"], ["gioca", 7, "#28aaaa"], ["onde", 4, "#3c78e6"], ["conchiglie", 3, "#508ceb"], ["sabbia", 2, "#5a96dc"], ["corre", 2, "#28aa50"], ["foglie", 1, "#3cb45a"], ["altalena", 1, "#50be6e"], ["scivolo", 1, "#46af64"], ["Fine", 1, "#46465a"]], "probabilita": {"nuota": 0.446, "gioca": 0.186, "onde": 0.087, "conchiglie": 0.073, "sabbia": 0.061}, "nuovo": {"nuota": "#2f73d4"}}};
+const MOD = {"mare": {"frase": ["Al", "mare", "Emma"], "passeggeri": {"Al": {"biglietto": "#429096", "tratti": ["#409493", "#3d998e", "#3b9e87"], "fili": {"Al": 1.0}}, "mare": {"biglietto": "#4681d7", "tratti": ["#427edb", "#3d79de", "#3975df"], "fili": {"Al": 0.3, "mare": 0.7}}, "Emma": {"biglietto": "#bc937f", "tratti": ["#728ebe", "#306edd", "#2864dc"], "fili": {"Al": 0.1, "mare": 0.7, "Emma": 0.2}, "fili_tratti": [{"Al": 0.1, "mare": 0.7, "Emma": 0.2}, {"Al": 0.1, "mare": 0.6, "Emma": 0.3}, {"Al": 0.1, "mare": 0.5, "Emma": 0.4}], "dopo_fili": "#8c8eab", "finestre": [[["Bovary", 4, "#f07064"], ["onde", 4, "#3c78e6"], ["sabbia", 4, "#5a96dc"], ["conchiglie", 4, "#508ceb"], ["felice", 4, "#f5c84c"], ["e", 3, "#f08c78"], ["altalena", 3, "#50be6e"], ["scivolo", 3, "#46af64"], ["nuota", 3, "#2864dc"], ["foglie", 2, "#3cb45a"], ["corre", 2, "#28aa50"], ["gioca", 2, "#28aaaa"], [".", 1, "#9696a0"], ["Fine", 1, "#46465a"]], [["nuota", 7, "#2864dc"], ["onde", 5, "#3c78e6"], ["conchiglie", 5, "#508ceb"], ["sabbia", 4, "#5a96dc"], ["gioca", 4, "#28aaaa"], ["felice", 3, "#f5c84c"], ["Bovary", 2, "#f07064"], ["foglie", 2, "#3cb45a"], ["altalena", 2, "#50be6e"], ["scivolo", 2, "#46af64"], ["corre", 2, "#28aa50"], ["e", 1, "#f08c78"], ["Fine", 1, "#46465a"]], [["nuota", 18, "#2864dc"], ["gioca", 7, "#28aaaa"], ["onde", 4, "#3c78e6"], ["conchiglie", 3, "#508ceb"], ["sabbia", 2, "#5a96dc"], ["corre", 2, "#28aa50"], ["foglie", 1, "#3cb45a"], ["altalena", 1, "#50be6e"], ["scivolo", 1, "#46af64"], ["Fine", 1, "#46465a"]]]}}, "vasca": [["nuota", 18, "#2864dc"], ["gioca", 7, "#28aaaa"], ["onde", 4, "#3c78e6"], ["conchiglie", 3, "#508ceb"], ["sabbia", 2, "#5a96dc"], ["corre", 2, "#28aa50"], ["foglie", 1, "#3cb45a"], ["altalena", 1, "#50be6e"], ["scivolo", 1, "#46af64"], ["Fine", 1, "#46465a"]], "probabilita": {"nuota": 0.446, "gioca": 0.186, "onde": 0.087, "conchiglie": 0.073, "sabbia": 0.061}, "nuovo": {"nuota": "#2f73d4"}}};
 // </modellino>
 
 window.G = {
@@ -641,6 +723,6 @@ window.G = {
   emma, emmaTirata, al, mare, paperella, ada, adaTesta,
   biglietto, striscia, spezzaparole, vagone, passeggero, telefono, bolle, insegna, salotto, SALOTTO,
   mondo, papereVasca, treno, posaTreno, sbarre, cambiaPasseggero, rng: kitRng, percorso, costruisciMondo, animaMondo, nascondiInMontagna, posaAda,
-  paesaggio, finestra, INTERNO, interno, interniDefs, testa, cima, scorriInterno,
-  sottotitolo, chunkSub, subs,
+  finestra, papereFinestra, paperellaDiLuce, INTERNO, interno, interniDefs, testa, cima, anello, scorriInterno,
+  sottotitolo, chunkSub, subs, RITMO, tempo, reale,
 };

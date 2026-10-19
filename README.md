@@ -14,8 +14,8 @@ Ada, una piccola scienziata, ne pesca una senza guardare: è la parola dopo. La 
 
 | | Titolo | Durata | Cosa racconta | Guarda |
 |---|---|---|---|---|
-| Prologo | Premi invio | 3:26 | Il mondo e il giro intero, visto da fuori: Ada, lo Spezzaparole, i passeggeri, la montagna, la vasca, la pesca | [apri](https://claude.ai/artifact/HNCae1Yqakm6xrZYTBu4Ah) |
-| 1 | Dentro la montagna | 4:28 | Lo stesso giro, da dentro: i fili di luce, gli scambi, le finestre. Emma entra rosa ed esce blu | [apri](https://claude.ai/artifact/Neb3nYKCJBYY7oUBes7foS) |
+| Prologo | Premi invio | 2:52 | Il mondo e il giro intero, visto da fuori: Ada, lo Spezzaparole, i passeggeri, la montagna, la vasca, la pesca | [apri](https://claude.ai/artifact/HNCae1Yqakm6xrZYTBu4Ah) |
+| 1 | Dentro la montagna | 3:52 | Lo stesso giro, da dentro: i fili di luce, gli scambi, le finestre sulla vasca dove si accendono le paperelle. Emma entra rosa ed esce blu | [apri](https://claude.ai/artifact/Neb3nYKCJBYY7oUBes7foS) |
 
 Personaggi, oggetti e luna park: [tela di design](https://claude.ai/artifact/1YpTiDnCNhg4bgh23faV33).
 

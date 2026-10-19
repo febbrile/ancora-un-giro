@@ -43,6 +43,7 @@ kit.scene('scambi', {
     this.sub = G.subs(kit, [[0.6, 9.2], [10.8, 21.2]]);
   },
   render(t, kit) {
+    t = window.G.tempo('01', 'scambi', t);
     const G = this.G, I = G.INTERNO;
     this.cam.setAttribute('transform', G.camChiavi(SC_CAM, t));
     G.scorriInterno(kit, SC_VEL * t);

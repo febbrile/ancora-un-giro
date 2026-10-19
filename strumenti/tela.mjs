@@ -59,7 +59,7 @@ function tavole() {
   let fili = '';
   pesi.forEach(([i, j, w]) => {
     let d;
-    if (i === j) { const a = G.testa(i, tipi[i]), rx = i === 2 ? 50 : 44, ry = i === 2 ? 58 : 40; d = 'M' + (a[0] - rx) + ' ' + a[1] + ' a' + rx + ' ' + ry + ' 0 1 0 ' + (2 * rx) + ' 0 a' + rx + ' ' + ry + ' 0 1 0 ' + (-2 * rx) + ' 0'; }
+    if (i === j) d = G.anello(i, tipi[i]);
     else { const a = G.cima(i, tipi[i]), b = G.cima(j, tipi[j]), mx = (a[0] + b[0]) / 2, my = Math.min(a[1], b[1]) - 80 - 0.12 * Math.abs(a[0] - b[0]); d = 'M' + b[0] + ' ' + b[1] + ' Q' + mx + ' ' + my + ' ' + a[0] + ' ' + a[1]; }
     const ww = i === j ? 0.45 * w : w;
     fili += '<path d="' + d + '" fill="none" stroke="#FFF1C9" stroke-width="' + (1.5 + 10 * ww).toFixed(1) + '" stroke-linecap="round" opacity="' + (0.25 + 0.75 * w).toFixed(2) + '" filter="url(#g-glow)"/>';
@@ -67,11 +67,14 @@ function tavole() {
   s = G.interniDefs + G.interno([{ tipo: 'al', col: P.Al.biglietto }, { tipo: 'mare', col: P.mare.biglietto }, { tipo: 'emma', col: P.Emma.dopo_fili }]).replace('<g class="g-int-fili"></g>', '<g>' + fili + '</g>');
   T['Montagna.dc.html'] = { titolo: 'Dentro la montagna · i fili di luce', w: 1920, h: 1080, svg: s };
   // Le finestre e i colori di Emma lungo il viaggio.
-  s = '<rect width="1920" height="1080" fill="' + C.notte1 + '"/>' + titolo('Le finestre').replace(C.inchiostro, C.crema);
-  P.Emma.finestre.forEach((nome, k) => { s += at(120 + k * 600, 200, 1.2, G.finestra(nome, k + 1)) + et(336 + k * 600, 560, nome, true, 30); });
+  s = '<rect width="1920" height="1080" fill="' + C.notte1 + '"/>' + titolo('Le finestre sulla vasca').replace(C.inchiostro, C.crema);
+  P.Emma.finestre.forEach((conta, k) => {
+    const papere = G.papereFinestra(conta, 11 + k).map(p => '<g transform="translate(' + p.x.toFixed(1) + ' ' + p.y.toFixed(1) + ') scale(.34) translate(-50 -84)">' + G.paperellaDiLuce(p.col) + '</g>').join('');
+    s += at(120 + k * 600, 200, 1.2, G.finestra('t' + k).replace('<g class="g-fin-papere"></g>', '<g>' + papere + '</g>')) + et(336 + k * 600, 560, ['prima', 'seconda', 'ultima'][k] + ' finestra', true, 30);
+  });
   const tappe = [['biglietto', P.Emma.biglietto], ['dopo i fili', P.Emma.dopo_fili], ['tratto 1', P.Emma.tratti[0]], ['tratto 2', P.Emma.tratti[1]], ['tratto 3', P.Emma.tratti[2]]];
   tappe.forEach(([n, col], k) => { s += at(130 + k * 360, 640, 1.05, G.emma(col)) + et(235 + k * 360, 1010, n + ' · ' + col, true, 24); });
-  T['Finestre.dc.html'] = { titolo: 'Le finestre e il vestito di Emma', w: 1920, h: 1080, svg: s };
+  T['Finestre.dc.html'] = { titolo: 'Le finestre sulla vasca e il vestito di Emma', w: 1920, h: 1080, svg: s };
   // La grammatica: colori e caratteri.
   const sw = [['notte', C.notte1], ['cielo', C.notte2], ['lampadine', C.luce], ['righe', C.rosso], ['crema', C.crema], ['oro', C.oro], ['montagna', C.mont2], ['acqua', C.acqua]];
   s = '<rect width="1280" height="720" fill="#F3EADB"/>' + titolo('La grammatica');

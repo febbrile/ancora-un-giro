@@ -43,6 +43,11 @@ Sono gli errori che hanno fatto fallire un primo tentativo con il pubblico vero:
 - **Al massimo 12 caratteri al secondo** di sottotitolo mentre una voce parla.
 - **Almeno 3 secondi di sole immagini in ogni scena.** Ogni scena rispetta `durata ≥ parlato/12 + 3 s`:
   controllalo con `python3 strumenti/tempi.py` dopo ogni modifica a una sceneggiatura.
+- **Nessuna pausa morta prima di uno stacco.** Dopo l'ultima battuta (o il cartello) una scena dura al massimo
+  3 secondi: dove nessuno parla la scena accelera, soprattutto alla fine. Le scene scrivono i tempi in tempo
+  interno e il `RITMO` di `shared.js` li porta al tempo vero (`t = G.tempo(ep, id, t)` in `render`, `R(id, x)` in
+  `score.js`); in `scenes.json` `dur` è la durata vera. Mai accelerare mentre c'è un sottotitolo:
+  `node strumenti/controlla.mjs` controlla le due cose.
 - **Un episodio dura al massimo 5 minuti** (limite dei film Motion). Meglio un episodio in più che uno troppo pieno.
 - **I sottotitoli scorrono a pezzi** di 18–48 caratteri (`chunkSub` in `shared.js`). Un pezzo non finisce mai con
   un articolo, una preposizione, una congiunzione o una parola con apostrofo.
@@ -61,8 +66,12 @@ L'elenco completo, tradotto nel luna park, è nel §7 del soggetto. Le più impo
    binario e il suo spostamento; tutti i vagoni attraversano tutti i tratti.
 5. **Si guarda sempre avanti**: i fili di luce vanno da ogni passeggero a chi gli siede davanti e a sé stesso, mai
    a chi sta dietro.
-6. **Alla vasca conta solo l'ultimo vagone.** Le paperelle nascono solo lì: nella montagna ci sono spostamenti,
+6. **Alla vasca conta solo l'ultimo vagone.** Le paperelle vere nascono solo lì: nella montagna ci sono spostamenti,
    non probabilità. Emma non diventa una paperella.
+   - **Le finestre sulla vasca** sono il momento fisso di ogni episodio: dentro la montagna una finestra dà
+     sull'acqua, e solo quando passa l'ultimo vagone si accendono paperelle di luce, quelle che cadrebbero se il
+     treno uscisse lì (dal modellino). Non sono vere: non cadono, non salgono sul treno, non si pescano.
+     L'ultima finestra è uguale alla vasca.
 7. **Stesso treno, stesso giro.** La pista è fissa; la pesca cambia; perché la pista sia fatta così non lo sa
    spiegare nessuno a parole.
 8. **Quando il treno torna in stazione, ogni vestito torna del colore del suo biglietto**: a ogni giro si riparte
@@ -70,8 +79,8 @@ L'elenco completo, tradotto nel luna park, è nel §7 del soggetto. Le più impo
 9. **La pista non l'ha progettata nessuno**: si è piegata sotto milioni di treni carichi di frasi, poi è stata fissata.
 10. **I colori non hanno un nome**: conta solo quanto due colori si somigliano.
 11. **Parliamo solo del nostro luna park.** Niente confronti con i modelli veri, salvo un episodio dedicato.
-12. **Quello che si mostra una volta, si mostra sempre.** Ogni passeggero ha i suoi colori, ogni finestra il suo
-    paesaggio, ogni vasca le sue paperelle, in ogni episodio. Se mancano i dati, prima si dichiarano nel modellino,
+12. **Quello che si mostra una volta, si mostra sempre.** Ogni passeggero ha i suoi colori, ogni finestra le sue
+    paperelle di luce, ogni vasca le sue paperelle, in ogni episodio. Se mancano i dati, prima si dichiarano nel modellino,
     poi si mostrano.
 
 ## Personaggi
@@ -84,14 +93,15 @@ L'elenco completo, tradotto nel luna park, è nel §7 del soggetto. Le più impo
   stellina sulla frangia. Il vestito ha il colore del suo biglietto, poi quello che le danno i fili e gli scambi.
   Quando uno scambio la sposta usa la posa **«tirata via»** (va avanti, capelli e vestito restano indietro).
   Niente frecce disegnate su di lei.
-- **Al** (sassolino) e **Mare** (onda con gli occhi): i compagni di viaggio della prima frase.
+- **Al** (sassolino) e **Mare** (onda con gli occhi): i compagni di viaggio della prima frase. Occhi grandi e
+  bordo chiaro, perché si leggano anche piccoli; nel vagone la testa sta sempre sopra la sponda.
 - **Le paperelle**: una per ogni parola che può venire dopo. Quella pescata sale sul treno e diventa un passeggero.
 - I modelli dei personaggi sono nella tela di design (link nel [README](README.md)) e, in SVG, in
   `episodi/comune/shared.js`: ogni cambio di aspetto parte dalla tela e si riporta in `shared.js`.
 
 ## I numeri
 
-- I colori dei vestiti, i paesaggi delle finestre e le paperelle nella vasca vengono da un modellino giocattolo
+- I colori dei vestiti, le paperelle di luce delle finestre e le paperelle nella vasca vengono da un modellino giocattolo
   coerente: **un'unica fonte**, [strumenti/modellino.py](strumenti/modellino.py). Inventati solo i valori che il
   modellino dichiara come inventati; tutto il resto si calcola.
 - Se cambi un numero, cambialo lì, esegui `python3 strumenti/modellino.py` e solo dopo riporta i risultati nelle scene.

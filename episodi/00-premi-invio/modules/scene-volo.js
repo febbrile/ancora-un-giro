@@ -43,6 +43,7 @@ kit.scene('volo', {
     this.sub = G.subs(kit, [[2.2, 7.4]]);
   },
   render(t, kit) {
+    t = window.G.tempo('00', 'volo', t);
     const G = this.G, z = 1.16, [bx, by] = G.SALOTTO.bolla;
     this.cam.setAttribute('transform', 'translate(' + (bx - bx * z).toFixed(2) + ' ' + (by - by * z).toFixed(2) + ') scale(' + z + ')');
     // La bolla si stacca e diventa la striscia.

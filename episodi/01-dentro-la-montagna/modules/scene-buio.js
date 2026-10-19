@@ -24,6 +24,7 @@ kit.scene('buio', {
     this.sub = G.subs(kit, [[1.2, 10.6]]);
   },
   render(t, kit) {
+    t = window.G.tempo('01', 'buio', t);
     const G = this.G, M = G.MONDO, m = this.m;
     const s = G.percorso(t, this.s0, BU_VEL);
     G.posaTreno(this.vag, m.partenza, s);

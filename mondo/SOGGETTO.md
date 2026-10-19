@@ -36,8 +36,9 @@ Sono le leggi fisiche del nostro mondo. Valgono in ogni episodio, anche quando n
 - **La pista è fissa.** Non cambia da un giro all'altro e non cambia per nessuno. Lo stesso treno, con gli stessi passeggeri, fa sempre lo stesso identico giro.
 - **Dentro la carrozza.** Sulle montagne russe si guarda sempre avanti. Da ogni passeggero partono fili di luce verso chi gli siede davanti, e verso sé stesso, mai verso chi sta dietro. Lungo i fili scorrono i colori: Emma, nell'ultimo vagone, prende qualcosa da tutti; Al, davanti, solo da sé.
 - **Il fascio di binari.** Ogni vagone corre sul suo binario, dentro un fascio larghissimo di binari paralleli. Gli scambi scattano da soli, a seconda di com'è fatto il vagone che passa, e lo spostano di poco verso un binario vicino. Mentre si sposta, il vestito del passeggero cambia colore. Tutti i vagoni attraversano tutti i tratti della pista: nessuno ne salta uno.
-- **La montagna è buia.** Da fuori si vedono il treno che entra e il treno che esce, e si sentono i *clac* degli scambi. Ogni tanto la montagna ha una finestra, da cui si vede un paesaggio che somiglia al colore dei passeggeri in quel momento.
-- **La vasca.** Il treno esce dalla montagna sopra la vasca della pesca. Conta solo dove passa l'ultimo vagone: da lì cadono nell'acqua le paperelle, tantissime di un colore, parecchie di un altro, poche di tutti gli altri. Ogni colore è una parola.
+- **La montagna è buia.** Da fuori si vedono il treno che entra e il treno che esce, e si sentono i *clac* degli scambi.
+- **Le finestre sulla vasca.** Ogni tanto, dentro la montagna, una finestra dà sull'acqua della vasca, e il treno rallenta per guardarla. Quando passano gli altri vagoni l'acqua resta vuota; quando passa l'ultimo, si accendono **paperelle di luce**: quelle che cadrebbero se il treno uscisse lì. Quelle che somigliano al vestito dell'ultimo passeggero gli nuotano incontro. Finestra dopo finestra le paperelle cambiano, e l'ultima finestra è uguale alla vasca vera. È il momento che torna in ogni episodio: lì si vede da dove vengono le paperelle.
+- **La vasca.** Il treno esce dalla montagna sopra la vasca della pesca. Conta solo dove passa l'ultimo vagone: da lì cadono nell'acqua le paperelle, le stesse dell'ultima finestra. Cadono di luce e toccano l'acqua vere: tantissime di un colore, parecchie di un altro, poche di tutti gli altri. Ogni colore è una parola.
 - **La pesca.** Ada pesca una paperella senza guardare. Le altre scivolano via dallo scarico e la vasca torna vuota.
 - **Ancora un giro.** La paperella pescata sale in un vagone nuovo, in fondo al treno, e il treno riparte, un vagone più lungo.
 - **Si riparte dai biglietti.** Quando il treno rientra in stazione, ogni vestito torna del colore del suo biglietto. A ogni giro i colori si rifanno da capo, e con gli stessi passeggeri tornano uguali.
@@ -65,6 +66,7 @@ Il luna park deve contenere da sé, per come funziona, ciascuna di queste cose, 
 | Tappe uguali per tutti, che spostano | Gli scambi nel fascio di binari | Strati, feed-forward, connessione residua |
 | Un interno che da fuori non si vede | La montagna buia | Opacità |
 | Tante possibilità, non una risposta | Le paperelle nella vasca | Distribuzione di probabilità |
+| La risposta prende forma strato dopo strato | Le paperelle di luce nelle finestre sulla vasca | Logit lens sull'ultima posizione |
 | L'estrazione avviene fuori | Ada pesca alla bancarella | Campionamento, fuori dal modello |
 
 ## 5. Il motore della serie: la curiosità di Ada
@@ -104,7 +106,7 @@ Restano quelle del progetto, tradotte nel nuovo mondo.
 2. **Biglietteria e pesca stanno fuori dalla montagna.**
 3. **Dentro la montagna non ci sono lettere**: solo colori e luce. Le paperelle non hanno scritte.
 4. **Gli scambi spostano, non trasformano.** Emma resta Emma; cambia il colore del vestito.
-5. **Le finestre sono letture**: mostrano dove porterebbe il viaggio se finisse lì, non sono fermate obbligate.
+5. **Le finestre sono letture**: mostrano la vasca che si avrebbe se il treno uscisse lì. Le paperelle di luce non sono vere: non cadono, non salgono sul treno, non si pescano, e si accendono solo per l'ultimo vagone. Il treno non le raccoglie: le paperelle vere nascono solo alla vasca.
 6. **Alla vasca conta solo l'ultimo vagone.** L'uscita è un colore, una direzione: Emma non diventa una paperella.
 7. **Stesso treno, stesso giro.** La pista è deterministica; la pesca no; perché la pista sia fatta così non lo sa spiegare nessuno a parole.
 8. **La Fine è una paperella come le altre.** Una storia troncata è opera di qualcosa fuori dalla giostra.
@@ -112,8 +114,8 @@ Restano quelle del progetto, tradotte nel nuovo mondo.
 10. **Due tipi di cose**: quello che è fisso (pista, binari, scambi, colori dei biglietti) e quello che nasce a ogni giro (fili di luce, colori mescolati, paperelle).
 11. **I colori non hanno un nome.** Nessun colore vuol dire «acqua» o «nome» da solo: conta solo quanto due colori si somigliano.
 12. **Parliamo solo del nostro luna park.** Niente confronti con i modelli veri, salvo un episodio dedicato.
-13. **Nella montagna ci sono spostamenti, non probabilità.** Le paperelle nascono solo alla vasca.
-14. **Quello che si mostra una volta, si mostra sempre.** Ogni passeggero ha il suo colore, ogni finestra il suo paesaggio, calcolati in [strumenti/modellino.py](../strumenti/modellino.py).
+13. **Nella montagna ci sono spostamenti, non probabilità.** Le paperelle vere nascono solo alla vasca; nelle finestre se ne vede solo la luce.
+14. **Quello che si mostra una volta, si mostra sempre.** Ogni passeggero ha il suo colore, ogni finestra le sue paperelle di luce, calcolati in [strumenti/modellino.py](../strumenti/modellino.py).
 
 ## 8. Gli errori da non suggerire mai
 
@@ -142,7 +144,6 @@ Se una risposta è sbagliata, l'elemento non entra.
 ## Questioni aperte
 
 - **Il fascio di binari** va disegnato con cura: vagoni che corrono ciascuno sul suo binario, ma restano un treno.
-- **Il nome del repository** è ancora quello di un progetto chiuso: va cambiato su GitHub, insieme al sito pubblicato.
 
 ## Gli altri file della serie
 - [CLAUDE.md](../CLAUDE.md): le regole di lavoro.

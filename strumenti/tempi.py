@@ -15,9 +15,9 @@ def controlla(f):
     righe = Path(f).read_text().splitlines()
     scene, cur, voce = [], None, False
     for r in righe:
-        m = re.match(r'^### (\S+) · (.+?) · (\d+):(\d\d)\s*$', r)
+        m = re.match(r'^### (\S+) · (.+?) · (\d+):(\d\d(?:\.\d)?)\s*$', r)
         if m:
-            cur = {'id': m[1], 'nome': m[2], 'dur': int(m[3]) * 60 + int(m[4]), 'detto': ''}
+            cur = {'id': m[1], 'nome': m[2], 'dur': int(m[3]) * 60 + float(m[4]), 'detto': ''}
             scene.append(cur)
             voce = False
             continue
@@ -39,10 +39,10 @@ def controlla(f):
         tot += s['dur']
         segno = '✓' if s['dur'] >= serve else '✗'
         ok &= s['dur'] >= serve
-        print(f"  {segno} {s['id']:14} {s['dur']:4d} s  parlato {n:4d} car  servono {serve:5.1f} s")
+        print(f"  {segno} {s['id']:14} {s['dur']:5.1f} s  parlato {n:4d} car  servono {serve:5.1f} s")
     segno = '✓' if tot <= MASSIMO else '✗'
     ok &= tot <= MASSIMO
-    print(f'  {segno} totale {tot // 60}:{tot % 60:02d}')
+    print(f'  {segno} totale {int(tot // 60)}:{tot % 60:04.1f}')
     return ok
 
 
