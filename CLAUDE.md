@@ -88,6 +88,7 @@ L'elenco completo, tradotto nel luna park, è nel §7 del soggetto. Le più impo
   Quando uno scambio la sposta usa la posa **«tirata via»** (va avanti, capelli e vestito restano indietro).
   Niente frecce disegnate su di lei.
 - **Al** (sassolino) e **Mare** (onda con gli occhi): i compagni di viaggio della prima frase.
+- **Parco** (alberello con gli occhi e due rametti): il compagno di viaggio di «Al parco Emma» (episodio 2).
 - **Le paperelle**: una per ogni parola che può venire dopo. Quella pescata sale sul treno e diventa un passeggero.
 - I modelli dei personaggi sono nella tela di design (link nel [README](README.md)) e, in SVG, in
   `episodi/comune/shared.js`: ogni cambio di aspetto parte dalla tela e si riporta in `shared.js`.

@@ -48,6 +48,7 @@ Sono le leggi fisiche del nostro mondo. Valgono in ogni episodio, anche quando n
 - **Lo Spezzaparole**: vecchia biglietteria con una grande forbice.
 - **Emma**: bambina fatta di luce, bionda, capelli mossi fin sopra le spalle, fermaglio a stellina. Il vestito ha il colore dei suoi vicini.
 - **Al** (sassolino) e **Mare** (onda con gli occhi): i suoi compagni di viaggio nella prima frase. Nelle altre frasi ne arrivano altri.
+- **Parco** (alberello con gli occhi): il compagno di viaggio di Emma in «Al parco Emma», al posto di Mare. Con lui Emma fa un altro viaggio ed esce verde.
 - **Le paperelle**: una per ogni parola che può venire dopo. Quella pescata diventa un passeggero.
 
 ## 4. Le proprietà che il mondo deve avere
