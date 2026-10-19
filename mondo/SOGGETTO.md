@@ -30,6 +30,7 @@ Ogni volta che qualcuno scrive e preme invio, la sua frase arriva lì e fa un gi
 Sono le leggi fisiche del nostro mondo. Valgono in ogni episodio, anche quando non si vedono.
 
 - **La biglietteria.** Alla stazione, lo **Spezzaparole** strappa la frase in biglietti, uno per pezzo. Sta fuori dalla montagna.
+- **La parola nuova** (episodio 6). Lo Spezzaparole ha un biglietto intero per le parole che passano tutti i giorni. Una parola che non ha mai visto intera, come un nome inventato, la taglia nei pezzi per cui ha un biglietto, e ogni pezzo sale nel suo vagone con il suo vestito: una parola sola può fare tre vagoni. Sul treno i pezzi restano biglietti con gli occhi, senza scritte. Il taglio non segue il significato, e lo stesso pezzo è sempre lo stesso biglietto. Dentro la montagna la parola intera non c'è: ci sono i pezzi, e i fili di luce che li legano.
 - **I passeggeri.** Ogni biglietto prende vita sul sedile e diventa un passeggero, con un vestito di luce del suo colore. Lo stesso pezzo ha sempre lo stesso vestito quando sale.
 - **La fila.** I passeggeri siedono in vagoni uno dietro l'altro, nell'ordine della frase. L'ultimo vagone è quello dell'ultimo pezzo.
 - **Nessuno guida.** Il treno parte da solo. La pista lo porta, e nessuno sul treno o fuori dal treno decide dove va.

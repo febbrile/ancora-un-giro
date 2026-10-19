@@ -561,11 +561,139 @@ def addestramento(dati):
     return {'momenti': momenti}
 
 
+# ── Episodio 6 · Lo Spezzaparole: «Al mare Zampirù» ───────────────────────────────────────────────────
+# Zampirù è il nome che un bambino ha inventato. Lo Spezzaparole non ha un biglietto per la parola intera:
+# la taglia nei pezzi per cui ha un biglietto, e la parola sale in tre vagoni.
+#
+# Inventati e dichiarati qui: i tagli dello Spezzaparole (TAGLI), i biglietti dei tre pezzi, gli sguardi di «rù»
+# (Q_RU e le key dei pezzi), i fili dei pezzi davanti e quelli di «rù» nei tratti 2 e 3, gli spostamenti di «Zam»
+# e «pi». Calcolati: i fili di «rù» nel primo tratto, quello che i fili gli portano, gli scambi (gli stessi di
+# sempre, con scambio()), i colori, le finestre e la vasca. Al e Mare sono uguali a «Al mare Emma»: guardano
+# solo avanti, e davanti a loro c'è la stessa cosa. Le paperelle (P) sono quelle di sempre.
+
+# Lo Spezzaparole: le parole di tutti i giorni hanno un biglietto intero; le altre si tagliano nei pezzi che ha.
+TAGLI = {
+    'Al': ['Al'], 'mare': ['mare'], 'Emma': ['Emma'], 'parco': ['parco'], 'gelato': ['gelato'],
+    'Zampirù': ['Zam', 'pi', 'rù'],
+    'precipitevolissimevolmente': ['pre', 'cipit', 'evol', 'issim', 'evol', 'mente'],
+}
+FRASE_ZAMPIRU = ['Al', 'mare', 'Zampirù']
+PESCA_ZAMPIRU = 'nuota'
+
+# I biglietti dei tre pezzi: «Zam» giallo, «pi» corallo, «rù» grigio argento, un colore che non somiglia a niente.
+B_PEZZI = {
+    'Zam': [-0.20, -0.25, -0.75],
+    'pi':  [1.00, 0.10, -0.80],
+    'rù':  [-0.50, 0.20, -0.60],
+}
+# Gli sguardi di «rù», l'ultimo vagone, nel primo tratto: query · key, poi softmax (come per Emma).
+Q_RU = [0.50, -0.50, -0.50]
+K_PEZZI = {'Zam': [0.70, -1.40, -0.90], 'pi': [1.40, -1.20, -1.10], 'rù': [0.40, -0.20, -0.30]}
+# I fili di «Zam» e «pi» (dichiarati): i pezzi guardano soprattutto il pezzo che hanno davanti.
+FILI_PEZZI = {
+    'Zam': {'Al': 0.2, 'mare': 0.3, 'Zam': 0.5},
+    'pi':  {'Al': 0.0, 'mare': 0.2, 'Zam': 0.5, 'pi': 0.3},
+}
+# Nei tratti 2 e 3 i fili di «rù» vanno soprattutto a Mare (Al, Mare, Zam, pi, rù).
+FILI_RU_TRATTI = [None, (0.1, 0.6, 0.1, 0.1, 0.1), (0.1, 0.6, 0.1, 0.1, 0.1)]
+# Gli spostamenti dei tre tratti di «Zam» e «pi».
+S_PEZZI = {
+    'Zam': [[-0.06, 0.08, 0.02], [-0.08, 0.10, 0.04], [-0.10, 0.12, 0.05]],
+    'pi':  [[-0.10, 0.06, 0.05], [-0.12, 0.10, 0.08], [-0.15, 0.12, 0.10]],
+}
+
+
+def giro_zampiru(dati):
+    pezzi = [p for w in FRASE_ZAMPIRU for p in TAGLI[w]]
+    print(f'\n== {" ".join(FRASE_ZAMPIRU)} ==  (sul treno: {" · ".join(pezzi)})')
+    for w in ('gelato', 'Zampirù', 'precipitevolissimevolmente'):
+        print(f'  lo Spezzaparole: «{w}» →', ' · '.join(TAGLI[w]))
+    biglietti = {**B, **B_PEZZI}
+    spost = {**S, **S_PEZZI}
+    ultimo = pezzi[-1]
+
+    def tappe(t):
+        x, tt = biglietti[t], [biglietti[t]]
+        for d in spost[t]:
+            x = somma(x, d)
+            tt.append(x)
+        return tt
+
+    # I fili di «rù» nel primo tratto, calcolati; nei tratti 2 e 3, dichiarati.
+    chiavi = {**K, **K_PEZZI}
+    sguardi = {t: round(dot(Q_RU, chiavi[t]), 2) for t in pezzi}
+    fili = dict(zip(pezzi, [round(q, 1) for q in softmax(list(sguardi.values()))]))
+    assert abs(sum(fili.values()) - 1) < 1e-9, fili
+    print('  sguardi di «rù»', sguardi, '→ fili', fili)
+    fili_tratti = [fili] + [dict(zip(pezzi, f)) for f in FILI_RU_TRATTI[1:]]
+    for f in fili_tratti:
+        assert abs(sum(f.values()) - 1) < 1e-9, f
+
+    # «rù», tratto per tratto: i fili gli portano la media pesata dei vestiti di chi guarda, poi scatta lo scambio.
+    altri = {t: tappe(t) for t in pezzi[:-1]}
+    x, tt = biglietti[ultimo], [biglietti[ultimo]]
+    for k, f in enumerate(fili_tratti):
+        vestiti = {**{t: altri[t][k] for t in altri}, ultimo: x}
+        porta = r2([sum(f[t] * vestiti[t][i] for t in pezzi) for i in range(3)])
+        y = somma(x, porta)
+        if k == 0:
+            dopo_fili = y
+        x = somma(y, scambio(k, y))
+        tt.append(x)
+
+    out = {'frase': FRASE_ZAMPIRU, 'pezzi': pezzi, 'tagli': {w: TAGLI[w] for w in TAGLI}, 'passeggeri': {}}
+    for t in pezzi:
+        if t == ultimo:
+            info = {'biglietto': colore(biglietti[t]), 'tratti': [colore(v) for v in tt[1:]], 'fili': fili,
+                    'fili_tratti': fili_tratti, 'dopo_fili': colore(dopo_fili), 'finestre': []}
+            print(f'  {t:5}: biglietto', info['biglietto'], '→ dopo i fili', info['dopo_fili'], '→ tratti', info['tratti'])
+            for k, v in enumerate(tt[1:]):
+                conta_k = vasca(v)[1]
+                info['finestre'].append([[w, c, '#%02x%02x%02x' % COLORE[w]] for w, c in conta_k.items()])
+                print(f'         finestra {k + 1}', conta_k)
+            p, conta = vasca(tt[-1])
+            assert sum(conta.values()) == PAPERELLE_IN_VASCA
+            out['vasca'] = [[w, c, '#%02x%02x%02x' % COLORE[w]] for w, c in conta.items()]
+            assert info['finestre'][-1] == out['vasca'], 'l\'ultima finestra deve essere uguale alla vasca'
+            out['probabilita'] = {w: round(p[w], 3) for w in sorted(p, key=lambda w: -p[w])[:5]}
+            print('  vasca', conta)
+            print('  probabilità', out['probabilita'])
+        else:
+            info = {'biglietto': colore(biglietti[t]), 'tratti': [colore(v) for v in altri[t][1:]],
+                    'fili': FILI_DICHIARATI.get(t) or FILI_PEZZI[t]}
+            print(f'  {t:5}: biglietto', info['biglietto'], '→ tratti', info['tratti'])
+        out['passeggeri'][t] = info
+    out['nuovo'] = {PESCA_ZAMPIRU: colore(B[PESCA_ZAMPIRU])}
+    print(f'  passeggero nuovo «{PESCA_ZAMPIRU}»:', out['nuovo'][PESCA_ZAMPIRU])
+
+    # Le cose che la storia dà per vere.
+    # Le parole di tutti i giorni salgono intere, quelle mai viste a pezzi; lo stesso pezzo è sempre lo stesso biglietto.
+    assert all(len(TAGLI[w]) == 1 for w in ('Al', 'mare', 'Emma', 'gelato'))
+    assert len(TAGLI['Zampirù']) == 3 and len(TAGLI['precipitevolissimevolmente']) > 3
+    assert ''.join(TAGLI['Zampirù']) == 'Zampirù' and ''.join(TAGLI['precipitevolissimevolmente']) == 'precipitevolissimevolmente'
+    # Al e Mare sono identici a «Al mare Emma»: guardano solo avanti.
+    for t in ('Al', 'mare'):
+        assert out['passeggeri'][t]['biglietto'] == dati['mare']['passeggeri'][t]['biglietto']
+        assert out['passeggeri'][t]['tratti'] == dati['mare']['passeggeri'][t]['tratti']
+    # I tre pezzi salgono con tre vestiti diversi; «rù» non somiglia ancora a niente.
+    assert len({out['passeggeri'][t]['biglietto'] for t in TAGLI['Zampirù']}) == 3
+    assert max(vasca(B_PEZZI['rù'])[1].values()) <= 5
+    # Nel primo tratto il filo più forte di «rù» va a «pi», poi a «Zam»: i fili legano i pezzi della parola.
+    assert max(fili, key=fili.get) == 'pi' and fili['Zam'] > fili['mare']
+    # Dopo il primo tratto «rù» ha il giallo di «Zam»: alla prima finestra vince la stessa parola del biglietto di «Zam».
+    assert next(iter(vasca(tt[1])[1])) == next(iter(vasca(B_PEZZI['Zam'])[1])) == 'felice'
+    # All'uscita la vasca è quella di un nome al mare: vince «nuota», e la «Fine» resta rara.
+    v = dict((w, c) for w, c, _ in out['vasca'])
+    assert out['vasca'][0][0] == PESCA_ZAMPIRU == 'nuota' and v.get('Fine', 0) <= 1
+    return out
+
+
 if __name__ == '__main__':
     dati = {k: giro(k) for k in FRASI}
     controlla(dati)
     dati['manopola'] = manopola(dati)
     dati['chat'] = giro_chat(dati)
     dati['addestramento'] = addestramento(dati)
+    dati['zampiru'] = giro_zampiru(dati)  # episodio 6
     if '--scrivi' in sys.argv:
         scrivi(dati)
