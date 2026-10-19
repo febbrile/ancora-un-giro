@@ -26,6 +26,62 @@
         "titolo": "Al parco",
         "personaggio": "parco",
         "racconto": "Due frasi quasi uguali: al posto di Mare, nel secondo treno c’è Parco, un alberello con gli occhi. Emma sale rosa su tutti e due, ma esce blu da uno e verde dall’altro."
+      },
+      {
+        "n": 3,
+        "etichetta": "Episodio 3",
+        "cartella": "03-la-stessa-vasca",
+        "titolo": "La stessa vasca",
+        "personaggio": "manopola",
+        "racconto": "Da tre case arriva la stessa frase, e tre volte la vasca si riempie uguale. Allora perché Ada pesca ogni volta una paperella diversa? Sul bancone c’è una vecchia manopola."
+      },
+      {
+        "n": 4,
+        "etichetta": "Episodio 4",
+        "cartella": "04-il-treno-che-ricorda",
+        "titolo": "Il treno che ricorda",
+        "personaggio": "vagone",
+        "racconto": "Quando la risposta è finita, i passeggeri scendono e il treno resta vuoto. Al messaggio dopo, alla stazione arriva una striscia lunghissima."
+      },
+      {
+        "n": 5,
+        "etichetta": "Episodio 5",
+        "cartella": "05-chi-ha-costruito-la-pista",
+        "titolo": "Chi ha costruito la pista",
+        "personaggio": "prova",
+        "racconto": "Dietro la stazione dormono dei vecchi treni grigi. Si torna indietro, a prima che il parco aprisse, per scoprire chi ha piegato la pista."
+      },
+      {
+        "n": 6,
+        "etichetta": "Episodio 6",
+        "cartella": "06-lo-spezzaparole",
+        "titolo": "Lo Spezzaparole",
+        "personaggio": "pezzo",
+        "racconto": "Da una cameretta arriva un nome che nessuno ha mai sentito: Zampirù. Lo Spezzaparole fa zac tre volte, e sul treno salgono tre biglietti con gli occhi."
+      },
+      {
+        "n": 7,
+        "etichetta": "Episodio 7",
+        "cartella": "07-come-finisce-la-storia",
+        "titolo": "Come finisce la storia",
+        "personaggio": "fine",
+        "racconto": "Il treno fa un giro dopo l’altro: potrebbe girare per sempre? In fondo alla vasca, fin dalla prima sera, c’è una paperella del colore della notte."
+      },
+      {
+        "n": 8,
+        "etichetta": "Episodio 8",
+        "cartella": "08-la-paperella-sbagliata",
+        "titolo": "La paperella sbagliata",
+        "personaggio": "cane",
+        "racconto": "Qualcuno chiede come si chiama il cane di Emma. Ma Emma un cane non ce l’ha: questa volta la vasca resterà vuota?"
+      },
+      {
+        "n": 9,
+        "etichetta": "Episodio 9",
+        "cartella": "09-il-parco-piu-grande-del-mondo",
+        "titolo": "Il parco più grande del mondo",
+        "personaggio": "laggiu",
+        "racconto": "Oltre le colline si accendono le luci di un altro parco, e quasi tutte le frasi volano là. Ada lascia il trenino e sale sulla collina a guardare."
       }
     ]
   }

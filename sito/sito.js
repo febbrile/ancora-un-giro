@@ -16,6 +16,14 @@
     mare: { colore: () => mare().mare.biglietto, ritratto: '10 25 184 184', intero: '8 52 186 136', disegno: c => G.mare(c) },
     ada: { colore: () => G.C.crema, ritratto: '28 10 144 144', intero: '20 0 160 312', disegno: () => G.ada('quaderno', 'felice') },
     paperella: { colore: () => '#FFD23F', ritratto: '-16 -18 132 132', intero: '0 10 104 86', disegno: c => G.paperella(c) },
+    // I volti degli episodi della prima stagione, dal terzo in poi: di solito l'elemento nuovo dell'episodio.
+    manopola: { colore: () => G.C.oro, ritratto: '-104 -104 208 208', intero: '-104 -104 208 208', disegno: () => G.manopola(0) },
+    vagone: { colore: () => G.C.rosso, ritratto: '-10 -40 260 210', intero: '-40 -40 300 200', disegno: () => G.vagone({ primo: true, sbarra: 0 }) },
+    prova: { colore: () => '#8C8E99', ritratto: '-10 -40 260 210', intero: '-40 -40 300 200', disegno: () => G.vagone({ primo: true, grigio: true }) },
+    pezzo: { colore: () => G.MOD.zampiru.passeggeri.Zam.biglietto, ritratto: '18 50 172 172', intero: '18 60 172 130', disegno: c => G.pezzo(c, 'd') },
+    fine: { colore: () => G.MOD.finisce.passeggeri['.'].tratti.at(-1), ritratto: '-16 -18 132 132', intero: '0 10 104 86', disegno: c => G.paperella(c) },
+    cane: { colore: () => G.MOD.cane.passeggeri.cane.biglietto, ritratto: '18 18 168 168', intero: '10 30 184 150', disegno: c => G.cane(c, { coda: 16 }) },
+    laggiu: { colore: () => G.C.luce2, ritratto: '1360 560 520 520', intero: '1100 560 1300 300', disegno: () => '<rect x="1000" y="400" width="1600" height="800" fill="' + G.C.notte2 + '"/>' + G.laggiu() + '<path d="M1000 900 L1000 760 Q1500 690 1920 740 L2600 740 L2600 900 Z" fill="#171A44"/>' },
   };
   const PERSONAGGI = Object.keys(VOLTI);
 
