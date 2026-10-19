@@ -24,11 +24,12 @@ Ogni episodio usa solo elementi già presentati e si chiude da solo. La domanda 
 - **Domanda di Ada**: «E se al posto del mare ci fosse un parco?» (chiude l'episodio 1).
 - **Elemento nuovo**: Parco, l'alberello con gli occhi, compagno di viaggio di Emma.
 - **Idea**: partono due treni identici tranne un vagone, Mare in uno e Parco nell'altro. Emma sale rosa su entrambi:
-  dal primo esce blu e la vasca si riempie di paperelle blu, dal secondo esce verde e la vasca si riempie quasi tutta di «gioca».
-  Ada pesca e la storia va al parco.
-- **Chiude con**: Ada pesca una seconda volta dalla stessa vasca, ed esce una paperella diversa.
+  dal primo esce blu e la vasca si riempie di paperelle blu, dal secondo esce verde e la vasca si riempie quasi tutta di
+  paperelle verdi, «corre». Ada pesca e la storia va al parco.
+- **Chiude con**: la stessa frase arriva di nuovo, la vasca si riempie uguale, Ada pesca ed esce una paperella diversa («gioca»).
 - **Sotto**: attention con un contesto diverso. Emma sale con lo stesso colore ed esce con un colore diverso.
-  La frase «Al parco Emma» va calcolata nel modellino prima di scrivere la sceneggiatura.
+  Gli scambi scattano a seconda del vagone che passa e portano avanti la differenza. Calcolata nel modellino:
+  sceneggiatura in [02-al-parco.md](../sceneggiatura/02-al-parco.md).
 
 ## 3 · La stessa vasca
 
