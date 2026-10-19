@@ -68,6 +68,7 @@ kit.scene('parco', {
     this.sub = G.subs(kit, [[1.0, 8.4], [15.6, 23.0], [23.4, 28.4]]);
   },
   render(t, kit) {
+    t = window.G.tempo('02', 'parco', t);
     const G = this.G, M = G.MONDO, m = this.m;
     m.cam.setAttribute('transform', G.camChiavi(PA_CAM, t));
     G.animaMondo(m, t + 660);

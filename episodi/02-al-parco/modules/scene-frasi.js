@@ -65,6 +65,7 @@ kit.scene('frasi', {
     this.sub = G.subs(kit, [[0.6, 7.2], [21.0, 24.6]]);
   },
   render(t, kit) {
+    t = window.G.tempo('02', 'frasi', t);
     const G = this.G, M = G.MONDO;
     // La città: le due finestre accese respirano.
     this.casa.forEach((c, k) => c.setAttribute('opacity', (0.75 + 0.25 * Math.sin(t * 2.4 + k * 1.7)).toFixed(3)));

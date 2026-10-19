@@ -29,7 +29,7 @@ kit.scene('mare', {
     this.lista.forEach((p, i) => { const d = Math.abs(p.x - 700) + Math.abs(p.y - 880); if (p.parola === 'nuota' && d < bd) { bd = d; best = i; } });
     this.presa = best; this.colPresa = this.lista[best].col;
     const ordine = this.lista.map((p, i) => i).sort((a, b) => this.lista[a].y - this.lista[b].y);
-    const papere = ordine.map(i => '<g class="mr-pap" data-i="' + i + '"><g transform="translate(-50 -84)">' + G.paperella(this.lista[i].col) + '</g></g>').join('');
+    const papere = ordine.map(i => '<g class="mr-pap" data-i="' + i + '"><g transform="translate(-50 -84)"><g class="mr-vera">' + G.paperella(this.lista[i].col) + '</g><g class="mr-dilu">' + G.paperellaDiLuce(this.lista[i].col) + '</g></g></g>').join('');
     const treno = this.chi.map(c => ({ tipo: c[0], col: c[1].tratti[2] })).concat([{ tipo: 'paperella', col: D.nuovo.nuota }]);
     let scintille = '';
     for (let k = 0; k < 10; k++) scintille += '<circle r="2.4" fill="' + G.C.luce + '"/>';
@@ -50,7 +50,7 @@ kit.scene('mare', {
     this.G = G;
     this.vag = this.m.qa('.mr-treno .g-vag'); this.ada = this.m.q('.mr-ada'); this.uscita = this.m.q('.mr-uscita');
     this.mano = this.m.q('.mr-mano'); this.luce = this.m.q('.mr-luce'); this.scint = this.m.q('.mr-scint');
-    this.pap = this.m.qa('.mr-pap').map(el => ({ el, i: +el.dataset.i }));
+    this.pap = this.m.qa('.mr-pap').map(el => ({ el, i: +el.dataset.i, vera: el.querySelector('.mr-vera'), luce: el.querySelector('.mr-dilu') }));
     this.passNuovo = this.vag[3].querySelector('.g-pass');
     const path = this.m.arrivo, sF = path.getTotalLength() - (M.fermo - 40);
     this.sF = sF;
@@ -68,6 +68,7 @@ kit.scene('mare', {
     return [ax - 100 * s + mx * s, ay - 304 * s + my * s];
   },
   render(t, kit) {
+    t = window.G.tempo('02', 'mare', t);
     const G = this.G, M = G.MONDO, m = this.m;
     m.cam.setAttribute('transform', G.camChiavi(MR_CAM, t));
     G.animaMondo(m, t + 760);
@@ -83,9 +84,12 @@ kit.scene('mare', {
     const torna = seg(s, this.sF - 150, this.sF);
     this.vag.slice(0, 3).forEach((v, i) => G.cambiaPasseggero(v, this.chi[i][0], G.mix(this.chi[i][1].tratti[2], this.chi[i][1].biglietto, Math.round(torna * 12) / 12)));
     // Le paperelle cadono dove passa l'ultimo vagone.
-    this.pap.forEach(({ el, i }) => {
+    this.pap.forEach(({ el, i, vera, luce }) => {
       const t0 = this.cade[i], p = this.lista[i];
       const u = seg(t, t0, t0 + 0.55);
+      // Cadono ancora di luce, come nelle finestre; quando toccano l'acqua sono vere.
+      const vv = seg(u, 0.55, 1);
+      vera.setAttribute('opacity', vv.toFixed(3)); luce.setAttribute('opacity', (1 - vv).toFixed(3));
       const via = eio(seg(t, 17.6 + (i % 7) * 0.12, 19.2 + (i % 7) * 0.12)), a = via * 2.4 + i;
       const x = lerp(p.x, 772 + 8 * Math.cos(a), via);
       const y = lerp(lerp(808, p.y, ei(u)) + (u >= 1 ? 1.2 * Math.sin(t * 2.2 + i) : 0), 884, via);

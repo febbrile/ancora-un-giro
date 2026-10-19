@@ -16,7 +16,7 @@ Ada, una piccola scienziata, ne pesca una senza guardare: è la parola dopo. La 
 |---|---|---|---|---|
 | Prologo | Premi invio | 2:52 | Il mondo e il giro intero, visto da fuori: Ada, lo Spezzaparole, i passeggeri, la montagna, la vasca, la pesca | [guarda](https://febbrile.github.io/ancora-un-giro/sito/guarda.html?ep=00-premi-invio) |
 | 1 | Dentro la montagna | 3:52 | Lo stesso giro, da dentro: i fili di luce, gli scambi, le finestre sulla vasca dove si accendono le paperelle. Emma entra rosa ed esce blu | [guarda](https://febbrile.github.io/ancora-un-giro/sito/guarda.html?ep=01-dentro-la-montagna) |
-| 2 | Al parco | DURATA | Due treni uguali tranne un vagone: con Mare Emma esce blu, con Parco esce verde. Stessa frase, stessa vasca, ma la pesca può cambiare | [guarda](https://febbrile.github.io/ancora-un-giro/sito/guarda.html?ep=02-al-parco) |
+| 2 | Al parco | 4:32 | Due treni uguali tranne un vagone: con Mare Emma esce blu, con Parco esce verde. Stessa frase, stessa vasca, ma la pesca può cambiare | [guarda](https://febbrile.github.io/ancora-un-giro/sito/guarda.html?ep=02-al-parco) |
 
 I prossimi episodi, con argomento e idea, sono nella [scaletta](mondo/SCALETTA.md).
 

@@ -25,7 +25,7 @@ kit.scene('verde', {
     this.chi = [['al', P.Al], ['parco', P.parco], ['emma', P.Emma]];
     this.lista = G.papereVasca(D.vasca);
     const ordine = this.lista.map((p, i) => i).sort((a, b) => this.lista[a].y - this.lista[b].y);
-    const papere = ordine.map(i => '<g class="vd-pap" data-i="' + i + '"><g transform="translate(-50 -84)">' + G.paperella(this.lista[i].col) + '</g></g>').join('');
+    const papere = ordine.map(i => '<g class="vd-pap" data-i="' + i + '"><g transform="translate(-50 -84)"><g class="vd-vera">' + G.paperella(this.lista[i].col) + '</g><g class="vd-dilu">' + G.paperellaDiLuce(this.lista[i].col) + '</g></g></g>').join('');
     // Il quaderno: a sinistra la vasca dell'altra volta (già disegnata), a destra quella di oggi (si disegna adesso).
     // Ogni pagina ha il suo centro: cx = 568 (sinistra) e 1352 (destra).
     const omino = (x, y, col) => '<g transform="translate(' + x + ' ' + y + ') scale(1.7)"><path d="M-26 0 L26 0 L16 -34 L-16 -34 Z" fill="' + col + '"/><circle cy="-52" r="22" fill="#F5C84C"/><circle cy="-48" r="15" fill="#FFE9D6"/></g>';
@@ -56,7 +56,7 @@ kit.scene('verde', {
     this.m.q('.g-vasca').insertAdjacentHTML('beforeend', papere);
     this.G = G;
     this.vag = this.m.qa('.vd-treno .g-vag'); this.ada = this.m.q('.vd-ada');
-    this.pap = this.m.qa('.vd-pap').map(el => ({ el, i: +el.dataset.i }));
+    this.pap = this.m.qa('.vd-pap').map(el => ({ el, i: +el.dataset.i, vera: el.querySelector('.vd-vera'), luce: el.querySelector('.vd-dilu') }));
     this.quad = this.m.q('.vd-quad'); this.tratti = this.m.qa('.vd-tratto'); this.colori = this.m.qa('.vd-colore'); this.matita = this.m.q('.vd-matita');
     this.lung = this.tratti.map(p => p.getTotalLength());
     const path = this.m.arrivo, sF = path.getTotalLength() - (M.fermo - 40);
@@ -70,6 +70,7 @@ kit.scene('verde', {
     this.sub = G.subs(kit, [[3.0, 10.0], [18.0, 24.0], [26.4, 32.4]]);
   },
   render(t, kit) {
+    t = window.G.tempo('02', 'verde', t);
     const G = this.G, M = G.MONDO, m = this.m;
     m.cam.setAttribute('transform', G.camChiavi(VD_CAM, t));
     G.animaMondo(m, t + 790);
@@ -80,9 +81,12 @@ kit.scene('verde', {
     const torna = Math.round(seg(s, this.sF - 150, this.sF) * 12) / 12;
     const ciao = Math.round((-22 + 18 * Math.sin((t - VD_CIAO[0]) * 5)) * seg(t, VD_CIAO[0], VD_CIAO[0] + 0.6) * (1 - seg(t, VD_CIAO[1] - 0.6, VD_CIAO[1])));
     this.vag.forEach((v, i) => G.cambiaPasseggero(v, this.chi[i][0], G.mix(this.chi[i][1].tratti[2], this.chi[i][1].biglietto, torna), i === 1 ? { ciao } : {}));
-    this.pap.forEach(({ el, i }) => {
+    this.pap.forEach(({ el, i, vera, luce }) => {
       const t0 = this.cade[i], p = this.lista[i];
       const u = seg(t, t0, t0 + 0.55);
+      // Cadono ancora di luce, come nelle finestre; quando toccano l'acqua sono vere.
+      const vv = seg(u, 0.55, 1);
+      vera.setAttribute('opacity', vv.toFixed(3)); luce.setAttribute('opacity', (1 - vv).toFixed(3));
       const yy = lerp(808, p.y, ei(u)) + (u >= 1 ? 1.2 * Math.sin(t * 2.2 + i) : 0);
       el.setAttribute('transform', 'translate(' + p.x.toFixed(2) + ' ' + yy.toFixed(2) + ') scale(' + (0.16 * (u < 1 ? lerp(0.7, 1, u) : 1)).toFixed(4) + ')');
       el.setAttribute('opacity', t < t0 ? 0 : 1);

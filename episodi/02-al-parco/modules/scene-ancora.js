@@ -45,7 +45,7 @@ kit.scene('ancora', {
     this.lista.forEach((p, i) => { const d = Math.abs(p.x - 700) + Math.abs(p.y - 880); if (p.parola === 'gioca' && d < bd) { bd = d; best = i; } });
     this.presa = best; this.colPresa = this.lista[best].col;
     const ordine = this.lista.map((p, i) => i).sort((a, b) => this.lista[a].y - this.lista[b].y);
-    const papere = ordine.map(i => '<g class="an-pap" data-i="' + i + '"><g transform="translate(-50 -84)">' + G.paperella(this.lista[i].col) + '</g></g>').join('');
+    const papere = ordine.map(i => '<g class="an-pap" data-i="' + i + '"><g transform="translate(-50 -84)"><g class="an-vera">' + G.paperella(this.lista[i].col) + '</g><g class="an-dilu">' + G.paperellaDiLuce(this.lista[i].col) + '</g></g></g>').join('');
     this.chiC = [['al', P.Al], ['parco', P.parco], ['emma', P.Emma]];
     const treni = [
       [{ tipo: 'al', col: A.passeggeri.Al.biglietto }, { tipo: 'mare', col: A.passeggeri.mare.biglietto }, { tipo: 'emma', col: A.passeggeri.Emma.biglietto }, { tipo: 'paperella', col: A.nuovo.nuota }],
@@ -79,7 +79,7 @@ kit.scene('ancora', {
     this.passC = this.treni[2].map(v => v.querySelector('.g-pass'));
     this.ada = this.m.q('.an-ada'); this.str = this.m.q('.an-striscia'); this.nero = this.m.q('.an-nero');
     this.mano = this.m.q('.an-mano'); this.luce = this.m.q('.an-luce'); this.scint = this.m.q('.an-scint');
-    this.pap = this.m.qa('.an-pap').map(el => ({ el, i: +el.dataset.i }));
+    this.pap = this.m.qa('.an-pap').map(el => ({ el, i: +el.dataset.i, vera: el.querySelector('.an-vera'), luce: el.querySelector('.an-dilu') }));
     this.casa = this.m.q('.an-casa'); this.telB = this.m.q('.an-tel-b');
     this.fine = this.m.q('.an-fine'); this.insegna = this.m.q('.an-insegna');
     const path = this.m.arrivo, sF = path.getTotalLength() - (M.fermo - 40);
@@ -98,6 +98,7 @@ kit.scene('ancora', {
     return [ax - 100 * s + mx * s, ay - 304 * s + my * s];
   },
   render(t, kit) {
+    t = window.G.tempo('02', 'ancora', t);
     const G = this.G, M = G.MONDO, m = this.m;
     m.cam.setAttribute('transform', G.camChiavi(AN_CAM, t));
     G.animaMondo(m, t + 860);
@@ -133,9 +134,12 @@ kit.scene('ancora', {
     this.str.setAttribute('transform', 'translate(' + sx.toFixed(1) + ' ' + sy.toFixed(1) + ') rotate(' + ((1 - us) * -14).toFixed(1) + ') scale(' + lerp(0.3, 0.123, us).toFixed(3) + ')');
     this.str.setAttribute('opacity', t >= AN_STRISCIA[0] && t < AN_STRISCIA[1] ? 1 : 0);
     // La vasca: si riempie uguale, poi, dopo la pesca, si svuota.
-    this.pap.forEach(({ el, i }) => {
+    this.pap.forEach(({ el, i, vera, luce }) => {
       const t0 = this.cade[i], p = this.lista[i];
       const u = seg(t, t0, t0 + 0.55);
+      // Cadono ancora di luce, come nelle finestre; quando toccano l'acqua sono vere.
+      const vv = seg(u, 0.55, 1);
+      vera.setAttribute('opacity', vv.toFixed(3)); luce.setAttribute('opacity', (1 - vv).toFixed(3));
       const via = eio(seg(t, 20.4 + (i % 7) * 0.12, 22.0 + (i % 7) * 0.12)), a = via * 2.4 + i;
       const x = lerp(p.x, 772 + 8 * Math.cos(a), via);
       const y = lerp(lerp(808, p.y, ei(u)) + (u >= 1 ? 1.2 * Math.sin(t * 2.2 + i) : 0), 884, via);

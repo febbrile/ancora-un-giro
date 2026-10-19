@@ -114,6 +114,10 @@ const RITMO = {
     fili: [[24.8, 36, 2.6, 1]], scambi: [[21.6, 34, 2.6, 1]], pesca: [[20.6, 30, 2.4, 1]],
     finestre: [[46.2, 51, 2.6, 1]], uscita: [[29.6, 34, 2.2, 1]], quaderno: [[1.0, 10.0, 6.0]],
   },
+  '02': {
+    domanda: [[19.0, 22, 2.6, 1]], partenza: [[9.6, 18, 2.4, 1]], fili: [[11.4, 21.6, 6.0], [30.4, 40, 2.4, 1]],
+    finestre: [[41.0, 46, 2.6, 1]], mare: [[17.4, 28, 2.6, 1]], pesca: [[21.8, 28, 2.4, 1]],
+  },
 };
 // Dove si trova il tempo interno dentro un tratto, dopo tau secondi veri.
 function nelTratto(x0, x1, r, fine, tau) {

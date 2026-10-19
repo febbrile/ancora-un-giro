@@ -1,39 +1,12 @@
 {
-  "v": 1,
-  "stage": "final",
-  "look": "Ancora un giro: illustrazione piatta e morbida, un luna park di notte (blu profondo, lampadine calde, righe rosse e crema, una montagna scura). Una sola storia raccontata dal narratore, senza formule né numeri a schermo. Personaggi in SVG: Ada, piccola scienziata col camice lungo; lo Spezzaparole, vecchia biglietteria rossa e oro con la forbice; Al sassolino, Mare onda, Parco alberello con gli occhi, Emma bambina di luce bionda col fermaglio a stellina; le paperelle colorate. Ritmo lento: al massimo 12 caratteri al secondo di sottotitolo e almeno 3 secondi di sole immagini per scena.",
-  "palettes": [
-    [
-      "#0B1030",
-      "#FFD27A",
-      "#F6EEDD",
-      "#D9483B"
-    ]
-  ],
-  "theirs": 0,
   "width": 1920,
   "height": 1080,
-  "fps": 60,
   "background": "#0B1030",
-  "fonts": {
-    "display": {
-      "family": "Fredoka",
-      "or": "manrope",
-      "weights": [
-        400,
-        600
-      ]
-    },
-    "sans": {
-      "family": "Atkinson Hyperlegible",
-      "or": "manrope"
-    }
-  },
   "scenes": [
     {
       "id": "domanda",
       "name": "La domanda",
-      "dur": 22,
+      "dur": 21.6,
       "desc": "Ada, alla bancarella, guarda il disegno dell'altra volta (Emma entrata rosa, uscita blu) e si chiede: e se al posto del mare ci fosse un parco? Titolo."
     },
     {
@@ -51,25 +24,25 @@
     {
       "id": "partenza",
       "name": "Due treni",
-      "dur": 18,
+      "dur": 12.0,
       "desc": "I due treni partono da soli, uno dietro l'altro, e spariscono nella montagna; Ada corre alla bancarella."
     },
     {
       "id": "fili",
       "name": "Due fili",
-      "dur": 40,
+      "dur": 28.6,
       "desc": "Dentro: nel primo treno il filo più forte va da Emma a Mare e porta l'azzurro; nel secondo va a Parco e porta il verde."
     },
     {
       "id": "finestre",
-      "name": "Le finestre del parco",
-      "dur": 36,
-      "desc": "Il secondo treno nel fascio di binari: gli scambi scattano a seconda di chi passa; le finestre danno su un giardino, un viale, un prato. Emma diventa verde."
+      "name": "Le finestre sulla vasca",
+      "dur": 43.6,
+      "desc": "Il secondo treno nel fascio di binari: gli scambi scattano a seconda di chi passa; alle finestre sulla vasca, con Emma si accendono paperelle di luce sempre più verdi."
     },
     {
       "id": "mare",
       "name": "Il primo treno",
-      "dur": 28,
+      "dur": 20.0,
       "desc": "Il primo treno esce: Emma è blu, la vasca si riempie di blu. Ada pesca: nuota. Il treno va ad aspettare in fondo alla stazione."
     },
     {
@@ -81,7 +54,7 @@
     {
       "id": "pesca",
       "name": "La pesca",
-      "dur": 28,
+      "dur": 24.2,
       "desc": "Ada pesca una paperella verde: corre. Sui due telefoni: «Al mare Emma nuota», «Al parco Emma corre»."
     },
     {

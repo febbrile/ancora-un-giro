@@ -48,6 +48,7 @@ kit.scene('domanda', {
     this.sub = G.subs(kit, [[0.8, 9.0], [12.6, 16.6]]);
   },
   render(t, kit) {
+    t = window.G.tempo('02', 'domanda', t);
     const G = this.G, m = this.m;
     m.cam.setAttribute('transform', G.camChiavi(DM_CAM, t));
     G.animaMondo(m, t + 620);
