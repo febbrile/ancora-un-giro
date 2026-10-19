@@ -72,6 +72,16 @@ function tavole() {
   const tappe = [['biglietto', P.Emma.biglietto], ['dopo i fili', P.Emma.dopo_fili], ['tratto 1', P.Emma.tratti[0]], ['tratto 2', P.Emma.tratti[1]], ['tratto 3', P.Emma.tratti[2]]];
   tappe.forEach(([n, col], k) => { s += at(130 + k * 360, 640, 1.05, G.emma(col)) + et(235 + k * 360, 1010, n + ' · ' + col, true, 24); });
   T['Finestre.dc.html'] = { titolo: 'Le finestre e il vestito di Emma', w: 1920, h: 1080, svg: s };
+  // Al parco: Parco, il viaggio di Emma nel secondo treno, le finestre e la vasca.
+  const Q = G.MOD.parco, PP = Q.passeggeri;
+  s = '<rect width="1920" height="1080" fill="#F3EADB"/>' + titolo('Al parco · episodio 2');
+  s += pannello(40, 120, 1000, 440);
+  [PP.parco.biglietto].concat(PP.parco.tratti).forEach((c, k) => { s += at(70 + k * 240, 170, 1.15, G.parco(c, { ciao: k === 3 ? -25 : 0 })); });
+  s += et(185, 540, 'Parco · biglietto', true) + et(665, 540, 'dopo i tratti', true) + et(905, 540, 'saluta', true);
+  [['biglietto', PP.Emma.biglietto], ['dopo i fili', PP.Emma.dopo_fili], ['uscita', PP.Emma.tratti[2]]].forEach(([n, col], k) => { s += at(1090 + k * 270, 140, 1.0, G.emma(col)) + et(1190 + k * 270, 540, 'Emma · ' + n); });
+  PP.Emma.finestre.forEach((nome, k) => { s += at(60 + k * 400, 600, 0.95, G.finestra(nome, k + 11)) + et(231 + k * 400, 880, nome); });
+  Q.vasca.forEach((v, k) => { s += at(1260 + (k % 3) * 200, 620 + Math.floor(k / 3) * 160, 0.9, G.paperella(v[2])) + et(1305 + (k % 3) * 200, 726 + Math.floor(k / 3) * 160, v[0] + ' · ' + v[1], false, 20); });
+  T['Parco.dc.html'] = { titolo: 'Al parco · Parco, le finestre, la vasca', w: 1920, h: 1080, svg: s };
   // La grammatica: colori e caratteri.
   const sw = [['notte', C.notte1], ['cielo', C.notte2], ['lampadine', C.luce], ['righe', C.rosso], ['crema', C.crema], ['oro', C.oro], ['montagna', C.mont2], ['acqua', C.acqua]];
   s = '<rect width="1280" height="720" fill="#F3EADB"/>' + titolo('La grammatica');
@@ -94,7 +104,7 @@ function artboard(nome, t) {
 
 const T = tavole();
 fs.mkdirSync(OUT, { recursive: true });
-const posto = { 'Main.dc.html': [0, 0], 'Oggetti.dc.html': [2000, 0], 'LunaPark.dc.html': [0, 1200], 'Montagna.dc.html': [2000, 1200], 'Finestre.dc.html': [0, 2400], 'Grammatica.dc.html': [2000, 2400] };
+const posto = { 'Main.dc.html': [0, 0], 'Oggetti.dc.html': [2000, 0], 'LunaPark.dc.html': [0, 1200], 'Montagna.dc.html': [2000, 1200], 'Finestre.dc.html': [0, 2400], 'Grammatica.dc.html': [2000, 2400], 'Parco.dc.html': [0, 3600] };
 const canvas = {
   v: 3, createdOnFiles: { v: 1, at: new Date().toISOString().replace(/\.\d+Z$/, 'Z') }, title: 'Ancora un giro · design',
   launch: { view: 'canvas' }, pages: [], boards: {}, order: Object.keys(T), notes: {}, designSystems: [],

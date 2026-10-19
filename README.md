@@ -16,6 +16,7 @@ Ada, una piccola scienziata, ne pesca una senza guardare: è la parola dopo. La 
 |---|---|---|---|---|
 | Prologo | Premi invio | 3:26 | Il mondo e il giro intero, visto da fuori: Ada, lo Spezzaparole, i passeggeri, la montagna, la vasca, la pesca | [apri](https://claude.ai/artifact/HNCae1Yqakm6xrZYTBu4Ah) |
 | 1 | Dentro la montagna | 4:28 | Lo stesso giro, da dentro: i fili di luce, gli scambi, le finestre. Emma entra rosa ed esce blu | [apri](https://claude.ai/artifact/Neb3nYKCJBYY7oUBes7foS) |
+| 2 | Al parco | 4:54 | Due treni uguali tranne un vagone: con Mare Emma esce blu, con Parco esce verde. Stessa frase, stessa vasca, ma la pesca può cambiare | [apri](https://claude.ai/artifact/H6jVGjksZzBqTejorEjvHe) |
 
 I prossimi episodi, con argomento e idea, sono nella [scaletta](mondo/SCALETTA.md).
 

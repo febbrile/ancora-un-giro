@@ -45,6 +45,13 @@
       "h": 1080,
       "title": "Le finestre e il vestito di Emma"
     },
+    "Parco.dc.html": {
+      "x": 0,
+      "y": 3600,
+      "w": 1920,
+      "h": 1080,
+      "title": "Al parco · Parco, le finestre, la vasca"
+    },
     "Grammatica.dc.html": {
       "x": 2000,
       "y": 2400,
@@ -59,6 +66,7 @@
     "LunaPark.dc.html",
     "Montagna.dc.html",
     "Finestre.dc.html",
+    "Parco.dc.html",
     "Grammatica.dc.html"
   ],
   "notes": {},
