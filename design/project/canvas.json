@@ -58,6 +58,27 @@
       "w": 1920,
       "h": 1080,
       "title": "Al parco · Parco, le finestre, la vasca"
+    },
+    "Passeggeri.dc.html": {
+      "x": 2000,
+      "y": 3600,
+      "w": 1920,
+      "h": 1080,
+      "title": "I passeggeri nuovi della stagione"
+    },
+    "Stagione.dc.html": {
+      "x": 0,
+      "y": 4800,
+      "w": 1920,
+      "h": 1080,
+      "title": "Gli oggetti nuovi della stagione"
+    },
+    "Immenso.dc.html": {
+      "x": 2000,
+      "y": 4800,
+      "w": 1920,
+      "h": 1080,
+      "title": "Il parco più grande del mondo"
     }
   },
   "order": [
@@ -67,7 +88,10 @@
     "Montagna.dc.html",
     "Finestre.dc.html",
     "Grammatica.dc.html",
-    "Parco.dc.html"
+    "Parco.dc.html",
+    "Passeggeri.dc.html",
+    "Stagione.dc.html",
+    "Immenso.dc.html"
   ],
   "notes": {},
   "designSystems": []
