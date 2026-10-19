@@ -295,6 +295,7 @@ def manopola(dati):
     out['nuovo'] = {w: colore(B[w]) for pos in PESCHE_MANOPOLA for w in PESCHE_MANOPOLA[pos]}
     for w, c in out['nuovo'].items():
         print(f'  passeggero nuovo «{w}»:', c)
+    return out
 
 
 # ── Episodio 4 · Il treno che ricorda: la chat e la banchina ─────────────────────────────────────────
