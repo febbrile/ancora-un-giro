@@ -1,0 +1,57 @@
+// Controlla gli episodi senza aprirli: `node strumenti/controlla.mjs [episodio…]`.
+//
+// Per ogni scena legge i sottotitoli (G.sottotitolo) e le loro finestre (G.subs) e verifica:
+// - al massimo 12 caratteri al secondo;
+// - finestre dentro la durata della scena, e almeno 3 secondi di sole immagini;
+// - nessun pezzo di sottotitolo che finisce con un articolo, una preposizione, una congiunzione o un apostrofo;
+// - l'episodio sotto i 5 minuti; shared.js e base.css uguali alla fonte comune;
+// - nessun numero a schermo nei sottotitoli.
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const RADICE = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const CPS = 12, PAUSA = 3, MAX = 300;
+const comune = f => fs.readFileSync(path.join(RADICE, 'episodi', 'comune', f), 'utf8');
+globalThis.window = {};
+new Function(comune('shared.js'))();
+const G = globalThis.window.G;
+const WEAK = new Set('il lo la i gli le un uno una di a da in con su per tra fra del dello della dei degli delle al allo alla ai agli alle dal dallo dalla dai dagli dalle nel nello nella nei negli nelle sul sullo sulla sui sugli sulle e ed o ma che se come non mi ti si ci vi ne è suo sua suoi sue mio mia tuo tua quel quella questo questa ogni più'.split(' '));
+
+let errori = 0;
+const male = m => { errori++; console.log('  ✗ ' + m); };
+const eps = process.argv.slice(2).length ? process.argv.slice(2) : fs.readdirSync(path.join(RADICE, 'episodi')).filter(d => /^\d\d-/.test(d)).sort();
+for (const ep of eps) {
+  const dir = path.join(RADICE, 'episodi', ep, 'modules');
+  const scene = JSON.parse(fs.readFileSync(path.join(dir, 'scenes.json'), 'utf8')).scenes;
+  const tot = scene.reduce((s, x) => s + x.dur, 0);
+  console.log('\n' + ep + ' · ' + Math.floor(tot / 60) + ':' + String(tot % 60).padStart(2, '0'));
+  if (tot > MAX) male('più di 5 minuti');
+  for (const f of ['shared.js', 'base.css']) if (fs.readFileSync(path.join(dir, f), 'utf8') !== comune(f)) male(f + ' diverso da episodi/comune (python3 strumenti/allinea.py)');
+  for (const s of scene) {
+    const file = path.join(dir, 'scene-' + s.id + '.js');
+    if (!fs.existsSync(file)) { male('manca scene-' + s.id + '.js'); continue; }
+    const src = fs.readFileSync(file, 'utf8');
+    const testi = [...src.matchAll(/G\.sottotitolo\('(NARRATORE|ADA)', '((?:[^'\\]|\\.)*)'\)/g)].map(m => ({ chi: m[1], testo: m[2] }));
+    const fin = /G\.subs\(kit, (\[\[.*?\]\])\)/.exec(src);
+    const finestre = fin ? JSON.parse(fin[1]) : [];
+    if (testi.length !== finestre.length) { male(s.id + ': ' + testi.length + ' sottotitoli ma ' + finestre.length + ' finestre'); continue; }
+    let detto = 0;
+    testi.forEach((x, i) => {
+      const [a, b] = finestre[i], n = x.testo.length, cps = n / (b - a);
+      detto += b - a;
+      if (cps > CPS) male(s.id + ': «' + x.testo.slice(0, 40) + '…» ' + cps.toFixed(1) + ' car/s (servono ' + (n / CPS).toFixed(1) + ' s, ne ha ' + (b - a).toFixed(1) + ')');
+      if (a < 0 || b > s.dur) male(s.id + ': finestra ' + a + '–' + b + ' fuori dalla scena (' + s.dur + ' s)');
+      if (/\d/.test(x.testo)) male(s.id + ': un numero nel sottotitolo «' + x.testo + '»');
+      G.chunkSub(x.testo).forEach(c => {
+        const w = c.split(' ').pop().toLowerCase().replace(/[«"]/g, '');
+        if (WEAK.has(w) || /['’]$/.test(w)) male(s.id + ': il pezzo «' + c + '» finisce con «' + w + '»');
+        if (c.length > 48) male(s.id + ': il pezzo «' + c + '» è più lungo di 48 caratteri');
+      });
+    });
+    if (s.dur - detto < PAUSA) male(s.id + ': meno di ' + PAUSA + ' s di sole immagini');
+    console.log('  ✓ ' + s.id.padEnd(14) + String(s.dur).padStart(3) + ' s · ' + testi.length + ' battute · ' + (s.dur - detto).toFixed(1) + ' s di sole immagini');
+  }
+}
+console.log(errori ? '\n' + errori + ' problemi' : '\nTutto a posto.');
+process.exit(errori ? 1 : 0);

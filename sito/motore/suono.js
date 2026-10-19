@@ -1,4 +1,4 @@
-// Il suono del pozzo: un piccolo sintetizzatore Web Audio che suona la partitura di score.js.
+// Il suono di «Ancora un giro»: un piccolo sintetizzatore Web Audio che suona la partitura di score.js.
 // Strumenti e rumori sono fatti da noi: somigliano a quelli di Motion, ma non sono identici.
 // Due stili: «calma» suona la musica com'è; «anni 90» la suona riarrangiata da anni90.js, con voci da console.
 // Il suono passa per tre canali, ognuno col suo volume e il suo interruttore:
@@ -57,12 +57,12 @@
 
     // Gli eventi da suonare, già divisi per canale. La musica cambia con lo stile, gli effetti no.
     const effetti = partitura.eventi.filter(e => e.tipo === 'rumore').map(e => Object.assign({}, e, { canale: 'effetti' }));
-    const arrangia = (p, s) => s === 'anni90' && Pozzo.anni90 ? Pozzo.anni90(p) : p.eventi;
+    const arrangia = (p, s) => s === 'anni90' && Giro.anni90 ? Giro.anni90(p) : p.eventi;
     function componi(s) {
       let note;
-      if (musica.tema && Pozzo.tema) {          // il tema: un giro che si ripete uguale per tutto l'episodio
-        const giro = Pozzo.tema(musica.tema, partitura.griglia);
-        note = Pozzo.ripeti(arrangia(giro, s), giro.durata, durata);
+      if (musica.tema && Giro.tema) {          // il tema: un giro che si ripete uguale per tutto l'episodio
+        const giro = Giro.tema(musica.tema, partitura.griglia);
+        note = Giro.ripeti(arrangia(giro, s), giro.durata, durata);
       } else if (musica.file) note = [];        // la musica è un file: la suona una clip
       else note = arrangia(partitura, s);        // la musica di score.js, scena per scena come in Motion
       note = note.filter(e => e.tipo !== 'rumore').map(e => Object.assign({}, e, { canale: 'musica' }));
@@ -111,15 +111,15 @@
     });
 
     let sessione = null;
-    let caso = Pozzo.rng(11);
+    let caso = Giro.rng(11);
 
     function risposta(ctx, sec) {
-      const n = Math.floor(ctx.sampleRate * sec), b = ctx.createBuffer(2, n, ctx.sampleRate), r = Pozzo.rng(5);
+      const n = Math.floor(ctx.sampleRate * sec), b = ctx.createBuffer(2, n, ctx.sampleRate), r = Giro.rng(5);
       for (let c = 0; c < 2; c++) { const d = b.getChannelData(c); for (let i = 0; i < n; i++) d[i] = (r() * 2 - 1) * Math.pow(1 - i / n, 2.6); }
       return b;
     }
     function rumore(ctx, sec) {
-      const n = Math.floor(ctx.sampleRate * sec), b = ctx.createBuffer(1, n, ctx.sampleRate), r = Pozzo.rng(3), d = b.getChannelData(0);
+      const n = Math.floor(ctx.sampleRate * sec), b = ctx.createBuffer(1, n, ctx.sampleRate), r = Giro.rng(3), d = b.getChannelData(0);
       for (let i = 0; i < n; i++) d[i] = r() * 2 - 1;
       return b;
     }
@@ -416,5 +416,5 @@
     };
   }
 
-  window.Pozzo = Object.assign(window.Pozzo || {}, { creaSuono, canaliPresenti, CANALI });
+  window.Giro = Object.assign(window.Giro || {}, { creaSuono, canaliPresenti, CANALI });
 })();

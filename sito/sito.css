@@ -1,13 +1,13 @@
-/* Il pozzo delle parole: le pagine del sito (elenco episodi e player). */
+/* Ancora un giro: le pagine del sito (elenco episodi e player). */
 :root {
-  --notte: #0E1226;
-  --fondo: #141A33;
+  --notte: #0B1030;
+  --fondo: #121944;
   --pannello: #1B2244;
   --bordo: #2C3563;
-  --oro: #F5C84C;
-  --crema: #F4EEE2;
+  --oro: #FFD27A;
+  --crema: #F6EEDD;
   --tenue: #A9B0CF;
-  --arancio: #E8743B;
+  --arancio: #D9483B;
   --menta: #9BE7C4;
   color-scheme: dark;
 }

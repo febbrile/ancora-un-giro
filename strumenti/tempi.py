@@ -1,78 +1,52 @@
-"""Controlla il ritmo della sceneggiatura.
+"""Controlla il ritmo delle sceneggiature: `python3 strumenti/tempi.py [file…]`.
 
-Per ogni scena (`### N.M · Titolo · m:ss`) conta i caratteri detti dalle voci (le righe `> `)
-e quelli del monitor (il blocco ``` dopo **MONITOR.**), e verifica che
-
-    durata ≥ parlato / 12 + monitor / 15 + 3 secondi di sole immagini
-
-Controlla anche che ogni episodio (`## Episodio N · Titolo`) stia sotto i 5 minuti.
-Uso: python3 strumenti/tempi.py [sceneggiatura/SCENEGGIATURA.md]
+Per ogni scena (`### id · Nome · m:ss`) somma i caratteri detti dalle voci (le righe `> ` sotto NARRATORE o ADA)
+e verifica che `durata ≥ parlato/12 + 3 s`. Poi verifica che l'episodio non superi i 5 minuti.
+Senza argomenti controlla tutte le sceneggiature in `sceneggiatura/`.
 """
 import re
 import sys
 from pathlib import Path
 
-PARLATO_CPS, MONITOR_CPS, PAUSA, MAX_EPISODIO = 12, 15, 3, 300
+CPS, PAUSA, MASSIMO = 12, 3, 300
 
 
-def secondi(s):
-    m, ss = s.split(':')
-    return int(m) * 60 + int(ss)
-
-
-def leggi(path):
-    episodi, ep, scena, in_monitor, dopo_monitor = [], None, None, False, False
-    for riga in Path(path).read_text(encoding='utf-8').splitlines():
-        if riga.startswith('## Episodio'):
-            ep = {'titolo': riga[3:].strip(), 'scene': []}
-            episodi.append(ep)
-            scena = None
+def controlla(f):
+    righe = Path(f).read_text().splitlines()
+    scene, cur, voce = [], None, False
+    for r in righe:
+        m = re.match(r'^### (\S+) · (.+?) · (\d+):(\d\d)\s*$', r)
+        if m:
+            cur = {'id': m[1], 'nome': m[2], 'dur': int(m[3]) * 60 + int(m[4]), 'detto': ''}
+            scene.append(cur)
+            voce = False
             continue
-        if riga.startswith('## '):
-            ep = scena = None
+        if r.startswith('## '):
+            cur = None
+        if cur is None:
             continue
-        m = re.match(r'### (\S+) · (.+) · (\d+:\d\d)$', riga)
-        if m and ep is not None:
-            scena = {'id': m[1], 'titolo': m[2], 'durata': secondi(m[3]), 'parlato': 0, 'monitor': 0}
-            ep['scene'].append(scena)
-            continue
-        if scena is None:
-            continue
-        if riga.startswith('**MONITOR'):
-            dopo_monitor = True
-            continue
-        if riga.startswith('```'):
-            in_monitor = dopo_monitor and not in_monitor
-            if not in_monitor:
-                dopo_monitor = False
-            continue
-        if in_monitor:
-            scena['monitor'] += len(riga.strip())
-        elif riga.startswith('> '):
-            scena['parlato'] += len(riga[2:].strip())
-    return episodi
-
-
-def main():
-    path = sys.argv[1] if len(sys.argv) > 1 else 'sceneggiatura/SCENEGGIATURA.md'
-    errori = 0
-    for ep in leggi(path):
-        totale = sum(s['durata'] for s in ep['scene'])
-        print(f"\n{ep['titolo']}  {totale // 60}:{totale % 60:02d}")
-        for s in ep['scene']:
-            serve = s['parlato'] / PARLATO_CPS + s['monitor'] / MONITOR_CPS + PAUSA
-            parla = s['durata'] - PAUSA - s['monitor'] / MONITOR_CPS
-            cps = s['parlato'] / parla if s['parlato'] else 0
-            ok = serve <= s['durata']
-            errori += not ok
-            print(f"  {'ok ' if ok else 'NO '} {s['id']:5} {s['titolo'][:32]:32} {s['durata']:3}s"
-                  f"  servono {serve:5.1f}s  parlato {s['parlato']:3}  monitor {s['monitor']:3}  {cps:4.1f} car/s")
-        if totale > MAX_EPISODIO:
-            errori += 1
-            print(f'  NO  episodio oltre i {MAX_EPISODIO // 60} minuti')
-    print('\nRitmo rispettato.' if not errori else f'\n{errori} problemi di ritmo.')
-    sys.exit(1 if errori else 0)
+        if re.match(r'^\*\*(NARRATORE|ADA)\.\*\*', r):
+            voce = True
+        elif r.startswith('**'):
+            voce = False
+        elif voce and r.startswith('> '):
+            cur['detto'] += r[2:].strip() + ' '
+    ok, tot = True, 0
+    print(f'\n{f}')
+    for s in scene:
+        n = len(s['detto'].strip())
+        serve = n / CPS + PAUSA
+        tot += s['dur']
+        segno = '✓' if s['dur'] >= serve else '✗'
+        ok &= s['dur'] >= serve
+        print(f"  {segno} {s['id']:14} {s['dur']:4d} s  parlato {n:4d} car  servono {serve:5.1f} s")
+    segno = '✓' if tot <= MASSIMO else '✗'
+    ok &= tot <= MASSIMO
+    print(f'  {segno} totale {tot // 60}:{tot % 60:02d}')
+    return ok
 
 
 if __name__ == '__main__':
-    main()
+    files = sys.argv[1:] or sorted(str(p) for p in (Path(__file__).resolve().parent.parent / 'sceneggiatura').glob('[0-9]*.md'))
+    risultati = [controlla(f) for f in files]
+    sys.exit(0 if all(risultati) else 1)

@@ -1,4 +1,4 @@
-// Il motore del pozzo: le stesse funzioni del kit di Claude Motion che usano le nostre scene, scritte da noi.
+// Il motore di «Ancora un giro»: le stesse funzioni del kit di Claude Motion che usano le nostre scene, scritte da noi.
 // Le scene (episodi/NN-titolo/modules) restano identiche: qui si caricano, si montano e si disegnano al tempo t.
 (function () {
   'use strict';
@@ -187,7 +187,7 @@
 
   // Esegue un modulo con `kit` a portata di mano, come fa Motion.
   function esegui(kit, nome, codice) {
-    try { new Function('kit', codice + '\n//# sourceURL=pozzo/' + nome)(kit); }
+    try { new Function('kit', codice + '\n//# sourceURL=giro/' + nome)(kit); }
     catch (e) { console.error(nome + ':', e); throw new Error('Errore nel modulo ' + nome + ': ' + e.message); }
   }
 
@@ -260,5 +260,5 @@
     return film;
   }
 
-  window.Pozzo = Object.assign(window.Pozzo || {}, { carica, rng, componiPartitura });
+  window.Giro = Object.assign(window.Giro || {}, { carica, rng, componiPartitura });
 })();

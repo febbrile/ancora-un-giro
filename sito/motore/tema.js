@@ -13,7 +13,7 @@
   function tema(def, griglia) {
     const bpm = (def && def.bpm) || (griglia && griglia.bpm) || 76;
     let battito = 0;
-    const p = Pozzo.componiPartitura(S => {
+    const p = Giro.componiPartitura(S => {
       S.tempo(bpm, { t0: 0 });
       S.seed((def && def.seme) || 7);
       S.program('pad', 'pad', { rev: 0.65, gain: -2 });
@@ -41,5 +41,5 @@
     return out.sort((a, b) => a.t - b.t);
   }
 
-  window.Pozzo = Object.assign(window.Pozzo || {}, { tema, ripeti });
+  window.Giro = Object.assign(window.Giro || {}, { tema, ripeti });
 })();

@@ -1,125 +1,151 @@
-# Il pozzo delle parole: regole di lavoro
+# Ancora un giro: regole di lavoro
 
-Un cartone animato a episodi che spiega come un LLM sceglie il prossimo token.
-Deve piacere a un bambino come fiaba ed essere corretto per un adulto. Le due cose non si scambiano mai:
-se una scena è bella ma scientificamente sbagliata, si riscrive.
+Una serie di cartoni animati che racconta, con una storia, cosa succede dopo che premi invio in una chat
+con un'intelligenza artificiale. È per una persona comune, e la guardano anche i bambini.
+Il mondo è un luna park di notte: una frase fa un giro sulle montagne russe e torna con una parola in più.
+
+**La regola che viene prima di tutte: una sola storia.** Chi guarda segue un racconto, non una lezione.
+Il rigore scientifico c'è sempre, ma sta sotto il racconto e non si vede.
+Se una scena è bella ma scientificamente sbagliata, si riscrive. Se è giusta ma non si capisce, si riscrive lo stesso.
+
+## Le fondamenta
+
+[mondo/SOGGETTO.md](mondo/SOGGETTO.md) viene prima di tutto: la frase da lasciare allo spettatore, le leggi del
+luna park, i personaggi, il motore della serie, le regole di racconto e scientifiche, gli errori da non suggerire
+e la prova per ogni elemento nuovo. Se una scelta lo contraddice, si cambia la scelta, oppure si discute e si
+cambia prima il soggetto.
 
 ## Come si lavora
 
 - **Si parla in italiano**, nei messaggi, nei testi dei film, nei commenti e nei commit.
-- **Prima la sceneggiatura, poi la produzione.** Ogni cambiamento di storia, ritmo o numeri passa prima da
-  [sceneggiatura/SCENEGGIATURA.md](sceneggiatura/SCENEGGIATURA.md); solo dopo l'approvazione si toccano i film.
-- **Le idee nuove si discutono prima di metterle in sceneggiatura**: proponi, spiega il perché, aspetta il sì.
-- Quando l'utente chiede di scegliere, proponi poche alternative (di solito tre) e indica la tua preferita.
-- Prima di dire che una scena è a posto, **guardala**: rendi i fotogrammi e leggili (vedi "Verifica").
+- **Prima il soggetto, poi la sceneggiatura, poi la produzione.** Ogni episodio ha la sua sceneggiatura in
+  `sceneggiatura/NN-titolo.md`; i film si toccano solo dopo.
+- **Le idee nuove si discutono prima di scriverle**: proponi, spiega il perché, aspetta il sì. Quando l'utente
+  chiede di scegliere, proponi poche alternative (di solito tre) e indica la tua preferita.
+- **Prima di dire che una scena è a posto, guardala**: rendi i fotogrammi e leggili (vedi «Verifica»).
 
-## Ritmo e sottotitoli
+## Gli errori da non ripetere
 
-- **Al massimo 12 caratteri al secondo** di sottotitolo mentre una voce parla. Il pubblico include bambini.
-- **Almeno 3 secondi di sole immagini in ogni scena**: servono anche per leggere il monitor di Ada.
-- Ada legge ad alta voce **un solo numero** per volta; gli altri restano sul monitor.
-- Ogni scena deve rispettare `durata ≥ parlato/12 + monitor/15 + 3 s`: controllalo con `python3 strumenti/tempi.py`
-  dopo ogni modifica alla sceneggiatura.
-- Un episodio dura **al massimo 5 minuti** (limite dei film Motion). Meglio un episodio in più che uno troppo pieno.
-- I sottotitoli **scorrono a pezzi** di 18–48 caratteri (`chunkSub` in `shared.js`).
-  Un pezzo **non finisce mai** con un articolo, una preposizione, una congiunzione o una parola con apostrofo:
-  "con un" apre il pezzo dopo, non chiude quello prima.
+Sono gli errori che hanno fatto fallire un primo tentativo con il pubblico vero:
+- **Personaggi, luoghi e oggetti che compaiono senza essere presentati.** Chi guarda deve sapere chi è e a cosa
+  serve ogni cosa che vede, prima che serva.
+- **Formule, numeri e parole tecniche a schermo.** Niente monitor, niente calcoli, niente scritte dentro la montagna.
+- **Due letture sovrapposte**, una per bambini e una per esperti: distraggono gli uni e non bastano agli altri.
+- **Troppe idee in un episodio.** Un episodio presenta **un solo elemento nuovo** del mondo e usa solo quelli già visti.
+- **Spiegazioni fuori dalla trama**: gag didattiche, esempi messi lì per insegnare, riassunti, mappe. Un concetto
+  che non fa avanzare la storia della puntata aspetta la sua puntata, dove diventerà la storia.
+- **Elementi estranei al mondo.** Ogni cosa deve appartenere a un luna park: un bambino che c'è stato la riconosce.
+- **Nessuna domanda.** Ogni episodio parte da una domanda e arriva a una risposta: è una storia completa.
+
+## Racconto e ritmo
+
+- **Il narratore racconta, non spiega.** Ada dice poche battute, brevi, mai numeri.
+- **Al massimo 12 caratteri al secondo** di sottotitolo mentre una voce parla.
+- **Almeno 3 secondi di sole immagini in ogni scena.** Ogni scena rispetta `durata ≥ parlato/12 + 3 s`:
+  controllalo con `python3 strumenti/tempi.py` dopo ogni modifica a una sceneggiatura.
+- **Un episodio dura al massimo 5 minuti** (limite dei film Motion). Meglio un episodio in più che uno troppo pieno.
+- **I sottotitoli scorrono a pezzi** di 18–48 caratteri (`chunkSub` in `shared.js`). Un pezzo non finisce mai con
+  un articolo, una preposizione, una congiunzione o una parola con apostrofo.
+- Le sole scritte a schermo sono i sottotitoli, il titolo e il cartello finale. Sul telefono si vede la frase della storia.
 
 ## Regole scientifiche
 
-1. Il pozzo **non decide, non sceglie, non vuole: calcola**.
-   - Verbi ammessi: calcola, sposta, misura, confronta, si accende, indica, mescola.
+L'elenco completo, tradotto nel luna park, è nel §7 del soggetto. Le più importanti:
+
+1. **La giostra non decide, non sceglie, non vuole: porta.**
+   - Verbi ammessi per pista, scambi e montagna: porta, sposta, fa scattare, calcola, accende, mescola, misura.
    - Verbi vietati: decide, sceglie, pensa, capisce, vuole, sa.
-2. Tokenizer (lo Spezzaparole) e campionamento (Ada che pesca) stanno **fuori** dal pozzo.
-3. Dentro il pozzo non ci sono lettere, solo numeri.
-4. Gli strati **spostano** il vettore: `x = x + Δ` (connessione residua). Mai "riscrivono" o "trasformano Emma".
-5. Le stanze sono **letture** (logit lens): "cosa verrebbe dopo se il pozzo finisse qui", non tappe obbligate.
-6. In uscita si usa solo l'ultima riga. L'uscita è una direzione, non una parola: Emma non *diventa* "nuota".
-7. Stessa frase, stesso secchio (deterministico); la pesca varia; il "perché" dei numeri resta opaco.
-8. EOS è un token come gli altri; una frase troncata è opera di max_tokens, fuori dal pozzo.
-9. Due tipi di pesi: i **parametri** (pietra, fissi) e i **pesi di attention** (luce, calcolati ora).
-10. **Le coordinate non hanno un nome.** Le righe delle carte sono semi neutri (♠ ♥ ♦, poi ♣ e altri):
-    nessuna riga vuol dire "acqua" o "nome". Conta solo quanto due carte si somigliano.
-    Nessuna parola giocattolo è allineata a un asse.
-11. Il colore del vestito di Emma viene **dai vicini** (le parole a cui somiglia), non da una singola riga.
-12. **Parliamo solo del nostro modellino.** Niente confronti con «i modelli veri» (piani, parole, dimensioni):
-    aprono collegamenti che andrebbero spiegati. L'unica eccezione è l'episodio 4, dedicato proprio a questo.
-13. **A metà pozzo ci sono spostamenti, non probabilità.** Botole, frecce e stanze mostrano direzioni calcolate;
-    le probabilità nascono solo in fondo (campane e secchio) e la scelta la fa Ada pescando.
-14. **Coerenza: quello che si mostra una volta, si mostra sempre.** Ogni carta ha i suoi numeri, ogni stanza ha le sue
-    parole calcolate col periscopio, per ogni viaggiatore e in ogni episodio. Se mancano i dati, prima si dichiarano
-    in `numeri.py` e in sceneggiatura, poi si mostrano: niente scorciatoie che facciano sembrare diverso un contesto.
-
-## Le metafore fissate
-
-- **Prodotto scalare = partita a carte.** Ognuno mette una carta sul tavolo; si confrontano seme per seme,
-  ogni coppia dà una pastiglia (prodotto), le pastiglie si sommano in un **gettone** (dorato se positivo,
-  grigio se negativo). Si dice "prodotto scalare", mai "prodotto cartesiano".
-- Attention: lanterna (query) e cartello (key) sono carte; i gettoni diventano **quote** (softmax);
-  con le quote si compone la **nuova carta** di Emma.
-- Uscita: la stessa partita a carte, giocata con ogni campana del fondo.
-- Distribuzione = secchio di palline; temperatura = termostato di Ada; logit lens = periscopio.
+2. **Biglietteria (lo Spezzaparole) e pesca stanno fuori dalla montagna.**
+3. **Dentro la montagna non ci sono lettere**: solo luce e colori. Le paperelle non hanno scritte.
+4. **Gli scambi spostano, non trasformano**: Emma resta Emma, cambia il colore del vestito. Ogni vagone ha il suo
+   binario e il suo spostamento; tutti i vagoni attraversano tutti i tratti.
+5. **Si guarda sempre avanti**: i fili di luce vanno da ogni passeggero a chi gli siede davanti e a sé stesso, mai
+   a chi sta dietro.
+6. **Alla vasca conta solo l'ultimo vagone.** Le paperelle nascono solo lì: nella montagna ci sono spostamenti,
+   non probabilità. Emma non diventa una paperella.
+7. **Stesso treno, stesso giro.** La pista è fissa; la pesca cambia; perché la pista sia fatta così non lo sa
+   spiegare nessuno a parole.
+8. **Quando il treno torna in stazione, ogni vestito torna del colore del suo biglietto**: a ogni giro si riparte
+   dai biglietti.
+9. **La pista non l'ha progettata nessuno**: si è piegata sotto milioni di treni carichi di frasi, poi è stata fissata.
+10. **I colori non hanno un nome**: conta solo quanto due colori si somigliano.
+11. **Parliamo solo del nostro luna park.** Niente confronti con i modelli veri, salvo un episodio dedicato.
+12. **Quello che si mostra una volta, si mostra sempre.** Ogni passeggero ha i suoi colori, ogni finestra il suo
+    paesaggio, ogni vasca le sue paperelle, in ogni episodio. Se mancano i dati, prima si dichiarano nel modellino,
+    poi si mostrano.
 
 ## Personaggi
 
+- **Ada**: piccola scienziata col camice troppo lungo, gli occhiali tondi e il quaderno. Lavora alla stazione e alla
+  bancarella della pesca. **Non sale mai sul treno e non tocca niente dentro la montagna.** È lei che vuole capire:
+  ogni episodio è un mistero che indaga da fuori.
+- **Lo Spezzaparole**: vecchia biglietteria con una grande forbice, sulla banchina.
 - **Emma**: bambina fatta di luce, **bionda, capelli mossi fin sopra le spalle, non spettinati**, fermaglio a
-  stellina sulla frangia. Il vestito ha il colore del suo vettore.
-  Quando uno strato la sposta usa la posa **"tirata via"** (una forza invisibile la tira: lei va avanti, capelli,
-  braccia e vestito restano indietro). **Niente frecce** disegnate su di lei.
-- **Ada**: piccola scienziata col camice lungo, fuori dal pozzo. Osserva, misura, annota, pesca.
-  **Non spinge mai Emma** e non tocca niente dentro il pozzo.
-- Compagni: **Al** sassolino, **Mare** onda con gli occhi, **Parco** alberello con gli occhi.
-- I modelli dei personaggi sono in [personaggi/](personaggi/) (tela Design): ogni cambio di aspetto parte da lì.
+  stellina sulla frangia. Il vestito ha il colore del suo biglietto, poi quello che le danno i fili e gli scambi.
+  Quando uno scambio la sposta usa la posa **«tirata via»** (va avanti, capelli e vestito restano indietro).
+  Niente frecce disegnate su di lei.
+- **Al** (sassolino) e **Mare** (onda con gli occhi): i compagni di viaggio della prima frase.
+- **Le paperelle**: una per ogni parola che può venire dopo. Quella pescata sale sul treno e diventa un passeggero.
+- I modelli dei personaggi sono nella tela di design (link nel [README](README.md)) e, in SVG, in
+  `episodi/comune/shared.js`: ogni cambio di aspetto parte dalla tela e si riporta in `shared.js`.
 
 ## I numeri
 
-- Tutti i numeri sono **giocattolo ma coerenti**: inventati solo dove la sceneggiatura lo dichiara
-  (embedding, righe di U, spostamenti Δ, lenti), tutto il resto si ricava con i calcoli veri.
-- **Un'unica fonte**: [strumenti/numeri.py](strumenti/numeri.py). Se cambi un numero, cambialo lì, esegui
-  `python3 strumenti/numeri.py` e solo dopo copialo in sceneggiatura e nelle scene.
-- Le somme mostrate a schermo devono tornare **con i termini arrotondati** che si vedono (es. 0.90 − 0.06 + 0.51 = 1.35).
+- I colori dei vestiti, i paesaggi delle finestre e le paperelle nella vasca vengono da un modellino giocattolo
+  coerente: **un'unica fonte**, [strumenti/modellino.py](strumenti/modellino.py). Inventati solo i valori che il
+  modellino dichiara come inventati; tutto il resto si calcola.
+- Se cambi un numero, cambialo lì, esegui `python3 strumenti/modellino.py` e solo dopo riporta i risultati nelle scene.
+- I numeri non vanno mai a schermo: decidono colori, quantità e posizioni.
 
 ## I film (artifact Motion)
 
-- Ogni episodio è un artifact Motion su claude.ai (link nel [README](README.md)). La versione pubblicata vive nello
-  **store dell'artifact**; `episodi/` ne è la copia di sorgente.
+- Ogni episodio è un artifact Motion su claude.ai (link nel [README](README.md)). La versione pubblicata vive
+  nello **store dell'artifact**; `episodi/NN-titolo/` ne è la copia di sorgente.
 - Documenti dello store: `film/meta`, `film/script` (`window.CUT = kit.scenes();`), `modules/scenes.json`,
   `modules/base.css`, `modules/shared.js`, `modules/score.js`, `modules/scene-<id>.js`.
   `modules/fetched-fonts.json` lo gestisce il player: non toccarlo.
-- Ogni scrittura su un documento esistente porta `if_version`. **Modifiche allo stesso documento una alla volta**,
-  mai in parallelo. In `str_replace` usa il testo decodificato (virgolette e accenti veri), non quello con escape JSON.
-- Dopo ogni modifica allo store, riallinea il file in `episodi/` e fai commit.
-- Testi SVG: font Fredoka per le scritte, JetBrains Mono per i numeri; la regola in `base.css` li forza.
-- Ogni scena è `kit.scene(id, { init, render(t) })`; i tempi interni usano `seg`, `eo`, `eio`.
+- `shared.js` e `base.css` sono uguali per tutti gli episodi: la fonte è `episodi/comune/`, e
+  `python3 strumenti/allinea.py` li copia negli episodi. Non modificarli dentro un episodio.
+- Ogni scrittura su un documento esistente porta `if_version`. Modifiche allo stesso documento una alla volta, mai
+  in parallelo. Dopo ogni modifica allo store, riallinea il file in `episodi/` e fai commit.
+- Ogni scena è `kit.scene(id, { init, render(t) })`, funzione pura del tempo; i tempi interni usano `seg`, `eo`, `eio`.
+- Testi SVG: Fredoka per titoli e scritte, Atkinson Hyperlegible per i sottotitoli.
+- Musica originale, in `score.js`, con gli accordi sul `pad` (il sito li usa per il suo stile «anni 90»).
 
-## Il sito (player nostro)
+## Il sito
 
-- `sito/` fa girare gli stessi `episodi/*/modules` nel browser, senza Motion. Le scene **non si duplicano**:
-  una modifica a una scena vale per l'artifact e per il sito.
+- `sito/` fa girare gli stessi `episodi/*/modules` nel browser, senza Motion: le scene non si duplicano.
 - Le scene possono usare solo le funzioni del kit che `sito/motore/kit.js` offre. Se una scena ne usa una nuova,
   prima la si aggiunge al motore (con lo stesso comportamento di Motion), poi la si usa.
-- L'audio del sito lo suona `sito/motore/suono.js` su tre canali: **musica**, **effetti**, **voce**, ognuno con
-  volume e interruttore suoi. Gli effetti sono i `S.fx` di `score.js`; la musica è il tema di
-  `episodi/NN-titolo/audio/tracce.json` (`sito/motore/tema.js`), un giro che si ripete uguale per tutto l'episodio
-  e non riparte a ogni scena. La voce (e ogni altro file audio) si aggiunge come `clip` in `tracce.json`.
-  `tracce.json` è solo del sito: non va nello store di Motion.
-- La musica sta più bassa degli effetti (−20 dB di partenza, misurati: i picchi degli effetti restano circa 12 dB sopra la musica): se si cambia il missaggio, gli effetti restano sopra.
-- Lo stile «anni 90» (`sito/motore/anni90.js`) usa gli accordi del `pad` per arpeggi, basso, batteria e melodia,
-  e marimba o basso per capire dove la musica è vivace. Chi scrive un tema o una partitura nuova tenga gli accordi
-  sul `pad`, così entrambi gli stili funzionano.
+- L'audio del sito lo suona `sito/motore/suono.js` su tre canali, **musica**, **effetti** e **voce**, ognuno con volume e
+  interruttore suoi. Senza altro, la musica è quella di `score.js` scena per scena, come nei film Motion. Un episodio può
+  avere `audio/tracce.json` (solo del sito, non va nello store di Motion) per un tema continuo (`sito/motore/tema.js`),
+  i volumi di partenza o file audio a un istante del film, come una voce narrante.
 - Il player di Motion (`app.js`) non va mai copiato nel repository né pubblicato: è codice di Anthropic.
-- Prima di dire che il sito funziona, apri `sito/guarda.html?ep=…&t=…` con un server locale e guarda i fotogrammi.
 - In `sito/episodi.json` c'è l'elenco degli episodi: aggiornalo quando ne nasce uno nuovo.
 
 ## Verifica
 
-- Per guardare un episodio: renderer offline (`render.mjs` con playwright-core e il Chrome dell'utente), che
-  scrive un PNG per ogni tempo richiesto. **Leggi i PNG** prima di dichiarare una scena finita.
-  Nel renderer offline i font sono sostitutivi: dillo quando la verifica è avvenuta solo lì.
-- Controlla in particolare: testi che escono dal riquadro, etichette sovrapposte, sottotitoli in anticipo o in
-  ritardo sulle immagini, elementi coperti.
+- `node strumenti/fotogrammi.mjs <episodio> <tempi…>` rende i fotogrammi in PNG (in `fotogrammi/`, fuori da git)
+  con il motore del sito e il Chrome dell'utente; `--foglio` li impagina in un foglio di provini.
+  **Leggi i PNG** prima di dichiarare una scena finita. Nel renderer i font possono essere sostitutivi: dillo
+  quando la verifica è avvenuta solo lì.
+- `node strumenti/controlla.mjs` controlla sottotitoli, finestre e moduli comuni senza aprire i film.
+- Dopo aver caricato un film su claude.ai, rendilo anche con il player vero di Motion, offline
+  (`render-offline.md` del tipo Motion): i file del player stanno nello scratchpad, mai nel repository.
+- In ogni scena `render(t, kit)` usa il `kit` che riceve: in Motion ogni scena ha il suo.
+- Per ogni scena controlla almeno l'inizio, il centro, la fine e ogni battuta:
+  - testi che escono dal riquadro, etichette sovrapposte, elementi coperti o tagliati;
+  - sottotitoli in anticipo o in ritardo sulle immagini;
+  - un personaggio o un oggetto che compare prima di essere stato presentato;
+  - scritte o numeri dove non devono esserci.
+- Prova del pubblico: dopo ogni episodio, chiediti se una persona che non sa niente di intelligenza artificiale
+  saprebbe raccontarlo con parole sue.
 
 ## Repository
 
-- `sceneggiatura/` la sceneggiatura · `episodi/NN-titolo/` i film · `sito/` il sito statico · `personaggi/` la tela · `strumenti/` script.
-- Commit in italiano, uno per passo logico (sceneggiatura, numeri, singolo episodio).
+- `mondo/` il soggetto · `sceneggiatura/` una sceneggiatura per episodio · `episodi/NN-titolo/` i film ·
+  `episodi/comune/` i moduli condivisi · `design/` la tela dei personaggi · `sito/` il sito statico ·
+  `strumenti/` script.
+- `archivio/` contiene un progetto chiuso: non è una fonte, non si legge e non si modifica.
+- Commit in italiano, uno per passo logico (soggetto, sceneggiatura, numeri, singolo episodio).

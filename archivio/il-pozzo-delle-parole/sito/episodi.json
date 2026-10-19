@@ -1,0 +1,26 @@
+[
+  {
+    "n": 1,
+    "cartella": "01-al-mare-emma",
+    "titolo": "Al mare Emma",
+    "racconto": "Emma entra nel pozzo con Al e Mare: lo Spezzaparole, le carte senza nome, la partita a carte, la discesa a botole, le campane e il secchio."
+  },
+  {
+    "n": 2,
+    "cartella": "02-al-parco-emma",
+    "titolo": "Al parco Emma",
+    "racconto": "Stessa Emma, stessa carta, un compagno diverso: Parco. Il periscopio di Ada, un'altra strada e due cieli."
+  },
+  {
+    "n": 3,
+    "cartella": "03-fino-alla-fine",
+    "titolo": "Fino alla Fine",
+    "racconto": "Il termostato di Ada, lo stesso secchio e una pesca diversa. Arrivano Corre, Felice e Punto, fino alla parola Fine."
+  },
+  {
+    "n": 4,
+    "cartella": "04-mille-semi",
+    "titolo": "Mille semi",
+    "racconto": "Tre semi si possono disegnare, il quarto non ci sta sul foglio. Poi l'etichetta di un pozzo vero: 4.096 semi."
+  }
+]

@@ -19,7 +19,7 @@
   function anni90(partitura) {
     const ev = partitura.eventi, spb = 60 / partitura.griglia.bpm;
     const ab = spb / 2;                  // il battito anni 90 va al doppio della partitura
-    const caso = Pozzo.rng(90);
+    const caso = Giro.rng(90);
     const out = [];
     const metti = (t, dur, tipo, patch, midi, vel) => out.push({ t, dur, tipo, patch, midi, vel: Math.max(1, Math.min(127, Math.round(vel))), params: {} });
 
@@ -96,5 +96,5 @@
     return out;
   }
 
-  window.Pozzo = Object.assign(window.Pozzo || {}, { anni90 });
+  window.Giro = Object.assign(window.Giro || {}, { anni90 });
 })();

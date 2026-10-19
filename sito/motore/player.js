@@ -1,10 +1,10 @@
-// Il player: carica un episodio (?ep=01-al-mare-emma), lo adatta allo schermo e lo fa scorrere col suono.
+// Il player: carica un episodio (?ep=00-premi-invio), lo adatta allo schermo e lo fa scorrere col suono.
 // ?t=12.5 apre il film fermo a quel secondo (comodo per controllare un fotogramma).
 (function () {
   'use strict';
   const $ = id => document.getElementById(id);
   const parametri = new URLSearchParams(location.search);
-  const cartella = (parametri.get('ep') || '01-al-mare-emma').replace(/[^a-z0-9-]/gi, '');
+  const cartella = (parametri.get('ep') || '00-premi-invio').replace(/[^a-z0-9-]/gi, '');
   const ICONA_SUONA = 'M7 4.5v15l12.5-7.5z', ICONA_PAUSA = 'M6.5 4.5h4v15h-4zM13.5 4.5h4v15h-4z';
 
   const stage = $('stage'), schermo = $('schermo'), velo = $('velo'), messaggio = $('messaggio'), grande = $('grande');
@@ -14,12 +14,12 @@
   // Lo stile della musica: «anni 90» (riarrangiata) o «calma» (com'è scritta). Si ricorda tra una visita e l'altra.
   const STILI = { anni90: 'Anni 90', calma: 'Calma' };
   let stile = 'anni90';
-  try { const s = localStorage.getItem('pozzo-stile'); if (STILI[s]) stile = s; } catch (e) {}
+  try { const s = localStorage.getItem('giro-stile'); if (STILI[s]) stile = s; } catch (e) {}
   // I canali dell'audio: acceso/spento e volume da 0 a 100 (79 = com'è scritto, 100 = +6 dB, curva cubica come l'orecchio).
   // Il volume di partenza lo dà tracce.json; quello che sceglie chi guarda si ricorda tra una visita e l'altra.
   const NOMI = { musica: 'Musica', effetti: 'Effetti sonori', voce: 'Voce' };
   const canali = {}, scelti = {};
-  try { Object.assign(scelti, JSON.parse(localStorage.getItem('pozzo-canali')) || {}); } catch (e) {}
+  try { Object.assign(scelti, JSON.parse(localStorage.getItem('giro-canali')) || {}); } catch (e) {}
   const guadagno = v => 2 * Math.pow(v / 100, 3);
   const daDecibel = x => Math.round(100 * Math.cbrt(Math.pow(10, x / 20) / 2));
 
@@ -42,14 +42,14 @@
     let elenco = [];
     try { elenco = await (await fetch('episodi.json', { cache: 'no-cache' })).json(); } catch (e) {}
     const io = elenco.find(e => e.cartella === cartella);
-    const titolo = io ? 'Episodio ' + io.n + ' · ' + io.titolo : cartella;
-    document.title = titolo + ' · Il pozzo delle parole';
+    const titolo = io ? (io.etichetta || 'Episodio ' + io.n) + ' · ' + io.titolo : cartella;
+    document.title = titolo + ' · Ancora un giro';
     $('dove').textContent = titolo;
     vicini(elenco, io);
 
     try {
       await caratteri();
-      [film, audio] = await Promise.all([Pozzo.carica('../episodi/' + cartella, stage), tracce('../episodi/' + cartella + '/audio/')]);
+      [film, audio] = await Promise.all([Giro.carica('../episodi/' + cartella, stage), tracce('../episodi/' + cartella + '/audio/')]);
     } catch (e) {
       console.error(e);
       messaggio.textContent = 'Non riesco a caricare l’episodio: ' + e.message;
@@ -82,8 +82,8 @@
     const prima = elenco.find(e => e.n === io.n - 1), dopo = elenco.find(e => e.n === io.n + 1);
     nav.innerHTML = '';
     const link = (e, testo) => { const a = document.createElement('a'); a.href = 'guarda.html?ep=' + e.cartella; a.textContent = testo; return a; };
-    nav.appendChild(prima ? link(prima, '← Episodio ' + prima.n + ': ' + prima.titolo) : document.createElement('span'));
-    if (dopo) nav.appendChild(link(dopo, 'Episodio ' + dopo.n + ': ' + dopo.titolo + ' →'));
+    nav.appendChild(prima ? link(prima, '← ' + (prima.etichetta || 'Episodio ' + prima.n) + ': ' + prima.titolo) : document.createElement('span'));
+    if (dopo) nav.appendChild(link(dopo, (dopo.etichetta || 'Episodio ' + dopo.n) + ': ' + dopo.titolo + ' →'));
   }
 
   function disegnaCapitoli() {
@@ -132,7 +132,7 @@
     if (tempo >= film.durata - 0.05) tempo = 0;
     if (!suono) {
       try {
-        suono = Pozzo.creaSuono(film.partitura, film.durata, audio, stile);
+        suono = Giro.creaSuono(film.partitura, film.durata, audio, stile);
         if (suono) { suono.muto(muto); Object.keys(canali).forEach(applica); }
       } catch (e) { console.error(e); suono = null; }
     }
@@ -201,9 +201,9 @@
   // ── Il pannello dell'audio: un interruttore e un volume per canale, e lo stile della musica ─────────
   const pannello = $('pannello-audio'), mixer = $('mixer');
   function disegnaPannello() {
-    const presenti = Pozzo.canaliPresenti(film.partitura, audio), volumi = audio.volumi || {};
+    const presenti = Giro.canaliPresenti(film.partitura, audio), volumi = audio.volumi || {};
     pannello.innerHTML = '';
-    Pozzo.CANALI.forEach(n => {
+    Giro.CANALI.forEach(n => {
       if (!presenti[n]) return;
       const mio = scelti[n] || {};
       const c = canali[n] = {
@@ -243,11 +243,11 @@
     const c = canali[n];
     applica(n); c.mostra();
     scelti[n] = { acceso: c.acceso, volume: c.volume };
-    try { localStorage.setItem('pozzo-canali', JSON.stringify(scelti)); } catch (e) {}
+    try { localStorage.setItem('giro-canali', JSON.stringify(scelti)); } catch (e) {}
   }
   function scegliStile(k) {
     stile = k;
-    try { localStorage.setItem('pozzo-stile', stile); } catch (e) {}
+    try { localStorage.setItem('giro-stile', stile); } catch (e) {}
     if (suono) suono.stile(stile);
     mostraStile();
   }
@@ -278,8 +278,8 @@
     else if (ev.key === 'f' || ev.key === 'F') $('intero').click();
   });
 
-  // Per i controlli automatici: window.pozzo.vai(12.5) disegna quel fotogramma.
-  window.pozzo = { vai: t => vai(t), suona, pausa, get film() { return film; }, get tempo() { return tempo; }, get suono() { return suono; }, get canali() { return canali; } };
+  // Per i controlli automatici: window.giro.vai(12.5) disegna quel fotogramma.
+  window.giro = { vai: t => vai(t), suona, pausa, get film() { return film; }, get tempo() { return tempo; }, get suono() { return suono; }, get canali() { return canali; } };
 
   avvio();
 })();

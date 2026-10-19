@@ -3,26 +3,26 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Il pozzo delle parole</title>
-<meta name="description" content="Un cartone a episodi che racconta come un modello linguistico calcola la parola dopo.">
-<link rel="icon" href="stella.svg" type="image/svg+xml">
+<title>Ancora un giro</title>
+<meta name="description" content="Un cartone a episodi che racconta, con una storia, cosa succede dopo che premi invio in una chat con un’intelligenza artificiale.">
+<link rel="icon" href="paperella.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Fredoka:wght@400;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Fredoka:wght@400;600&display=swap">
 <link rel="stylesheet" href="sito.css">
 </head>
 <body>
 <header class="testata">
-  <a class="casa titolo-sito" href="./"><img class="stella" src="stella.svg" alt="">Il pozzo delle parole</a>
+  <a class="casa titolo-sito" href="./"><img class="stella" src="paperella.svg" alt="">Ancora un giro</a>
 </header>
 <main>
   <section class="copertina">
-    <h1 class="titolo-sito">Il pozzo delle parole</h1>
-    <p>Emma è una parola. Cade in un pozzo pieno di numeri, e il pozzo calcola quale parola può venire dopo di lei.</p>
-    <p>Un cartone a episodi su come un modello linguistico sceglie il prossimo token: una fiaba per i bambini, e i conti giusti per i grandi.</p>
+    <h1 class="titolo-sito">Ancora un giro</h1>
+    <p>Quando scrivi a un’intelligenza artificiale e premi invio, la tua frase parte per un viaggio: fa un giro sulle montagne russe di un luna park e torna con una parola in più.</p>
+    <p>Un cartone a episodi per chi non sa niente di come funziona: una storia sola, da guardare dall’inizio.</p>
   </section>
   <ol class="episodi" id="episodi"></ol>
-  <p class="piede">I numeri dei film sono giocattolo ma coerenti: tutti i conti tornano.</p>
+  <p class="piede">Dietro la storia c’è un modellino coerente: i colori e le paperelle vengono da calcoli veri.</p>
 </main>
 <script>
 (async function () {
@@ -32,7 +32,7 @@
   elenco.forEach(e => {
     const li = document.createElement('li'), a = document.createElement('a');
     a.href = 'guarda.html?ep=' + e.cartella;
-    const parti = [['num', 'EPISODIO ' + e.n], ['nome', e.titolo], ['racconto', e.racconto], ['vai', 'Guarda →']];
+    const parti = [['num', (e.etichetta || 'Episodio ' + e.n).toUpperCase()], ['nome', e.titolo], ['racconto', e.racconto], ['vai', 'Guarda →']];
     parti.forEach(([cls, testo]) => { const s = document.createElement('span'); s.className = cls; s.textContent = testo; a.appendChild(s); });
     li.appendChild(a); ol.appendChild(li);
   });

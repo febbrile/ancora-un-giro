@@ -1,0 +1,88 @@
+{
+  "v": 1,
+  "stage": "final",
+  "look": "Ancora un giro: illustrazione piatta e morbida, un luna park di notte (blu profondo, lampadine calde, righe rosse e crema, una montagna scura). Una sola storia raccontata dal narratore, senza formule né numeri a schermo. Personaggi in SVG: Ada, piccola scienziata col camice lungo; lo Spezzaparole, vecchia biglietteria rossa e oro con la forbice; Al sassolino, Mare onda, Emma bambina di luce bionda col fermaglio a stellina; le paperelle colorate. Ritmo lento: al massimo 12 caratteri al secondo di sottotitolo e almeno 3 secondi di sole immagini per scena.",
+  "palettes": [
+    [
+      "#0B1030",
+      "#FFD27A",
+      "#F6EEDD",
+      "#D9483B"
+    ]
+  ],
+  "theirs": 0,
+  "width": 1920,
+  "height": 1080,
+  "fps": 60,
+  "background": "#0B1030",
+  "fonts": {
+    "display": {
+      "family": "Fredoka",
+      "or": "manrope",
+      "weights": [
+        400,
+        600
+      ]
+    },
+    "sans": {
+      "family": "Atkinson Hyperlegible",
+      "or": "manrope"
+    }
+  },
+  "scenes": [
+    {
+      "id": "domanda",
+      "name": "La domanda",
+      "dur": 24,
+      "desc": "Ada, alla bancarella, guarda il trenino sparire nella montagna e si chiede cosa succeda là dentro. Titolo."
+    },
+    {
+      "id": "carrozza",
+      "name": "In carrozza",
+      "dur": 28,
+      "desc": "Arriva «Al mare Emma»: lo Spezzaparole fa tre biglietti, che salgono sul treno; Emma ha un vestito rosa antico."
+    },
+    {
+      "id": "buio",
+      "name": "Nel buio",
+      "dur": 16,
+      "desc": "Il treno sale, scende di colpo ed entra nella montagna; la camera entra con lui."
+    },
+    {
+      "id": "fili",
+      "name": "I fili di luce",
+      "dur": 36,
+      "desc": "Tra i passeggeri si accendono fili di luce verso chi sta davanti; Emma prende un po' dell'azzurro di Mare."
+    },
+    {
+      "id": "scambi",
+      "name": "Gli scambi",
+      "dur": 34,
+      "desc": "I binari si aprono in un fascio; gli scambi scattano da soli e spostano ogni vagone di poco; Emma diventa azzurro polvere."
+    },
+    {
+      "id": "finestre",
+      "name": "Le finestre",
+      "dur": 42,
+      "desc": "Fili e scambi si ripetono; dalle finestre si vedono una spiaggia, un molo, il mare aperto, sempre più simili al vestito di Emma."
+    },
+    {
+      "id": "uscita",
+      "name": "L'uscita",
+      "dur": 34,
+      "desc": "Il treno esce sopra la vasca: sotto l'ultimo vagone cadono paperelle quasi tutte blu. Ada: è uscita blu come il mare."
+    },
+    {
+      "id": "pesca",
+      "name": "La pesca",
+      "dur": 30,
+      "desc": "Ada pesca una paperella blu: «nuota». Sale su un vagone nuovo; sul telefono la storia diventa «Al mare Emma nuota»."
+    },
+    {
+      "id": "quaderno",
+      "name": "Il quaderno",
+      "dur": 24,
+      "desc": "Ada disegna il viaggio sul quaderno e si chiede: e se fosse un parco? Il treno riparte. Fine."
+    }
+  ]
+}
