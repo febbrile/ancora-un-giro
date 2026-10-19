@@ -409,10 +409,163 @@ def giro_chat(dati):
     return out
 
 
+# ── Episodio 5 · Chi ha costruito la pista: i treni di prova ──────────────────────────────────────────
+# Prima che il parco aprisse la pista era dritta: dentro la montagna i fili non portavano niente e gli scambi non
+# spostavano nessuno. Ogni notte passavano i treni di prova, carichi di frasi vere con la parola dopo già scritta
+# sulla striscia; a ogni passaggio la pista si piegava un pochino, nella direzione che fa cadere più paperelle di
+# quella parola (discesa lungo l'errore sulla parola dopo). Poi la pista è stata fissata: è quella di sempre.
+#
+# Semplificazione dichiarata: nel modellino la pista si piega lungo una sola strada, con due misure che vanno da 0
+# (pista dritta) a 1 (la pista di oggi): quanto è piegata (quanto portano i fili, quanto spostano gli scambi con la
+# loro parte fissa, e con loro gli spostamenti dichiarati di Al e del vagone di mezzo) e quanto spinge il vagone che
+# passa (FORZA_SCAMBI). Biglietti, paperelle e colori non si piegano. Con due misure la pista di oggi è l'unica che
+# dà le vasche di oggi: la discesa ci arriva da sola, senza conoscerla. (Con più misure ci sono tante piste diverse
+# che danno le stesse vasche: anche questo è vero, ma qui non serve.)
+# Inventati: la pista dritta di partenza, le frasi di prova (per ogni inizio, quanto spesso arriva ogni parola
+# dopo: proprio la vasca di oggi), il passo di ogni notte (PASSO_NOTTE) e i momenti da raccontare (NUOTA_RACCONTATE).
+# Calcolati: la piega di ogni notte, il brivido di ogni treno, le vasche e le finestre di ogni momento.
+
+PIEGA_DRITTA = (0.0, 0.0)
+PIEGA_DI_OGGI = (1.0, 1.0)
+PASSO_NOTTE = 0.02
+NOTTI_MASSIME = 2000
+# I momenti che l'episodio racconta, per «Al mare Emma»: la prima notte in cui nella vasca ci sono almeno tante
+# paperelle «nuota» (la prima e l'ultima sono la pista dritta e la pista di oggi). A metà strada la vasca passa per
+# notti strane, con molte paperelle scure «Fine»: sono vere, ma l'episodio non le racconta (la «Fine» è dell'episodio 7).
+NUOTA_RACCONTATE = (13, 16)
+
+
+def tappe_piegate(frase, piega, arrotonda=True):
+    """Il vestito di Emma dopo ogni tratto, sulla pista piegata così (0 dritta, 1 oggi)."""
+    pa, pb = piega
+    R = r2 if arrotonda else list
+    sguardi = [round(dot(Q_EMMA, K[t]), 2) for t in frase]
+    fili = dict(zip(frase, [round(q, 1) for q in softmax(sguardi)]))
+    fili_tratti = [fili] + [dict(zip(frase, f)) for f in FILI_EMMA_TRATTI[1:]]
+    altri = {}
+    for t in frase[:-1]:
+        x, tt = B[t], [B[t]]
+        for d in S[t]:
+            x = R([a + pa * b for a, b in zip(x, d)])
+            tt.append(x)
+        altri[t] = tt
+    x, tappe = B['Emma'], []
+    for k, f in enumerate(fili_tratti):
+        vestiti = {**{t: altri[t][k] for t in altri}, 'Emma': x}
+        porta = R([pa * sum(f[t] * vestiti[t][i] for t in frase) for i in range(3)])
+        y = R([a + b for a, b in zip(x, porta)])
+        spinta = [pb * FORZA_SCAMBI * sum(max(0.0, dot(y, P[w])) * P[w][i] for w in P) for i in range(3)]
+        d = R([pa * SCAMBI_FISSI[k][i] + spinta[i] for i in range(3)])
+        x = R([a + b for a, b in zip(y, d)])
+        tappe.append(x)
+    return tappe
+
+
+def log_p(x):
+    lg = [dot(x, P[w]) for w in P]
+    m = max(lg)
+    lse = m + math.log(sum(math.exp(v - m) for v in lg))
+    return {w: v - lse for w, v in zip(P, lg)}
+
+
+def gradiente(f, piega, e=1e-6):
+    g = []
+    for i in range(len(piega)):
+        su, giu = list(piega), list(piega)
+        su[i] += e
+        giu[i] -= e
+        g.append((f(su) - f(giu)) / (2 * e))
+    return g
+
+
+def momento(piega):
+    """Il treno di prova «Al mare Emma» su questa pista: vestiti di Emma, finestre e vasca."""
+    tappe = tappe_piegate(FRASI['mare'][0], piega)
+    finestre = [[[w, c, '#%02x%02x%02x' % COLORE[w]] for w, c in vasca(v)[1].items()] for v in tappe]
+    return {'piega': [round(p, 3) for p in piega], 'tratti': [colore(v) for v in tappe],
+            'finestre': finestre, 'vasca': finestre[-1]}
+
+
+def addestramento(dati):
+    print('\n== I treni di prova (episodio 5) ==')
+    inizi = {k: FRASI[k][0] for k in FRASI}
+    # Le frasi di prova: per ogni inizio, quanto spesso arriva ogni parola dopo (la vasca di oggi).
+    prova = {k: {w: math.exp(v) for w, v in log_p(tappe_piegate(f, PIEGA_DI_OGGI, False)[-1]).items()}
+             for k, f in inizi.items()}
+
+    def errore(piega):
+        return -sum(q * log_p(tappe_piegate(inizi[k], piega, False)[-1])[w]
+                    for k in inizi for w, q in prova[k].items()) / len(inizi)
+
+    def brivido(piega, parola='nuota'):
+        """Quanto forte parte il brivido dalla vasca dopo un treno «Al mare Emma» con quella parola sulla striscia:
+        quanto mancava perché cadessero tutte di quel colore (1 meno la probabilità della parola)."""
+        return 1 - math.exp(log_p(tappe_piegate(inizi['mare'], piega, False)[-1])[parola])
+
+    def piega_della_notte(piega):
+        """Di quanto si piega la pista in una notte intera, con tutti i treni di prova."""
+        g = gradiente(errore, piega)
+        return PASSO_NOTTE * math.sqrt(dot(g, g))
+
+    piega, notte, momenti = list(PIEGA_DRITTA), 0, []
+    da_raccontare = list(NUOTA_RACCONTATE)
+    m = momento(piega)
+    momenti.append({'notte': 0, **m})
+    while notte < NOTTI_MASSIME and max(abs(p - 1) for p in piega) > 1e-5:
+        g = gradiente(errore, piega)
+        piega = [p - PASSO_NOTTE * gi for p, gi in zip(piega, g)]
+        notte += 1
+        if da_raccontare:
+            m = momento(piega)
+            nuota = dict((w, c) for w, c, _ in m['vasca']).get('nuota', 0)
+            if nuota >= da_raccontare[0]:
+                momenti.append({'notte': notte, **m})
+                da_raccontare.pop(0)
+    assert max(abs(p - 1) for p in piega) <= 1e-5, f'la pista non arriva a quella di oggi: {piega}'
+    assert not da_raccontare, 'un momento da raccontare non arriva mai'
+    # Poi la pista si fissa: le sue misure si fermano al millesimo (come gli altri numeri del modellino, che si
+    # fermano al centesimo), ed è proprio la pista di oggi.
+    fissata = tuple(round(p, 3) for p in piega)
+    assert fissata == PIEGA_DI_OGGI, fissata
+    momenti.append({'notte': notte, **momento(fissata)})
+
+    # La pista fissata è quella di sempre: stessi vestiti, stesse finestre, stesse vasche degli episodi 1 e 2.
+    oggi = momento(PIEGA_DI_OGGI)
+    assert momenti[-1]['vasca'] == oggi['vasca'] == dati['mare']['vasca']
+    assert momenti[-1]['finestre'] == oggi['finestre'] == dati['mare']['passeggeri']['Emma']['finestre']
+    assert oggi['tratti'] == dati['mare']['passeggeri']['Emma']['tratti']
+    for k in inizi:
+        conta = vasca(tappe_piegate(inizi[k], fissata)[-1])[1]
+        assert [[w, c] for w, c in conta.items()] == [[w, c] for w, c, _ in dati[k]['vasca']], k
+    # Sulla pista dritta Emma esce del colore del suo biglietto, e le tre finestre sono uguali.
+    dritta = momenti[0]
+    assert dritta['tratti'] == [colore(B['Emma'])] * 3
+    assert dritta['finestre'][0] == dritta['finestre'][1] == dritta['finestre'][2]
+    # Il brivido di un treno «nuota» parte grande quando le paperelle blu sono poche, e diventa sempre più piccolo;
+    # non si spegne mai del tutto, perché altri treni portano «gioca» o «onde» e tirano dall'altra parte.
+    # Quello che si spegne è la piega di tutta la notte: alla fine i brividi si pareggiano e la pista sta ferma.
+    for mo in momenti:
+        mo['brivido'] = round(brivido(mo['piega']), 2)
+        mo['piega_notte'] = round(piega_della_notte(mo['piega']), 4)
+    assert all(a['brivido'] > b['brivido'] > 0 for a, b in zip(momenti, momenti[1:])), [mo['brivido'] for mo in momenti]
+    assert momenti[-1]['piega_notte'] < 1e-3 * max(mo['piega_notte'] for mo in momenti)
+    # Oggi la pista non si piega più: lo stesso treno, mille volte, dà sempre la stessa vasca.
+    assert all(momento(PIEGA_DI_OGGI)['vasca'] == oggi['vasca'] for _ in range(3))
+
+    for mo in momenti:
+        conta = {w: c for w, c, _ in mo['vasca']}
+        print(f"  notte {mo['notte']:4d}  piega {mo['piega']}  brivido {mo['brivido']:.2f}  "
+              f"piega della notte {mo['piega_notte']:.4f}  Emma {mo['tratti']}")
+        print('             vasca', conta)
+    print('  finestre della pista dritta:', {w: c for w, c, _ in dritta['finestre'][0]})
+    return {'momenti': momenti}
+
+
 if __name__ == '__main__':
     dati = {k: giro(k) for k in FRASI}
     controlla(dati)
     dati['manopola'] = manopola(dati)
     dati['chat'] = giro_chat(dati)
+    dati['addestramento'] = addestramento(dati)
     if '--scrivi' in sys.argv:
         scrivi(dati)
