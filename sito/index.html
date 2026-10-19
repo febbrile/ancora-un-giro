@@ -21,22 +21,34 @@
     <p>Quando scrivi a un’intelligenza artificiale e premi invio, la tua frase parte per un viaggio: fa un giro sulle montagne russe di un luna park e torna con una parola in più.</p>
     <p>Un cartone a episodi per chi non sa niente di come funziona: una storia sola, da guardare dall’inizio.</p>
   </section>
+  <section class="sezione" id="guarda">
+    <h2>Gli episodi</h2>
+  </section>
   <ol class="episodi" id="episodi"></ol>
   <p class="piede">Dietro la storia c’è un modellino coerente: i colori e le paperelle vengono da calcoli veri.</p>
+  <section class="sezione" id="lezioni">
+    <h2>Come funziona un LLM</h2>
+    <p>Le lezioni da leggere: quello che succede davvero dopo che premi invio, spiegato passo per passo, con i numeri.</p>
+  </section>
+  <ol class="episodi" id="elenco-lezioni"></ol>
 </main>
 <script>
-(async function () {
-  const ol = document.getElementById('episodi');
+// Due elenchi con le stesse schede: gli episodi da guardare e le lezioni da leggere.
+async function schede(id, file, errore, scheda) {
+  const ol = document.getElementById(id);
   let elenco = [];
-  try { elenco = await (await fetch('episodi.json', { cache: 'no-cache' })).json(); } catch (e) { ol.textContent = 'Non riesco a leggere l’elenco degli episodi.'; return; }
+  try { elenco = await (await fetch(file, { cache: 'no-cache' })).json(); } catch (e) { ol.textContent = errore; return; }
   elenco.forEach(e => {
-    const li = document.createElement('li'), a = document.createElement('a');
-    a.href = 'guarda.html?ep=' + e.cartella;
-    const parti = [['num', (e.etichetta || 'Episodio ' + e.n).toUpperCase()], ['nome', e.titolo], ['racconto', e.racconto], ['vai', 'Guarda →']];
+    const li = document.createElement('li'), a = document.createElement('a'), [href, parti] = scheda(e);
+    a.href = href;
     parti.forEach(([cls, testo]) => { const s = document.createElement('span'); s.className = cls; s.textContent = testo; a.appendChild(s); });
     li.appendChild(a); ol.appendChild(li);
   });
-})();
+}
+schede('episodi', 'episodi.json', 'Non riesco a leggere l’elenco degli episodi.', e => ['guarda.html?ep=' + e.cartella,
+  [['num', (e.etichetta || 'Episodio ' + e.n).toUpperCase()], ['nome', e.titolo], ['racconto', e.racconto], ['vai', 'Guarda →']]]);
+schede('elenco-lezioni', 'lezioni.json', 'Non riesco a leggere l’elenco delle lezioni.', e => ['leggi.html?l=' + e.file,
+  [['num', (e.etichetta || 'Lezione ' + e.n).toUpperCase()], ['nome', e.titolo], ['racconto', e.sommario], ['vai', 'Leggi →']]]);
 </script>
 </body>
 </html>

@@ -20,6 +20,14 @@ Ada, una piccola scienziata, ne pesca una senza guardare: è la parola dopo. La 
 
 I prossimi episodi, con argomento e idea, sono nella [scaletta](mondo/SCALETTA.md).
 
+## Da leggere: come funziona un LLM
+
+Accanto ai film, sul sito c'è una sezione di lezioni da leggere, più tecniche, con i numeri.
+
+| | Titolo | Leggi |
+|---|---|---|
+| 1 | Dal testo alla distribuzione di probabilità | [leggi](https://febbrile.github.io/ancora-un-giro/sito/leggi.html?l=01-dal-testo-alla-distribuzione) |
+
 Personaggi, oggetti e luna park: [tela di design](https://claude.ai/artifact/1YpTiDnCNhg4bgh23faV33).
 
 ## Struttura
@@ -33,6 +41,7 @@ episodi/comune/               shared.js (personaggi, luna park, treno, sottotito
 episodi/NN-titolo/modules/    le scene di ogni film (scenes.json, scene-<id>.js) e la musica (score.js)
 design/project/               la tela di design, generata dagli stessi disegni dei film
 sito/                         il sito statico con il player nostro
+sito/lezioni/                 le lezioni da leggere, in Markdown (elenco in sito/lezioni.json)
 strumenti/                    modellino, controlli, renderer dei fotogrammi, generatore della tela
 archivio/                     un progetto chiuso: non è una fonte
 ```

@@ -1,0 +1,9 @@
+[
+  {
+    "n": 1,
+    "etichetta": "Lezione 1",
+    "file": "01-dal-testo-alla-distribuzione",
+    "titolo": "Dal testo alla distribuzione di probabilità",
+    "sommario": "Il ciclo che produce una risposta un token alla volta, e cosa succede dentro il modello: embedding, strati, attention, uscita. Con un glossario e le domande di verifica."
+  }
+]

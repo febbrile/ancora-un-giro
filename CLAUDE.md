@@ -132,6 +132,10 @@ L'elenco completo, tradotto nel luna park, è nel §7 del soggetto. Le più impo
   `audio/tracce.json` per un tema continuo (`sito/motore/tema.js`), i volumi di partenza o file audio a un istante
   del film, come una voce narrante.
 - In `sito/episodi.json` c'è l'elenco degli episodi: aggiornalo quando ne nasce uno nuovo.
+- La sezione da leggere, **«Come funziona un LLM»**, raccoglie le lezioni: una per file in `sito/lezioni/NN-titolo.md`
+  (Markdown: titoli, paragrafi, elenchi, tabelle, codice, formule in ```latex), elencate in `sito/lezioni.json` e
+  impaginate da `sito/leggi.html?l=NN-titolo`. Sono testi tecnici fuori dalla storia: le regole di racconto e del
+  luna park valgono per i film, non per le lezioni.
 - Prima di dire che il sito funziona, aprilo con un server locale (`python3 -m http.server 8791`, poi
   `sito/guarda.html?ep=…&t=…`); dopo la pubblicazione, aprilo anche online.
 

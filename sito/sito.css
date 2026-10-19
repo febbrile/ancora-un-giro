@@ -35,6 +35,40 @@ a { color: var(--oro) }
 .episodi .racconto { color: var(--tenue); font-size: 16px; flex: 1 }
 .episodi .vai { color: var(--oro); font-weight: 700; font-size: 15px }
 .piede { max-width: 980px; margin: 0 auto; padding: 0 24px 48px; color: var(--tenue); font-size: 14px }
+.sezione { max-width: 980px; margin: 0 auto; padding: 32px 24px 0 }
+.sezione h2 { font-family: 'Fredoka', system-ui, sans-serif; font-weight: 600; font-size: 30px; line-height: 1.15; margin: 0 0 8px; color: var(--oro) }
+.sezione p { margin: 0; color: var(--tenue); max-width: 680px }
+.sezione + .episodi { padding-top: 20px }
+.episodi:has(+ .piede) { padding-bottom: 20px }
+
+/* ── Le lezioni da leggere ───────────────────────────────────────────────── */
+.articolo { max-width: 760px; margin: 0 auto; padding: 48px 24px 16px; font-size: 18px; line-height: 1.65 }
+.articolo .num { font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: .1em; color: var(--arancio); margin: 0 0 10px }
+.articolo h1 { font-family: 'Fredoka', system-ui, sans-serif; font-weight: 600; font-size: clamp(30px, 5vw, 44px); line-height: 1.1; color: var(--oro); margin: 0 0 24px }
+.articolo h2 { font-family: 'Fredoka', system-ui, sans-serif; font-weight: 600; font-size: 28px; line-height: 1.2; color: var(--crema); margin: 56px 0 16px; padding-top: 24px; border-top: 1px solid var(--bordo); scroll-margin-top: 16px }
+.articolo h3 { font-family: 'Fredoka', system-ui, sans-serif; font-weight: 600; font-size: 22px; margin: 32px 0 12px }
+.articolo p, .articolo ul, .articolo ol { margin: 0 0 18px }
+.articolo li + li { margin-top: 8px }
+.articolo strong { color: var(--oro) }
+.articolo code { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: .86em }
+.articolo .tenue { color: var(--tenue) }
+.codice { margin: 0 0 22px; padding: 16px 18px; background: var(--fondo); border: 1px solid var(--bordo); border-radius: 12px; overflow-x: auto; font-size: 14px; line-height: 1.55; color: var(--crema) }
+.codice code { font-size: 14px; white-space: pre; font-variant-ligatures: none }
+.formula { margin: 0 0 22px; padding: 12px 18px; background: var(--fondo); border: 1px solid var(--bordo); border-radius: 12px; overflow-x: auto; text-align: center; font-size: 17px }
+.tabella { margin: 0 0 22px; overflow-x: auto; border: 1px solid var(--bordo); border-radius: 12px }
+.tabella table { width: 100%; border-collapse: collapse; font-size: 15px; line-height: 1.5 }
+.tabella th, .tabella td { padding: 10px 14px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--bordo) }
+.tabella th { background: var(--fondo); color: var(--oro); font-weight: 700; white-space: nowrap }
+.tabella tr:last-child td { border-bottom: 0 }
+.tabella td:first-child { font-weight: 700; white-space: nowrap }
+.tabella td:last-child { color: var(--tenue) }
+.sommario { margin: 0 0 32px; padding: 16px 20px; background: var(--fondo); border: 1px solid var(--bordo); border-radius: 14px; font-size: 16px }
+.sommario p { margin: 0 0 6px; color: var(--tenue); font-size: 14px; letter-spacing: .04em }
+.sommario ol { margin: 0; padding-left: 22px }
+.sommario li + li { margin-top: 4px }
+.sommario a { text-decoration: none }
+.sommario a:hover { text-decoration: underline }
+.articolo + .vicini { max-width: 760px }
 
 /* ── Il player ───────────────────────────────────────────────────────────── */
 .lettore { max-width: 1280px; margin: 24px auto 0; padding: 0 24px }
@@ -107,5 +141,7 @@ a { color: var(--oro) }
   .lettore:fullscreen .pannello-audio { top: auto; bottom: calc(100% + 8px) }
   .capitoli, .aiuto { padding: 0 16px }
   .velo .grande { width: 72px; height: 72px }
-  .copertina, .episodi, .piede, .vicini { padding-left: 16px; padding-right: 16px }
+  .copertina, .episodi, .piede, .vicini, .sezione, .articolo { padding-left: 16px; padding-right: 16px }
+  .articolo { padding-top: 32px; font-size: 17px }
+  .tabella td:first-child, .tabella th { white-space: normal }
 }
