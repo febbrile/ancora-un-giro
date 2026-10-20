@@ -2,7 +2,7 @@ const { seg, eo, ei, eio, lerp } = kit;
 // Il treno scivola in stazione e si ferma; i vestiti tornano piano del colore dei biglietti («rù» di nuovo grigio
 // argento). Ada chiude gli occhi, infila la mano nella vasca e tira fuori una paperella blu. La paperella le salta di
 // mano e corre a sedersi in un vagone nuovo, dietro «rù»; le altre scivolano via dallo scarico. Stacco sulla cameretta:
-// sul telefono, sotto «Al mare Zampirù», compare «nuota», e una mano piccola accarezza il disegno.
+// sul telefono, sotto «Al mare Zampirù», compare «nuota»; la camera si allarga sul disegno della bestiolina.
 // Si apre come finisce «vasca»; finisce sul treno di sei vagoni in stazione (lo riprende «ancora»).
 const PS_CAM = [
   { t: 0, cx: 600, cy: 836, z: 3.4 },
@@ -19,7 +19,7 @@ const PS_TORNA = [0.6, 4.0];
 const PS_ADA = [672, 896];
 const PS_PESCA = { giu: 4.6, su: 6.4, preso: 6.9 };
 const PS_SALTA = 10.6, PS_SALE = 13.4, PS_VAGONE = 12.6, PS_SCARICO = 9.4;
-const PS_CASA = [14.2, 14.8, 19.8, 20.6], PS_RISPOSTA = 15.2, PS_CAREZZA = [16.4, 19.6];
+const PS_CASA = [14.2, 14.8, 19.8, 20.6], PS_RISPOSTA = 15.2;
 const PS_CASA_CAM = [
   { t: 14.2, cx: 950, cy: 520, z: 2.0 },
   { t: 16.0, cx: 950, cy: 520, z: 2.0 },
@@ -114,16 +114,15 @@ kit.scene('pesca', {
     const sc = seg(t, PS_VAGONE, PS_VAGONE + 1.1);
     this.scint.setAttribute('opacity', (sc > 0 && sc < 1 ? 1 - sc : 0).toFixed(3));
     [...this.scint.children].forEach((c, n) => { const a = n * Math.PI / 5, d = 10 + 34 * eo(sc); c.setAttribute('cx', (this.sedile[0] + d * Math.cos(a)).toFixed(2)); c.setAttribute('cy', (838 + d * 0.6 * Math.sin(a)).toFixed(2)); });
-    // La cameretta: sotto la frase compare «nuota»; poi una mano piccola accarezza il disegno.
+    // La cameretta: sotto la frase compare «nuota»; poi si vede il disegno, accanto al telefono.
     const ca = seg(t, PS_CASA[0], PS_CASA[1]) * (1 - seg(t, PS_CASA[2], PS_CASA[3]));
     this.casa.setAttribute('opacity', ca.toFixed(3));
     if (ca > 0) {
       const risposta = t >= PS_RISPOSTA;
-      const carezza = t >= PS_CAREZZA[0] && t < PS_CAREZZA[1] ? Math.max(0.01, Math.round((t - PS_CAREZZA[0]) / (PS_CAREZZA[1] - PS_CAREZZA[0]) * 60) / 60) : 0;
-      const kc = risposta + '|' + carezza;
+      const kc = String(risposta);
       if (kc !== this.statoCasa) {
         const tel = G.telefono(risposta ? { messaggi: ['Al mare Zampirù'], rispostaTesto: 'nuota' } : { messaggi: ['Al mare Zampirù'] });
-        this.casaCam.innerHTML = G.unico(G.salotto(tel, { cameretta: true, carezza }), 'pesca');
+        this.casaCam.innerHTML = G.unico(G.salotto(tel, { cameretta: true }), 'pesca');
         this.statoCasa = kc;
       }
       this.casaCam.setAttribute('transform', G.camChiavi(PS_CASA_CAM, t));
