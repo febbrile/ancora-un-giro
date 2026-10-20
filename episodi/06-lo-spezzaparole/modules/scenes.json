@@ -1,0 +1,61 @@
+{
+  "width": 1920,
+  "height": 1080,
+  "background": "#0B1030",
+  "scenes": [
+    {
+      "id": "nome",
+      "name": "Il nome",
+      "dur": 22.6,
+      "desc": "Da una cameretta, accanto al disegno a pastelli di una bestiolina gialla, mani piccole scrivono «Al mare Zampirù». La striscia vola fino al luna park e atterra in mano ad Ada, che aggrotta le sopracciglia."
+    },
+    {
+      "id": "zac",
+      "name": "Zac, zac, zac",
+      "dur": 27.6,
+      "desc": "Lo Spezzaparole strappa «Al» e «mare»; per Zampirù la forbice fa zac tre volte: «Zam», «pi», «rù». Sul trenino di cinque vagoni i tre biglietti aprono gli occhi, ognuno col suo vestito. Ada conta i vagoni. Titolo."
+    },
+    {
+      "id": "partenza",
+      "name": "La partenza",
+      "dur": 12.0,
+      "desc": "Il trenino di cinque vagoni parte da solo e sparisce nella montagna. Ada non corre alla bancarella: resta davanti allo Spezzaparole e strappa un foglio dal quaderno."
+    },
+    {
+      "id": "prova",
+      "name": "La prova",
+      "dur": 32.6,
+      "desc": "Ada fa una prova: «gelato» esce intero; «precipitevolissimevolmente» esce in sei pezzi, a cascata. Ada li mette in fila: due sono identici, i bordi combaciano. Disegna sul quaderno, mette i biglietti in tasca e corre alla bancarella."
+    },
+    {
+      "id": "fili",
+      "name": "I fili",
+      "dur": 20.6,
+      "desc": "Dentro la montagna si accendono i fili di luce: i più forti legano i tre pezzi di Zampirù. Lungo i fili scorrono i colori e l'ultimo pezzo passa dal grigio argento al giallo oro."
+    },
+    {
+      "id": "finestre",
+      "name": "Le finestre sulla vasca",
+      "dur": 40.3,
+      "desc": "Il treno corre nel fascio di binari e gli scambi scattano. Alle finestre sulla vasca, solo con l'ultimo pezzo, si accendono paperelle di luce: prima gialle, poi, quando il filo più forte va a Mare, sempre più blu."
+    },
+    {
+      "id": "vasca",
+      "name": "La vasca",
+      "dur": 17.2,
+      "desc": "Il treno esce sopra la vasca: con i primi quattro vagoni non succede niente; sotto l'ultimo pezzo, blu, cadono le paperelle, tante blu e qualcuna gialla. Ada guarda i tre pezzi e sorride."
+    },
+    {
+      "id": "pesca",
+      "name": "La pesca",
+      "dur": 21.0,
+      "desc": "Il treno si ferma in stazione e i vestiti tornano del colore dei biglietti. Ada pesca una paperella blu, che corre a sedersi in un vagone nuovo dietro l'ultimo pezzo. Nella cameretta, sotto «Al mare Zampirù», compare «nuota»."
+    },
+    {
+      "id": "ancora",
+      "name": "Ancora un giro",
+      "dur": 24.2,
+      "desc": "Il treno riparte, giro dopo giro, e una paperella sale in fondo finché il treno arriva alla sbarra di dietro della banchina. Sul telefono la storia di Zampirù si allunga e non smette. Ada si gratta la testa: «Ma quando finisce?». Fine."
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "width": 1920,
+  "height": 1080,
+  "background": "#0B1030",
+  "scenes": [
+    {
+      "id": "domanda",
+      "name": "La domanda",
+      "dur": 20,
+      "desc": "Notte al luna park. Ada, sulla banchina col quaderno sotto il braccio, guarda le strisce di carta: una scende alla stazione, quasi tutte volano alte oltre le colline, verso le luci viste l'altra volta. Titolo."
+    },
+    {
+      "id": "collina",
+      "name": "La collina",
+      "dur": 14,
+      "desc": "Ada lascia il trenino in stazione, esce dal cancello del luna park e sale a piedi il sentiero della collina, sotto le strisce che volano tutte dalla stessa parte. In cima si ferma, col fiato corto."
+    },
+    {
+      "id": "immenso",
+      "name": "Il parco immenso",
+      "dur": 36,
+      "desc": "Dall'altra parte della collina, una pianura di luci e un parco come quello di Ada, ma immenso: la stazione lunga come una strada, lo Spezzaparole alto come un palazzo, i treni che girano senza fermarsi, la montagna di tante cime in fila fino alle nuvole, la vasca grande come un lago."
+    },
+    {
+      "id": "frase",
+      "name": "La stessa frase",
+      "dur": 32,
+      "desc": "Ada, dietro la ringhiera della stazione immensa, legge al volo «Al mare Emma». Lo Spezzaparole gigante strappa la frase: salgono Al, Mare ed Emma, con vestiti di altri colori. Ada confronta sul quaderno la sua Emma rosa. Il treno parte da solo e sparisce nella prima cima."
+    },
+    {
+      "id": "finestre",
+      "name": "Le finestre sulla vasca",
+      "dur": 42,
+      "desc": "Dentro la montagna: un fascio di binari largo come un'autostrada, i fili di luce, gli scambi. Una finestra dopo l'altra, cima dopo cima, le paperelle di luce restano di tutti i colori; solo alle ultime cresce il viola, come il vestito di Emma. In fondo, la luce dell'uscita."
+    },
+    {
+      "id": "lago",
+      "name": "Il lago",
+      "dur": 34,
+      "desc": "Il treno esce sopra il lago: sotto Emma, viola, cadono paperelle di tantissimi colori. Ada, alla bancarella, pesca a occhi chiusi una paperella viola, che sale su un vagone nuovo. Sul telefono compare «nuota». Ada guarda la sua Emma blu sul quaderno e ride."
+    },
+    {
+      "id": "nomi",
+      "name": "I nomi veri",
+      "dur": 50,
+      "desc": "Ada, seduta in cima alla collina tra il suo parco e quello immenso, ascolta i nomi da grandi: i biglietti sono i token, la montagna con la sua pista il modello, le paperelle di ogni colore la probabilità, il tempo dei treni di prova l'addestramento."
+    },
+    {
+      "id": "quaderno",
+      "name": "Il quaderno",
+      "dur": 26,
+      "desc": "In tutti e due i parchi i treni ripartono, un vagone più lungo. Ada chiude il quaderno e corre giù per il sentiero, verso il suo luna park. Fine."
+    }
+  ]
+}

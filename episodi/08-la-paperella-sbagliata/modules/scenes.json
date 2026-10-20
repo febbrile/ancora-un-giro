@@ -1,0 +1,67 @@
+{
+  "width": 1920,
+  "height": 1080,
+  "background": "#0B1030",
+  "scenes": [
+    {
+      "id": "domanda",
+      "name": "La domanda",
+      "dur": 21,
+      "desc": "Dietro la stazione, sul binario morto, dormono i treni di prova. Ada, seduta su una traversina con la striscia ancora arrotolata, guarda i treni grigi e poi la montagna: e se nessun treno di prova ha mai portato la risposta? Titolo."
+    },
+    {
+      "id": "frase",
+      "name": "Il cane di Emma",
+      "dur": 30,
+      "desc": "Poco prima, nel salotto del prologo, due mani scrivono «Il cane di Emma si chiama» e premono invio: la striscia vola sopra i tetti. È quella che Ada tiene in mano: la srotola, la legge, sfoglia il quaderno all'indietro. Di cani, nemmeno l'ombra."
+    },
+    {
+      "id": "prima",
+      "name": "I treni di prova",
+      "dur": 30,
+      "desc": "Come in una vecchia fotografia, prima che il parco aprisse: i treni grigi carichi di cani escono sopra la vasca, e dopo «si chiama» resta acceso ogni volta un nome, caramello, miele, nocciola. Il cane di Emma non c'è mai. Di nuovo oggi: Ada guarda la vasca vuota."
+    },
+    {
+      "id": "biglietti",
+      "name": "Sei biglietti",
+      "dur": 28.6,
+      "desc": "Lo Spezzaparole strappa la frase in sei biglietti, che salgono sul treno: il sassolino «Il», Cane, il sassolino «di», Emma, il sassolino «si» e, in fondo, Chiama, la campanella. Ada guarda Cane, poi Emma, e scuote la testa. Le sbarre si abbassano."
+    },
+    {
+      "id": "partenza",
+      "name": "L'attesa",
+      "dur": 16,
+      "desc": "Il treno parte da solo e sparisce nella montagna; dal buio arrivano i clac. Ada si siede accanto alla vasca vuota, sotto la manopola, con la matita pronta."
+    },
+    {
+      "id": "finestre",
+      "name": "Le finestre sulla vasca",
+      "dur": 47.6,
+      "desc": "Dentro: il filo più forte di Chiama va a Cane e porta il suo nocciola. Clac, clac: Chiama è tirata via. Alle tre finestre, con l'ultimo vagone, le paperelle di luce si fanno sempre più dei colori caldi dei nomi da cane, finché sono sei colori vicini, nessuno più forte."
+    },
+    {
+      "id": "vasca",
+      "name": "La vasca",
+      "dur": 21.8,
+      "desc": "Il treno esce sopra la vasca: con i primi cinque vagoni niente, con Chiama, color caramello, cadono le paperelle e la vasca si riempie come tutte le sere. Ada lascia cadere la matita. Il treno scivola in stazione e i vestiti tornano del colore dei biglietti."
+    },
+    {
+      "id": "pesca",
+      "name": "La pesca",
+      "dur": 21.4,
+      "desc": "Ada pesca senza guardare: una paperella caramello. Sul quaderno la confronta con la paperella blu del mare: sono fatte allo stesso modo. Le altre scivolano via; la paperella corre in un vagone nuovo, dietro Chiama."
+    },
+    {
+      "id": "telefono",
+      "name": "La risposta",
+      "dur": 25.0,
+      "desc": "Nel salotto, sotto «Il cane di Emma si chiama», compare «Briciola», e dietro il telefono si intravede un sorriso. In stazione Ada guarda Briciola, poi il quaderno: Emma, e accanto a lei nessun cane."
+    },
+    {
+      "id": "laggiu",
+      "name": "Laggiù",
+      "dur": 20.2,
+      "desc": "Le sbarre si abbassano e il treno riparte, un vagone più lungo. Ada chiude il quaderno e guarda oltre la ruota panoramica: dietro le colline si accendono le luci di un parco molto più grande. Fine."
+    }
+  ]
+}

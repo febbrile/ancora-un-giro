@@ -222,6 +222,7 @@ def giro(chiave):
     for w, c in out['nuovo'].items():
         print(f'  passeggero nuovo «{w}»:', c)
     return out
+    return out
 
 
 def controlla(dati):
@@ -294,6 +295,7 @@ def manopola(dati):
     out['nuovo'] = {w: colore(B[w]) for pos in PESCHE_MANOPOLA for w in PESCHE_MANOPOLA[pos]}
     for w, c in out['nuovo'].items():
         print(f'  passeggero nuovo «{w}»:', c)
+    return out
 
 
 # ── Episodio 4 · Il treno che ricorda: la chat e la banchina ─────────────────────────────────────────
@@ -1064,6 +1066,6 @@ if __name__ == '__main__':
     dati['finisce'] = finisce(dati)
     controlla_finisce(dati['finisce'])
     dati['cane'] = giro_cane(dati)
-    parco_grande()
+    dati['grande'] = parco_grande()  # episodio 9
     if '--scrivi' in sys.argv:
         scrivi(dati)

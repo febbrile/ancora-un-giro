@@ -1,0 +1,55 @@
+{
+  "width": 1920,
+  "height": 1080,
+  "background": "#0B1030",
+  "scenes": [
+    {
+      "id": "domanda",
+      "name": "La domanda",
+      "dur": 20.4,
+      "desc": "Nel salotto, sotto «Al mare Emma nuota», tre puntini: la risposta sta ancora arrivando. Al luna park il treno, un vagone più lungo, sparisce nella montagna; Ada si chiede se potrebbe girare per sempre. Titolo."
+    },
+    {
+      "id": "giri",
+      "name": "Giro dopo giro",
+      "dur": 33.0,
+      "desc": "Montaggio: il treno esce, la vasca si riempie, Ada pesca «e», poi «gioca», e il treno riparte ogni volta un vagone più lungo. In un angolo della vasca c'è sempre una paperella scura, che scivola via con le altre."
+    },
+    {
+      "id": "quaderno",
+      "name": "Il quaderno",
+      "dur": 22,
+      "desc": "Ada sfoglia il quaderno all'indietro fino alla prima sera: nella vasca disegnata, piccola piccola, c'era già una paperella scura. Che parola sarà?"
+    },
+    {
+      "id": "punto",
+      "name": "Il punto",
+      "dur": 16.2,
+      "desc": "Il treno esce: la paperella turchese è diventata grigia. Cadono tante paperelle grigie, e le scure sono tante. Ada pesca una grigia: un punto. La paperella siede nell'ultimo posto della banchina."
+    },
+    {
+      "id": "finestre",
+      "name": "Le finestre sulla vasca",
+      "dur": 40.6,
+      "desc": "Dentro la montagna, il treno di sette vagoni: fili di luce, scambi, finestre. Finestra dopo finestra la paperella del punto si fa scura, e le paperelle di luce sono sempre più del colore della notte."
+    },
+    {
+      "id": "vasca",
+      "name": "La vasca scura",
+      "dur": 21,
+      "desc": "Il treno esce: con gli altri vagoni niente, con l'ultimo nella vasca cadono tantissime paperelle scure. Ada guarda la vasca e la paperellina scura della prima sera sul quaderno."
+    },
+    {
+      "id": "pesca",
+      "name": "L'ultima pesca",
+      "dur": 24,
+      "desc": "Ada pesca una paperella scura: resta nella sua mano, nessuno sale sul treno. Il fanale e le lampadine della stazione si spengono; sul telefono «nuota e gioca.», i puntini spariscono e la lampada si spegne."
+    },
+    {
+      "id": "fine",
+      "name": "Come finisce",
+      "dur": 27,
+      "desc": "Ada disegna la paperella scura accanto a quella della prima sera e la rimette nell'acqua. Arriva una striscia nuova: e se nessun treno di prova ha mai portato la risposta? Fine."
+    }
+  ]
+}

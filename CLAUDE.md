@@ -26,6 +26,9 @@ l'unico elemento nuovo e l'idea. Un episodio nuovo parte da lì.
 - **Le idee nuove si discutono prima di scriverle**: proponi, spiega il perché, aspetta il sì. Quando l'utente
   chiede di scegliere, proponi poche alternative (di solito tre) e indica la tua preferita.
 - **Prima di dire che una scena è a posto, guardala**: rendi i fotogrammi e leggili (vedi «Verifica»).
+- **Le pull request le apre sempre l'utente, a mano, dal browser.** Tu fai il push del branch e gli prepari il
+  titolo, la descrizione (in un file fuori da git, da incollare) e il link per aprirla:
+  `https://github.com/febbrile/ancora-un-giro/compare/main...<branch>?expand=1`. Non usare `gh pr create`.
 
 ## Gli errori da non ripetere
 

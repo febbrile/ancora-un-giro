@@ -88,6 +88,42 @@ function tavole() {
   });
   Q.vasca.forEach((v, k) => { s += at(1260 + (k % 3) * 200, 620 + Math.floor(k / 3) * 160, 0.9, G.paperella(v[2])) + et(1305 + (k % 3) * 200, 726 + Math.floor(k / 3) * 160, v[0] + ' · ' + v[1], false, 20); });
   T['Parco.dc.html'] = { titolo: 'Al parco · Parco, le finestre, la vasca', w: 1920, h: 1080, svg: s };
+  // La stagione: i passeggeri nuovi (episodi 3–8), ognuno nel suo vagone, con i colori del modellino.
+  const Z = G.MOD.zampiru.passeggeri, K = G.MOD.cane.passeggeri, MN = G.MOD.manopola, F = G.MOD.finisce;
+  const inVag = (x, y, s2, tipo, col, o, vo) => at(x, y, s2, G.vagone(Object.assign({ sbarra: 1 }, vo || {}), G.passeggero(tipo, col, o)));
+  s = '<rect width="1920" height="1080" fill="#F3EADB"/>' + titolo('I passeggeri nuovi della stagione');
+  s += pannello(40, 120, 1840, 420);
+  s += inVag(70, 260, 1.0, 'sasso', K.Il.biglietto, { forma: 0 }, { primo: true }) + inVag(370, 260, 1.0, 'cane', K.cane.biglietto, { coda: 18 }) + inVag(670, 260, 1.0, 'sasso', K.di.biglietto, { forma: 1 }) +
+    inVag(970, 260, 1.0, 'sasso', K.si.biglietto, { forma: 2 }) + inVag(1270, 260, 1.0, 'chiama', K.chiama.biglietto) + inVag(1570, 260, 1.0, 'chiama', K.chiama.tratti.at(-1), { tirata: true });
+  s += et(190, 520, '«Il» · sassolino', true) + et(490, 520, 'Cane', true) + et(790, 520, '«di» · sassolino', true) + et(1090, 520, '«si» · sassolino', true) + et(1390, 520, 'Chiama', true) + et(1690, 520, 'Chiama · tirata via', true);
+  s += pannello(40, 580, 1000, 440);
+  s += inVag(70, 700, 1.0, 'pezzo', Z['Zam'].biglietto, { strappo: 'd' }, { primo: true }) + inVag(370, 700, 1.0, 'pezzo', Z['pi'].biglietto, { strappo: 'sd' }) + inVag(670, 700, 1.0, 'pezzo', Z['rù'].biglietto, { strappo: 's' });
+  s += et(190, 990, 'pezzo «Zam»', true) + et(490, 990, 'pezzo «pi»', true) + et(790, 990, 'pezzo «rù»', true);
+  const nuovi = [['nuota', MN.nuovo.nuota], ['gioca', MN.nuovo.gioca], ['corre', MN.nuovo.corre], ['altalena', MN.nuovo.altalena], ['e', F.passeggeri ? (F.passeggeri.e || {}).biglietto : null], ['punto', F.passeggeri ? (F.passeggeri['.'] || {}).biglietto : null], ['Briciola', G.MOD.cane.nuovo.Briciola]].filter(x => x[1]);
+  nuovi.forEach(([n, col], k) => { s += at(1080 + (k % 4) * 200, 610 + Math.floor(k / 4) * 220, 1.1, G.paperella(col, { glow: true })) + et(1135 + (k % 4) * 200, 730 + Math.floor(k / 4) * 220, n); });
+  T['Passeggeri.dc.html'] = { titolo: 'I passeggeri nuovi della stagione', w: 1920, h: 1080, svg: s };
+  // Gli oggetti nuovi: la manopola, la banchina, i treni di prova, la lanterna, i biglietti strappati, le case.
+  s = '<rect width="1920" height="1080" fill="#F3EADB"/>' + titolo('Gli oggetti nuovi della stagione');
+  [-1, 0, 1].forEach((p, k) => { s += at(160 + k * 250, 280, 1.0, G.manopola(p)) + et(160 + k * 250, 420, ['verso la lucina grande', 'la tacca di mezzo', 'verso le lucine piccole'][k]); });
+  s += at(840, 150, 1.4, G.biglietto('Zam', { strappo: 'd' })) + at(1008, 150, 1.4, G.biglietto('pi', { strappo: 'sd' })) + at(1176, 150, 1.4, G.biglietto('rù', { strappo: 's' }));
+  s += et(1094, 270, 'i biglietti strappati: i bordi combaciano');
+  s += at(1460, 150, 1.4, G.lanterna('nuota', MN.nuovo.nuota)) + et(1544, 270, 'la lanterna dei treni di prova');
+  s += pannello(40, 460, 1840, 300);
+  s += [0, 1, 2].map(i => at(80 + i * 250, 560, 1.0, G.vagone({ primo: i === 0, grigio: true, fanale: 1 }))).join('') + et(420, 740, 'un treno di prova: grigio, senza vernice, solo il fanale', true);
+  // Le scene intere stanno in finestre (svg annidati), che tagliano quello che esce.
+  const vista = (x, y, w, h, vb, dentro) => '<svg x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" viewBox="' + vb + '" preserveAspectRatio="xMidYMid slice">' + dentro + '</svg>';
+  s += vista(900, 480, 960, 260, '20 700 760 206', G.mondo({ banchina: true, manopola: 0, morto: true }));
+  s += et(1380, 740, 'la banchina con le sue due sbarre, il bancone con la manopola', true);
+  s += vista(40, 790, 560, 250, '400 260 1120 500', G.salotto(G.telefono({ chat: [['io', 'Al mare Emma'], ['ai', 'nuota'], ['io', 'Al parco'], ['ai', 'corre'], ['io', 'Al parco']] })));
+  s += vista(680, 790, 560, 250, '160 330 1120 500', G.salotto(G.telefono({ chat: [['io', 'Al mare Zampirù'], ['ai', 12]] }), { cameretta: true }));
+  s += vista(1320, 790, 560, 250, '400 360 1120 500', G.salotto(G.telefono({ chat: [['io', 'Al mare Emma'], ['ai', 'nuota']], puntini: 0.3 })));
+  s += et(320, 1066, 'la chat che risale tutta') + et(960, 1066, 'la cameretta') + et(1600, 1066, 'la risposta che sta arrivando');
+  T['Stagione.dc.html'] = { titolo: 'Gli oggetti nuovi della stagione', w: 1920, h: 1080, svg: s };
+  // Il parco più grande del mondo (episodio 9), oltre la collina, con il parco di Ada a sinistra.
+  s = '<rect width="1920" height="1080" fill="#F3EADB"/>' + titolo('Il parco più grande del mondo · episodio 9');
+  s += '<svg x="40" y="110" width="1840" height="930" viewBox="2500 -900 6200 3134" preserveAspectRatio="xMidYMid slice">' + G.PARCO.defs + G.paesaggio({ laggiu: 1, manopola: 0, banchina: true, morto: true, strisce: 0 }) + '</svg>';
+  s += et(960, 1068, 'la stazione lunga come una strada, lo Spezzaparole alto come un palazzo, le cime in fila fino alle nuvole, il lago');
+  T['Immenso.dc.html'] = { titolo: 'Il parco più grande del mondo', w: 1920, h: 1080, svg: s };
   // La grammatica: colori e caratteri.
   const sw = [['notte', C.notte1], ['cielo', C.notte2], ['lampadine', C.luce], ['righe', C.rosso], ['crema', C.crema], ['oro', C.oro], ['montagna', C.mont2], ['acqua', C.acqua]];
   s = '<rect width="1280" height="720" fill="#F3EADB"/>' + titolo('La grammatica');
@@ -110,7 +146,8 @@ function artboard(nome, t) {
 
 const T = tavole();
 fs.mkdirSync(OUT, { recursive: true });
-const posto = { 'Main.dc.html': [0, 0], 'Oggetti.dc.html': [2000, 0], 'LunaPark.dc.html': [0, 1200], 'Montagna.dc.html': [2000, 1200], 'Finestre.dc.html': [0, 2400], 'Grammatica.dc.html': [2000, 2400], 'Parco.dc.html': [0, 3600] };
+const posto = { 'Main.dc.html': [0, 0], 'Oggetti.dc.html': [2000, 0], 'LunaPark.dc.html': [0, 1200], 'Montagna.dc.html': [2000, 1200], 'Finestre.dc.html': [0, 2400], 'Grammatica.dc.html': [2000, 2400], 'Parco.dc.html': [0, 3600],
+  'Passeggeri.dc.html': [2000, 3600], 'Stagione.dc.html': [0, 4800], 'Immenso.dc.html': [2000, 4800] };
 const canvas = {
   v: 3, createdOnFiles: { v: 1, at: new Date().toISOString().replace(/\.\d+Z$/, 'Z') }, title: 'Ancora un giro · design',
   launch: { view: 'canvas' }, pages: [], boards: {}, order: [], notes: {}, designSystems: [],
