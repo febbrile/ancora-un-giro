@@ -25,7 +25,7 @@ Prima stagione.
 | 6 | Lo Spezzaparole | 3:38 | Un nome mai sentito sale sul treno a pezzi, tre biglietti con gli occhi, e la storia va avanti lo stesso | [guarda](https://febbrile.github.io/ancora-un-giro/sito/guarda.html?ep=06-lo-spezzaparole) |
 | 7 | Come finisce la storia | 3:24 | Nella vasca c’è sempre stata una paperella del colore della notte: quando Ada la pesca, la risposta è finita | [guarda](https://febbrile.github.io/ancora-un-giro/sito/guarda.html?ep=07-come-finisce-la-storia) |
 | 8 | La paperella sbagliata | 4:22 | Il cane di Emma non esiste, ma la vasca si riempie lo stesso di nomi che suonano bene | [guarda](https://febbrile.github.io/ancora-un-giro/sito/guarda.html?ep=08-la-paperella-sbagliata) |
-| 9 | Il parco più grande del mondo | 4:14 | Oltre le colline c’è un parco immenso: tutto più grande, ma il giro è lo stesso. E le cose del luna park hanno i loro nomi da grandi | [guarda](https://febbrile.github.io/ancora-un-giro/sito/guarda.html?ep=09-il-parco-piu-grande-del-mondo) |
+| 9 | Il parco più grande del mondo | 4:32 | Oltre le colline c’è un parco immenso: tutto più grande, ma il giro è lo stesso. E le cose del luna park hanno i loro nomi da grandi. Al ritorno, al cancello, c’è il custode | [guarda](https://febbrile.github.io/ancora-un-giro/sito/guarda.html?ep=09-il-parco-piu-grande-del-mondo) |
 
 Argomento, domanda e idea di ogni episodio sono nella [scaletta](mondo/SCALETTA.md).
 
