@@ -63,7 +63,7 @@ Sono le leggi fisiche del nostro mondo. Valgono in ogni episodio, anche quando n
 - **Al** (sassolino) e **Mare** (onda con gli occhi): i suoi compagni di viaggio nella prima frase. Nelle altre frasi ne arrivano altri.
 - **Parco** (alberello con gli occhi): il compagno di viaggio di Emma in «Al parco Emma», al posto di Mare. Con lui Emma fa un altro viaggio ed esce verde.
 - **Le paperelle**: una per ogni parola che può venire dopo. Quella pescata diventa un passeggero.
-- **Il custode**: tiene il parco con la lanterna, le chiavi, l'orologio e il regolamento. È il contrario di Ada: lei pesca a caso e chiede sempre perché; lui fa sempre la stessa cosa e risponde «Lo dice il regolamento». Il suo episodio è il 4 della seconda stagione.
+- **Il custode**: alto, magro e un po' altero, come il custode di una vecchia biblioteca, con gli occhiali a mezzaluna. Tiene il parco con la lanterna, le chiavi, l'orologio e il regolamento. È il contrario di Ada: lei pesca a caso e chiede sempre perché; lui fa sempre la stessa cosa e risponde «Lo dice il regolamento». Il suo episodio è il 4 della seconda stagione.
 
 ## 4. Le proprietà che il mondo deve avere
 

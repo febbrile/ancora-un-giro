@@ -106,7 +106,8 @@ L'elenco completo, tradotto nel luna park, è nel §7 del soggetto. Le più impo
 - **Parco** (alberello con gli occhi e due rametti): il compagno di viaggio di «Al parco Emma» (episodio 2), disegnato
   come Al e Mare.
 - **Le paperelle**: una per ogni parola che può venire dopo. Quella pescata sale sul treno e diventa un passeggero.
-- **Il custode**: tiene il parco con la lanterna, le chiavi, l'orologio e il regolamento; compare alla fine dell'episodio 9
+- **Il custode**: alto e magro, distinto e un po' altero, come il custode di una vecchia biblioteca: redingote, gilet,
+  occhiali a mezzaluna; **niente divisa**. Tiene il parco con la lanterna, le chiavi, l'orologio e il regolamento; compare alla fine dell'episodio 9
   ed è il personaggio della seconda stagione. **Non entra nella montagna e non pesca.** È il contrario di Ada: lei pesca a
   caso e chiede perché, lui fa sempre la stessa cosa e risponde «Lo dice il regolamento».
 - I modelli dei personaggi sono nella tela di design (link nel [README](README.md)) e, in SVG, in

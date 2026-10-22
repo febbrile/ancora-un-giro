@@ -360,13 +360,16 @@ function ada(pose, expr, o) {
   return '<g>' + adaBody + slL + slR + head + '</g>';
 }
 
-// Il custode (fine dell'episodio 9, poi la seconda stagione): tiene il parco con la lanterna, le chiavi alla cintura,
-// l'orologio da tasca e il regolamento sotto il braccio, un grosso libro senza scritte. Scatola 240×420, piedi a y = 410.
+// Il custode (fine dell'episodio 9, poi la seconda stagione): alto e magro, distinto, un po' altero, come il custode di
+// una vecchia biblioteca. Redingote lunga, gilet con la catena dell'orologio, colletto bianco e cravatta, occhiali a
+// mezzaluna in punta di naso; la lanterna, un mazzo di chiavi e il regolamento sotto il braccio, un grosso libro rilegato
+// senza scritte. Scatola 240×420, piedi a y = 410.
 // pose: 'base' (la lanterna in mano), 'alza' (la lanterna alzata, per fare luce), 'orologio' (guarda l'orologio; la
-// lanterna è appesa alla cintura). Espressioni: 'base', 'sorriso', 'serio', 'chiusi'.
+// lanterna è appesa al polso). Espressioni: 'base' (altero), 'sorriso', 'serio', 'chiusi'.
 // o.dondolo: di quanti gradi dondola la lanterna; o.occhi: dove guarda (da -1, a sinistra, a 1); o.luce: da 0 a 1.
-const CU = { giacca: '#3F6E5A', giaccaScura: '#2A4B3E', pantaloni: '#2E3448', berretto: '#335C4B', visiera: '#1E2A26',
-  pelle: '#E8B48F', naso: '#D8957A', bianco: '#ECE7DD', grigio: '#BDB6AA', libro: '#8E3B2E', libroScuro: '#5E2620', ottone: '#E0A93B', ottoneScuro: '#8C6420' };
+const CU = { giacca: '#5A4A42', giaccaScura: '#3E322D', gilet: '#B5893A', giletScuro: '#8A6527', cravatta: '#7E2F3F', pantaloni: '#2B2A33',
+  pelle: '#E8B48F', naso: '#DC9C80', bianco: '#F4F0E8', grigio: '#C9C3B8', grigioScuro: '#A39C90', libro: '#6B3A26', libroScuro: '#47251A',
+  ottone: '#E0A93B', ottoneScuro: '#8C6420' };
 // La lanterna del custode, appesa per il manico nel punto (x, y): alta 56.
 function lume(x, y, luce) {
   luce = luce === undefined ? 1 : luce;
@@ -379,70 +382,85 @@ function lume(x, y, luce) {
     '<rect x="' + (x - 14) + '" y="' + (y + 47) + '" width="28" height="7" rx="2" fill="' + CU.ottone + '" stroke="' + CU.ottoneScuro + '" stroke-width="2"/></g>';
 }
 function custodeTesta(expr, o) {
-  const dx = 4 * (o.occhi || 0);
-  let occhi, bocca = '<path d="M111 142 Q120 147 129 142" stroke="' + AI + '" stroke-width="2.6" stroke-linecap="round" fill="none"/>';
-  let ciglia = '<path d="M92 99 Q103 91 114 98 M126 98 Q137 91 148 99" stroke="' + CU.bianco + '" stroke-width="6" stroke-linecap="round" fill="none"/>';
+  const dx = 3 * (o.occhi || 0);
+  // Le sopracciglia: una un po' più alta dell'altra, da altero; dritte quando è serio.
+  let ciglia = '<path d="M95 89 Q104 82 113 87 M127 89 Q136 86 145 90" stroke="' + CU.grigioScuro + '" stroke-width="4.5" stroke-linecap="round" fill="none"/>';
+  let occhi, bocca = '<path d="M112 134 Q120 131 128 134" stroke="' + AI + '" stroke-width="2.4" stroke-linecap="round" fill="none"/>';
   if (expr === 'sorriso' || expr === 'chiusi') {
     occhi = expr === 'sorriso' ?
-      '<path d="M97 110 Q104 103 111 110 M129 110 Q136 103 143 110" stroke="' + AI + '" stroke-width="3" stroke-linecap="round" fill="none"/>' :
-      '<path d="M97 107 Q104 112 111 107 M129 107 Q136 112 143 107" stroke="' + AI + '" stroke-width="3" stroke-linecap="round" fill="none"/>';
-    if (expr === 'sorriso') bocca = '<path d="M109 140 Q120 151 131 140 Z" fill="' + AI + '"/>';
+      '<path d="M98 102 Q104 97 110 102 M130 102 Q136 97 142 102" stroke="' + AI + '" stroke-width="2.8" stroke-linecap="round" fill="none"/>' :
+      '<path d="M98 101 Q104 105 110 101 M130 101 Q136 105 142 101" stroke="' + AI + '" stroke-width="2.8" stroke-linecap="round" fill="none"/>';
+    if (expr === 'sorriso') bocca = '<path d="M111 132 Q120 138 129 132" stroke="' + AI + '" stroke-width="2.6" stroke-linecap="round" fill="none"/>';
   } else {
-    occhi = '<circle cx="' + (104 + dx) + '" cy="108" r="3.8" fill="' + AI + '"/><circle cx="' + (136 + dx) + '" cy="108" r="3.8" fill="' + AI + '"/>' +
-      '<circle cx="' + (105.2 + dx) + '" cy="106.8" r="1.2" fill="#FFFFFF"/><circle cx="' + (137.2 + dx) + '" cy="106.8" r="1.2" fill="#FFFFFF"/>';
+    // Gli occhi a mezza palpebra: guarda dall'alto, sopra gli occhiali.
+    occhi = '<circle cx="' + (104 + dx) + '" cy="102" r="3.6" fill="' + AI + '"/><circle cx="' + (136 + dx) + '" cy="102" r="3.6" fill="' + AI + '"/>' +
+      '<path d="M97 99.5 L111 99.5 M129 99.5 L143 99.5" stroke="' + CU.pelle + '" stroke-width="4"/>' +
+      '<path d="M97 98 Q104 96 111 98 M129 98 Q136 96 143 98" stroke="' + AI + '" stroke-width="2.4" stroke-linecap="round" fill="none"/>';
     if (expr === 'serio') {
-      ciglia = '<path d="M92 99 L114 101 M126 101 L148 99" stroke="' + CU.bianco + '" stroke-width="6" stroke-linecap="round" fill="none"/>';
-      bocca = '<path d="M112 143 L128 143" stroke="' + AI + '" stroke-width="2.6" stroke-linecap="round" fill="none"/>';
+      ciglia = '<path d="M95 88 L113 90 M127 90 L145 88" stroke="' + CU.grigioScuro + '" stroke-width="4.5" stroke-linecap="round" fill="none"/>';
+      bocca = '<path d="M113 134 L127 134" stroke="' + AI + '" stroke-width="2.4" stroke-linecap="round" fill="none"/>';
     }
   }
-  return '<rect x="110" y="140" width="20" height="22" fill="' + CU.pelle + '"/>' +
-    '<circle cx="78" cy="112" r="9" fill="' + CU.pelle + '"/><circle cx="162" cy="112" r="9" fill="' + CU.pelle + '"/>' +
-    '<circle cx="120" cy="106" r="42" fill="' + CU.pelle + '"/>' +
-    '<path d="M80 92 C76 104 78 118 84 126 L90 120 C86 110 86 100 88 92 Z M160 92 C164 104 162 118 156 126 L150 120 C154 110 154 100 152 92 Z" fill="' + CU.grigio + '"/>' +
-    '<circle cx="92" cy="126" r="7" fill="#FF8F8F" opacity=".4"/><circle cx="148" cy="126" r="7" fill="#FF8F8F" opacity=".4"/>' +
-    ciglia + occhi + bocca +
-    '<path d="M120 128 C110 123 96 125 89 136 C99 139 110 137 120 132 C130 137 141 139 151 136 C144 125 130 123 120 128 Z" fill="' + CU.bianco + '" stroke="' + CU.grigio + '" stroke-width="1.5"/>' +
-    '<ellipse cx="120" cy="121" rx="9" ry="7.5" fill="' + CU.naso + '"/>' +
-    // Il berretto da custode: la fascia scura, la stellina d'ottone, la visiera.
-    '<path d="M76 84 Q76 48 120 46 Q164 48 164 84 Z" fill="' + CU.berretto + '" stroke="' + AI + '" stroke-width="2.5"/>' +
-    '<rect x="76" y="74" width="88" height="12" fill="' + CU.giaccaScura + '"/>' +
-    '<path d="M120 54 L123 61 L130 61 L124.5 65.5 L126.5 72.5 L120 68.5 L113.5 72.5 L115.5 65.5 L110 61 L117 61 Z" fill="' + CU.ottone + '"/>' +
-    '<path d="M72 86 Q120 100 168 86 L166 80 Q120 92 74 80 Z" fill="' + CU.visiera + '"/>';
+  return '<rect x="111" y="132" width="18" height="24" fill="' + CU.pelle + '"/>' +
+    '<ellipse cx="85" cy="106" rx="6" ry="9" fill="' + CU.pelle + '"/><ellipse cx="155" cy="106" rx="6" ry="9" fill="' + CU.pelle + '"/>' +
+    '<ellipse cx="120" cy="100" rx="35" ry="42" fill="' + CU.pelle + '"/>' +
+    // I capelli grigi, pettinati all'indietro con la riga, e la fronte alta; le basette corte.
+    '<path d="M86 90 C82 62 100 54 121 54 C142 54 158 64 154 90 C150 74 140 66 126 66 C116 64 108 62 104 70 C96 72 89 80 86 90 Z" fill="' + CU.grigio + '"/>' +
+    '<path d="M104 70 C112 60 128 58 140 64" stroke="' + CU.grigioScuro + '" stroke-width="2" fill="none" stroke-linecap="round"/>' +
+    '<path d="M86 88 C84 98 85 106 88 112 L91 108 C89 102 89 96 90 90 Z M154 88 C156 98 155 106 152 112 L149 108 C151 102 151 96 150 90 Z" fill="' + CU.grigio + '"/>' +
+    ciglia + occhi +
+    '<path d="M121 100 C124 108 128 116 126 121 C124 124 118 124 115 121" fill="' + CU.naso + '"/>' +
+    // Gli occhiali a mezzaluna, in punta di naso.
+    '<path d="M96 108 Q104 118 112 108 Z M128 108 Q136 118 144 108 Z" fill="#FFFFFF" fill-opacity=".25" stroke="' + CU.ottone + '" stroke-width="2" stroke-linejoin="round"/>' +
+    '<path d="M112 109 Q120 106 128 109 M96 108 L87 104 M144 108 L153 104" stroke="' + CU.ottone + '" stroke-width="1.8" fill="none"/>' +
+    '<path d="M106 125 Q113 120 120 123 Q127 120 134 125 Q127 128 120 125.5 Q113 128 106 125 Z" fill="' + CU.grigio + '"/>' +
+    bocca;
 }
 function custode(pose, expr, o) {
   o = o || {};
   const luce = o.luce === undefined ? 1 : o.luce, dond = o.dondolo || 0;
-  const gambe = '<rect x="94" y="350" width="22" height="50" fill="' + CU.pantaloni + '"/><rect x="124" y="350" width="22" height="50" fill="' + CU.pantaloni + '"/>' +
-    '<ellipse cx="102" cy="404" rx="19" ry="9" fill="#1E1A20"/><ellipse cx="140" cy="404" rx="19" ry="9" fill="#1E1A20"/>';
-  const giacca = '<path d="M120 166 C92 166 74 176 68 196 L58 360 Q120 374 182 360 L172 196 C166 176 148 166 120 166 Z" fill="' + CU.giacca + '" stroke="' + AI + '" stroke-width="2.5"/>' +
-    '<path d="M120 188 L120 366" stroke="' + CU.giaccaScura + '" stroke-width="2.5"/>' +
-    '<path d="M102 168 L120 200 L112 168 Z M138 168 L120 200 L128 168 Z" fill="' + CU.giaccaScura + '"/>' +
-    [214, 244, 300, 330].map(y => '<circle cx="128" cy="' + y + '" r="4" fill="' + CU.ottone + '"/>').join('') +
-    '<rect x="63" y="266" width="114" height="14" fill="#3A2A22"/><rect x="111" y="264" width="18" height="18" rx="2" fill="none" stroke="' + CU.ottone + '" stroke-width="3"/>';
-  // Le chiavi, appese alla cintura su un anello.
-  const chiavi = '<circle cx="158" cy="290" r="8" fill="none" stroke="' + CU.ottone + '" stroke-width="3"/>' +
-    '<path d="M153 296 L149 318 M149 312 L144 311 M149 318 L144 317 M158 298 L158 322 M158 316 L163 316 M158 322 L163 322 M163 296 L169 316 M167 310 L172 308" stroke="' + CU.ottone + '" stroke-width="3.5" stroke-linecap="round" fill="none"/>';
-  // Il regolamento sotto il braccio destro (a destra di chi guarda), coperto dalla manica.
-  const libro = '<g transform="rotate(-8 178 252)"><rect x="150" y="212" width="58" height="80" rx="4" fill="' + CU.libro + '" stroke="' + CU.libroScuro + '" stroke-width="2.5"/>' +
-    '<rect x="203" y="216" width="7" height="72" fill="' + C.crema + '"/><rect x="150" y="226" width="58" height="5" fill="' + CU.libroScuro + '"/><rect x="150" y="272" width="58" height="5" fill="' + CU.libroScuro + '"/>' +
-    '<path d="M186 292 L186 306 L190 301 L194 306 L194 292" fill="' + C.oro + '"/></g>';
-  const destro = '<path d="M164 190 Q188 228 182 284 L166 286 Q170 236 152 204 Z" fill="' + CU.giacca + '" stroke="' + AI + '" stroke-width="2.5"/><circle cx="174" cy="290" r="9" fill="' + CU.pelle + '"/>';
+  const gambe = '<rect x="101" y="360" width="16" height="42" fill="' + CU.pantaloni + '"/><rect x="123" y="360" width="16" height="42" fill="' + CU.pantaloni + '"/>' +
+    '<path d="M92 404 Q92 396 108 396 L118 398 L118 408 L94 408 Z M148 404 Q148 396 132 396 L122 398 L122 408 L146 408 Z" fill="#14110F"/>' +
+    '<path d="M98 400 L106 399 M142 400 L134 399" stroke="#FFFFFF" stroke-width="1.5" opacity=".35"/>';
+  // Il gilet con i bottoni e la catena dell'orologio, la camicia, il colletto alto e la cravatta.
+  const gilet = '<path d="M103 168 L137 168 L139 300 L120 314 L101 300 Z" fill="' + CU.gilet + '" stroke="' + CU.giletScuro + '" stroke-width="2"/>' +
+    [204, 228, 252, 276].map(y => '<circle cx="120" cy="' + y + '" r="3.2" fill="' + CU.giletScuro + '"/>').join('') +
+    '<path d="M120 240 Q128 256 136 250" stroke="' + CU.ottone + '" stroke-width="2" fill="none"/>' +
+    '<path d="M108 156 L120 190 L132 156 Z" fill="' + CU.bianco + '"/>' +
+    '<path d="M108 154 L120 166 L112 150 Z M132 154 L120 166 L128 150 Z" fill="' + CU.bianco + '" stroke="' + CU.grigio + '" stroke-width="1.2"/>' +
+    '<path d="M120 166 L111 160 L111 172 Z M120 166 L129 160 L129 172 Z" fill="' + CU.cravatta + '"/><circle cx="120" cy="166" r="3.4" fill="' + CU.cravatta + '"/>' +
+    '<path d="M117 168 L114 192 L120 198 L126 192 L123 168 Z" fill="' + CU.cravatta + '"/>';
+  // La redingote lunga, aperta sul davanti, con i risvolti.
+  const giacca = '<path d="M114 156 C98 157 86 165 82 184 L70 374 Q92 382 115 376 L104 300 L102 196 Z" fill="' + CU.giacca + '" stroke="' + AI + '" stroke-width="2.5" stroke-linejoin="round"/>' +
+    '<path d="M126 156 C142 157 154 165 158 184 L170 374 Q148 382 125 376 L136 300 L138 196 Z" fill="' + CU.giacca + '" stroke="' + AI + '" stroke-width="2.5" stroke-linejoin="round"/>' +
+    '<path d="M110 158 L98 204 L104 200 L114 172 Z M130 158 L142 204 L136 200 L126 172 Z" fill="' + CU.giaccaScura + '"/>' +
+    '<path d="M86 300 L100 300 M140 300 L154 300" stroke="' + CU.giaccaScura + '" stroke-width="3" stroke-linecap="round"/>';
+  // Le chiavi, appese alla tasca della redingote.
+  const chiavi = '<circle cx="150" cy="306" r="7" fill="none" stroke="' + CU.ottone + '" stroke-width="3"/>' +
+    '<path d="M146 312 L143 332 M143 326 L138 325 M143 332 L138 331 M150 313 L150 336 M150 330 L155 330 M150 336 L155 336 M154 312 L160 330 M158 324 L163 322" stroke="' + CU.ottone + '" stroke-width="3.2" stroke-linecap="round" fill="none"/>';
+  // Il regolamento sotto il braccio destro (a destra di chi guarda), rilegato in cuoio con gli angoli d'ottone.
+  const libro = '<g transform="rotate(-8 176 250)"><rect x="146" y="210" width="60" height="82" rx="3" fill="' + CU.libro + '" stroke="' + CU.libroScuro + '" stroke-width="2.5"/>' +
+    '<rect x="201" y="214" width="7" height="74" fill="' + C.crema + '"/>' +
+    '<path d="M146 224 L206 224 M146 230 L206 230 M146 272 L206 272 M146 278 L206 278" stroke="' + C.oro + '" stroke-width="2"/>' +
+    '<path d="M146 210 L158 210 L146 222 Z M206 210 L194 210 L206 222 Z M146 292 L158 292 L146 280 Z M206 292 L194 292 L206 280 Z" fill="' + CU.ottone + '"/>' +
+    '<path d="M182 292 L182 308 L186 303 L190 308 L190 292" fill="' + CU.cravatta + '"/></g>';
+  const destro = '<path d="M156 182 Q180 226 174 284 L158 286 Q162 236 146 202 Z" fill="' + CU.giacca + '" stroke="' + AI + '" stroke-width="2.5"/><circle cx="166" cy="290" r="8" fill="' + CU.pelle + '"/>';
   let sinistro;
   if (pose === 'alza') {
-    sinistro = '<g transform="rotate(' + dond + ' 36 132)">' + lume(36, 132, luce) + '</g>' +
-      '<path d="M86 200 Q50 188 28 144 L46 128 Q64 166 100 182 Z" fill="' + CU.giacca + '" stroke="' + AI + '" stroke-width="2.5"/><circle cx="36" cy="134" r="9" fill="' + CU.pelle + '"/>';
+    sinistro = '<g transform="rotate(' + dond + ' 38 132)">' + lume(38, 132, luce) + '</g>' +
+      '<path d="M88 198 Q52 186 30 144 L48 130 Q66 166 100 182 Z" fill="' + CU.giacca + '" stroke="' + AI + '" stroke-width="2.5"/><circle cx="38" cy="134" r="8" fill="' + CU.pelle + '"/>';
   } else if (pose === 'orologio') {
-    sinistro = '<g transform="rotate(' + dond + ' 70 280)">' + lume(70, 280, luce) + '</g>' +
-      '<path d="M76 190 Q58 236 80 256 L102 240 Q84 228 92 204 Z" fill="' + CU.giacca + '" stroke="' + AI + '" stroke-width="2.5"/>' +
-      '<path d="M104 236 Q114 256 128 244" stroke="' + CU.ottone + '" stroke-width="2" fill="none"/>' +
-      '<circle cx="104" cy="224" r="12" fill="' + CU.ottone + '" stroke="' + CU.ottoneScuro + '" stroke-width="2"/><circle cx="104" cy="224" r="8.5" fill="' + C.crema + '"/>' +
-      '<path d="M104 224 L104 218 M104 224 L108 226" stroke="' + AI + '" stroke-width="1.6" stroke-linecap="round"/><circle cx="104" cy="210" r="3" fill="none" stroke="' + CU.ottone + '" stroke-width="2"/>' +
-      '<circle cx="98" cy="238" r="9" fill="' + CU.pelle + '"/>';
+    sinistro = '<g transform="rotate(' + dond + ' 92 248)">' + lume(92, 248, luce) + '</g>' +
+      '<path d="M84 186 Q66 234 88 256 L106 240 Q90 228 96 204 Z" fill="' + CU.giacca + '" stroke="' + AI + '" stroke-width="2.5"/>' +
+      '<path d="M104 236 Q112 254 120 240" stroke="' + CU.ottone + '" stroke-width="2" fill="none"/>' +
+      '<circle cx="104" cy="224" r="11" fill="' + CU.ottone + '" stroke="' + CU.ottoneScuro + '" stroke-width="2"/><circle cx="104" cy="224" r="8" fill="' + C.crema + '"/>' +
+      '<path d="M104 224 L104 218 M104 224 L108 226" stroke="' + AI + '" stroke-width="1.6" stroke-linecap="round"/><circle cx="104" cy="211" r="3" fill="none" stroke="' + CU.ottone + '" stroke-width="2"/>' +
+      '<circle cx="98" cy="238" r="8" fill="' + CU.pelle + '"/>';
   } else {
-    sinistro = '<path d="M76 190 Q56 232 60 290 L76 292 Q74 240 90 204 Z" fill="' + CU.giacca + '" stroke="' + AI + '" stroke-width="2.5"/>' +
-      '<g transform="rotate(' + dond + ' 68 296)">' + lume(68, 296, luce) + '</g><circle cx="68" cy="296" r="9" fill="' + CU.pelle + '"/>';
+    sinistro = '<path d="M84 186 Q64 232 68 290 L82 292 Q80 240 96 204 Z" fill="' + CU.giacca + '" stroke="' + AI + '" stroke-width="2.5"/>' +
+      '<g transform="rotate(' + dond + ' 74 296)">' + lume(74, 296, luce) + '</g><circle cx="74" cy="296" r="8" fill="' + CU.pelle + '"/>';
   }
-  return '<g>' + gambe + giacca + chiavi + libro + destro + sinistro + custodeTesta(expr, o) + '</g>';
+  return '<g>' + gambe + gilet + giacca + chiavi + libro + destro + sinistro + custodeTesta(expr, o) + '</g>';
 }
 // La guardiola del custode, accanto al cancello: una casetta di legno col tetto a righe e la finestra accesa.
 // Scatola 120×170, base a y = 170. o.porta da 0 (chiusa) a 1 (aperta), o.luce da 0 a 1.
