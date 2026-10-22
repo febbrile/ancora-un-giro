@@ -48,8 +48,14 @@
     {
       "id": "quaderno",
       "name": "Il quaderno",
-      "dur": 26,
-      "desc": "In tutti e due i parchi i treni ripartono, un vagone più lungo. Ada chiude il quaderno e corre giù per il sentiero, verso il suo luna park. Fine."
+      "dur": 21.5,
+      "desc": "In tutti e due i parchi i treni ripartono, un vagone più lungo. Ada chiude il quaderno e corre giù per il sentiero, verso il suo luna park."
+    },
+    {
+      "id": "cancello",
+      "name": "Il cancello",
+      "dur": 23,
+      "desc": "Al cancello del suo luna park, chiuso, Ada trova il custode, uscito dalla guardiola con la lanterna, le chiavi e il regolamento: c'è sempre stato, ma lei non l'aveva mai guardato. Lui apre il cancello, guarda l'orologio: «Fra poco si chiude. Lo dice il regolamento.» Ada passa e riapre il quaderno su una pagina bianca. Fine."
     }
   ]
 }

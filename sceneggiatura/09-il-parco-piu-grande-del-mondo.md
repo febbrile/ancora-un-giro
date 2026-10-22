@@ -6,7 +6,7 @@
 **Cosa dà per scontato.** Il prologo e gli episodi da 1 a 8: Ada, lo Spezzaparole, i passeggeri, il treno, la montagna con i fili di luce, gli scambi e le finestre sulla vasca, la vasca, la pesca; i treni di prova grigi che hanno piegato la pista e dormono su un binario morto dietro la stazione (episodio 5); le luci oltre le colline (episodio 8).
 **Cosa lascia per dopo.** È la fine della stagione: Ada torna al suo parco, e il treno riparte. Al cancello c'è il custode, con il suo regolamento: è la seconda stagione.
 
-Durata: 4:40 · Voci: narratore, Ada, custode.
+Durata: 4:37 · Voci: narratore, Ada, custode.
 
 ---
 
@@ -130,7 +130,7 @@ Torniamo su Ada, che ascolta e annuisce a ogni nome.
 
 ---
 
-### quaderno · Il quaderno · 0:26
+### quaderno · Il quaderno · 0:22
 
 **VISIVO.** Sulla collina. In tutti e due i parchi le sbarre si abbassano e i treni ripartono, un vagone più lungo: il trenino di Ada, piccolo, e i treni del parco immenso, a centinaia. Ada guarda l'uno e l'altro, sorride e chiude il quaderno. Poi si alza e corre giù per il sentiero, verso il suo luna park, dove il trenino la aspetta.
 
@@ -142,9 +142,9 @@ Torniamo su Ada, che ascolta e annuisce a ogni nome.
 
 ---
 
-### cancello · Il cancello · 0:22
+### cancello · Il cancello · 0:23
 
-**VISIVO.** Ada arriva di corsa al cancello del suo luna park, col fiato corto, il camice pieno d'erba. Accanto al cancello c'è una guardiola di legno con la finestra accesa. Ne esce il custode: un uomo anziano col berretto, una lanterna in mano, un mazzo di chiavi alla cintura e un grosso libro sotto il braccio, il regolamento. Tira fuori un orologio da tasca, lo guarda, e tiene aperto il cancello per farla passare. Ada si ferma e lo guarda dal basso, con gli occhiali tondi sul naso: non l'aveva mai visto. Il custode richiude il cancello alle sue spalle e torna piano verso la guardiola, con la lanterna che dondola. Ada riapre il quaderno su una pagina bianca, si gira a guardarlo e sorride. Cartello: **Fine**.
+**VISIVO.** Ada scende di corsa fino al cancello del suo luna park, e lo trova chiuso. Accanto al cancello c'è una guardiola di legno, col tetto a righe come le giostre e la finestra accesa. La porta si apre e ne esce il custode: un uomo anziano col berretto verde e la stellina, i baffi bianchi, una lanterna in mano, un mazzo di chiavi alla cintura e un grosso libro rosso sotto il braccio, il regolamento. Va al cancello, alza la lanterna su Ada e le sorride; Ada lo guarda a bocca aperta: non l'aveva mai visto. Il custode apre il cancello. Mentre parla tira fuori l'orologio da tasca e lo guarda, serio. Poi si fa da parte, Ada passa, e lui richiude il cancello alle sue spalle, con la lanterna che dondola. Ada, davanti alla guardiola, riapre il quaderno su una pagina bianca e sorride. Cartello: **Fine**.
 
 **NARRATORE.**
 > Al cancello c'è il custode, con la lanterna e le chiavi. C'è sempre stato, ma Ada non l'aveva mai guardato.

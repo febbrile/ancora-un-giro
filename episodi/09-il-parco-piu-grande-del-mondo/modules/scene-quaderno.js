@@ -1,8 +1,8 @@
 const { seg, eo, eio, lerp } = kit;
 // In cima alla collina. In tutti e due i parchi le sbarre si abbassano e i treni ripartono, un vagone più lungo: il
 // trenino di Ada, piccolo, e i treni del parco immenso, a centinaia. Ada guarda l'uno e l'altro, sorride e chiude il
-// quaderno. Poi si alza e corre giù per il sentiero, verso il suo luna park. Cartello: «Fine».
-// Si apre come finisce «nomi», su Ada seduta in cima; è l'ultima scena della stagione.
+// quaderno. Poi si alza e corre giù per il sentiero, verso il suo luna park.
+// Si apre come finisce «nomi», su Ada seduta in cima; finisce con Ada a metà discesa (la riprende «cancello»).
 const QD_CAM = [
   { t: 0, cx: 2560, cy: 548, z: 2.9 },
   { t: 1.6, cx: 2560, cy: 548, z: 2.9 },
@@ -10,13 +10,11 @@ const QD_CAM = [
   { t: 12.4, cx: 2540, cy: 500, z: 0.42 },
   { t: 14.4, cx: 2560, cy: 560, z: 1.8 },
   { t: 17.2, cx: 2470, cy: 600, z: 1.6 },
-  { t: 21.0, cx: 1500, cy: 520, z: 0.62 },
-  { t: 26, cx: 1460, cy: 520, z: 0.6 },
+  { t: 21.6, cx: 2180, cy: 740, z: 1.9 },
 ];
 const QD_SBARRE = [5.4, 6.4];
 const QD_VEL = [[6.8, 0], [8.4, 90], [10.4, 140], [12.4, 200]];
-const QD_CHIUDE = 14.8, QD_ALZA = [15.4, 16.0], QD_CORSA = [16.4, 22.6];
-const QD_FINE = 22.0;
+const QD_CHIUDE = 14.8, QD_ALZA = [15.4, 16.0], QD_CORSA = [16.4, 21.6];
 const QD_CIMA = [2550, 558];
 kit.scene('quaderno', {
   init(kit) {
@@ -24,13 +22,12 @@ kit.scene('quaderno', {
     const piccolo = [{ tipo: 'al', col: A.passeggeri.Al.biglietto }, { tipo: 'mare', col: A.passeggeri.mare.biglietto }, { tipo: 'emma', col: A.passeggeri.Emma.biglietto }, { tipo: 'paperella', col: A.nuovo.nuota }];
     const prato = '<path d="M2462 650 C2486 572 2520 560 2550 560 C2580 560 2614 572 2638 650 Z" fill="#1F2258"/>' +
       '<path d="M2478 600 q3 -12 6 -2 q3 -14 6 0 q3 -10 5 2 M2530 578 q3 -12 6 -2 q3 -14 6 0 q3 -10 5 2 M2590 590 q3 -12 6 -2 q3 -14 6 0 q3 -10 5 2" stroke="#2E5A3E" stroke-width="3" fill="none" stroke-linecap="round"/>';
-    // La discesa: dalla cima, giù per il sentiero, fuori dal cancello, verso la stazione.
-    this.discesa = P.sentiero.slice().reverse().concat([[1860, 872], [1500, 900], [1100, 900]]);
-    const fine = '<g class="qd-fine" opacity="0"><g transform="translate(960 300)"><g class="qd-insegna"></g></g></g>';
+    // La discesa: dalla cima, giù per il sentiero, fino a dove la riprende «cancello».
+    this.discesa = P.sentiero.slice(2).reverse();
     this.m = G.costruisciPaesaggio(kit, '<g class="qd-trenino">' + G.treno(piccolo, { sbarra: 0 }) + '</g>' +
       '<g transform="' + G.posa(G.MONDO.spezzaparole[0], G.MONDO.spezzaparole[1], 0.34, 220, 300) + '">' + G.spezzaparole({}) + '</g>' +
       '<g class="qd-ada"></g><g class="qd-prato">' + prato + '</g>', {
-      pre: 'quaderno', laggiu: 1, manopola: 0, banchina: true, morto: true, treni: true, davanti: fine,
+      pre: 'quaderno', laggiu: 1, manopola: 0, banchina: true, morto: true, treni: true,
       html: G.sottotitolo('NARRATORE', 'Una macchina che non pensa calcola, un pezzo alla volta, quanto è probabile ogni parola che può venire dopo. Se ne pesca una, e si ricomincia.') +
         G.sottotitolo('ADA', 'Ancora un giro!'),
     });
@@ -39,8 +36,7 @@ kit.scene('quaderno', {
     this.m.qa('.qd-trenino .g-lucina').forEach(l => l.setAttribute('opacity', 0.3));
     this.lucine = this.m.qa('.qd-trenino .g-lucina');
     this.ada = this.m.q('.qd-ada'); this.prato = this.m.q('.qd-prato');
-    this.fine = this.m.q('.qd-fine'); this.insegna = this.m.q('.qd-insegna');
-    this.stato = ''; this.statoIns = '';
+    this.stato = '';
     this.sub = G.subs(kit, [[1.0, 14.0], [16.4, 18.6]]);
   },
   lungo(pt, u) {
@@ -78,12 +74,6 @@ kit.scene('quaderno', {
     }
     this.ada.firstChild.setAttribute('transform', G.posaAda(x, y) + ' rotate(' + (uc > 0 && uc < 1 ? 4 * Math.sin(t * 5.5) : 0).toFixed(2) + ' 100 300)');
     this.prato.setAttribute('opacity', (1 - alza).toFixed(3));
-    // Il cartello: «Fine».
-    const f = eo(seg(t, QD_FINE, QD_FINE + 1.0));
-    this.fine.setAttribute('opacity', f.toFixed(3));
-    this.fine.setAttribute('transform', 'translate(0 ' + (16 * (1 - f)).toFixed(1) + ')');
-    const turno = String(Math.floor(t / 0.6) % 3);
-    if (turno !== this.statoIns) { this.insegna.innerHTML = G.insegna('Fine', 520, 200, +turno); this.statoIns = turno; }
     this.sub(t);
   },
 });

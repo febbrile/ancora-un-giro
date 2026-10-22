@@ -56,12 +56,14 @@ kit.score(function (S, T) {
   sez(R('nomi', 48.6), T.quaderno, ['C', 'C'], { pad: 30 });
   // Il finale della stagione.
   sez(T.quaderno, R('quaderno', 14.8), ['F', 'G', 'Em', 'Am'], { pad: 30, keys: 28 });
-  sez(R('quaderno', 14.8), R('quaderno', 22.0), giro, { pad: 32, mallet: 'x.x.X.x.', mv: 42, box: 'x.x.x.x.', bv: 32, bass: 52 });
+  sez(R('quaderno', 14.8), T.cancello, giro, { pad: 32, mallet: 'x.x.X.x.', mv: 42, box: 'x.x.x.x.', bv: 32, bass: 52 });
+  // Il cancello: il custode, piano, con il vibrafono; poi la fine della stagione.
+  sez(T.cancello, R('cancello', 20.8), ['F', 'C', 'Dm', 'G'], { pad: 26, keys: 22, vib: 22 });
   S.drums({ kick: 'x...x...', shaker: 'oxoxoxox' }, { from: Math.ceil(bt(R('immenso', 8))), repeat: 5, vel: 30 });
   S.drums({ kick: 'x...x...', shaker: 'oxoxoxox' }, { from: Math.ceil(bt(R('lago', 2))), repeat: 5, vel: 30 });
   S.drums({ kick: 'x...x...', shaker: 'oxoxoxox' }, { from: Math.ceil(bt(R('quaderno', 15))), repeat: 3, vel: 32 });
   // I due cartelli: il titolo e la fine della stagione (più lunga, più piena).
-  [R('domanda', 16.4), R('quaderno', 22.0)].forEach((a, k) => {
+  [R('domanda', 16.4), R('cancello', 20.8)].forEach((a, k) => {
     S.fx('revswell', a - 0.6, { dur: 1.2 });
     S.chord('pad', C.C, { t: a, dur: k ? 4.0 : 3.6, vel: k ? 48 : 42 });
     S.chord('keys', ['C4', 'E4', 'G4', 'C5'], { t: a, dur: 3.4, vel: 44 });
@@ -136,4 +138,16 @@ kit.score(function (S, T) {
   S.fx('click', R('quaderno', 14.8), { vel: 40 });
   S.fx('boing', R('quaderno', 15.6), { vel: 34 });
   for (let k = 0; k < 14; k++) S.fx('woodblock', R('quaderno', 16.6 + k * 0.32), { vel: 22 });
+  // Il cancello: la corsa, la porta della guardiola, i passi del custode, le chiavi, il cancello che cigola, l'orologio.
+  for (let k = 0; k < 8; k++) S.fx('woodblock', R('cancello', 0.1 + k * 0.3), { vel: 22 });
+  S.fx('click', R('cancello', 1.0), { vel: 30 });
+  for (let k = 0; k < 4; k++) S.fx('sidestick', R('cancello', 1.9 + k * 0.45), { vel: 18 });
+  for (let k = 0; k < 3; k++) S.fx('tick', R('cancello', 3.7 + k * 0.09), { vel: 20 });
+  S.fx('chime', R('cancello', 4.0), { vel: 26 });
+  S.fx('roll', R('cancello', 6.4), { dur: 1.0, vel: 18 });
+  for (let k = 0; k < 6; k++) S.fx('tick', R('cancello', 11.8 + k * 0.5), { vel: 18 });
+  for (let k = 0; k < 5; k++) S.fx('woodblock', R('cancello', 18.7 + k * 0.32), { vel: 20 });
+  S.fx('roll', R('cancello', 19.4), { dur: 0.9, vel: 16 });
+  S.fx('thud', R('cancello', 20.4), { vel: 24 });
+  S.fx('click', R('cancello', 20.2), { vel: 30 });
 });
