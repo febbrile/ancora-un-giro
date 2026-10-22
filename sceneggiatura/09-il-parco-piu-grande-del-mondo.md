@@ -2,11 +2,11 @@
 
 **La domanda.** Che cosa c'è laggiù? (È la domanda con cui finisce l'episodio 8.)
 **La risposta.** Laggiù c'è un parco come quello di Ada, ma immenso: è lì che fanno il giro le chat di tutti i giorni. È tutto più grande e ha altri colori, ma il giro è lo stesso: biglietti, un treno senza guidatore, la montagna, il lago, la pesca. E fuori dal luna park le sue cose hanno un nome: token, modello, probabilità, addestramento.
-**Cosa presenta.** Una cosa sola: il parco immenso.
+**Cosa presenta.** Una cosa sola per questa storia: il parco immenso. Nell'ultima scena, fuori dalla storia, compare il custode: non serve a questo episodio, apre la seconda stagione.
 **Cosa dà per scontato.** Il prologo e gli episodi da 1 a 8: Ada, lo Spezzaparole, i passeggeri, il treno, la montagna con i fili di luce, gli scambi e le finestre sulla vasca, la vasca, la pesca; i treni di prova grigi che hanno piegato la pista e dormono su un binario morto dietro la stazione (episodio 5); le luci oltre le colline (episodio 8).
-**Cosa lascia per dopo.** Niente: è la fine della stagione. Ada torna al suo parco, e il treno riparte.
+**Cosa lascia per dopo.** È la fine della stagione: Ada torna al suo parco, e il treno riparte. Al cancello c'è il custode, con il suo regolamento: è la seconda stagione.
 
-Durata: 4:18 · Voci: narratore, Ada.
+Durata: 4:40 · Voci: narratore, Ada, custode.
 
 ---
 
@@ -132,13 +132,31 @@ Torniamo su Ada, che ascolta e annuisce a ogni nome.
 
 ### quaderno · Il quaderno · 0:26
 
-**VISIVO.** Sulla collina. In tutti e due i parchi le sbarre si abbassano e i treni ripartono, un vagone più lungo: il trenino di Ada, piccolo, e i treni del parco immenso, a centinaia. Ada guarda l'uno e l'altro, sorride e chiude il quaderno. Poi si alza e corre giù per il sentiero, verso il suo luna park, dove il trenino la aspetta. Cartello: **Fine**.
+**VISIVO.** Sulla collina. In tutti e due i parchi le sbarre si abbassano e i treni ripartono, un vagone più lungo: il trenino di Ada, piccolo, e i treni del parco immenso, a centinaia. Ada guarda l'uno e l'altro, sorride e chiude il quaderno. Poi si alza e corre giù per il sentiero, verso il suo luna park, dove il trenino la aspetta.
 
 **NARRATORE.**
 > Una macchina che non pensa calcola, un pezzo alla volta, quanto è probabile ogni parola che può venire dopo. Se ne pesca una, e si ricomincia.
 
 **ADA.**
 > Ancora un giro!
+
+---
+
+### cancello · Il cancello · 0:22
+
+**VISIVO.** Ada arriva di corsa al cancello del suo luna park, col fiato corto, il camice pieno d'erba. Accanto al cancello c'è una guardiola di legno con la finestra accesa. Ne esce il custode: un uomo anziano col berretto, una lanterna in mano, un mazzo di chiavi alla cintura e un grosso libro sotto il braccio, il regolamento. Tira fuori un orologio da tasca, lo guarda, e tiene aperto il cancello per farla passare. Ada si ferma e lo guarda dal basso, con gli occhiali tondi sul naso: non l'aveva mai visto. Il custode richiude il cancello alle sue spalle e torna piano verso la guardiola, con la lanterna che dondola. Ada riapre il quaderno su una pagina bianca, si gira a guardarlo e sorride. Cartello: **Fine**.
+
+**NARRATORE.**
+> Al cancello c'è il custode, con la lanterna e le chiavi. C'è sempre stato, ma Ada non l'aveva mai guardato.
+
+**CUSTODE.**
+> Bentornata. Fra poco si chiude.
+
+**ADA.**
+> Perché?
+
+**CUSTODE.**
+> Lo dice il regolamento.
 
 ---
 
@@ -173,4 +191,6 @@ Torniamo su Ada, che ascolta e annuisce a ogni nome.
 - **La pesca** dà «nuota», la paperella più numerosa: è la stessa parola che Ada pesca a casa, di un altro colore.
 - **Richiami agli altri episodi.** La scena `domanda` riprende il finale dell'episodio 8 (le luci oltre la ruota panoramica, dietro le colline). Nella scena `nomi`, il binario morto con i treni grigi è quello dell'episodio 5, moltiplicato. Se arrivano su main, si possono aggiungere senza parlarne: la manopola alla bancarella del lago (episodio 3), la stazione lunghissima come richiamo alla banchina (episodio 4), le paperelle «Fine» nel lago (episodio 7).
 - **Non sono elementi nuovi**: la collina, il sentiero e la città lontana sono il paesaggio già visto; la bancarella del lago è la stessa di Ada. L'unico elemento nuovo è il parco immenso.
+- **Il custode** (scena `cancello`) non fa parte della storia di questo episodio: lo presenta per la seconda stagione ([SCALETTA-2.md](../mondo/SCALETTA-2.md)). Qui si dice solo chi è (il custode del parco, con la lanterna, le chiavi, l'orologio e il regolamento) e com'è diverso da Ada: lei chiede perché, lui risponde con il regolamento. Non tocca il treno e non va verso la stazione: quello che fa per i treni lo racconta la seconda stagione. Nel modello è il programma intorno alla montagna, il codice di inferenza; il nome arriva nell'episodio 6 della seconda stagione. Il suo aspetto va deciso nella tela prima della produzione; la guardiola è paesaggio, come la ruota panoramica.
+- **Il ritmo della fine**: la frase da lasciare resta nella scena `quaderno`; la scena `cancello` è un congedo breve, e il cartello finale passa a lei.
 - **Cosa non diciamo**: nomi di prodotti o di aziende, numeri (restano qui), i tanti fili per ogni coppia di passeggeri (le teste dell'attention), perché la pista è fatta così, chi pesca al lago quando Ada non c'è.
