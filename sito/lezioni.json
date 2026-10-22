@@ -5,5 +5,12 @@
     "file": "01-dal-testo-alla-distribuzione",
     "titolo": "Dal testo alla distribuzione di probabilità",
     "sommario": "Il ciclo che produce una risposta un token alla volta, e cosa succede dentro il modello: embedding, strati, attention, uscita. Con un glossario e le domande di verifica."
+  },
+  {
+    "n": 2,
+    "etichetta": "Lezione 2",
+    "file": "02-dal-prompt-alla-risposta",
+    "titolo": "Dal prompt alla risposta",
+    "sommario": "Il software intorno al modello: come si costruisce il contesto, i classificatori, il campionamento con temperatura, top-k e top-p, gli strumenti e il reasoning. Con lo pseudocodice, un glossario e le domande di verifica."
   }
 ]
