@@ -124,6 +124,19 @@ function tavole() {
   s += '<svg x="40" y="110" width="1840" height="930" viewBox="2500 -900 6200 3134" preserveAspectRatio="xMidYMid slice">' + G.PARCO.defs + G.paesaggio({ laggiu: 1, manopola: 0, banchina: true, morto: true, strisce: 0 }) + '</svg>';
   s += et(960, 1068, 'la stazione lunga come una strada, lo Spezzaparole alto come un palazzo, le cime in fila fino alle nuvole, il lago');
   T['Immenso.dc.html'] = { titolo: 'Il parco più grande del mondo', w: 1920, h: 1080, svg: s };
+  // Il custode (fine dell'episodio 9 e seconda stagione): le pose, la guardiola, e accanto ad Ada per le proporzioni.
+  s = '<rect width="1920" height="1080" fill="#F3EADB"/>' + titolo('Il custode · seconda stagione');
+  [['base', 'base', 'con la lanterna'], ['alza', 'sorriso', 'alza la lanterna'], ['orologio', 'serio', 'guarda l\'orologio'], ['base', 'chiusi', 'occhi chiusi']].forEach(([p, e, n], k) => {
+    s += at(40 + k * 260, 130, 1.0, G.custode(p, e, { dondolo: k === 0 ? -8 : 0 })) + et(160 + k * 260, 590, n);
+  });
+  s += pannello(40, 630, 1060, 420);
+  s += at(90, 762, 1.4, G.guardiola({ porta: 1 })) + at(300, 754, 0.6, G.custode('base', 'sorriso', { occhi: 1 })) + at(500, 820, 0.6, G.ada('quaderno', 'felice'));
+  s += at(800, 762, 1.4, G.guardiola({ porta: 0, luce: 0.4 }));
+  s += et(330, 690, 'la guardiola, accanto al cancello', true) + et(884, 690, 'con la porta chiusa', true);
+  s += pannello(1140, 120, 740, 930);
+  s += at(1460, 470, 1.25, G.custode('alza', 'base', { occhi: -1 })) + at(1170, 600, 1.25, G.ada('quaderno', 'sorpresa'));
+  s += et(1510, 1030, 'accanto ad Ada: alto, ma non un gigante', true);
+  T['Custode.dc.html'] = { titolo: 'Il custode', w: 1920, h: 1080, svg: s };
   // La grammatica: colori e caratteri.
   const sw = [['notte', C.notte1], ['cielo', C.notte2], ['lampadine', C.luce], ['righe', C.rosso], ['crema', C.crema], ['oro', C.oro], ['montagna', C.mont2], ['acqua', C.acqua]];
   s = '<rect width="1280" height="720" fill="#F3EADB"/>' + titolo('La grammatica');
@@ -147,7 +160,7 @@ function artboard(nome, t) {
 const T = tavole();
 fs.mkdirSync(OUT, { recursive: true });
 const posto = { 'Main.dc.html': [0, 0], 'Oggetti.dc.html': [2000, 0], 'LunaPark.dc.html': [0, 1200], 'Montagna.dc.html': [2000, 1200], 'Finestre.dc.html': [0, 2400], 'Grammatica.dc.html': [2000, 2400], 'Parco.dc.html': [0, 3600],
-  'Passeggeri.dc.html': [2000, 3600], 'Stagione.dc.html': [0, 4800], 'Immenso.dc.html': [2000, 4800] };
+  'Passeggeri.dc.html': [2000, 3600], 'Stagione.dc.html': [0, 4800], 'Immenso.dc.html': [2000, 4800], 'Custode.dc.html': [0, 6000] };
 const canvas = {
   v: 3, createdOnFiles: { v: 1, at: new Date().toISOString().replace(/\.\d+Z$/, 'Z') }, title: 'Ancora un giro · design',
   launch: { view: 'canvas' }, pages: [], boards: {}, order: [], notes: {}, designSystems: [],

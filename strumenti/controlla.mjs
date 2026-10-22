@@ -36,7 +36,7 @@ for (const ep of eps) {
     const file = path.join(dir, 'scene-' + s.id + '.js');
     if (!fs.existsSync(file)) { male('manca scene-' + s.id + '.js'); continue; }
     const src = fs.readFileSync(file, 'utf8');
-    const testi = [...src.matchAll(/G\.sottotitolo\('(NARRATORE|ADA)', '((?:[^'\\]|\\.)*)'\)/g)].map(m => ({ chi: m[1], testo: m[2] }));
+    const testi = [...src.matchAll(/G\.sottotitolo\('(NARRATORE|ADA|CUSTODE)', '((?:[^'\\]|\\.)*)'\)/g)].map(m => ({ chi: m[1], testo: m[2] }));
     const fin = /G\.subs\(kit, (\[\[.*?\]\])\)/.exec(src);
     const finestre = fin ? JSON.parse(fin[1]) : [];
     if (testi.length !== finestre.length) { male(s.id + ': ' + testi.length + ' sottotitoli ma ' + finestre.length + ' finestre'); continue; }

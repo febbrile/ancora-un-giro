@@ -79,6 +79,13 @@
       "w": 1920,
       "h": 1080,
       "title": "Il parco più grande del mondo"
+    },
+    "Custode.dc.html": {
+      "x": 0,
+      "y": 6000,
+      "w": 1920,
+      "h": 1080,
+      "title": "Il custode"
     }
   },
   "order": [
@@ -91,7 +98,8 @@
     "Parco.dc.html",
     "Passeggeri.dc.html",
     "Stagione.dc.html",
-    "Immenso.dc.html"
+    "Immenso.dc.html",
+    "Custode.dc.html"
   ],
   "notes": {},
   "designSystems": []
