@@ -108,6 +108,8 @@ Ogni episodio usa solo elementi già presentati e si chiude da solo. La domanda 
 - **Idea**: montagne una dietro l'altra, migliaia di scambi, vasche grandi come laghi. Ma il giro è lo stesso.
   Alla fine, come premio, arrivano le parole vere: token, modello, probabilità, addestramento. Ada chiude il quaderno
   sulla frase da lasciare.
+- **Chiude con**: Ada torna al suo luna park e al cancello incontra il custode, che c'è sempre stato e lei non aveva mai
+  guardato. Apre la [seconda stagione](SCALETTA-2.md).
 - **Sotto**: è l'unico episodio in cui si fanno confronti con i modelli veri (regola 12 del soggetto).
 
 ---
@@ -116,6 +118,8 @@ Ogni episodio usa solo elementi già presentati e si chiude da solo. La domanda 
 
 Idee buone che non entrano in questa stagione, perché porterebbero un secondo elemento nuovo o non servono ancora:
 
-- **Il custode che chiude il parco** a un'ora fissa, a metà frase: il troncamento per lunghezza.
+- **Il custode che chiude il parco** a metà frase: il troncamento per lunghezza. È diventato la campanella del custode,
+  episodio 4 della [seconda stagione](SCALETTA-2.md).
 - **I messaggi che non hai scritto**: biglietti che la chat aggiunge alla striscia per dire chi parla e come comportarsi.
+  Sono diventati la frase del parco e le bandierine, episodio 1 della [seconda stagione](SCALETTA-2.md).
 - **Perché la pista è fatta così**: nessuno sa dirlo a parole. Può diventare un episodio su ciò che nemmeno Ada riesce a vedere.

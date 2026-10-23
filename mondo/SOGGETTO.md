@@ -1,5 +1,5 @@
 # Ancora un giro · Il soggetto
-### Le fondamenta · bozza 2, 19 ottobre 2026
+### Le fondamenta · bozza 3, 22 ottobre 2026
 
 Questa pagina viene prima di tutto il resto. Ogni personaggio, luogo, episodio o regola nuova deve poterci stare sopra.
 Se una scelta futura contraddice questa pagina, si cambia la scelta, oppure si discute e si cambia prima questa pagina.
@@ -13,6 +13,10 @@ Alla fine della serie, chi guarda deve saper dire con parole sue:
 > **Una macchina che non pensa calcola, un pezzo alla volta, quanto è probabile ogni parola che può venire dopo. Se ne pesca una, e si ricomincia.**
 
 Tutto il resto è dettaglio. Un episodio che non avvicina lo spettatore a questa frase non serve.
+
+La seconda stagione ne aggiunge una, che si appoggia alla prima:
+
+> **La montagna fa sempre lo stesso giro. Chi sale, chi controlla, come si pesca e cosa si va a prendere fuori lo fa il parco, e cambia da un parco all'altro.**
 
 ## 2. A chi parliamo
 
@@ -50,6 +54,7 @@ Sono le leggi fisiche del nostro mondo. Valgono in ogni episodio, anche quando n
 - **La banchina** (episodio 4). La banchina della stazione ha una lunghezza fissa: ci stanno sette vagoni, non uno di più, tra le due sbarre a righe bianche e rosse dei suoi capi, e non si allunga mai. Quando una risposta è finita i passeggeri scendono e il treno resta vuoto: al messaggio dopo arriva alla stazione tutta la chat, risposte comprese, e risalgono tutti dal principio. Il treno non ricorda niente: porta chi sale. I biglietti prendono posto dall'ultimo vagone in avanti; se la chat è più lunga della banchina, quelli del principio restano giù, sulle assi, e il treno parte senza di loro.
 - **I treni di prova** (episodio 5). Prima che il parco aprisse, per moltissime notti, giravano soli i treni di prova: grigi, senza vernice e senza lucine, con un fanale. Erano carichi di frasi che la gente aveva scritto davvero, e sulla loro striscia c'era già la parola dopo. Lo Spezzaparole la tagliava come le altre, ma l'ultimo biglietto non saliva: restava acceso sopra la vasca, come una lanterna. Dentro la montagna, all'inizio, la pista era dritta: i fili non portavano niente e gli scambi non spostavano nessuno. All'uscita, quando le paperelle del colore del biglietto erano poche, dalla vasca partiva un **brivido** che correva all'indietro lungo i binari, fino in fondo alla montagna, e spostava di un capello tutti gli scambi di tutti i tratti, piegando la pista un pochino verso quel colore. Più paperelle mancavano, più forte era il brivido. Nessuno pescava e nessuno toccava la pista; della frase non restava niente: la striscia volava via, i passeggeri si spegnevano, le paperelle scivolavano via. Ogni treno piegava la stessa pista, e nessuna frase ci ha un posto suo. Notte dopo notte la pista si è piegata sempre meno; poi i treni di prova sono andati a dormire su un binario morto dietro la stazione, e il parco si è acceso per la prima volta. Oggi, con le frasi di chi scrive, non parte nessun brivido: la pista non si piega più.
 - **Il parco più grande del mondo** (episodio 9). Oltre le colline, dietro la ruota panoramica, c'è un parco immenso, e non è l'unico. Ci arrivano le frasi di tutte le case, e i treni partono uno dopo l'altro senza fermarsi mai, alcuni lunghissimi. La stazione è lunga come una strada e lo Spezzaparole è alto come un palazzo. La montagna è una sola, ma fatta di tante cime in fila fino alle nuvole: una per ogni tratto, ognuna con la sua finestra sulla vasca. Dentro, il fascio di binari è largo come un'autostrada e gli scambi sono più delle stelle in cielo. La vasca è grande come un lago, con paperelle di più colori di quanti se ne possano contare. Ogni parco ha i suoi colori: laggiù lo stesso pezzo sale con un altro vestito, e la stessa parola ha paperelle di un altro colore. Ma il giro è lo stesso, con la biglietteria e la pesca fuori dalla montagna. Il parco di Ada è un parco giocattolo, fatto apposta per guardarci dentro: le chat di tutti i giorni fanno il giro in parchi come quello. È l'unico posto della serie in cui si parla dei modelli veri e in cui le cose del luna park hanno i loro nomi da grandi.
+- **Il custode** (episodio 9). Al cancello del luna park, nella guardiola con la finestra accesa, c'è il custode: la lanterna, le chiavi, un orologio da tasca e un grosso regolamento. C'è sempre stato, anche se Ada non l'aveva mai guardato. Apre e chiude il parco e fa quello che dice il regolamento, sempre allo stesso modo, senza chiedersi perché. Non entra nella montagna e non pesca: come la biglietteria e la bancarella, sta fuori.
 
 ### Personaggi
 - **Ada**: piccola scienziata col camice troppo lungo, gli occhiali tondi e il quaderno. Lavora alla stazione e alla bancarella della pesca. **Non sale mai sul treno e non tocca niente dentro la montagna.** Guarda, ascolta, annota, pesca.
@@ -58,6 +63,7 @@ Sono le leggi fisiche del nostro mondo. Valgono in ogni episodio, anche quando n
 - **Al** (sassolino) e **Mare** (onda con gli occhi): i suoi compagni di viaggio nella prima frase. Nelle altre frasi ne arrivano altri.
 - **Parco** (alberello con gli occhi): il compagno di viaggio di Emma in «Al parco Emma», al posto di Mare. Con lui Emma fa un altro viaggio ed esce verde.
 - **Le paperelle**: una per ogni parola che può venire dopo. Quella pescata diventa un passeggero.
+- **Il custode**: alto, magro e un po' altero, come il custode di una vecchia biblioteca, con gli occhiali a mezzaluna. Tiene il parco con la lanterna, le chiavi, l'orologio e il regolamento. È il contrario di Ada: lei pesca a caso e chiede sempre perché; lui fa sempre la stessa cosa e risponde «Lo dice il regolamento». Il suo episodio è il 4 della seconda stagione.
 
 ## 4. Le proprietà che il mondo deve avere
 
@@ -79,6 +85,7 @@ Il luna park deve contenere da sé, per come funziona, ciascuna di queste cose, 
 | L'estrazione avviene fuori | Ada pesca alla bancarella | Campionamento, fuori dal modello |
 | Quanto la pesca può sorprendere | La manopola della bancarella | Temperatura, fuori dal modello |
 | Tra un messaggio e l'altro non resta niente, e c'è un limite | A ogni messaggio risale tutta la chat, finché c'è posto sulla banchina | Contesto, nessuno stato tra le chiamate, finestra di contesto |
+| Intorno alla giostra, regole fisse che non sono la giostra | Il custode e il suo regolamento, fuori dalla montagna | Il codice di inferenza, il programma che chiama il modello |
 
 ## 5. Il motore della serie: la curiosità di Ada
 
@@ -91,6 +98,8 @@ Ogni episodio è un **mistero** che Ada indaga da fuori, con i suoi strumenti, s
 - finisce con una risposta, cioè una storia completa, e magari con la domanda dell'episodio dopo.
 
 La scaletta della prima stagione, episodio per episodio, è in [SCALETTA.md](SCALETTA.md).
+
+Nella seconda stagione Ada guarda il parco intorno alla giostra, e trova qualcuno a cui chiedere: **il custode**. Ada gli chiede perché, lui risponde con una regola del regolamento, e il perché vero Ada lo scopre guardando. La scaletta è in [SCALETTA-2.md](SCALETTA-2.md).
 
 ## 6. Regole di racconto
 
@@ -121,6 +130,8 @@ Restano quelle del progetto, tradotte nel nuovo mondo.
 12. **Parliamo solo del nostro luna park.** Niente confronti con i modelli veri, salvo un episodio dedicato.
 13. **Nella montagna ci sono spostamenti, non probabilità.** Le paperelle vere nascono solo alla vasca; nelle finestre se ne vede solo la luce.
 14. **Quello che si mostra una volta, si mostra sempre.** Ogni passeggero ha il suo colore, ogni finestra le sue paperelle di luce, calcolati in [strumenti/modellino.py](../strumenti/modellino.py).
+15. **Il custode fa, la giostra porta.** Il custode sta fuori dalla montagna e applica il regolamento, sempre uguale: non tira a indovinare e non sa perché la pista è fatta così. Verbi del custode: apre, chiude, attacca, porta, manda, conta, suona. Quello che il custode fa succede di sicuro; quello che mette sul treno dà solo una spinta, come ogni altro passeggero.
+16. **Dentro la montagna non cambia niente.** Tutto quello che il parco aggiunge alla giostra sta fuori, e la montagna non sa che c'è.
 
 ## 8. Gli errori da non suggerire mai
 
@@ -131,6 +142,8 @@ Sono le idee sbagliate più diffuse sull'intelligenza artificiale. Nessuna immag
 - **«Pensa, capisce, vuole.»** Il treno non ha guidatore.
 - **«La risposta è già pronta tutta intera.»** Si fa un giro per ogni parola.
 - **«Esiste una sola risposta giusta.»** Nella vasca ci sono tante paperelle, e la pesca può cambiare.
+- **«Le istruzioni sono comandi.»** Quello che il parco mette sul treno siede davanti, ma non guida nessuno (seconda stagione).
+- **«Va a cercare da solo, e sa che quello che trova è vero.»** La montagna non esce dal parco: porta chi sale, anche quello che torna da fuori (seconda stagione).
 
 ## 9. La prova per ogni elemento nuovo
 
@@ -155,5 +168,6 @@ Se una risposta è sbagliata, l'elemento non entra.
 - [strumenti/modellino.py](../strumenti/modellino.py): i colori, le finestre e le paperelle.
 - `sceneggiatura/`: una sceneggiatura per episodio.
 - [SCALETTA.md](SCALETTA.md): la prima stagione, episodio per episodio.
+- [SCALETTA-2.md](SCALETTA-2.md): la seconda stagione, «Intorno alla giostra».
 - Da scrivere: `concetti.md` (metafora ↔ concetto, prerequisiti, episodio in cui ognuno viene presentato)
   e `nuovo-episodio.md` (lo stampo per scrivere una puntata).

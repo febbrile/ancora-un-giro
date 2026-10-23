@@ -16,7 +16,8 @@ e la prova per ogni elemento nuovo. Se una scelta lo contraddice, si cambia la s
 cambia prima il soggetto.
 
 [mondo/SCALETTA.md](mondo/SCALETTA.md) è la prima stagione: per ogni episodio l'argomento, la domanda di Ada,
-l'unico elemento nuovo e l'idea. Un episodio nuovo parte da lì.
+l'unico elemento nuovo e l'idea. Un episodio nuovo parte da lì. La seconda stagione, «Intorno alla giostra», è in
+[mondo/SCALETTA-2.md](mondo/SCALETTA-2.md).
 
 ## Come si lavora
 
@@ -105,6 +106,10 @@ L'elenco completo, tradotto nel luna park, è nel §7 del soggetto. Le più impo
 - **Parco** (alberello con gli occhi e due rametti): il compagno di viaggio di «Al parco Emma» (episodio 2), disegnato
   come Al e Mare.
 - **Le paperelle**: una per ogni parola che può venire dopo. Quella pescata sale sul treno e diventa un passeggero.
+- **Il custode**: alto e magro, distinto e un po' altero, come il custode di una vecchia biblioteca: redingote, gilet,
+  occhiali a mezzaluna; **niente divisa**. Tiene il parco con la lanterna, le chiavi, l'orologio e il regolamento; compare alla fine dell'episodio 9
+  ed è il personaggio della seconda stagione. **Non entra nella montagna e non pesca.** È il contrario di Ada: lei pesca a
+  caso e chiede perché, lui fa sempre la stessa cosa e risponde «Lo dice il regolamento».
 - I modelli dei personaggi sono nella tela di design (link nel [README](README.md)) e, in SVG, in
   `episodi/comune/shared.js`: ogni cambio di aspetto parte dalla tela e si riporta in `shared.js`.
 - **La tela pubblicata e `design/project/` sono sempre identiche.** Dopo ogni pubblicazione della tela si fa commit

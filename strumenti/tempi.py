@@ -1,6 +1,6 @@
 """Controlla il ritmo delle sceneggiature: `python3 strumenti/tempi.py [file…]`.
 
-Per ogni scena (`### id · Nome · m:ss`) somma i caratteri detti dalle voci (le righe `> ` sotto NARRATORE o ADA)
+Per ogni scena (`### id · Nome · m:ss`) somma i caratteri detti dalle voci (le righe `> ` sotto NARRATORE, ADA o CUSTODE)
 e verifica che `durata ≥ parlato/12 + 3 s`. Poi verifica che l'episodio non superi i 5 minuti.
 Senza argomenti controlla tutte le sceneggiature in `sceneggiatura/`.
 """
@@ -25,7 +25,7 @@ def controlla(f):
             cur = None
         if cur is None:
             continue
-        if re.match(r'^\*\*(NARRATORE|ADA)\.\*\*', r):
+        if re.match(r'^\*\*(NARRATORE|ADA|CUSTODE)\.\*\*', r):
             voce = True
         elif r.startswith('**'):
             voce = False

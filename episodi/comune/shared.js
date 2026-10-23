@@ -360,6 +360,130 @@ function ada(pose, expr, o) {
   return '<g>' + adaBody + slL + slR + head + '</g>';
 }
 
+// Il custode (fine dell'episodio 9, poi la seconda stagione): alto e magro, distinto, un po' altero, come il custode di
+// una vecchia biblioteca. Redingote lunga, gilet con la catena dell'orologio, colletto bianco e cravatta, occhiali a
+// mezzaluna in punta di naso; la lanterna, un mazzo di chiavi e il regolamento sotto il braccio, un grosso libro rilegato
+// senza scritte. Scatola 240×420, piedi a y = 410.
+// pose: 'base' (la lanterna in mano), 'alza' (la lanterna alzata, per fare luce), 'orologio' (guarda l'orologio; la
+// lanterna è appesa al polso). Espressioni: 'base' (altero), 'sorriso', 'serio', 'chiusi'.
+// o.dondolo: di quanti gradi dondola la lanterna; o.occhi: dove guarda (da -1, a sinistra, a 1); o.luce: da 0 a 1.
+const CU = { giacca: '#5A4A42', giaccaScura: '#3E322D', gilet: '#B5893A', giletScuro: '#8A6527', cravatta: '#7E2F3F', pantaloni: '#2B2A33',
+  pelle: '#E8B48F', naso: '#DC9C80', bianco: '#F4F0E8', grigio: '#C9C3B8', grigioScuro: '#A39C90', libro: '#6B3A26', libroScuro: '#47251A',
+  ottone: '#E0A93B', ottoneScuro: '#8C6420' };
+// La lanterna del custode, appesa per il manico nel punto (x, y): alta 56.
+function lume(x, y, luce) {
+  luce = luce === undefined ? 1 : luce;
+  return '<g><circle cx="' + x + '" cy="' + (y + 34) + '" r="54" fill="' + C.luce + '" opacity="' + (0.4 * luce).toFixed(2) + '" filter="url(#g-soft)"/>' +
+    '<path d="M' + (x - 9) + ' ' + (y + 12) + ' Q' + x + ' ' + (y - 4) + ' ' + (x + 9) + ' ' + (y + 12) + '" stroke="' + AI + '" stroke-width="3" fill="none"/>' +
+    '<path d="M' + (x - 12) + ' ' + (y + 20) + ' L' + (x + 12) + ' ' + (y + 20) + ' L' + (x + 8) + ' ' + (y + 11) + ' L' + (x - 8) + ' ' + (y + 11) + ' Z" fill="' + CU.ottone + '" stroke="' + CU.ottoneScuro + '" stroke-width="2"/>' +
+    '<rect x="' + (x - 12) + '" y="' + (y + 20) + '" width="24" height="28" rx="3" fill="' + mix('#8A7A5A', '#FFE7A8', luce) + '" stroke="' + CU.ottoneScuro + '" stroke-width="2.5"/>' +
+    '<ellipse cx="' + x + '" cy="' + (y + 36) + '" rx="5" ry="8" fill="#FFFFFF" opacity="' + (0.85 * luce).toFixed(2) + '"/>' +
+    '<path d="M' + x + ' ' + (y + 20) + ' L' + x + ' ' + (y + 48) + '" stroke="' + CU.ottoneScuro + '" stroke-width="1.5" opacity=".6"/>' +
+    '<rect x="' + (x - 14) + '" y="' + (y + 47) + '" width="28" height="7" rx="2" fill="' + CU.ottone + '" stroke="' + CU.ottoneScuro + '" stroke-width="2"/></g>';
+}
+function custodeTesta(expr, o) {
+  const dx = 3 * (o.occhi || 0);
+  // Le sopracciglia: una un po' più alta dell'altra, da altero; dritte quando è serio.
+  let ciglia = '<path d="M95 89 Q104 82 113 87 M127 89 Q136 86 145 90" stroke="' + CU.grigioScuro + '" stroke-width="4.5" stroke-linecap="round" fill="none"/>';
+  let occhi, bocca = '<path d="M112 134 Q120 131 128 134" stroke="' + AI + '" stroke-width="2.4" stroke-linecap="round" fill="none"/>';
+  if (expr === 'sorriso' || expr === 'chiusi') {
+    occhi = expr === 'sorriso' ?
+      '<path d="M98 102 Q104 97 110 102 M130 102 Q136 97 142 102" stroke="' + AI + '" stroke-width="2.8" stroke-linecap="round" fill="none"/>' :
+      '<path d="M98 101 Q104 105 110 101 M130 101 Q136 105 142 101" stroke="' + AI + '" stroke-width="2.8" stroke-linecap="round" fill="none"/>';
+    if (expr === 'sorriso') bocca = '<path d="M111 132 Q120 138 129 132" stroke="' + AI + '" stroke-width="2.6" stroke-linecap="round" fill="none"/>';
+  } else {
+    // Gli occhi a mezza palpebra: guarda dall'alto, sopra gli occhiali.
+    occhi = '<circle cx="' + (104 + dx) + '" cy="102" r="3.6" fill="' + AI + '"/><circle cx="' + (136 + dx) + '" cy="102" r="3.6" fill="' + AI + '"/>' +
+      '<path d="M97 99.5 L111 99.5 M129 99.5 L143 99.5" stroke="' + CU.pelle + '" stroke-width="4"/>' +
+      '<path d="M97 98 Q104 96 111 98 M129 98 Q136 96 143 98" stroke="' + AI + '" stroke-width="2.4" stroke-linecap="round" fill="none"/>';
+    if (expr === 'serio') {
+      ciglia = '<path d="M95 88 L113 90 M127 90 L145 88" stroke="' + CU.grigioScuro + '" stroke-width="4.5" stroke-linecap="round" fill="none"/>';
+      bocca = '<path d="M113 134 L127 134" stroke="' + AI + '" stroke-width="2.4" stroke-linecap="round" fill="none"/>';
+    }
+  }
+  return '<rect x="111" y="132" width="18" height="24" fill="' + CU.pelle + '"/>' +
+    '<ellipse cx="85" cy="106" rx="6" ry="9" fill="' + CU.pelle + '"/><ellipse cx="155" cy="106" rx="6" ry="9" fill="' + CU.pelle + '"/>' +
+    '<ellipse cx="120" cy="100" rx="35" ry="42" fill="' + CU.pelle + '"/>' +
+    // I capelli grigi, pettinati all'indietro con la riga, e la fronte alta; le basette corte.
+    '<path d="M86 90 C82 62 100 54 121 54 C142 54 158 64 154 90 C150 74 140 66 126 66 C116 64 108 62 104 70 C96 72 89 80 86 90 Z" fill="' + CU.grigio + '"/>' +
+    '<path d="M104 70 C112 60 128 58 140 64" stroke="' + CU.grigioScuro + '" stroke-width="2" fill="none" stroke-linecap="round"/>' +
+    '<path d="M86 88 C84 98 85 106 88 112 L91 108 C89 102 89 96 90 90 Z M154 88 C156 98 155 106 152 112 L149 108 C151 102 151 96 150 90 Z" fill="' + CU.grigio + '"/>' +
+    ciglia + occhi +
+    '<path d="M121 100 C124 108 128 116 126 121 C124 124 118 124 115 121" fill="' + CU.naso + '"/>' +
+    // Gli occhiali a mezzaluna, in punta di naso.
+    '<path d="M96 108 Q104 118 112 108 Z M128 108 Q136 118 144 108 Z" fill="#FFFFFF" fill-opacity=".25" stroke="' + CU.ottone + '" stroke-width="2" stroke-linejoin="round"/>' +
+    '<path d="M112 109 Q120 106 128 109 M96 108 L87 104 M144 108 L153 104" stroke="' + CU.ottone + '" stroke-width="1.8" fill="none"/>' +
+    '<path d="M106 125 Q113 120 120 123 Q127 120 134 125 Q127 128 120 125.5 Q113 128 106 125 Z" fill="' + CU.grigio + '"/>' +
+    bocca;
+}
+function custode(pose, expr, o) {
+  o = o || {};
+  const luce = o.luce === undefined ? 1 : o.luce, dond = o.dondolo || 0;
+  const gambe = '<rect x="101" y="360" width="16" height="42" fill="' + CU.pantaloni + '"/><rect x="123" y="360" width="16" height="42" fill="' + CU.pantaloni + '"/>' +
+    '<path d="M92 404 Q92 396 108 396 L118 398 L118 408 L94 408 Z M148 404 Q148 396 132 396 L122 398 L122 408 L146 408 Z" fill="#14110F"/>' +
+    '<path d="M98 400 L106 399 M142 400 L134 399" stroke="#FFFFFF" stroke-width="1.5" opacity=".35"/>';
+  // Il gilet con i bottoni e la catena dell'orologio, la camicia, il colletto alto e la cravatta.
+  const gilet = '<path d="M103 168 L137 168 L139 300 L120 314 L101 300 Z" fill="' + CU.gilet + '" stroke="' + CU.giletScuro + '" stroke-width="2"/>' +
+    [204, 228, 252, 276].map(y => '<circle cx="120" cy="' + y + '" r="3.2" fill="' + CU.giletScuro + '"/>').join('') +
+    '<path d="M120 240 Q128 256 136 250" stroke="' + CU.ottone + '" stroke-width="2" fill="none"/>' +
+    '<path d="M108 156 L120 190 L132 156 Z" fill="' + CU.bianco + '"/>' +
+    '<path d="M108 154 L120 166 L112 150 Z M132 154 L120 166 L128 150 Z" fill="' + CU.bianco + '" stroke="' + CU.grigio + '" stroke-width="1.2"/>' +
+    '<path d="M120 166 L111 160 L111 172 Z M120 166 L129 160 L129 172 Z" fill="' + CU.cravatta + '"/><circle cx="120" cy="166" r="3.4" fill="' + CU.cravatta + '"/>' +
+    '<path d="M117 168 L114 192 L120 198 L126 192 L123 168 Z" fill="' + CU.cravatta + '"/>';
+  // La redingote lunga, aperta sul davanti, con i risvolti.
+  const giacca = '<path d="M114 156 C98 157 86 165 82 184 L70 374 Q92 382 115 376 L104 300 L102 196 Z" fill="' + CU.giacca + '" stroke="' + AI + '" stroke-width="2.5" stroke-linejoin="round"/>' +
+    '<path d="M126 156 C142 157 154 165 158 184 L170 374 Q148 382 125 376 L136 300 L138 196 Z" fill="' + CU.giacca + '" stroke="' + AI + '" stroke-width="2.5" stroke-linejoin="round"/>' +
+    '<path d="M110 158 L98 204 L104 200 L114 172 Z M130 158 L142 204 L136 200 L126 172 Z" fill="' + CU.giaccaScura + '"/>' +
+    '<path d="M86 300 L100 300 M140 300 L154 300" stroke="' + CU.giaccaScura + '" stroke-width="3" stroke-linecap="round"/>';
+  // Le chiavi, appese alla tasca della redingote.
+  const chiavi = '<circle cx="150" cy="306" r="7" fill="none" stroke="' + CU.ottone + '" stroke-width="3"/>' +
+    '<path d="M146 312 L143 332 M143 326 L138 325 M143 332 L138 331 M150 313 L150 336 M150 330 L155 330 M150 336 L155 336 M154 312 L160 330 M158 324 L163 322" stroke="' + CU.ottone + '" stroke-width="3.2" stroke-linecap="round" fill="none"/>';
+  // Il regolamento sotto il braccio destro (a destra di chi guarda), rilegato in cuoio con gli angoli d'ottone.
+  const libro = '<g transform="rotate(-8 176 250)"><rect x="146" y="210" width="60" height="82" rx="3" fill="' + CU.libro + '" stroke="' + CU.libroScuro + '" stroke-width="2.5"/>' +
+    '<rect x="201" y="214" width="7" height="74" fill="' + C.crema + '"/>' +
+    '<path d="M146 224 L206 224 M146 230 L206 230 M146 272 L206 272 M146 278 L206 278" stroke="' + C.oro + '" stroke-width="2"/>' +
+    '<path d="M146 210 L158 210 L146 222 Z M206 210 L194 210 L206 222 Z M146 292 L158 292 L146 280 Z M206 292 L194 292 L206 280 Z" fill="' + CU.ottone + '"/>' +
+    '<path d="M182 292 L182 308 L186 303 L190 308 L190 292" fill="' + CU.cravatta + '"/></g>';
+  const destro = '<path d="M156 182 Q180 226 174 284 L158 286 Q162 236 146 202 Z" fill="' + CU.giacca + '" stroke="' + AI + '" stroke-width="2.5"/><circle cx="166" cy="290" r="8" fill="' + CU.pelle + '"/>';
+  let sinistro;
+  if (pose === 'alza') {
+    sinistro = '<g transform="rotate(' + dond + ' 38 132)">' + lume(38, 132, luce) + '</g>' +
+      '<path d="M88 198 Q52 186 30 144 L48 130 Q66 166 100 182 Z" fill="' + CU.giacca + '" stroke="' + AI + '" stroke-width="2.5"/><circle cx="38" cy="134" r="8" fill="' + CU.pelle + '"/>';
+  } else if (pose === 'orologio') {
+    sinistro = '<g transform="rotate(' + dond + ' 92 248)">' + lume(92, 248, luce) + '</g>' +
+      '<path d="M84 186 Q66 234 88 256 L106 240 Q90 228 96 204 Z" fill="' + CU.giacca + '" stroke="' + AI + '" stroke-width="2.5"/>' +
+      '<path d="M104 236 Q112 254 120 240" stroke="' + CU.ottone + '" stroke-width="2" fill="none"/>' +
+      '<circle cx="104" cy="224" r="11" fill="' + CU.ottone + '" stroke="' + CU.ottoneScuro + '" stroke-width="2"/><circle cx="104" cy="224" r="8" fill="' + C.crema + '"/>' +
+      '<path d="M104 224 L104 218 M104 224 L108 226" stroke="' + AI + '" stroke-width="1.6" stroke-linecap="round"/><circle cx="104" cy="211" r="3" fill="none" stroke="' + CU.ottone + '" stroke-width="2"/>' +
+      '<circle cx="98" cy="238" r="8" fill="' + CU.pelle + '"/>';
+  } else {
+    sinistro = '<path d="M84 186 Q64 232 68 290 L82 292 Q80 240 96 204 Z" fill="' + CU.giacca + '" stroke="' + AI + '" stroke-width="2.5"/>' +
+      '<g transform="rotate(' + dond + ' 74 296)">' + lume(74, 296, luce) + '</g><circle cx="74" cy="296" r="8" fill="' + CU.pelle + '"/>';
+  }
+  return '<g>' + gambe + gilet + giacca + chiavi + libro + destro + sinistro + custodeTesta(expr, o) + '</g>';
+}
+// La guardiola del custode, accanto al cancello: una casetta di legno col tetto a righe e la finestra accesa.
+// Scatola 120×170, base a y = 170. o.porta da 0 (chiusa) a 1 (aperta), o.luce da 0 a 1.
+function guardiola(o) {
+  o = o || {};
+  const porta = o.porta || 0, luce = o.luce === undefined ? 1 : o.luce;
+  let assi = '';
+  for (let x = 22; x < 110; x += 12) assi += 'M' + x + ' 58 L' + x + ' 168 ';
+  return '<g><rect x="10" y="54" width="100" height="116" fill="' + C.legno + '" stroke="' + C.legnoScuro + '" stroke-width="3"/>' +
+    '<path d="' + assi + '" stroke="' + C.legnoScuro + '" stroke-width="1.5" opacity=".5"/>' +
+    '<path d="M0 60 L60 10 L120 60 Z" fill="' + C.rosso + '" stroke="' + C.rossoScuro + '" stroke-width="3" stroke-linejoin="round"/>' +
+    '<path d="M30 35 L22 60 L38 60 L44 27 Z M76 27 L82 60 L98 60 L90 35 Z" fill="' + C.crema + '"/>' +
+    '<circle cx="60" cy="10" r="5" fill="' + C.luce + '"/>' +
+    // La finestra accesa.
+    '<rect x="20" y="74" width="40" height="38" rx="3" fill="' + mix('#3A3060', C.luce, luce) + '" stroke="' + C.legnoScuro + '" stroke-width="3"/>' +
+    '<path d="M40 74 L40 112 M20 93 L60 93" stroke="' + C.legnoScuro + '" stroke-width="3"/>' +
+    '<rect x="14" y="74" width="52" height="60" fill="' + C.luce + '" opacity="' + (0.18 * luce).toFixed(2) + '" filter="url(#g-soft)"/>' +
+    // La porta: aperta, dentro si vede la luce.
+    '<rect x="70" y="94" width="30" height="76" fill="' + mix('#2A2240', C.luce2, 0.8 * luce) + '"/>' +
+    '<g transform="translate(70 0) scale(' + (1 - 0.8 * porta).toFixed(3) + ' 1) translate(-70 0)"><rect x="70" y="94" width="30" height="76" fill="' + C.legnoScuro + '" stroke="#4A2E20" stroke-width="2"/>' +
+    '<circle cx="94" cy="134" r="3" fill="' + CU.ottone + '"/></g></g>';
+}
+
 // ── Oggetti ─────────────────────────────────────────────────────────────────────────────────────────
 // Un biglietto: scatola 120×60.
 // o.strappo: i lati strappati di un pezzo di parola (episodio 6): 's' a sinistra, 'd' a destra, 'sd' tutti e due.
@@ -984,7 +1108,7 @@ function scorriInterno(kit, d) {
 // ── Sottotitoli ─────────────────────────────────────────────────────────────────────────────────────
 // La voce del narratore non ha etichetta; quella di Ada sì.
 function sottotitolo(chi, testo) {
-  return '<div class="sott">' + (chi === 'ADA' ? '<div class="chi chi-ada">ADA</div>' : '') + '<div class="detto">' + testo + '</div></div>';
+  return '<div class="sott">' + (chi === 'NARRATORE' ? '' : '<div class="chi chi-' + chi.toLowerCase() + '">' + chi + '</div>') + '<div class="detto">' + testo + '</div></div>';
 }
 
 // <modellino> generato da strumenti/modellino.py: non modificare a mano
@@ -993,7 +1117,7 @@ const MOD = {"mare": {"frase": ["Al", "mare", "Emma"], "passeggeri": {"Al": {"bi
 
 window.G = {
   C, defs, MOD, MONDO, mix, tappa, fade, cam, camChiavi, posa, unico,
-  emma, emmaTirata, al, mare, parco, paperella, ada, adaTesta,
+  emma, emmaTirata, al, mare, parco, paperella, ada, adaTesta, custode, guardiola,
   biglietto, lanterna, striscia, chat, cameretta, spezzaparole, vagone, passeggero, sasso, pezzo, cane, chiama, manopola, laggiu, telefono, bolle, insegna, salotto, SALOTTO,
   mondo, papereVasca, treno, posaTreno, sbarre, cambiaPasseggero, rng: kitRng, percorso, costruisciMondo, animaMondo, nascondiInMontagna, posaAda,
   finestra, papereFinestra, paperellaDiLuce, INTERNO, interno, interniDefs, testa, cima, anello, scorriInterno,
@@ -1784,7 +1908,15 @@ window.G.schizzoEmma = function (x, y, col, s) {
     for (let k = 0; k <= 8; k++) lampCanc.push([cx - 48 + k * 12, 730 - 10 * Math.sin(Math.PI * k / 8), 4]);
     const cancello = '<g class="pi-cancello"><g stroke="' + C.legnoScuro + '" stroke-width="10"><line x1="' + (cx - 48) + '" y1="870" x2="' + (cx - 48) + '" y2="740"/><line x1="' + (cx + 48) + '" y1="870" x2="' + (cx + 48) + '" y2="740"/></g>' +
       '<path d="M' + (cx - 58) + ' 754 L' + (cx + 58) + ' 754 L' + (cx + 52) + ' 730 Q' + cx + ' 706 ' + (cx - 52) + ' 730 Z" fill="' + C.rossoScuro + '"/>' + archi +
-      '<path d="' + puntini(lampCanc) + '" fill="' + C.luce + '"/></g>';
+      '<path d="' + puntini(lampCanc) + '" fill="' + C.luce + '"/>' +
+      // Le ante del cancello, aperte contro i pali (G.anteCancello le chiude), e la guardiola del custode, lì accanto.
+      [-1, 1].map(l => { const px = cx + 43 * l, w = 43;
+        let sbarre = '';
+        for (let k = 1; k < 4; k++) sbarre += 'M' + (px - l * k * w / 4) + ' 812 L' + (px - l * k * w / 4) + ' 864 ';
+        return '<g class="pi-anta" data-px="' + px + '" transform="translate(' + px + ' 0) scale(.12 1) translate(' + (-px) + ' 0)">' +
+          '<path d="M' + px + ' 810 L' + (px - l * w) + ' 816 L' + (px - l * w) + ' 866 L' + px + ' 866 Z" fill="none" stroke="' + C.legnoScuro + '" stroke-width="5" stroke-linejoin="round"/>' +
+          '<path d="' + sbarre + '" stroke="' + C.legnoScuro + '" stroke-width="3"/></g>'; }).join('') + '</g>' +
+      '<g class="pi-guardiola" transform="translate(1840 734) scale(.8)"><g class="pi-guardiola-in">' + G.guardiola({ porta: 0 }) + '</g></g>';
     // Le strisce che volano verso lo Spezzaparole gigante.
     let strisce = '';
     for (let k = 0; k < (o.strisce === undefined ? 44 : o.strisce); k++) strisce += '<g class="pi-str" opacity="0"><g transform="translate(-150 -22)">' + G.striscia('', 300) + '</g></g>';
@@ -1797,6 +1929,10 @@ window.G.schizzoEmma = function (x, y, col, s) {
       '<path d="' + ciuffi + '" stroke="#2E5A3E" stroke-width="3" fill="none" stroke-linecap="round"/>' +
       '<path d="' + sentiero + '" stroke="#3E3A72" stroke-width="12" fill="none" stroke-linecap="round" stroke-linejoin="round"/>' + cancello +
       '<g class="pi-strisce">' + strisce + '</g>';
+  };
+  // Le ante del cancello del parco di Ada: a = 1 aperte contro i pali, a = 0 chiuse.
+  G.anteCancello = function (m, a) {
+    m.qa('.pi-anta').forEach(el => { const px = +el.dataset.px; el.setAttribute('transform', 'translate(' + px + ' 0) scale(' + (1 - 0.88 * a).toFixed(3) + ' 1) translate(' + (-px) + ' 0)'); });
   };
   // Monta il paesaggio in una scena, come G.costruisciMondo: sopra sta nella camera, davanti fuori.
   G.costruisciPaesaggio = function (kit, sopra, o) {
