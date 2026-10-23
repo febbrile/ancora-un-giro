@@ -156,5 +156,5 @@ In fondo al tunnel si accende la luce dell'uscita.
 - **La bestiolina del disegno resta nella cameretta**: sul treno viaggiano solo i pezzi, e nessun pezzo «è» una zampa o una coda.
 - **La cameretta** è una casa col telefono, come quelle dell'episodio 2; le mani piccole dicono che a scrivere è un bambino.
 - **La prova di Ada** sta tutta fuori dalla montagna: Ada usa lo Spezzaparole, non manda niente sul treno.
-- **Nel montaggio finale** non si vedono vasche da vicino: solo il treno da lontano, le paperelle che salgono e il telefono. Il treno cresce fino ai sette vagoni della banchina (episodio 4) e non oltre; il montaggio si ferma prima che un biglietto resti giù. A crescere senza fine è la storia sul telefono.
+- **Nel montaggio finale** non si vedono vasche da vicino: solo il treno da lontano, le paperelle che salgono e il telefono. Il treno cresce lungo la banchina (episodio 4) e non oltre; il montaggio si ferma prima che un biglietto resti giù. A crescere senza fine è la storia sul telefono.
 - **Cosa non diciamo**: i nomi veri, come sono nati i pezzi dello Spezzaparole, perché proprio «Zam», «pi» e «rù», come finisce la storia (episodio 7).
