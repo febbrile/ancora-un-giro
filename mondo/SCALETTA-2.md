@@ -154,15 +154,26 @@ cancello del luna park; ha il suo episodio, che lo presenta del tutto, con la ca
 
 ---
 
-## Questioni aperte
+## Decisioni prese
 
-- **L'ultimo vagone.** In una chat vera l'ultimo passeggero non è Emma ma la bandierina della risposta, messa dal
-  custode: è lei che passa per ultima davanti alle finestre e sopra la vasca. È la verità e conviene mostrarla, ma
-  cambia l'immagine fissa della prima stagione: va decisa con il modellino prima della sceneggiatura dell'episodio 1.
-- **I numeri dell'episodio 1.** La vasca «mezza blu» e il verde che torna con l'insistenza devono uscire da
-  [strumenti/modellino.py](../strumenti/modellino.py), non da come li vogliamo noi.
-- **Il Bruco** ha bisogno del suo modellino: una montagna piccola con due soli colori nella vasca.
-- **Il custode** va disegnato nella tela, prima della produzione dell'episodio 9.
+Le questioni aperte di questa scaletta sono state chiuse il 23 ottobre 2026, prima di scrivere le sceneggiature
+(`sceneggiatura/10-…` – `15-…`).
+
+- **L'ultimo vagone** è la bandierina della risposta, d'ottone: è lei che passa davanti alle finestre e sopra la
+  vasca. La prima stagione resta vera, perché lì il custode non attaccava niente.
+- **Le bandierine** sono tre, d'oro (frase del parco), d'argento (chi scrive) e d'ottone (risposta), più quella
+  turchese della teleferica. Sono biglietti senza parola: salgono e hanno i loro fili, e non sono paperelle.
+- **La banchina** è passata da sette a venticinque vagoni: frase del parco, bandierine, teleferica e telone occupano
+  posti come tutti, e a sette non ci stavano. Il film dell'episodio 4 della prima stagione va rifatto, quello
+  dell'episodio 7 ritoccato.
+- **I numeri dell'episodio 1** escono da [strumenti/modellino.py](../strumenti/modellino.py): la frase del parco è
+  *Storie di mare*, il filo più forte della bandierina d'ottone va a Mare, e la vasca passa da blu a turchese a verde
+  con il secondo e il terzo *Al parco*.
+- **Il Bruco** ha il suo modellino: rossezze dichiarate, venti paperelle, sbarra giù se le rosse sono di più.
+- **Le vasche con paperelle che il modellino non ha** (sì e no, teleferica, telone, i nomi come risposta) sono
+  dichiarate, come il lago dell'episodio 9; finestre e vestiti si calcolano da lì.
+- **La paperella viola sale sul treno** come tutte: la richiesta è fatta di passeggeri. Non sale solo la Fine.
+- **Il custode gemello** è basso e tondo, con lanterna e regolamento verdi: va disegnato nella tela.
 
 ## Rimandi
 

@@ -1204,6 +1204,19 @@ def finestre_dichiarate(conta):
     return {'finestre': finestre, 'vasca': finestre[-1], 'tratti': tratti}
 
 
+# I fili dell'ultimo vagone nei giri dichiarati che si vedono dentro la montagna (scena delle finestre): si vedono,
+# quindi si dichiarano. Si guarda sempre avanti; per una parola che compare più volte vale l'ultima.
+FILI_PIOGGIA = {'Domani': 0.3, 'piove': 0.35, '⚑turchese': 0.1, 'pioggia': 0.25}     # episodio 3, ultimo «pioggia»
+FILI_TELONE = {'basso': 0.1, 'Al': 0.35, 'piccolo': 0.4, 'telone·fine': 0.15}         # episodio 5, ultima l'arancio scura
+
+
+def con_fili(g, fili):
+    """Attacca a un giro dichiarato i fili del suo ultimo vagone, controllando che guardino solo avanti."""
+    assert abs(sum(fili.values()) - 1) < 1e-9 and set(fili) <= set(g['frase']), fili
+    g['fili'] = {f'{t}·{len(g["frase"]) - 1 - g["frase"][::-1].index(t)}': x for t, x in fili.items()}
+    return g
+
+
 def giro_dichiarato(frase, conta, pescata):
     g = finestre_dichiarate(conta)
     g.update({'frase': frase, 'pescata': pescata})
@@ -1369,7 +1382,8 @@ def teleferica(dati):
         for g in giri:
             assert g['vasca'][0][0] == g['pescata'], g['pescata']
     # Le finestre del giro con la pioggia: il bianco del sì cresce finestra dopo finestra.
-    g = out['pioggia'][3]
+    g = con_fili(out['pioggia'][3], FILI_PIOGGIA)
+    print('  fili di «pioggia»:', g['fili'])
     si = [dict((w, c) for w, c, _ in f).get('Sì', 0) for f in g['finestre']]
     assert si[0] < si[1] < si[2], si
     print('  finestre del giro «pioggia»:', [{w: c for w, c, _ in f} for f in g['finestre'][:2]])
@@ -1497,7 +1511,8 @@ def telone(dati):
     out['paperelle'] = {w: colore_s2(w) for w in ('telone', 'telone·fine', 'Al', 'mare', 'Emma', 'piccolo')}
     out['biglietti'] = {t: colore(biglietto_s2(t)) for t in DOMANDA_TELONE}
     print('  biglietti', out['biglietti'])
-    g = out['giusta']['giri'][4]
+    g = con_fili(out['giusta']['giri'][4], FILI_TELONE)
+    print('  fili dell\'arancio scura:', g['fili'])
     print('  finestre del giro dopo il telone:', [{w: c for w, c, _ in f} for f in g['finestre']])
     return out
 
