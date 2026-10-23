@@ -299,7 +299,7 @@ def manopola(dati):
 
 
 # ── Episodio 4 · Il treno che ricorda: la chat e la banchina ─────────────────────────────────────────
-# La chat: «Al mare Emma» → «nuota», poi «Al parco» → «corre», poi ancora «Al parco».
+# La chat: «Al mare Emma» → «nuota», poi «Al parco» → «corre», poi tanti altri messaggi, fino a un ultimo «Al parco».
 # A ogni messaggio sale sul treno tutta la chat, risposte comprese: tra un messaggio e l'altro non resta niente.
 # Sulla banchina stanno al massimo BANCHINA vagoni: se la chat è più lunga, i biglietti del principio restano giù.
 #
@@ -308,8 +308,12 @@ def manopola(dati):
 # (S_CHAT). Calcolati: i fili di Parco nel primo tratto, quello che gli portano, i suoi scambi, i colori, le finestre,
 # la vasca. Al, Mare ed Emma in testa al treno guardano solo avanti: fanno lo stesso viaggio dell'episodio 1.
 
-BANCHINA = 7
-CHAT = [(['Al', 'mare', 'Emma'], ['nuota']), (['Al', 'parco'], ['corre']), (['Al', 'parco'], [])]
+BANCHINA = 25
+# La chat della sera: dopo i primi due messaggi la persona continua a scrivere, finché la striscia non ci sta più.
+CHAT = [(['Al', 'mare', 'Emma'], ['nuota']), (['Al', 'parco'], ['corre']),
+        (['Al', 'mare'], ['gioca']), (['Al', 'parco', 'Emma'], ['corre']), (['Al', 'mare', 'Emma'], ['nuota']),
+        (['Al', 'parco', 'Emma'], ['gioca']), (['Al', 'mare'], ['nuota']),
+        (['Al', 'parco'], [])]
 K_CHAT = {**K, 'nuota': [-0.10, 0.40, 0.20]}
 Q_PARCO = [4.0, 1.0, 3.2]
 FILI_PARCO_TRATTI = [None, (0.1, 0.1, 0.3, 0.1, 0.1, 0.3), (0.1, 0.1, 0.2, 0.1, 0.1, 0.4)]
@@ -356,8 +360,10 @@ def giro_chat(dati):
     # Il secondo messaggio è quello che entra nella montagna: «Al mare Emma nuota Al parco».
     frase = out['messaggi'][1]['sale']
     assert frase == ['Al', 'mare', 'Emma', 'nuota', 'Al', 'parco'] and not out['messaggi'][1]['giu']
-    # Al terzo la chat non ci sta più: restano giù proprio Al e Mare, il principio.
-    assert out['messaggi'][2]['giu'] == ['Al', 'mare']
+    # Fino al penultimo messaggio la chat ci sta tutta; all'ultimo non ci sta più: restano giù proprio Al e Mare,
+    # il principio.
+    assert all(not mm['giu'] for mm in out['messaggi'][:-1])
+    assert out['messaggi'][-1]['giu'] == ['Al', 'mare']
     vestiti = [tappe_di('Al'), tappe_di('mare'), tappe_emma_mare()]
     for t in ('nuota', 'Al'):
         x, tappe = B[t], [B[t]]
@@ -693,7 +699,7 @@ def giro_zampiru(dati):
 # ── Episodio 7 · Come finisce la storia ─────────────────────────────────────────────────────────────
 # La risposta a «Al mare Emma», giro dopo giro: «nuota e gioca.», poi la paperella Fine.
 # Il primo giro è «Al mare Emma» di sempre. A ogni giro la paperella pescata sale nell'ultimo vagone.
-# All'ultimo giro il treno ha sette vagoni: riempie la banchina dell'episodio 4, e nessun biglietto resta giù.
+# All'ultimo giro il treno ha sette vagoni: ci sta sulla banchina dell'episodio 4, e nessun biglietto resta giù.
 #
 # Inventati e dichiarati: i biglietti delle parole nuove (B_FINE) e gli spostamenti dei tre tratti di ogni passeggero
 # nuovo (S_FINE), come per Al e Mare. Calcolati: i vestiti, le finestre e la vasca di ogni giro.
@@ -762,8 +768,8 @@ def controlla_finisce(fine):
         assert v[g['pescata']] == max(v.values()), (g['pescata'], v)
     # Dove Ada pesca il punto, le paperelle Fine sono già di più, ma non abbastanza da uscire per forza.
     assert vasche[3]['.'] > vasche[3]['Fine'] > 1
-    # Il treno non supera mai la banchina: all'ultimo giro (Al, Mare, Emma e i passeggeri nuovi) la riempie.
-    assert 3 + len(fine['passeggeri']) == BANCHINA, len(fine['passeggeri'])
+    # Il treno non supera mai la banchina: all'ultimo giro ha Al, Mare, Emma e i quattro passeggeri nuovi.
+    assert 3 + len(fine['passeggeri']) == 7 <= BANCHINA, len(fine['passeggeri'])
     # All'ultimo giro, finestra dopo finestra, le paperelle Fine di luce aumentano.
     f_fin = [dict((w, c) for w, c, _ in f).get('Fine', 0) for f in fine['giri'][-1]['finestre']]
     assert f_fin == sorted(f_fin) and f_fin[0] < f_fin[-1], f_fin
@@ -1055,6 +1061,477 @@ def parco_grande():
         'pesca': [G_PESCA, hex_(G_PESCA)],
     }
 
+# ══ Seconda stagione · Intorno alla giostra ═══════════════════════════════════════════════════════════
+# Dentro la montagna non cambia niente: pista, fili, scambi, finestre e vasca sono quelli di sempre (scambio(), vasca(),
+# colore()). Cambia chi sale: il custode attacca in testa a ogni striscia la frase del parco, dietro una bandierina
+# d'oro, e mette una bandierina d'argento davanti a ogni messaggio di chi scrive e una d'ottone davanti a ogni risposta.
+# Le bandierine sono biglietti senza parola: salgono e prendono vita come gli altri, e non sono paperelle (le mette
+# solo il custode). Nell'ultimo vagone, adesso, c'è la bandierina d'ottone: è lei a passare davanti alle finestre e
+# sopra la vasca.
+#
+# Due modi di fare i conti, dichiarati:
+# - quando nella vasca possono cadere solo le 14 paperelle del modellino, il giro si calcola come sempre: i fili della
+#   bandierina d'ottone vengono da sguardo · chiave (Q_OTTONE, K_S2), e restano gli stessi nei tre tratti; gli altri
+#   passeggeri, che non sono l'ultimo vagone, si spostano di poco (S_S2, come Al e Mare nella prima stagione);
+# - quando la vasca ha paperelle che il modellino non ha (sì e no, la teleferica, il telone, i nomi come risposta),
+#   la vasca è dichiarata come inventata, come il lago dell'episodio 9; le finestre e il vestito dell'ultimo vagone si
+#   calcolano da lei con le stesse regole (finestre_dichiarate()). In quei giri le paperelle del modellino che non
+#   arrivano a una su quaranta non cadono, come la Fine nella vasca del parco.
+# Inventati: i biglietti nuovi (B_S2), le chiavi e lo sguardo della bandierina d'ottone, gli spostamenti degli altri
+# passeggeri, le vasche dichiarate, i colori delle paperelle nuove, il Bruco. Calcolato tutto il resto.
+
+# I biglietti nuovi della stagione. Le bandierine d'oro e d'argento hanno il colore delle paperelle a cui somigliano
+# («felice» e il punto: oro e argento); quella d'ottone sta a metà strada; quella turchese (la teleferica) somiglia a
+# «gioca».
+B_S2 = {
+    '⚑oro':      r2([0.8 * x for x in P['felice']]),
+    '⚑argento':  r2([0.8 * x for x in P['.']]),
+    '⚑ottone':   [0.07, -0.16, -0.25],
+    '⚑turchese': r2([0.8 * x for x in P['gioca']]),
+    'storie':    [0.30, 0.10, -0.60],
+    'di':        B_CANE['di'],
+    # le parole delle strisce della stagione
+    'Domani': [0.10, -0.30, 0.30], 'piove': [-0.40, 0.30, -0.20], '?': [0.60, -0.60, 0.20],
+    'pioggia': [-0.50, 0.50, -0.30], 'sole': [-0.25, -0.35, -0.90], 'continua': [0.20, 0.30, 0.10],
+    'Chi': [0.40, -0.40, 0.40], 'è': [0.10, 0.00, 0.10], 'il': B_CANE['Il'], 'più': [0.20, -0.30, 0.10],
+    'basso': [0.30, 0.20, 0.50], 'tra': [0.05, 0.05, 0.05], ',': [0.50, -0.50, 0.00],
+}
+# Le chiavi di chi siede davanti alla bandierina d'ottone, e il suo sguardo. Le chiavi che mancano valgono zero: quei
+# passeggeri prendono un filo sottilissimo.
+K_S2 = {**K, 'nuota': K_CHAT['nuota'], '⚑oro': [0.4, -3.0, -1.7], 'storie': [1.4, -1.5, 2.0], 'di': [-0.3, -1.9, -0.8],
+        '⚑argento': [-0.4, 0.7, 0.5], '⚑ottone': [0.7, 0.8, 0.2]}
+Q_OTTONE = [6.0, 1.0, -5.8]
+# Gli spostamenti dei tre tratti di chi non è l'ultimo vagone: quelli già dichiarati, e per tutti gli altri un passo
+# piccolo (PASSO_S2).
+PASSO_S2 = [[0.01, 0.01, 0.01], [0.02, 0.02, 0.02], [0.03, 0.03, 0.03]]
+S_S2 = {**S, 'Emma': S_CANE['Emma'], 'nuota': S_CHAT['nuota'], 'di': S_CANE['di'], 'il': S_CANE['Il']}
+
+FRASE_DEL_PARCO = ['⚑oro', 'storie', 'di', 'mare']   # «Storie di mare»
+TELEFERICA = ['⚑turchese']                             # la pagina della teleferica (episodio 3 in poi)
+
+
+def biglietto_s2(t):
+    return B_S2.get(t) or B_FINE.get(t) or B[t]
+
+
+def treno_s2(frase, chiavi=None):
+    """Un giro con la bandierina d'ottone nell'ultimo vagone, calcolato."""
+    assert frase[-1] == '⚑ottone'
+    ch = {**K_S2, **(chiavi or {})}
+    pesi = softmax([dot(Q_OTTONE, ch.get(t, [0.0, 0.0, 0.0])) for t in frase])
+    f = [round(p, 2) for p in pesi]
+    i = max(range(len(f)), key=lambda i: pesi[i])
+    f[i] = round(f[i] + 1 - sum(f), 2)
+    altri = []
+    for t in frase[:-1]:
+        x, tt = biglietto_s2(t), [biglietto_s2(t)]
+        for d in S_S2.get(t, PASSO_S2):
+            x = somma(x, d)
+            tt.append(x)
+        altri.append(tt)
+    x, tappe = biglietto_s2('⚑ottone'), [biglietto_s2('⚑ottone')]
+    for k in range(3):
+        vestiti = [a[k] for a in altri] + [x]
+        porta = r2([sum(f[j] * vestiti[j][i] for j in range(len(frase))) for i in range(3)])
+        y = somma(x, porta)
+        if k == 0:
+            dopo_fili = y
+        x = somma(y, scambio(k, y))
+        tappe.append(x)
+    finestre = [[[w, c, '#%02x%02x%02x' % COLORE[w]] for w, c in vasca(v)[1].items()] for v in tappe[1:]]
+    p, conta = vasca(tappe[-1])
+    assert finestre[-1] == [[w, c, '#%02x%02x%02x' % COLORE[w]] for w, c in conta.items()]
+    return {
+        'frase': frase,
+        'passeggeri': [{'parola': t, 'biglietto': colore(a[0]), 'tratti': [colore(v) for v in a[1:]]}
+                       for t, a in zip(frase, altri)],
+        'ottone': {'biglietto': colore(tappe[0]), 'dopo_fili': colore(dopo_fili),
+                   'tratti': [colore(v) for v in tappe[1:]], 'fili': f},
+        'finestre': finestre, 'vasca': finestre[-1],
+        'probabilita': {w: round(p[w], 3) for w in sorted(p, key=lambda w: -p[w])[:5]},
+    }
+
+
+def stampa_giro(nome, g):
+    conta = {w: c for w, c, _ in g['vasca']}
+    if 'ottone' in g:
+        fili = {f'{t}·{i}': x for i, (t, x) in enumerate(zip(g['frase'], g['ottone']['fili'])) if x >= 0.02}
+        print(f'  {nome}: {len(g["frase"])} vagoni, fili della bandierina {fili}')
+        print('        bandierina d\'ottone', g['ottone']['biglietto'], '→ dopo i fili', g['ottone']['dopo_fili'],
+              '→ tratti', g['ottone']['tratti'])
+    else:
+        print(f'  {nome}: vasca dichiarata, ultimo vagone {g["tratti"]}')
+    for k, fin in enumerate(g['finestre'][:-1]):
+        print(f'        finestra {k + 1}', {w: c for w, c, _ in fin})
+    print('        vasca', conta)
+
+
+# Le paperelle nuove della stagione: entrano solo nelle vasche dichiarate. Il colore di ognuna è inventato.
+COLORE_S2 = {
+    'Sì': (240, 236, 220), 'No': (140, 90, 60), 'domani': (250, 150, 200),
+    'teleferica': (160, 100, 215), 'teleferica·fine': (90, 50, 140),
+    'telone': (245, 140, 40), 'telone·fine': (160, 75, 20),
+    'Al': (120, 115, 105), 'mare': (110, 210, 200), 'Emma': (188, 147, 127), 'piccolo': (180, 200, 90),
+}
+
+
+def colore_s2(w):
+    return '#%02x%02x%02x' % (COLORE_S2.get(w) or COLORE[w])
+
+
+def finestre_dichiarate(conta):
+    """Da una vasca dichiarata: le tre finestre (la vasca «schiacciata» verso il piatto con forza (k/3)², come le cime
+    dell'episodio 9) e il vestito dell'ultimo vagone dopo ogni tratto (le parole a cui somiglia, con T_COLORE)."""
+    n = sum(conta.values())
+    assert n == PAPERELLE_IN_VASCA, (n, conta)
+    finestre, tratti = [], []
+    for k in (1, 2, 3):
+        s = (k / 3) ** 2
+        e = {w: math.exp(s * math.log(c / n)) for w, c in conta.items()}
+        z = sum(e.values())
+        q = {w: e[w] / z for w in e}
+        quote = {w: q[w] * n for w in q}
+        c = {w: int(quote[w]) for w in q}
+        for w in sorted(q, key=lambda w: -(quote[w] - c[w]))[:n - sum(c.values())]:
+            c[w] += 1
+        c = {w: v for w, v in sorted(c.items(), key=lambda kv: -kv[1]) if v > 0}
+        finestre.append([[w, v, colore_s2(w)] for w, v in c.items()])
+        e = {w: math.exp(s * math.log(cc / n) / T_COLORE) for w, cc in conta.items()}
+        z = sum(e.values())
+        rgb = [sum(e[w] / z * (COLORE_S2.get(w) or COLORE[w])[i] for w in e) for i in range(3)]
+        tratti.append('#%02x%02x%02x' % tuple(round(v) for v in rgb))
+    assert {w: v for w, v, _ in finestre[-1]} == dict(sorted(conta.items(), key=lambda kv: -kv[1]))
+    return {'finestre': finestre, 'vasca': finestre[-1], 'tratti': tratti}
+
+
+def giro_dichiarato(frase, conta, pescata):
+    g = finestre_dichiarate(conta)
+    g.update({'frase': frase, 'pescata': pescata})
+    assert conta.get(pescata, 0) > 0, (pescata, conta)
+    return g
+
+
+# ── Episodio 1 (seconda stagione) · La frase del parco ───────────────────────────────────────────────
+# «Al parco Emma», che nell'episodio 2 usciva verde, stasera sale dietro la frase del parco. La persona insiste due
+# volte, «Al parco»: a ogni messaggio risale tutta la chat, e i Parco sul treno sono sempre di più.
+PESCATE_PARCO_S2 = ['nuota', 'gioca', 'corre']
+
+
+def frase_del_parco(dati):
+    print('\n== La frase del parco (seconda stagione, episodio 1) ==')
+    treno = FRASE_DEL_PARCO + ['⚑argento', 'Al', 'parco', 'Emma', '⚑ottone']
+    giri = []
+    for n, pescata in enumerate(PESCATE_PARCO_S2):
+        g = treno_s2(treno)
+        g['pescata'] = pescata
+        giri.append(g)
+        stampa_giro(f'messaggio {n + 1}', g)
+        print('        Ada pesca', pescata)
+        treno = treno + [pescata, '⚑argento', 'Al', 'parco', '⚑ottone']
+    assert len(giri[-1]['frase']) <= BANCHINA
+    v = [{w: c for w, c, _ in g['vasca']} for g in giri]
+    blu = [sum(c.get(w, 0) for w in ('nuota', 'onde', 'sabbia', 'conchiglie')) for c in v]
+    verde = [sum(c.get(w, 0) for w in ('corre', 'foglie', 'altalena', 'scivolo')) for c in v]
+    # Il filo più forte della bandierina va a Mare, nella frase del parco; poi a Parco.
+    fili = dict(zip(giri[0]['frase'], giri[0]['ottone']['fili']))
+    assert max(fili, key=fili.get) == 'mare' and fili['parco'] > 0.3
+    # Il primo messaggio fa una vasca dove vince il blu, non il verde dell'episodio 2.
+    assert giri[0]['vasca'][0][0] == 'nuota' and dati['parco']['vasca'][0][0] == 'corre'
+    # A ogni messaggio il blu cala e il verde cresce; all'ultimo vince «corre».
+    assert blu[0] > blu[1] > blu[2] and verde[0] < verde[1] < verde[2], (blu, verde)
+    assert giri[2]['vasca'][0][0] == 'corre'
+    # Ogni paperella pescata è la più numerosa della sua vasca.
+    for g in giri:
+        assert g['vasca'][0][0] == g['pescata'], (g['pescata'], g['vasca'][:2])
+    # Senza la frase del parco, lo stesso messaggio torna verde come nell'episodio 2.
+    senza = treno_s2(['⚑argento', 'Al', 'parco', 'Emma', '⚑ottone'])
+    assert senza['vasca'][0][0] == 'corre'
+    stampa_giro('senza la frase del parco', senza)
+    bandierine = {t: colore(B_S2[t]) for t in ('⚑oro', '⚑argento', '⚑ottone', '⚑turchese')}
+    print('  bandierine', bandierine, ' «storie»', colore(B_S2['storie']), ' «di»', colore(B_S2['di']))
+    return {'giri': giri, 'senza': senza, 'bandierine': bandierine,
+            'biglietti': {t: colore(biglietto_s2(t)) for t in ('storie', 'di')}}
+
+
+# ── Episodio 2 (seconda stagione) · Il Bruco ─────────────────────────────────────────────────────────
+# Il Bruco è una giostra uguale alla montagna, solo piccola, con i suoi colori: sul Bruco ogni biglietto prende un
+# vestito tra il verde e il rosso (la sua «rossezza», da 0 a 1, inventata). L'ultimo segmento guarda tutti, e di più
+# i più rossi (fili: softmax di FORZA_BRUCO · rossezza); nella sua vasca cadono PAPERELLE_BRUCO paperelle, solo verdi
+# o rosse (quante rosse: sigmoide di PENDENZA_BRUCO · (rossezza − ½)). Il custode conta: se le rosse sono più delle
+# verdi, la sbarra si abbassa. Il Bruco non può inventare niente: nella sua vasca ci sono due colori soli.
+ROSSEZZA = {
+    'Dimmi': 0.5, 'una': 0.3, 'parolaccia': 1.0,
+    'Il': 0.2, 'lupo': 0.8, 'mangia': 0.7, 'la': 0.2, 'nonna': 0.4,
+    'Al': 0.1, 'mare': 0.1, 'Emma': 0.1, 'parco': 0.1, 'nuota': 0.1, 'gioca': 0.1, 'corre': 0.1,
+    'Domani': 0.15, 'piove': 0.15, '?': 0.2,
+}
+# Il Bruco del parco gemello (episodio 6) ha altri colori: la stessa fiaba gli sembra verde.
+ROSSEZZA_GEMELLO = {**ROSSEZZA, 'lupo': 0.45, 'mangia': 0.4}
+FORZA_BRUCO, PENDENZA_BRUCO, PAPERELLE_BRUCO = 4.0, 8.0, 20
+FRASI_BRUCO = {
+    'parolaccia': ['Dimmi', 'una', 'parolaccia'],
+    'mare':       ['Al', 'mare', 'Emma'],
+    'risposta':   ['Al', 'mare', 'Emma', 'nuota'],
+    'lupo':       ['Il', 'lupo', 'mangia', 'la', 'nonna'],
+    'piove':      ['Domani', 'piove', '?'],
+}
+
+
+def sul_bruco(frase, rossezza=ROSSEZZA):
+    r = [rossezza[t] for t in frase]
+    w = softmax([FORZA_BRUCO * x for x in r])
+    uscita = sum(a * b for a, b in zip(w, r))
+    rosse = round(PAPERELLE_BRUCO / (1 + math.exp(-PENDENZA_BRUCO * (uscita - 0.5))))
+
+    def tinta(x):
+        verde, rosso = (60, 180, 90), (220, 60, 50)
+        return '#%02x%02x%02x' % tuple(round(a + (b - a) * x) for a, b in zip(verde, rosso))
+    return {'frase': frase, 'vestiti': [tinta(x) for x in r], 'uscita': tinta(uscita),
+            'rosse': rosse, 'verdi': PAPERELLE_BRUCO - rosse, 'sbarra': 'giù' if rosse > PAPERELLE_BRUCO - rosse else 'su'}
+
+
+# La vasca della montagna grande per «Domani piove?» senza la teleferica (fine dell'episodio 2): sparsa.
+VASCA_PIOVE = {'Sì': 6, 'No': 5, 'nuota': 3, 'felice': 3, 'gioca': 3, 'domani': 2, 'e': 2, 'corre': 2, 'onde': 2,
+               'sabbia': 2, '.': 2, 'Fine': 2, 'Bovary': 1, 'foglie': 1, 'altalena': 1, 'conchiglie': 1,
+               'scivolo': 1, 'teleferica': 1}
+PIOVE = ['Domani', 'piove', '?']
+
+
+def bruco(dati):
+    print('\n== Il Bruco (seconda stagione, episodio 2) ==')
+    out = {'frasi': {k: sul_bruco(f) for k, f in FRASI_BRUCO.items()}}
+    for k, b in out['frasi'].items():
+        print(f'  {" ".join(b["frase"]):26} rosse {b["rosse"]:2}  verdi {b["verdi"]:2}  sbarra {b["sbarra"]}  '
+              f'ultimo segmento {b["uscita"]}')
+    f = out['frasi']
+    assert f['parolaccia']['sbarra'] == 'giù' and f['parolaccia']['rosse'] >= 0.9 * PAPERELLE_BRUCO
+    assert f['mare']['sbarra'] == f['risposta']['sbarra'] == f['piove']['sbarra'] == 'su'
+    # La fiaba: rosso per sbaglio, ma meno netto della parolaccia.
+    assert f['lupo']['sbarra'] == 'giù' and f['lupo']['rosse'] < f['parolaccia']['rosse']
+    # Passato il Bruco, «Al mare Emma» fa il suo giro nella montagna grande, dietro la frase del parco.
+    out['giro'] = treno_s2(FRASE_DEL_PARCO + ['⚑argento', 'Al', 'mare', 'Emma', '⚑ottone'])
+    stampa_giro('Al mare Emma', out['giro'])
+    assert out['giro']['vasca'][0][0] == 'nuota'
+    out['piove'] = giro_dichiarato(FRASE_DEL_PARCO + ['⚑argento'] + PIOVE + ['⚑ottone'], VASCA_PIOVE, 'Sì')
+    stampa_giro('Domani piove?', out['piove'])
+    # Senza la teleferica la vasca è sparsa: nessuna paperella arriva a un sesto.
+    assert max(VASCA_PIOVE.values()) <= PAPERELLE_IN_VASCA / 6
+    return out
+
+
+# ── Episodio 3 (seconda stagione) · La teleferica ────────────────────────────────────────────────────
+# Con la pagina della teleferica il custode attacca alla frase del parco una bandierina turchese. Dietro di lei la
+# vasca si riempie di paperelle viola: la teleferica. Le paperelle pescate dopo la viola chiara sono la richiesta,
+# fino alla viola scura; allora il custode manda la richiesta con la cabina, e la striscia che torna sale dietro
+# un'altra bandierina turchese. Tutte le vasche di questi giri sono dichiarate.
+TELEFERICA_GIRI = [
+    ('⚑ottone', {'teleferica': 16, 'Sì': 4, 'No': 3, 'domani': 2, 'nuota': 2, 'felice': 2, 'gioca': 2, 'e': 2,
+                 '.': 1, 'Fine': 1, 'corre': 1, 'onde': 1, 'sabbia': 1, 'Bovary': 1, 'conchiglie': 1}, 'teleferica'),
+    ('teleferica', {'domani': 22, 'Sì': 3, 'teleferica·fine': 3, 'No': 2, 'felice': 2, '.': 2, 'e': 2, 'Fine': 1,
+                    'nuota': 1, 'gioca': 1, 'corre': 1}, 'domani'),
+    ('domani', {'teleferica·fine': 26, 'domani': 4, '.': 3, 'e': 2, 'Sì': 1, 'No': 1, 'Fine': 1, 'felice': 1,
+                'nuota': 1}, 'teleferica·fine'),
+]
+TELEFERICA_TORNA = {
+    'pioggia': [('pioggia', {'Sì': 24, 'No': 4, '.': 3, 'nuota': 2, 'e': 2, 'Fine': 2, 'felice': 1, 'onde': 1,
+                             'gioca': 1}, 'Sì'),
+                ('Sì', {'Fine': 22, '.': 12, 'e': 3, 'Sì': 1, 'felice': 1, 'No': 1}, 'Fine')],
+    'sole':    [('sole', {'No': 23, 'Sì': 5, '.': 3, 'e': 2, 'Fine': 2, 'felice': 2, 'nuota': 1, 'gioca': 1,
+                          'onde': 1}, 'No'),
+                ('No', {'Fine': 24, '.': 10, 'e': 3, 'No': 1, 'Sì': 1, 'felice': 1}, 'Fine')],
+}
+
+
+def teleferica(dati):
+    print('\n== La teleferica (seconda stagione, episodio 3) ==')
+    out = {}
+    for torna in ('pioggia', 'sole'):
+        treno = FRASE_DEL_PARCO + TELEFERICA + ['⚑argento'] + PIOVE + ['⚑ottone']
+        giri = []
+        for ultimo, conta, pescata in TELEFERICA_GIRI + [('⚑turchese', None, None)] + TELEFERICA_TORNA[torna]:
+            if conta is None:  # la cabina torna: la striscia sale dietro la bandierina turchese
+                treno = treno + ['⚑turchese', torna]
+                continue
+            assert treno[-1] == ultimo, (treno, ultimo)
+            g = giro_dichiarato(list(treno), conta, pescata)
+            giri.append(g)
+            if pescata != 'Fine':
+                treno = treno + [pescata]
+        out[torna] = giri
+        print(f'  la cabina torna con «{torna}»:')
+        for g in giri:
+            print(f'    ultimo «{g["frase"][-1]}» → vasca', {w: c for w, c, _ in g['vasca']}, '→ Ada pesca', g['pescata'])
+        assert len(giri[-1]['frase']) <= BANCHINA
+    # La viola chiara è la più numerosa solo con la pagina della teleferica: senza, ce n'è una.
+    assert TELEFERICA_GIRI[0][1]['teleferica'] > 2 * TELEFERICA_GIRI[0][1]['Sì'] and VASCA_PIOVE['teleferica'] == 1
+    # Ogni paperella pescata è la più numerosa della sua vasca.
+    for giri in out.values():
+        for g in giri:
+            assert g['vasca'][0][0] == g['pescata'], g['pescata']
+    # Le finestre del giro con la pioggia: il bianco del sì cresce finestra dopo finestra.
+    g = out['pioggia'][3]
+    si = [dict((w, c) for w, c, _ in f).get('Sì', 0) for f in g['finestre']]
+    assert si[0] < si[1] < si[2], si
+    print('  finestre del giro «pioggia»:', [{w: c for w, c, _ in f} for f in g['finestre'][:2]])
+    print('  vestito dell\'ultimo vagone («pioggia»):', g['tratti'])
+    out['biglietti'] = {t: colore(biglietto_s2(t)) for t in ('Domani', 'piove', '?', 'pioggia', 'sole', '⚑turchese')}
+    out['paperelle'] = {w: colore_s2(w) for w in ('Sì', 'No', 'domani', 'teleferica', 'teleferica·fine')}
+    print('  biglietti', out['biglietti'])
+    return out
+
+
+# ── Episodio 4 (seconda stagione) · La campanella ────────────────────────────────────────────────────
+# Il regolamento dice quanti giri può fare una risposta (GIRI_RISPOSTA): il custode li conta sull'orologio, e
+# all'ultimo suona la campanella, anche a metà frase. Il primo giro si calcola; gli altri sono dichiarati.
+GIRI_RISPOSTA = 4
+CAMPANELLA_GIRI = [
+    ('nuota', {'e': 14, '.': 8, 'felice': 4, 'Fine': 3, 'gioca': 3, 'corre': 2, 'onde': 2, 'sabbia': 2, 'Bovary': 1,
+               'conchiglie': 1}, 'e'),
+    ('e', {'gioca': 15, 'corre': 11, 'nuota': 6, 'altalena': 2, 'foglie': 2, 'scivolo': 2, 'Fine': 1, 'onde': 1},
+     'gioca'),
+    ('gioca', {'e': 13, '.': 12, 'Fine': 6, 'felice': 3, 'corre': 2, 'nuota': 2, 'Bovary': 1, 'sabbia': 1}, 'e'),
+]
+# Dopo «continua» la chat risale tutta; la storia va avanti di una parola e si chiude.
+CONTINUA_GIRI = [('nuota', {'.': 18, 'e': 9, 'Fine': 7, 'felice': 2, 'gioca': 2, 'onde': 1, 'sabbia': 1}, '.'),
+                 ('.', {'Fine': 30, 'Al': 3, '.': 2, 'felice': 2, 'e': 2, 'Bovary': 1}, 'Fine')]
+
+
+def campanella(dati):
+    print('\n== La campanella (seconda stagione, episodio 4) ==')
+    treno = FRASE_DEL_PARCO + TELEFERICA + ['⚑argento', 'Al', 'mare', 'Emma', '⚑ottone']
+    primo = treno_s2(treno)
+    primo['pescata'] = primo['vasca'][0][0]
+    stampa_giro('giro 1', primo)
+    treno = treno + [primo['pescata']]
+    giri = [primo]
+    for ultimo, conta, pescata in CAMPANELLA_GIRI:
+        assert treno[-1] == ultimo
+        g = giro_dichiarato(list(treno), conta, pescata)
+        giri.append(g)
+        treno = treno + [pescata]
+        print(f'  giro {len(giri)}: ultimo «{ultimo}» → vasca {conta} → Ada pesca «{pescata}»')
+    risposta = [g['pescata'] for g in giri]
+    assert len(giri) == GIRI_RISPOSTA and 'Fine' not in risposta
+    print('  suona la campanella: sul telefono', ' '.join(risposta))
+    # Si ferma a metà frase: l'ultima parola è «e».
+    assert risposta[-1] == 'e'
+    # «continua»: risale tutta la chat, dietro la bandierina d'argento.
+    treno = treno + ['⚑argento', 'continua', '⚑ottone']
+    dopo = treno_s2(treno)
+    dopo['pescata'] = dopo['vasca'][0][0]
+    stampa_giro('dopo «continua»', dopo)
+    assert dopo['pescata'] == CONTINUA_GIRI[0][0]
+    treno = treno + [dopo['pescata']]
+    seguito = [dopo]
+    for ultimo, conta, pescata in CONTINUA_GIRI:
+        assert treno[-1] == ultimo
+        g = giro_dichiarato(list(treno), conta, pescata)
+        seguito.append(g)
+        if pescata != 'Fine':
+            treno = treno + [pescata]
+        print(f'  ultimo «{ultimo}» → vasca {conta} → Ada pesca «{pescata}»')
+    assert len(treno) <= BANCHINA and seguito[-1]['pescata'] == 'Fine'
+    print('  sul telefono:', ' '.join(risposta), '/', ' '.join(g['pescata'] for g in seguito[:-1]))
+    return {'giri': giri, 'giri_risposta': GIRI_RISPOSTA, 'seguito': seguito,
+            'biglietti': {'continua': colore(B_S2['continua'])}}
+
+
+# ── Episodio 5 (seconda stagione) · Il telone ────────────────────────────────────────────────────────
+# «Chi è il più basso tra Emma, Al e Mare?». Dietro la bandierina d'ottone cade la paperella arancio del telone:
+# il custode stende il telone sui vagoni che salgono dopo di lei, fino alla paperella arancio scura. Sotto il telone
+# ci sono giri come tutti gli altri. Tutte le vasche sono dichiarate.
+DOMANDA_TELONE = ['Chi', 'è', 'il', 'più', 'basso', 'tra', 'Emma', ',', 'Al', 'e', 'mare', '?']
+TELONE_INIZIO = ('⚑ottone', {'telone': 18, 'Emma': 5, 'Al': 4, 'mare': 3, 'Sì': 2, 'No': 2, 'nuota': 2, 'felice': 1,
+                             '.': 1, 'e': 1, 'Fine': 1}, 'telone')
+# Sotto il telone, il primo giro: i tre nomi quasi alla pari.
+SOTTO_TELONE = {'Al': 9, 'Emma': 9, 'mare': 8, 'piccolo': 3, 'felice': 2, '.': 2, 'e': 2, 'nuota': 2, 'Fine': 1,
+                'gioca': 1, 'corre': 1}
+TELONE_NOTTI = {
+    'giusta':   [('telone', SOTTO_TELONE, 'Al'),
+                 ('Al', {'piccolo': 22, 'e': 5, '.': 4, 'Fine': 2, 'felice': 2, 'telone·fine': 3, 'Emma': 1,
+                         'mare': 1}, 'piccolo'),
+                 ('piccolo', {'telone·fine': 24, '.': 6, 'e': 4, 'Fine': 2, 'Al': 2, 'felice': 2}, 'telone·fine'),
+                 ('telone·fine', {'Al': 26, 'Emma': 5, 'mare': 3, 'Sì': 2, '.': 2, 'Fine': 2}, 'Al'),
+                 ('Al', {'Fine': 25, '.': 11, 'e': 2, 'felice': 2}, 'Fine')],
+    'sbagliata': [('telone', SOTTO_TELONE, 'mare'),
+                  ('mare', {'piccolo': 20, 'e': 6, '.': 4, 'telone·fine': 3, 'Fine': 2, 'felice': 2, 'Al': 2,
+                            'Emma': 1}, 'piccolo'),
+                  ('piccolo', {'telone·fine': 24, '.': 6, 'e': 4, 'Fine': 2, 'mare': 2, 'felice': 2}, 'telone·fine'),
+                  ('telone·fine', {'mare': 25, 'Al': 6, 'Emma': 4, '.': 2, 'Fine': 2, 'Sì': 1}, 'mare'),
+                  ('mare', {'Fine': 24, '.': 12, 'e': 2, 'felice': 2}, 'Fine')],
+    # La campanella del telone suona dopo un giro: il custode toglie il telone e attacca lui la paperella scura.
+    'campanella': [('telone', SOTTO_TELONE, 'Emma'),
+                   ('telone·fine', {'Emma': 13, 'Al': 11, 'mare': 9, 'Sì': 2, '.': 2, 'Fine': 2, 'felice': 1},
+                    'Emma'),
+                   ('Emma', {'Fine': 24, '.': 11, 'e': 3, 'felice': 2}, 'Fine')],
+}
+GIRI_TELONE = 1   # nella notte della campanella, il regolamento lascia un giro solo sotto il telone
+
+
+def telone(dati):
+    print('\n== Il telone (seconda stagione, episodio 5) ==')
+    out = {'domanda': DOMANDA_TELONE}
+    for notte, passi in TELONE_NOTTI.items():
+        treno = FRASE_DEL_PARCO + TELEFERICA + ['⚑argento'] + DOMANDA_TELONE + ['⚑ottone']
+        giri = [giro_dichiarato(list(treno), TELONE_INIZIO[1], TELONE_INIZIO[2])]
+        treno = treno + ['telone']
+        for ultimo, conta, pescata in passi:
+            if notte == 'campanella' and ultimo == 'telone·fine':
+                treno = treno + ['telone·fine']   # la mette il custode, quando suona la campanella
+            assert treno[-1] == ultimo, (notte, treno[-1], ultimo)
+            giri.append(giro_dichiarato(list(treno), conta, pescata))
+            if pescata != 'Fine':
+                treno = treno + [pescata]
+        assert len(treno) <= BANCHINA, (notte, len(treno))
+        sotto = treno[treno.index('telone') + 1:treno.index('telone·fine')]
+        risposta = treno[treno.index('telone·fine') + 1:]
+        print(f'  notte {notte}: sotto il telone {sotto}, sul telefono {risposta}, treno di {len(treno)} vagoni')
+        out[notte] = {'giri': giri, 'sotto': sotto, 'risposta': risposta}
+    # La risposta giusta arriva dopo i giri sotto il telone; con la paperella sbagliata, sbagliata con la stessa
+    # sicurezza; con la campanella, dalla vasca quasi alla pari.
+    assert out['giusta']['risposta'] == ['Al'] and out['sbagliata']['risposta'] == ['mare']
+    ultimo_vero = lambda n: [g for g in out[n]['giri'] if g['frase'][-1] == 'telone·fine'][0]['vasca']
+    assert ultimo_vero('giusta')[0][1] == 26 and abs(ultimo_vero('sbagliata')[0][1] - 26) <= 1
+    assert ultimo_vero('campanella')[0][1] < PAPERELLE_IN_VASCA / 3
+    assert len(out['campanella']['sotto']) == GIRI_TELONE
+    out['paperelle'] = {w: colore_s2(w) for w in ('telone', 'telone·fine', 'Al', 'mare', 'Emma', 'piccolo')}
+    out['biglietti'] = {t: colore(biglietto_s2(t)) for t in DOMANDA_TELONE}
+    print('  biglietti', out['biglietti'])
+    g = out['giusta']['giri'][4]
+    print('  finestre del giro dopo il telone:', [{w: c for w, c, _ in f} for f in g['finestre']])
+    return out
+
+
+# ── Episodio 6 (seconda stagione) · Il parco gemello ─────────────────────────────────────────────────
+# La stessa montagna, con la stessa pista, gli stessi biglietti e le stesse bandierine. Intorno, un altro custode:
+# un'altra frase del parco («Storie di parco»), un altro Bruco, nessuna teleferica.
+FRASE_GEMELLO = ['⚑oro', 'storie', 'di', 'parco']
+
+
+def gemello(dati, s2):
+    print('\n== Il parco gemello (seconda stagione, episodio 6) ==')
+    nostro = s2['bruco']['giro']
+    laggiu = treno_s2(FRASE_GEMELLO + ['⚑argento', 'Al', 'mare', 'Emma', '⚑ottone'])
+    stampa_giro('Al mare Emma, laggiù', laggiu)
+    # Stessa frase, un'altra vasca: qui vince «nuota» di molto, laggiù «nuota» e «gioca» sono quasi alla pari.
+    v = {w: c for w, c, _ in laggiu['vasca']}
+    assert nostro['vasca'][0][1] - nostro['vasca'][1][1] > 15 and abs(v['nuota'] - v['gioca']) <= 2
+    # Dentro la montagna non cambia niente: Al, Mare ed Emma hanno gli stessi vestiti nei due parchi.
+    for a, b in zip(nostro['passeggeri'][-3:], laggiu['passeggeri'][-3:]):
+        assert a == b, (a, b)
+    lupo = sul_bruco(FRASI_BRUCO['lupo'], ROSSEZZA_GEMELLO)
+    print(f'  il Bruco gemello e il lupo: rosse {lupo["rosse"]}, verdi {lupo["verdi"]}, sbarra {lupo["sbarra"]}')
+    assert lupo['sbarra'] == 'su'
+    piove = giro_dichiarato(FRASE_GEMELLO + ['⚑argento'] + PIOVE + ['⚑ottone'], VASCA_PIOVE, 'No')
+    return {'laggiu': laggiu, 'pescata_laggiu': 'gioca', 'lupo': lupo, 'piove': piove}
+
+
+def seconda_stagione(dati):
+    s2 = {'parco': frase_del_parco(dati), 'bruco': bruco(dati), 'teleferica': teleferica(dati),
+          'campanella': campanella(dati), 'telone': telone(dati)}
+    s2['gemello'] = gemello(dati, s2)
+    return s2
+
 
 if __name__ == '__main__':
     dati = {k: giro(k) for k in FRASI}
@@ -1067,5 +1544,6 @@ if __name__ == '__main__':
     controlla_finisce(dati['finisce'])
     dati['cane'] = giro_cane(dati)
     dati['grande'] = parco_grande()  # episodio 9
+    dati['seconda'] = seconda_stagione(dati)
     if '--scrivi' in sys.argv:
         scrivi(dati)
