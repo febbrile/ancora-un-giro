@@ -11,15 +11,18 @@ const AN_CAM = [
   // Di nuovo in stazione: sale l'ultima paperella.
   { t: 8.61, cx: 430, cy: 800, z: 2.8, da: 8.6 },
   { t: 10.8, cx: 430, cy: 800, z: 2.8 },
-  // Il treno riparte ancora; Ada lo guarda.
+  // Il treno riparte ancora; Ada lo guarda. Dietro di lei si vedono la banchina e, in alto, il viadotto fino alla montagna.
   { t: 13.61, cx: 470, cy: 760, z: 2.4, da: 13.6 },
   { t: 15.0, cx: 470, cy: 760, z: 2.4 },
-  { t: 17.0, cx: 430, cy: 660, z: 1.7 },
-  { t: 22.0, cx: 430, cy: 660, z: 1.7 },
+  { t: 17.0, cx: 440, cy: 615, z: 1.45 },
+  { t: 22.0, cx: 440, cy: 615, z: 1.45 },
   { t: 24.0, cx: 760, cy: 640, z: 1.6 },
 ];
 const AN_PASSO = 76, AN_TRENO = 490;
-const AN_VEL = [[[0, 0], [1.4, 0], [2.4, 250], [3.2, 650]], [[0, 0], [14.4, 0], [15.6, 120], [17.4, 160], [19.0, 300], [20.4, 520]]];
+// I due giri: il treno esce di campo a sinistra lungo la banchina, fuori campo corre (banchina, salita) e ricompare in alto
+// sul viadotto, poi entra in montagna (il primo giro prima della cameretta, il secondo col cartello).
+const AN_VEL = [[[0, 0], [1.4, 0], [2.4, 250], [3.2, 650], [3.6, 5660], [4.0, 850]],
+  [[0, 0], [14.4, 0], [15.6, 120], [17.4, 260], [18.4, 700], [18.9, 3400], [19.4, 650]]];
 const AN_SBARRE = [0.2, 1.0], AN_SBARRA_7 = [13.6, 14.2];
 const AN_CASE = [[5.4, 8.6], [10.8, 13.6]];
 const AN_ADA = [672, 896];
