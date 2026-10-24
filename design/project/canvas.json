@@ -107,6 +107,13 @@
       "w": 1920,
       "h": 1080,
       "title": "Il Bruco"
+    },
+    "Teleferica.dc.html": {
+      "x": 0,
+      "y": 8400,
+      "w": 1920,
+      "h": 1080,
+      "title": "La teleferica"
     }
   },
   "order": [
@@ -123,7 +130,8 @@
     "Custode.dc.html",
     "Gemello.dc.html",
     "Frase.dc.html",
-    "Bruco.dc.html"
+    "Bruco.dc.html",
+    "Teleferica.dc.html"
   ],
   "notes": {},
   "designSystems": []

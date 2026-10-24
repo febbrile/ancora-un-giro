@@ -188,6 +188,20 @@ function tavole() {
   [['#4ca856', 'verde'], ['#cd4736', 'rossa']].forEach(([c2, n], k) => { s += at(1080 + k * 200, 900, 1.2, G.paperella(c2)) + et(1140 + k * 200, 1040, n, true); });
   s += vista(1500, 830, 340, 200, '984 936 170 100', G.mondo({}) + S2.giostrina({ sbarra: 1 }).davanti) + et(1670, 1040, 'la sbarra abbassata', true);
   T['Bruco.dc.html'] = { titolo: 'Il Bruco', w: 1920, h: 1080, svg: s };
+  // La teleferica (stagione 2, episodio 3): il palo accanto alla guardiola, il pilone sulla collina, il filo fino alle nuvole.
+  const TE = G.MOD.seconda.teleferica, pc = S2.puntoCabina(0.3);
+  s = '<rect width="1920" height="1080" fill="#F3EADB"/>' + titolo('La teleferica · stagione 2');
+  s += vista(40, 120, 1180, 620, '1640 -480 2620 1376', G.PARCO.defs + G.paesaggio({ laggiu: 1, manopola: 0, banchina: true, morto: true, bruco: 'acceso', strisce: 0 }) + S2.teleferica({}) +
+    '<g transform="translate(' + pc[0] + ' ' + pc[1] + ') scale(2)">' + S2.cabina({}) + '</g>');
+  s += et(630, 770, 'dal palo accanto alla guardiola al pilone sulla collina, e oltre, fino alle nuvole di pioggia');
+  s += pannello(1260, 120, 620, 620);
+  s += at(1420, 200, 4.4, S2.cabina({})) + at(1720, 200, 4.4, S2.cabina({ gocce: 1, t: 0.3, rotolo: true }));
+  s += et(1420, 420, 'la cabina viola', true) + et(1720, 420, 'torna gocciolante', true);
+  s += at(1310, 460, 2.2, '<g transform="translate(-54 -230)">' + G.libroAperto(120, 262, 'teleferica') + '</g>') + et(1570, 720, 'la pagina del regolamento', true);
+  s += pannello(40, 810, 1840, 240);
+  [['teleferica', 'viola chiara'], ['domani', 'rosa'], ['teleferica·fine', 'viola scura'], ['Sì', 'sì'], ['No', 'no']].forEach(([w, n], k) => { s += at(90 + k * 180, 850, 1.1, G.paperella(TE.paperelle[w])) + et(145 + k * 180, 1030, n, true); });
+  ['Domani', 'piove', '?', 'pioggia', 'sole'].forEach((w, k) => { s += inVag(990 + k * 176, 900, 0.72, S2.tipo(w).tipo, TE.biglietti[w], S2.tipo(w).o) + et(1076 + k * 176, 1030, '«' + w + '»', true); });
+  T['Teleferica.dc.html'] = { titolo: 'La teleferica', w: 1920, h: 1080, svg: s };
   // La grammatica: colori e caratteri.
   const sw = [['notte', C.notte1], ['cielo', C.notte2], ['lampadine', C.luce], ['righe', C.rosso], ['crema', C.crema], ['oro', C.oro], ['montagna', C.mont2], ['acqua', C.acqua]];
   s = '<rect width="1280" height="720" fill="#F3EADB"/>' + titolo('La grammatica');
@@ -212,7 +226,7 @@ const T = tavole();
 fs.mkdirSync(OUT, { recursive: true });
 const posto = { 'Main.dc.html': [0, 0], 'Oggetti.dc.html': [2000, 0], 'LunaPark.dc.html': [0, 1200], 'Montagna.dc.html': [3500, 1200], 'Finestre.dc.html': [0, 2400], 'Grammatica.dc.html': [2000, 2400], 'Parco.dc.html': [0, 3600],
   'Passeggeri.dc.html': [2000, 3600], 'Stagione.dc.html': [0, 4800], 'Immenso.dc.html': [2000, 4800], 'Custode.dc.html': [0, 6000],
-  'Gemello.dc.html': [2000, 6000], 'Frase.dc.html': [0, 7200], 'Bruco.dc.html': [2000, 7200] };
+  'Gemello.dc.html': [2000, 6000], 'Frase.dc.html': [0, 7200], 'Bruco.dc.html': [2000, 7200], 'Teleferica.dc.html': [0, 8400] };
 const canvas = {
   v: 3, createdOnFiles: { v: 1, at: new Date().toISOString().replace(/\.\d+Z$/, 'Z') }, title: 'Ancora un giro · design',
   launch: { view: 'canvas' }, pages: [], boards: {}, order: [], notes: {}, designSystems: [],

@@ -133,6 +133,7 @@ const RITMO = {
   '09': { collina: [[11.6, 15.0, 2.4, 1]] },
   '10': { finestre: [[34.4, 40.6, 2.8, 1]] },
   '11': { finestre: [[34.0, 40.6, 2.8, 1]] },
+  '12': { finestre: [[34.4, 40.6, 2.8, 1]] },
 };
 // Dove si trova il tempo interno dentro un tratto, dopo tau secondi veri.
 function nelTratto(x0, x1, r, fine, tau) {
@@ -536,6 +537,12 @@ function libroAperto(x, y, pagina, colori) {
 }
 // I disegni del regolamento, a matita: nessuna scritta. Coordinate del libro aperto (pagine da x 60 a 180, y 236–284).
 const PAGINE = {
+  // La teleferica: un filo che sale tra due pali, la cabina appesa, una nuvola; accanto la bandierina turchese.
+  teleferica: '<path d="M64 278 L64 252 M114 248 L114 240" stroke="' + C.cremaScura + '" stroke-width="2.4"/><path d="M62 254 L116 240" stroke="' + C.cremaScura + '" stroke-width="1.6"/>' +
+    '<path d="M88 247 L88 252" stroke="' + C.cremaScura + '" stroke-width="1.6"/><rect x="82" y="252" width="12" height="11" rx="2" fill="#A064D7"/>' +
+    '<path d="M100 248 q4 -6 10 -2 q6 -6 10 2 q4 6 -2 6 l-16 0 q-6 0 -2 -6 Z" fill="none" stroke="' + C.cremaScura + '" stroke-width="1.6"/>' +
+    '<path d="M104 258 l-2 6 M110 258 l-2 6 M116 258 l-2 6" stroke="#5C8FD0" stroke-width="1.4"/>' +
+    '<g transform="translate(150 262) scale(.7)">' + segnoBandierina('turchese') + '</g>',
   // La frase del parco: una bandierina d'oro davanti a una striscia con le onde del mare.
   frase: '<g transform="translate(76 260) scale(.62)">' + segnoBandierina('oro') + '</g>' +
     '<path d="M88 252 L112 250 L110 262 L112 274 L88 272 L91 262 Z" fill="none" stroke="' + C.cremaScura + '" stroke-width="1.8"/>' +
@@ -2129,13 +2136,15 @@ window.G.schizzoEmma = function (x, y, col, s) {
     let strisce = '';
     for (let k = 0; k < (o.strisce === undefined ? 44 : o.strisce); k++) strisce += '<g class="pi-str" opacity="0"><g transform="translate(-150 -22)">' + G.striscia('', 300) + '</g></g>';
     return '<rect x="-2400" y="-4000" width="16500" height="4000" fill="' + C.notte1 + '"/><rect x="3880" y="0" width="10200" height="900" fill="url(#g-cielo)"/><rect x="-2400" y="900" width="16500" height="3400" fill="' + C.terra + '"/>' +
-      G.mondo(o) +
+      G.mondo(Object.assign({}, o, { bruco: false })) +
       stelle.map((l, k) => '<path d="' + puntini(l) + '" fill="#FFF4DA" opacity="' + [0.8, 0.55, 0.35][k] + '"/>').join('') +
       '<path d="M1880 760 Q2600 700 3400 734 Q4400 772 5400 728 Q6600 690 7800 736 Q9000 772 10400 730 L14000 740 L14000 1300 L1880 1300 Z" fill="#171A44"/>' +
       '<g class="pi-parco" transform="translate(' + PARCO.origine[0] + ' ' + PARCO.origine[1] + ') scale(' + PARCO.scala + ')">' + G.parcoImmenso(o) + '</g>' +
       '<path d="' + collina + '" fill="url(#g-pi-collina)"/><path d="' + collina.replace(/^M1500 3200 L1500 1010 C1660 990 1790 920 1880 872 /, 'M1880 872 ').replace(/ L4300 3200 Z$/, '') + '" fill="none" stroke="#2E3270" stroke-width="5"/>' +
       '<path d="' + ciuffi + '" stroke="#2E5A3E" stroke-width="3" fill="none" stroke-linecap="round"/>' +
       '<path d="' + sentiero + '" stroke="#3E3A72" stroke-width="12" fill="none" stroke-linecap="round" stroke-linejoin="round"/>' + cancello +
+      // Il Bruco (seconda stagione) sta davanti ai piedi della collina.
+      (o.bruco ? G.S2.brucoFermo(o.bruco) : '') +
       '<g class="pi-strisce">' + strisce + '</g>';
   };
   // Le ante del cancello del parco di Ada: a = 1 aperte contro i pali, a = 0 chiuse.
@@ -2508,4 +2517,66 @@ window.G.S2.brucoFermo = function (stato) {
   const buio = stato === 'acceso' ? 0.14 : 0.62;
   return '<g class="g-bruco-fermo">' + gio.dietro + segm + gio.davanti +
     '<ellipse cx="' + (B.c[0] + 20) + '" cy="' + (B.c[1] - 10) + '" rx="420" ry="200" fill="#05070F" opacity="' + buio + '" filter="url(#g-velo)"/></g>';
+};
+// La teleferica (stagione 2, episodio 3): da un palo accanto alla guardiola, vicino al cancello, un filo sale al pilone sulla
+// cima della collina (dietro la ruota panoramica) e da lì oltre le colline, fino a sparire tra le nuvole di pioggia. Sul
+// filo è appesa una cabina viola. Coordinate del paesaggio (G.costruisciPaesaggio). TELEFERICA.filo: i punti del filo.
+window.G.S2.TELEFERICA = { filo: [[1826, 762], [2550, 452], [3700, -420]], nuvole: [3760, -470] };
+// o.luce: da 0 (spenta) a 1, le lampadine del pilone; o.filo: da 0 a 1, quanto filo si vede (si accende dal basso).
+window.G.S2.teleferica = function (o) {
+  o = o || {};
+  const G = window.G, C = G.C, T = G.S2.TELEFERICA, [a, b, c] = T.filo, luce = o.luce === undefined ? 1 : o.luce, filo = o.filo === undefined ? 1 : o.filo;
+  const traliccio = (x, y0, y1, w) => '<path d="M' + (x - w) + ' ' + y0 + ' L' + (x - 3) + ' ' + y1 + ' L' + (x + 3) + ' ' + y1 + ' L' + (x + w) + ' ' + y0 + '" fill="none" stroke="#3E3A72" stroke-width="4"/>' +
+    [0.25, 0.5, 0.75].map(u => { const y = y0 + (y1 - y0) * u, ww = w + (3 - w) * u; return '<path d="M' + (x - ww) + ' ' + y + ' L' + (x + ww) + ' ' + y + '" stroke="#3E3A72" stroke-width="3"/>'; }).join('') +
+    '<path d="M' + (x - w) + ' ' + y0 + ' L' + (x + w * 0.5) + ' ' + (y0 + (y1 - y0) * 0.5) + ' M' + (x + w) + ' ' + y0 + ' L' + (x - w * 0.5) + ' ' + (y0 + (y1 - y0) * 0.5) + '" stroke="#3E3A72" stroke-width="2"/>';
+  const ruota = (x, y) => '<circle cx="' + x + '" cy="' + y + '" r="7" fill="#2A2440" stroke="' + C.acciaio + '" stroke-width="2.5"/><circle cx="' + x + '" cy="' + y + '" r="2" fill="' + C.oro + '"/>';
+  const lamp = (x, y) => '<circle cx="' + x + '" cy="' + y + '" r="4" fill="' + mix('#3A3440', C.luce, luce) + '"/>' + (luce > 0 ? '<circle cx="' + x + '" cy="' + y + '" r="16" fill="' + C.luce + '" opacity="' + (0.5 * luce).toFixed(2) + '" filter="url(#g-glow)"/>' : '');
+  // Le nuvole di pioggia, oltre le colline, dove sparisce il filo.
+  const [nx, ny] = T.nuvole;
+  let pioggia = '';
+  for (let k = 0; k < 26; k++) { const x = nx - 260 + k * 20 + (k % 3) * 6, y = ny + 70 + (k % 4) * 30; pioggia += 'M' + x + ' ' + y + ' l-10 44 '; }
+  const nuvole = '<g class="g-tel-nuvole"><path d="' + pioggia + '" stroke="#7FA8D8" stroke-width="3" opacity=".55" stroke-linecap="round"/>' +
+    [[-200, 30, 130], [-60, -10, 170], [120, 20, 150], [260, 50, 110]].map(([dx, dy, r]) => '<ellipse cx="' + (nx + dx) + '" cy="' + (ny + dy) + '" rx="' + r + '" ry="' + (r * 0.55).toFixed(0) + '" fill="#4A4F72"/>').join('') +
+    '<ellipse cx="' + nx + '" cy="' + (ny + 64) + '" rx="380" ry="40" fill="#3A3E60"/></g>';
+  // Il filo, che si accende dal basso verso le nuvole.
+  const L1 = Math.hypot(b[0] - a[0], b[1] - a[1]), L2 = Math.hypot(c[0] - b[0], c[1] - b[1]), Lf = (L1 + L2) * filo;
+  const d = 'M' + a[0] + ' ' + a[1] + ' L' + b[0] + ' ' + b[1] + ' L' + c[0] + ' ' + c[1];
+  return '<g class="g-teleferica">' + nuvole +
+    // Il palo dietro la guardiola, con la sua ruota; il pilone sulla cima, con le lampadine.
+    traliccio(a[0], 870, a[1] - 6, 14) + ruota(a[0], a[1]) +
+    traliccio(b[0], 560, b[1] - 6, 22) + ruota(b[0], b[1]) + lamp(b[0] - 12, b[1] + 30) + lamp(b[0] + 12, b[1] + 30) + lamp(b[0], b[1] - 14) +
+    '<path d="' + d + '" fill="none" stroke="#C9CBD4" stroke-width="3.4" stroke-dasharray="' + Lf.toFixed(1) + ' 9999"/></g>';
+};
+// La cabina viola, appesa al filo per il gancio nel punto (0, 0); alta 40. o.gocce: da 0 a 1, quanto gocciola.
+window.G.S2.cabina = function (o) {
+  o = o || {};
+  const C = window.G.C, g = o.gocce || 0, t = o.t || 0;
+  let gocce = '';
+  if (g > 0) for (let k = 0; k < 4; k++) { const u = ((t * 1.3 + k * 0.27) % 1); gocce += '<ellipse cx="' + (-10 + k * 7) + '" cy="' + (42 + 30 * u) + '" rx="1.6" ry="2.6" fill="#9CC8F0" opacity="' + (g * (1 - u)).toFixed(2) + '"/>'; }
+  return '<g><path d="M0 0 L0 10" stroke="#5A5F80" stroke-width="2.4"/><circle cx="0" cy="0" r="3.4" fill="#5A5F80"/>' +
+    '<path d="M-16 12 L16 12 L18 18 L-18 18 Z" fill="#6E3FA8"/>' +
+    '<rect x="-15" y="17" width="30" height="22" rx="4" fill="#A064D7" stroke="#5A328C" stroke-width="2"/>' +
+    '<rect x="-11" y="21" width="22" height="9" rx="2" fill="' + C.luce + '" opacity=".75"/><path d="M0 21 L0 30" stroke="#5A328C" stroke-width="1.6"/>' +
+    (o.rotolo ? '<g transform="translate(0 26) scale(.1)">' + window.G.rotolo() + '</g>' : '') + gocce + '</g>';
+};
+// Dove sta la cabina quando ha fatto la frazione u del suo viaggio (0: al palo della guardiola, 1: tra le nuvole).
+window.G.S2.puntoCabina = function (u) {
+  const [a, b, c] = window.G.S2.TELEFERICA.filo, L1 = Math.hypot(b[0] - a[0], b[1] - a[1]), L2 = Math.hypot(c[0] - b[0], c[1] - b[1]);
+  const d = Math.max(0, Math.min(1, u)) * (L1 + L2);
+  if (d <= L1) return [a[0] + (b[0] - a[0]) * d / L1, a[1] + (b[1] - a[1]) * d / L1];
+  const v = (d - L1) / L2;
+  return [b[0] + (c[0] - b[0]) * v, b[1] + (c[1] - b[1]) * v];
+};
+// Un treno dalle sole parole del modellino (frase) e dai tratti dell'ultimo passeggero (gli unici che il modellino calcola
+// per i giri con la vasca dichiarata). I primi quattro (la bandierina d'oro e «Storie di mare») hanno i colori di sempre;
+// gli altri il colore del loro biglietto (bandierine, biglietti e paperelle dal modellino).
+window.G.S2.trenoDa = function (frase, trattiUltimo) {
+  const G = window.G, S = G.MOD.seconda, capo = S.parco.giri[0].passeggeri;
+  const colore = w => S.parco.bandierine[w] || S.teleferica.biglietti[w] || S.teleferica.paperelle[w] || S.parco.biglietti[w] ||
+    (G.MOD.finisce.passeggeri[w] || {}).biglietto || '#96969f';
+  return frase.map((w, i) => {
+    if (i < 4 && capo[i].parola === w) return this.chi(capo[i]);
+    const b = colore(w);
+    return this.chi({ parola: w, biglietto: b, tratti: i === frase.length - 1 ? trattiUltimo : [b] });
+  });
 };
