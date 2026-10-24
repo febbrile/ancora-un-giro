@@ -96,6 +96,14 @@
         "titolo": "La frase del parco",
         "personaggio": "bandierina",
         "racconto": "Stasera «Al parco Emma» non fa la vasca verde, come l’altra volta. Prima che la striscia salga sul treno, il custode ci attacca qualcosa in testa: Ada vuole sapere cosa."
+      },
+      {
+        "n": 2,
+        "etichetta": "Episodio 2",
+        "cartella": "11-il-bruco",
+        "titolo": "Il Bruco",
+        "personaggio": "bruco",
+        "racconto": "A un bambino, sul telefono, non arriva la risposta del treno ma una frase già pronta. Ada segue il custode in un angolo buio del parco, dove c’è una giostrina che non aveva mai visto."
       }
     ]
   }
