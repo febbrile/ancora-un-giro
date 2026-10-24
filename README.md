@@ -27,7 +27,13 @@ Prima stagione.
 | 8 | La paperella sbagliata | 4:22 | Il cane di Emma non esiste, ma la vasca si riempie lo stesso di nomi che suonano bene | [guarda](https://febbrile.github.io/ancora-un-giro/sito/guarda.html?ep=08-la-paperella-sbagliata) |
 | 9 | Il parco più grande del mondo | 4:32 | Oltre le colline c’è un parco immenso: tutto più grande, ma il giro è lo stesso. E le cose del luna park hanno i loro nomi da grandi. Al ritorno, al cancello, c’è il custode | [guarda](https://febbrile.github.io/ancora-un-giro/sito/guarda.html?ep=09-il-parco-piu-grande-del-mondo) |
 
-Argomento, domanda e idea di ogni episodio sono nella [scaletta](mondo/SCALETTA.md).
+Seconda stagione, «Intorno alla giostra».
+
+| | Titolo | Durata | Cosa racconta | Guarda |
+|---|---|---|---|---|
+| 1 | La frase del parco | 4:22 | Da stasera il custode attacca in testa a ogni striscia la frase del parco, *Storie di mare*, con le sue bandierine: la vasca di «Al parco Emma» si fa blu. Se chi scrive insiste, torna verde | [guarda](https://febbrile.github.io/ancora-un-giro/sito/guarda.html?ep=10-la-frase-del-parco) |
+
+Argomento, domanda e idea di ogni episodio sono nella [scaletta](mondo/SCALETTA.md) e nella [scaletta della seconda stagione](mondo/SCALETTA-2.md).
 
 ## Da leggere: come funziona un LLM
 

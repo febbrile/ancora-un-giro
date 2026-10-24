@@ -23,6 +23,8 @@
     pezzo: { colore: () => G.MOD.zampiru.passeggeri.Zam.biglietto, ritratto: '18 50 172 172', intero: '18 60 172 130', disegno: c => G.pezzo(c, 'd') },
     fine: { colore: () => G.MOD.finisce.passeggeri['.'].tratti.at(-1), ritratto: '-16 -18 132 132', intero: '0 10 104 86', disegno: c => G.paperella(c) },
     cane: { colore: () => G.MOD.cane.passeggeri.cane.biglietto, ritratto: '18 18 168 168', intero: '10 30 184 150', disegno: c => G.cane(c, { coda: 16 }) },
+    // I volti della seconda stagione.
+    bandierina: { colore: () => G.MOD.seconda.parco.giri[0].ottone.tratti.at(-1), ritratto: '36 -8 176 176', intero: '50 8 150 170', disegno: c => G.bandierina(c, { metallo: 'ottone' }) },
     laggiu: { colore: () => G.C.luce2, ritratto: '1360 560 520 520', intero: '1100 560 1300 300', disegno: () => '<rect x="1000" y="400" width="1600" height="800" fill="' + G.C.notte2 + '"/>' + G.laggiu() + '<path d="M1000 900 L1000 760 Q1500 690 1920 740 L2600 740 L2600 900 Z" fill="#171A44"/>' },
   };
   const PERSONAGGI = Object.keys(VOLTI);

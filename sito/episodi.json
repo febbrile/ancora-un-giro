@@ -84,5 +84,19 @@
         "racconto": "Oltre le colline si accendono le luci di un altro parco, e quasi tutte le frasi volano là. Ada lascia il trenino e sale sulla collina a guardare."
       }
     ]
+  },
+  {
+    "n": 2,
+    "titolo": "Seconda stagione",
+    "episodi": [
+      {
+        "n": 1,
+        "etichetta": "Episodio 1",
+        "cartella": "10-la-frase-del-parco",
+        "titolo": "La frase del parco",
+        "personaggio": "bandierina",
+        "racconto": "Stasera «Al parco Emma» non fa la vasca verde, come l’altra volta. Prima che la striscia salga sul treno, il custode ci attacca qualcosa in testa: Ada vuole sapere cosa."
+      }
+    ]
   }
 ]
