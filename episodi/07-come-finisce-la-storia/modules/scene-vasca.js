@@ -2,7 +2,7 @@ const { seg, eo, eio, lerp } = kit;
 // Fuori, alla bancarella. Il treno esce sopra la vasca: passano gli altri vagoni, e non succede niente. Passa l'ultimo,
 // la paperella del punto, scura come la notte. Sotto di lei cadono le paperelle, di luce, e toccano l'acqua vere:
 // tantissime scure, qualcuna grigio chiaro, una o due di altri colori. La vasca sembra un pezzo di cielo. Il treno si
-// ferma in stazione, sulla banchina piena, e i vestiti tornano del colore dei biglietti. Ada guarda la vasca, poi il
+// ferma in stazione, lungo la banchina, e i vestiti tornano del colore dei biglietti. Ada guarda la vasca, poi il
 // quaderno, con la paperellina scura della prima sera.
 // Si apre dalla luce dell'uscita, come finisce «finestre»; finisce su Ada e la vasca scura (la riprende «pesca»).
 const VS_CAM = [

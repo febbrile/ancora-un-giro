@@ -2,7 +2,7 @@ const { seg, eo, eio, lerp } = kit;
 // Il treno esce sopra la vasca: nell'ultimo vagone la paperella turchese è diventata grigia. Cadono tantissime
 // paperelle grigio chiaro, e adesso le paperelle scure sono più di una: sono tante. Ada le indica col dito, una per una,
 // sorpresa. Poi chiude gli occhi e pesca una grigio chiaro: sul telefono, dopo «gioca», compare un punto. La paperella
-// grigia corre a sedersi in fondo al treno, nell'ultimo posto della banchina, e il treno riparte.
+// grigia corre a sedersi in fondo al treno, e il treno riparte, lungo sette vagoni.
 // Si apre su Ada e la vasca vuota, come finisce «quaderno»; finisce sul treno che riparte con sette vagoni (dentro la
 // montagna lo riprende «finestre»).
 const PT_CAM = [

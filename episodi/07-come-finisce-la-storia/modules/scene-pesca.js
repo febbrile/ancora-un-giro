@@ -90,7 +90,8 @@ kit.scene('pesca', {
       this.statoFanale = String(fan);
     }
     // Una dopo l'altra, dal primo vagone in fondo, le lampadine della stazione e le lucine dei vagoni sotto di loro.
-    const spenta = x => eio(seg(t, PE_STAZIONE[0] + (x - 50) / 560 * (PE_STAZIONE[1] - PE_STAZIONE[0]), PE_STAZIONE[0] + (x - 50) / 560 * (PE_STAZIONE[1] - PE_STAZIONE[0]) + 0.35));
+    // Le lampadine della banchina lunga, oltre il primo vagone, si spengono con le prime (sono fuori campo).
+    const spenta = x => (x = Math.max(x, 50), eio(seg(t, PE_STAZIONE[0] + (x - 50) / 560 * (PE_STAZIONE[1] - PE_STAZIONE[0]), PE_STAZIONE[0] + (x - 50) / 560 * (PE_STAZIONE[1] - PE_STAZIONE[0]) + 0.35)));
     this.lampadine.forEach(({ el, x }) => el.setAttribute('opacity', (1 - 0.85 * spenta(x)).toFixed(3)));
     this.giro.vag.forEach((v, i) => { const o = (1 - 0.88 * spenta(M.fermo + i * M.passoBanchina)).toFixed(3); v.querySelectorAll('.g-lucina').forEach(el => el.setAttribute('opacity', o)); });
     // Il salotto.

@@ -2,7 +2,7 @@ const { seg, eo, eio, lerp } = kit;
 // Ada sfoglia il quaderno all'indietro, pagina dopo pagina, fino alla prima sera: il disegno della vasca piena di
 // paperelle blu e turchesi. In mezzo, piccola piccola, c'è una paperella scura: l'aveva disegnata senza farci caso.
 // Ada guarda il disegno, poi la vasca vuota, poi di nuovo il disegno, e si chiede che parola sarà.
-// Si apre come finisce «giri», con il treno che riparte e sparisce sulla salita; finisce su Ada e la vasca vuota
+// Si apre come finisce «giri», con il treno che riparte e corre via lungo la banchina; finisce su Ada e la vasca vuota
 // (la riprende «punto», con il treno che esce).
 const QD_CAM = [
   { t: 0, cx: 420, cy: 760, z: 2.0 },

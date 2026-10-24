@@ -1547,7 +1547,7 @@ window.G.giro7 = function (o) {
         const ps = this.passoA(s);
         G.posaTreno(this.vag, m.arrivo, s, undefined, ps);
         this.vag.forEach((el, i) => el.setAttribute('opacity', (i < n ? c01((s - i * ps - 4) / 26) : nuovo).toFixed(3)));
-        // Fermo in stazione, l'ultimo vagone della banchina piena sta in piano, sulle assi (come quando riparte).
+        // Fermo in stazione, anche il settimo vagone, accanto alla sbarra di dietro, sta in piano, sulle assi (come quando riparte).
         const ferma = seg(s, this.sF - 150, this.sF), L = m.arrivo.getTotalLength();
         if (ferma > 0) this.vag.forEach((el, i) => {
           const si = Math.max(0.5, Math.min(L - 0.5, s - i * ps)), p = m.arrivo.getPointAtLength(si);
