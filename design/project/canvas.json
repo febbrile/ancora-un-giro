@@ -93,6 +93,20 @@
       "w": 1920,
       "h": 1080,
       "title": "Il custode del parco gemello"
+    },
+    "Frase.dc.html": {
+      "x": 0,
+      "y": 7200,
+      "w": 1920,
+      "h": 1080,
+      "title": "La frase del parco"
+    },
+    "Bruco.dc.html": {
+      "x": 2000,
+      "y": 7200,
+      "w": 1920,
+      "h": 1080,
+      "title": "Il Bruco"
     }
   },
   "order": [
@@ -107,7 +121,9 @@
     "Stagione.dc.html",
     "Immenso.dc.html",
     "Custode.dc.html",
-    "Gemello.dc.html"
+    "Gemello.dc.html",
+    "Frase.dc.html",
+    "Bruco.dc.html"
   ],
   "notes": {},
   "designSystems": []

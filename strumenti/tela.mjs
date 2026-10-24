@@ -155,6 +155,39 @@ function tavole() {
   s += at(1366, 488, 1.2, G.custodeGemello('alza', 'base', { occhi: -1 }));
   s += et(1510, 1030, 'basso e tondo: lanterna e regolamento verdi', true);
   T['Gemello.dc.html'] = { titolo: 'Il custode del parco gemello', w: 1920, h: 1080, svg: s };
+  // La frase del parco (stagione 2, episodio 1): le bandierine, i biglietti e la striscia, le pose nuove del custode, la pagina.
+  const S2 = G.S2, BA = G.MOD.seconda.parco.bandierine, OT = G.MOD.seconda.parco.giri[0].ottone;
+  s = '<rect width="1920" height="1080" fill="#F3EADB"/>' + titolo('La frase del parco · stagione 2');
+  s += pannello(40, 120, 1840, 360);
+  ['oro', 'argento', 'ottone', 'turchese'].forEach((m2, k) => { s += inVag(70 + k * 300, 250, 1.0, 'bandierina', BA['⚑' + m2], { metallo: m2 }, { primo: k === 0 }); });
+  s += inVag(1270, 250, 1.0, 'bandierina', OT.tratti.at(-1), { metallo: 'ottone' }) + inVag(1570, 250, 1.0, 'bandierina', OT.tratti.at(-1), { metallo: 'ottone', tirata: true });
+  s += et(190, 460, 'd’oro: la frase del parco', true) + et(490, 460, 'd’argento: il messaggio', true) + et(790, 460, 'd’ottone: la risposta', true) + et(1090, 460, 'turchese: la teleferica', true) +
+    et(1390, 460, 'd’ottone, uscita blu', true) + et(1690, 460, 'tirata via', true);
+  ['⚑oro', '⚑argento', '⚑ottone', '⚑turchese'].forEach((w, k) => { s += at(70 + k * 170, 520, 1.2, G.biglietto(w)); });
+  s += et(400, 630, 'i biglietti senza parola');
+  s += G.nastro(G.linea([[760, 560], [1860, 560]]), 0, 1100, ['⚑oro', 'Storie', 'di', 'mare', '⚑argento', 'Al', 'parco', 'Emma', '⚑ottone'].map((w, k) => [w, 60 + k * 122]), 40) + et(1310, 630, 'la striscia, con la frase del parco attaccata in testa');
+  [['porge', 'base', {}, 'porge la striscia'], ['attacca', 'serio', {}, 'attacca i pezzi'], ['legge', 'serio', { pagina: 'frase' }, 'apre il regolamento'], ['legge', 'serio', { pagina: 'frase', dito: 1 }, 'ci batte il dito']].forEach(([p2, e, o2, n], k) => {
+    s += at(60 + k * 250, 660, 0.88, G.custode(p2, e, o2)) + et(166 + k * 250, 1060, n);
+  });
+  s += at(1080, 640, 3.2, '<g transform="translate(-54 -230)">' + G.libroAperto(120, 262, 'frase') + '</g>') + et(1480, 1060, 'la pagina della frase del parco: disegni, nessuna scritta');
+  T['Frase.dc.html'] = { titolo: 'La frase del parco', w: 1920, h: 1080, svg: s };
+  // Il Bruco (stagione 2, episodio 2): la giostrina intera, la testa e i segmenti, chi ci sale sopra.
+  const BR = S2.BRUCO, giost = S2.giostrina({ sbarra: 0 });
+  let segm = '';
+  for (let i = 0; i <= BR.segmenti; i++) { const a2 = Math.PI * 0.62 - i * 0.16; segm += '<g transform="translate(' + (BR.c[0] + BR.rx * Math.cos(a2)).toFixed(1) + ' ' + (BR.c[1] + BR.ry * Math.sin(a2)).toFixed(1) + ')">' + S2.segmento(i === 0, i > 0 && i <= 3 ? S2.sulBruco(['#8FB06A', '#5FB04A', '#D24A36'][i - 1]) : '') + '</g>'; }
+  s = '<rect width="1920" height="1080" fill="#F3EADB"/>' + titolo('Il Bruco · stagione 2');
+  s += vista(40, 120, 1180, 620, '1930 640 640 336', G.mondo({ banchina: true, manopola: 0 }) + giost.dietro + segm + giost.davanti + '<g transform="' + G.posaCustode(2060, 884) + '">' + G.custode('base', 'base', { occhi: 1 }) + '</g>');
+  s += et(630, 770, 'la giostrina, nell’angolo buio del parco: la mela, la vasca piccola, la sbarra');
+  s += pannello(1260, 120, 620, 620);
+  s += at(1440, 390, 3.4, S2.segmento(true)) + at(1700, 400, 3.4, S2.segmento(false, S2.sulBruco('#D24A36')));
+  s += et(1420, 450, 'la testa, dipinta', true) + et(1700, 450, 'un segmento', true);
+  s += at(1440, 660, 2.4, S2.segmento(true, '', { faccia: '#BFE6FF' })) + et(1700, 640, 'il Bruco gemello: un’altra faccia', true);
+  s += pannello(40, 810, 1840, 240);
+  ['#4ca856', '#8FB06A', '#C9A03E', '#cd4736'].forEach((c2, k) => { s += at(120 + k * 220, 800, 1.0, G.pezzo(c2, '')); });
+  s += et(500, 1040, 'chi sale sul Bruco: dal verde al rosso', true);
+  [['#4ca856', 'verde'], ['#cd4736', 'rossa']].forEach(([c2, n], k) => { s += at(1080 + k * 200, 900, 1.2, G.paperella(c2)) + et(1140 + k * 200, 1040, n, true); });
+  s += vista(1500, 830, 340, 200, '1930 790 170 100', G.mondo({}) + S2.giostrina({ sbarra: 1 }).davanti) + et(1670, 1040, 'la sbarra abbassata', true);
+  T['Bruco.dc.html'] = { titolo: 'Il Bruco', w: 1920, h: 1080, svg: s };
   // La grammatica: colori e caratteri.
   const sw = [['notte', C.notte1], ['cielo', C.notte2], ['lampadine', C.luce], ['righe', C.rosso], ['crema', C.crema], ['oro', C.oro], ['montagna', C.mont2], ['acqua', C.acqua]];
   s = '<rect width="1280" height="720" fill="#F3EADB"/>' + titolo('La grammatica');
@@ -179,7 +212,7 @@ const T = tavole();
 fs.mkdirSync(OUT, { recursive: true });
 const posto = { 'Main.dc.html': [0, 0], 'Oggetti.dc.html': [2000, 0], 'LunaPark.dc.html': [0, 1200], 'Montagna.dc.html': [3500, 1200], 'Finestre.dc.html': [0, 2400], 'Grammatica.dc.html': [2000, 2400], 'Parco.dc.html': [0, 3600],
   'Passeggeri.dc.html': [2000, 3600], 'Stagione.dc.html': [0, 4800], 'Immenso.dc.html': [2000, 4800], 'Custode.dc.html': [0, 6000],
-  'Gemello.dc.html': [2000, 6000] };
+  'Gemello.dc.html': [2000, 6000], 'Frase.dc.html': [0, 7200], 'Bruco.dc.html': [2000, 7200] };
 const canvas = {
   v: 3, createdOnFiles: { v: 1, at: new Date().toISOString().replace(/\.\d+Z$/, 'Z') }, title: 'Ancora un giro · design',
   launch: { view: 'canvas' }, pages: [], boards: {}, order: [], notes: {}, designSystems: [],
