@@ -27,6 +27,7 @@
     bandierina: { colore: () => G.MOD.seconda.parco.giri[0].ottone.tratti.at(-1), ritratto: '36 -8 176 176', intero: '50 8 150 170', disegno: c => G.bandierina(c, { metallo: 'ottone' }) },
     bruco: { colore: () => G.S2.COLORI_BRUCO.corpo, ritratto: '-42 -66 66 66', intero: '-36 -76 66 84', disegno: () => G.S2.segmento(true) },
     cabina: { colore: () => G.MOD.seconda.teleferica.paperelle.teleferica, ritratto: '-30 -6 60 60', intero: '-30 -6 60 60', disegno: () => G.S2.cabina({}) },
+    campanella: { colore: () => '#E0A93B', ritratto: '-120 -170 240 290', intero: '-120 -170 240 290', disegno: () => G.S2.orologio({ lancetta: 0.75 }) },
     laggiu: { colore: () => G.C.luce2, ritratto: '1360 560 520 520', intero: '1100 560 1300 300', disegno: () => '<rect x="1000" y="400" width="1600" height="800" fill="' + G.C.notte2 + '"/>' + G.laggiu() + '<path d="M1000 900 L1000 760 Q1500 690 1920 740 L2600 740 L2600 900 Z" fill="#171A44"/>' },
   };
   const PERSONAGGI = Object.keys(VOLTI);
