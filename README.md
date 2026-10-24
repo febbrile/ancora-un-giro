@@ -33,6 +33,7 @@ Seconda stagione, «Intorno alla giostra».
 |---|---|---|---|---|
 | 1 | La frase del parco | 4:22 | Da stasera il custode attacca in testa a ogni striscia la frase del parco, *Storie di mare*, con le sue bandierine: la vasca di «Al parco Emma» si fa blu. Se chi scrive insiste, torna verde | [guarda](https://febbrile.github.io/ancora-un-giro/sito/guarda.html?ep=10-la-frase-del-parco) |
 | 2 | Il Bruco | 4:06 | Prima del treno grande c’è il Bruco, una giostrina piccola con due colori soli nella vasca: se escono più rosse che verdi, la sbarra si abbassa e la montagna grande quella frase non la vede mai. Ma il Bruco può sbagliare | [guarda](https://febbrile.github.io/ancora-un-giro/sito/guarda.html?ep=11-il-bruco) |
+| 3 | La teleferica | 4:14 | Il treno non sa se domani piove. Quando Ada pesca le paperelle viola, il custode manda una cabina oltre le colline: la striscia che torna sale sul treno come un passeggero qualunque, anche quando è sbagliata | [guarda](https://febbrile.github.io/ancora-un-giro/sito/guarda.html?ep=12-la-teleferica) |
 
 Argomento, domanda e idea di ogni episodio sono nella [scaletta](mondo/SCALETTA.md) e nella [scaletta della seconda stagione](mondo/SCALETTA-2.md).
 
