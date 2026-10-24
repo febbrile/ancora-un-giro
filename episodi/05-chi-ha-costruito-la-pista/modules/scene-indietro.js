@@ -15,8 +15,8 @@ const IN_CAM = [
 const IN_INDIETRO = [3.2, 10.6], IN_NOTTI = 4;
 const IN_ADA = [2.6, 4.4];
 const IN_GRIGI = [10.2, 11.8];
-// I treni grigi della notte di prova: uno in cima alla salita, carico, e uno vuoto in stazione.
-const IN_TRENI = [1080, 490];
+// I treni grigi della notte di prova: uno sul viadotto, carico, vicino alla montagna, e uno vuoto in stazione.
+const IN_TRENI = [3816, 490];
 kit.scene('indietro', {
   init(kit) {
     const G = window.G, M = G.MONDO, P = G.MOD.parco.passeggeri;

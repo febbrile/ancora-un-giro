@@ -3,7 +3,7 @@ const { seg, eo, ei, eio, lerp } = kit;
 // pesca a occhi chiusi: blu, «nuota»; la paperella sale sul vagone nuovo. Sui binari non corre nessun brivido. Arriva
 // un'altra striscia, di nuovo «Al mare Emma»: stesso giro, stessa vasca (le stesse paperelle, negli stessi posti),
 // binari fermi. Ada si china sui binari lucidi e piegati in mille punti, poi guarda i treni grigi che dormono.
-// Si apre dal telefono (come finisce «apre»); finisce su Ada e i treni grigi (lo riprende «fine»).
+// Si apre dal telefono (come finisce «apre»); guarda i treni grigi e finisce su Ada (lo riprende «fine»).
 const OG_CAM = [
   { t: 0, cx: 820, cy: 820, z: 3.0 },
   { t: 2.6, cx: 800, cy: 834, z: 3.4 },
@@ -15,7 +15,12 @@ const OG_CAM = [
   { t: 16.6, cx: 720, cy: 850, z: 3.4 },
   { t: 18.8, cx: 650, cy: 842, z: 5.0 },
   { t: 20.4, cx: 650, cy: 842, z: 5.0 },
-  { t: 22.0, cx: 240, cy: 790, z: 1.9 },
+  // Ada si raddrizza: stacco sui treni grigi, in fondo alla banchina lunga; poi stacco di nuovo su di lei.
+  { t: 20.8, cx: 645, cy: 840, z: 4.8 },
+  { t: 20.81, cx: -1700, cy: 795, z: 2.0 },
+  { t: 23.2, cx: -1660, cy: 795, z: 2.0 },
+  { t: 23.21, cx: 520, cy: 800, z: 2.4 },
+  { t: 26.0, cx: 540, cy: 796, z: 2.3 },
 ];
 const OG_VEL = [[0, 100], [3.4, 55], [7.0, 55], [8.4, 130], [10.0, 130], [11.8, 0]];
 // Il secondo giro, a montaggio: lo stesso giro, più svelto.
