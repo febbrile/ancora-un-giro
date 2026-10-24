@@ -128,6 +128,14 @@
         "titolo": "Il telone",
         "personaggio": "telone",
         "racconto": "A un indovinello il treno gira e gira, ma il telefono resta muto. Questa volta Ada guarda dall’inizio: il custode ha un grande telone arancio, cucito a toppe."
+      },
+      {
+        "n": 6,
+        "etichetta": "Episodio 6",
+        "cartella": "15-il-parco-gemello",
+        "titolo": "Il parco gemello",
+        "personaggio": "custodeGemello",
+        "racconto": "Oltre il fiume c’è un parco piccolo come quello di Ada, con la stessa montagna. Ma la stessa frase, laggiù, torna con un’altra parola."
       }
     ]
   }

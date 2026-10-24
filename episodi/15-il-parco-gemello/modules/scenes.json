@@ -1,0 +1,61 @@
+{
+  "width": 1920,
+  "height": 1080,
+  "background": "#0B1030",
+  "scenes": [
+    {
+      "id": "ponte",
+      "name": "Il ponte",
+      "dur": 28.6,
+      "desc": "Ada attraversa il ponte sul fiume: dall'altra parte c'è un parco piccolo come il suo, con la montagna identica, curva per curva. Al cancello, un altro custode. Titolo."
+    },
+    {
+      "id": "frase",
+      "name": "La frase di laggiù",
+      "dur": 31.2,
+      "desc": "Il custode di laggiù porta «Al mare Emma» al suo Bruco, poi attacca la sua frase del parco: «Storie di parco». Stessi biglietti, stessi vestiti; ma davanti c'è Parco."
+    },
+    {
+      "id": "finestre",
+      "name": "Le finestre sulla vasca",
+      "dur": 37.0,
+      "desc": "Dentro, la pista è la stessa e il treno fa lo stesso giro. Ma i fili della bandierina d'ottone vanno a Mare e a Parco, e portano anche il verde."
+    },
+    {
+      "id": "vasca",
+      "name": "Un'altra risposta",
+      "dur": 30,
+      "desc": "Nella vasca gemella, blu e turchesi quasi alla pari. Ada pesca una turchese: «gioca». Nel parco di Ada, la stessa frase dava «nuota»."
+    },
+    {
+      "id": "regolamento",
+      "name": "I due regolamenti",
+      "dur": 19.2,
+      "desc": "Al cancello, Ada e il custode di laggiù sfogliano i due regolamenti, pagina accanto a pagina: un'altra frase del parco, un altro Bruco, e nessuna teleferica."
+    },
+    {
+      "id": "piove",
+      "name": "Senza teleferica",
+      "dur": 24.6,
+      "desc": "«Domani piove?», laggiù: nessuna cabina parte, e la vasca resta sparsa. Ada pesca «no». Oltre le colline, nuvole scure."
+    },
+    {
+      "id": "nomi",
+      "name": "I nomi veri",
+      "dur": 36.6,
+      "desc": "Seduta in mezzo al ponte, tra i due parchi, Ada ascolta i nomi da grandi delle cose intorno alla giostra: istruzioni di sistema, classificatore, strumento, ragionamento, il programma."
+    },
+    {
+      "id": "treni",
+      "name": "I due treni",
+      "dur": 16.4,
+      "desc": "In tutti e due i parchi i treni ripartono, identici; Ada si alza dal ponte e torna verso la sua riva."
+    },
+    {
+      "id": "cancello",
+      "name": "Il cancello",
+      "dur": 14.4,
+      "desc": "I due treni ripartono, identici. Ada torna al suo parco, e il suo custode le apre il cancello. Fine."
+    }
+  ]
+}
