@@ -202,6 +202,21 @@ function tavole() {
   [['teleferica', 'viola chiara'], ['domani', 'rosa'], ['teleferica·fine', 'viola scura'], ['Sì', 'sì'], ['No', 'no']].forEach(([w, n], k) => { s += at(90 + k * 180, 850, 1.1, G.paperella(TE.paperelle[w])) + et(145 + k * 180, 1030, n, true); });
   ['Domani', 'piove', '?', 'pioggia', 'sole'].forEach((w, k) => { s += inVag(990 + k * 176, 900, 0.72, S2.tipo(w).tipo, TE.biglietti[w], S2.tipo(w).o) + et(1076 + k * 176, 1030, '«' + w + '»', true); });
   T['Teleferica.dc.html'] = { titolo: 'La teleferica', w: 1920, h: 1080, svg: s };
+  // La campanella (stagione 2, episodio 4): l'orologio da tasca, la notte del custode (guardiola, lampioni, lucchetto, panchina).
+  s = '<rect width="1920" height="1080" fill="#F3EADB"/>' + titolo('La campanella · stagione 2');
+  s += pannello(40, 120, 760, 620);
+  [0, 0.5, 1].forEach((l, k) => { s += at(170 + k * 230, 440, 0.82, S2.orologio({ lancetta: l, suona: k === 2 ? 14 : 0, tira: k === 2 ? 0.8 : 0 })); });
+  s += et(170, 700, 'a zero', true) + et(400, 700, 'a metà dei giri', true) + et(630, 700, 'drin', true);
+  s += at(860, 130, 1.0, G.custode('orologio', 'serio', { campanella: true, lancetta: 0.5 })) + et(980, 590, 'guarda l’orologio');
+  s += at(1140, 300, 3.0, '<g transform="translate(-54 -230)">' + G.libroAperto(120, 262, 'campanella') + '</g>') + et(1500, 590, 'la pagina della campanella: nessun numero');
+  s += pannello(40, 790, 1840, 260);
+  s += at(120, 830, 1.2, G.guardiola({ porta: 1, dentro: true })) + et(190, 1040, 'la guardiola, da dentro', true);
+  [0, 1].forEach(k => { s += at(420 + k * 140, 1010, 1.8, S2.lampione(k)); });
+  s += et(490, 1040, 'i lampioni del viale', true);
+  s += at(760, 930, 4, S2.lucchetto()) + et(760, 1040, 'il lucchetto', true);
+  s += at(1000, 1010, 2.2, S2.panchina()) + et(1000, 1040, 'la panchina della stazione', true);
+  s += at(1300, 820, 0.5, G.custode('orologio', 'serio', { campanella: true, lancetta: 1, suona: 18 })) + et(1360, 1040, 'drin', true);
+  T['Campanella.dc.html'] = { titolo: 'La campanella', w: 1920, h: 1080, svg: s };
   // La grammatica: colori e caratteri.
   const sw = [['notte', C.notte1], ['cielo', C.notte2], ['lampadine', C.luce], ['righe', C.rosso], ['crema', C.crema], ['oro', C.oro], ['montagna', C.mont2], ['acqua', C.acqua]];
   s = '<rect width="1280" height="720" fill="#F3EADB"/>' + titolo('La grammatica');
@@ -226,7 +241,7 @@ const T = tavole();
 fs.mkdirSync(OUT, { recursive: true });
 const posto = { 'Main.dc.html': [0, 0], 'Oggetti.dc.html': [2000, 0], 'LunaPark.dc.html': [0, 1200], 'Montagna.dc.html': [3500, 1200], 'Finestre.dc.html': [0, 2400], 'Grammatica.dc.html': [2000, 2400], 'Parco.dc.html': [0, 3600],
   'Passeggeri.dc.html': [2000, 3600], 'Stagione.dc.html': [0, 4800], 'Immenso.dc.html': [2000, 4800], 'Custode.dc.html': [0, 6000],
-  'Gemello.dc.html': [2000, 6000], 'Frase.dc.html': [0, 7200], 'Bruco.dc.html': [2000, 7200], 'Teleferica.dc.html': [0, 8400] };
+  'Gemello.dc.html': [2000, 6000], 'Frase.dc.html': [0, 7200], 'Bruco.dc.html': [2000, 7200], 'Teleferica.dc.html': [0, 8400], 'Campanella.dc.html': [2000, 8400] };
 const canvas = {
   v: 3, createdOnFiles: { v: 1, at: new Date().toISOString().replace(/\.\d+Z$/, 'Z') }, title: 'Ancora un giro · design',
   launch: { view: 'canvas' }, pages: [], boards: {}, order: [], notes: {}, designSystems: [],

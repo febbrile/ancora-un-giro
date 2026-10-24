@@ -114,6 +114,13 @@
       "w": 1920,
       "h": 1080,
       "title": "La teleferica"
+    },
+    "Campanella.dc.html": {
+      "x": 2000,
+      "y": 8400,
+      "w": 1920,
+      "h": 1080,
+      "title": "La campanella"
     }
   },
   "order": [
@@ -131,7 +138,8 @@
     "Gemello.dc.html",
     "Frase.dc.html",
     "Bruco.dc.html",
-    "Teleferica.dc.html"
+    "Teleferica.dc.html",
+    "Campanella.dc.html"
   ],
   "notes": {},
   "designSystems": []

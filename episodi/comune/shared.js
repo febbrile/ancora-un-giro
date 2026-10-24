@@ -134,6 +134,7 @@ const RITMO = {
   '10': { finestre: [[34.4, 40.6, 2.8, 1]] },
   '11': { finestre: [[34.0, 40.6, 2.8, 1]] },
   '12': { finestre: [[34.4, 40.6, 2.8, 1]] },
+  '13': { continua: [[13.4, 25.4, 8.0]] },
 };
 // Dove si trova il tempo interno dentro un tratto, dopo tau secondi veri.
 function nelTratto(x0, x1, r, fine, tau) {
@@ -495,7 +496,10 @@ function custode(pose, expr, o) {
       '<path d="M84 186 Q66 234 88 256 L106 240 Q90 228 96 204 Z" fill="' + CU.giacca + '" stroke="' + AI + '" stroke-width="2.5"/>' +
       '<path d="M104 236 Q112 254 120 240" stroke="' + CU.ottone + '" stroke-width="2" fill="none"/>' +
       '<circle cx="104" cy="224" r="11" fill="' + CU.ottone + '" stroke="' + CU.ottoneScuro + '" stroke-width="2"/><circle cx="104" cy="224" r="8" fill="' + C.crema + '"/>' +
-      '<path d="M104 224 L104 218 M104 224 L108 226" stroke="' + AI + '" stroke-width="1.6" stroke-linecap="round"/><circle cx="104" cy="211" r="3" fill="none" stroke="' + CU.ottone + '" stroke-width="2"/>' +
+      // Dalla seconda stagione (o.campanella) al posto della corona c'è la campanella, e la lancetta conta i giri (o.lancetta).
+      (o.campanella ? '<path d="M104 224 L' + (104 + 7 * Math.sin(Math.PI * (1 + (o.lancetta || 0)))).toFixed(1) + ' ' + (224 - 7 * Math.cos(Math.PI * (1 + (o.lancetta || 0)))).toFixed(1) + '" stroke="' + AI + '" stroke-width="1.8" stroke-linecap="round"/>' +
+        '<g transform="rotate(' + (o.suona || 0) + ' 104 212)"><path d="M100 212 Q100 204 104 204 Q108 204 108 212 L110 214 L98 214 Z" fill="' + CU.ottone + '" stroke="' + CU.ottoneScuro + '" stroke-width="1.2"/></g>' :
+        '<path d="M104 224 L104 218 M104 224 L108 226" stroke="' + AI + '" stroke-width="1.6" stroke-linecap="round"/><circle cx="104" cy="211" r="3" fill="none" stroke="' + CU.ottone + '" stroke-width="2"/>') +
       '<circle cx="98" cy="238" r="8" fill="' + CU.pelle + '"/>';
   } else {
     sinistro = '<path d="M84 186 Q64 232 68 290 L82 292 Q80 240 96 204 Z" fill="' + CU.giacca + '" stroke="' + AI + '" stroke-width="2.5"/>' +
@@ -537,6 +541,11 @@ function libroAperto(x, y, pagina, colori) {
 }
 // I disegni del regolamento, a matita: nessuna scritta. Coordinate del libro aperto (pagine da x 60 a 180, y 236–284).
 const PAGINE = {
+  // La campanella: un trenino che fa il giro della pista, più volte (tre anelli), e una campanella. Nessun numero.
+  campanella: '<g fill="none" stroke="' + C.cremaScura + '" stroke-width="1.8"><ellipse cx="90" cy="262" rx="24" ry="12"/><ellipse cx="90" cy="262" rx="18" ry="8"/><ellipse cx="90" cy="262" rx="12" ry="5"/>' +
+    '<path d="M108 252 l6 2 l-6 3"/></g><rect x="62" y="254" width="12" height="7" rx="2" fill="' + C.rosso + '"/><rect x="74" y="255" width="9" height="6" rx="2" fill="' + C.crema + '" stroke="' + C.cremaScura + '" stroke-width="1"/>' +
+    '<path d="M150 246 Q140 246 140 262 L138 268 L162 268 L160 262 Q160 246 150 246 Z" fill="' + CU.ottone + '" stroke="' + CU.ottoneScuro + '" stroke-width="1.4"/><circle cx="150" cy="270" r="2.4" fill="' + CU.ottoneScuro + '"/>' +
+    '<path d="M134 250 l-4 -3 M134 258 l-5 0 M166 250 l4 -3 M166 258 l5 0" stroke="' + CU.ottoneScuro + '" stroke-width="1.4"/>',
   // La teleferica: un filo che sale tra due pali, la cabina appesa, una nuvola; accanto la bandierina turchese.
   teleferica: '<path d="M64 278 L64 252 M114 248 L114 240" stroke="' + C.cremaScura + '" stroke-width="2.4"/><path d="M62 254 L116 240" stroke="' + C.cremaScura + '" stroke-width="1.6"/>' +
     '<path d="M88 247 L88 252" stroke="' + C.cremaScura + '" stroke-width="1.6"/><rect x="82" y="252" width="12" height="11" rx="2" fill="#A064D7"/>' +
@@ -667,8 +676,13 @@ function guardiola(o) {
     '<rect x="20" y="74" width="40" height="38" rx="3" fill="' + mix('#3A3060', C.luce, luce) + '" stroke="' + C.legnoScuro + '" stroke-width="3"/>' +
     '<path d="M40 74 L40 112 M20 93 L60 93" stroke="' + C.legnoScuro + '" stroke-width="3"/>' +
     '<rect x="14" y="74" width="52" height="60" fill="' + C.luce + '" opacity="' + (0.18 * luce).toFixed(2) + '" filter="url(#g-soft)"/>' +
-    // La porta: aperta, dentro si vede la luce.
+    // La porta: aperta, dentro si vede la luce (e, con o.dentro, gli scaffali, le chiavi al chiodo, la teiera e il leggio).
     '<rect x="70" y="94" width="30" height="76" fill="' + mix('#2A2240', C.luce2, 0.8 * luce) + '"/>' +
+    (o.dentro ? '<path d="M72 112 L98 112 M72 128 L98 128" stroke="' + C.legnoScuro + '" stroke-width="2.4"/>' +
+      '<rect x="74" y="104" width="4" height="8" fill="#7E2F3F"/><rect x="79" y="105" width="3" height="7" fill="#3F6FA8"/><rect x="83" y="103" width="4" height="9" fill="#5A7A3A"/>' +
+      '<circle cx="92" cy="118" r="1.6" fill="' + C.legnoScuro + '"/><path d="M92 118 L90 124 M92 118 L94 125 M92 118 L92 126" stroke="' + CU.ottone + '" stroke-width="1.6"/>' +
+      '<path d="M74 128 Q74 121 79 121 Q84 121 84 128 Z" fill="#C9553E"/><path d="M84 124 L88 122" stroke="#C9553E" stroke-width="1.6"/>' +
+      '<path d="M86 170 L90 146 L94 170 M84 146 L97 141 L97 147 L84 151 Z" fill="' + CU.libro + '" stroke="' + C.legnoScuro + '" stroke-width="1"/>' : '') +
     '<g transform="translate(70 0) scale(' + (1 - 0.8 * porta).toFixed(3) + ' 1) translate(-70 0)"><rect x="70" y="94" width="30" height="76" fill="' + C.legnoScuro + '" stroke="#4A2E20" stroke-width="2"/>' +
     '<circle cx="94" cy="134" r="3" fill="' + CU.ottone + '"/></g></g>';
 }
@@ -2579,4 +2593,196 @@ window.G.S2.trenoDa = function (frase, trattiUltimo) {
     const b = colore(w);
     return this.chi({ parola: w, biglietto: b, tratti: i === frase.length - 1 ? trattiUltimo : [b] });
   });
+};
+// L'orologio da tasca del custode, da vicino (stagione 2, episodio 4): d'ottone, il quadrante crema senza numeri, solo
+// tacche; al posto della corona, una campanella piccola come un ditale, con la cordicella. Centrato in (0, 0), raggio 100.
+// o.lancetta: da 0 (in basso) a 1 (in cima, alla campanella), a scatti di una tacca per giro (o.tacche, di solito 4);
+// o.suona: di quanti gradi oscilla la campanella; o.tira: da 0 a 1, la cordicella tirata giù.
+window.G.S2.orologio = function (o) {
+  o = o || {};
+  const C = window.G.C, n = o.tacche || 4, a = Math.PI * (1 + (o.lancetta || 0));
+  let tacche = '';
+  for (let k = 0; k <= n; k++) { const b = Math.PI * (1 + k / n), x = Math.sin(b), y = -Math.cos(b); tacche += '<path d="M' + (72 * x).toFixed(1) + ' ' + (72 * y).toFixed(1) + ' L' + (84 * x).toFixed(1) + ' ' + (84 * y).toFixed(1) + '" stroke="' + C.inchiostro + '" stroke-width="' + (k === n ? 7 : 5) + '" stroke-linecap="round"/>'; }
+  const tira = o.tira || 0;
+  return '<g><circle r="100" fill="#E0A93B" stroke="#8C6420" stroke-width="6"/><circle r="88" fill="' + C.crema + '" stroke="#C9A060" stroke-width="3"/>' + tacche +
+    '<path d="M0 0 L' + (64 * Math.sin(a)).toFixed(1) + ' ' + (-64 * Math.cos(a)).toFixed(1) + '" stroke="' + C.inchiostro + '" stroke-width="7" stroke-linecap="round"/><circle r="9" fill="#8C6420"/>' +
+    '<path d="M-60 -50 Q-30 -76 10 -80" stroke="#FFFFFF" stroke-width="7" fill="none" stroke-linecap="round" opacity=".5"/>' +
+    // La campanella, sopra, e la sua cordicella.
+    '<rect x="-10" y="-112" width="20" height="14" rx="3" fill="#E0A93B" stroke="#8C6420" stroke-width="3"/>' +
+    '<g transform="rotate(' + (o.suona || 0).toFixed(1) + ' 0 -150)"><path d="M0 -150 Q-26 -150 -28 -124 L-34 -114 L34 -114 L28 -124 Q26 -150 0 -150 Z" fill="#E0A93B" stroke="#8C6420" stroke-width="4" stroke-linejoin="round"/>' +
+    '<circle cy="-108" r="7" fill="#8C6420"/><circle cx="0" cy="-154" r="5" fill="#8C6420"/></g>' +
+    '<path d="M24 -118 Q60 -100 ' + (70 - 6 * tira).toFixed(1) + ' ' + (-40 + 50 * tira).toFixed(1) + '" stroke="#7E2F3F" stroke-width="4" fill="none" stroke-linecap="round"/>' +
+    '<circle cx="' + (70 - 6 * tira).toFixed(1) + '" cy="' + (-34 + 50 * tira).toFixed(1) + '" r="7" fill="#7E2F3F"/></g>';
+};
+// Un lampione del viale (stagione 2, episodio 4): il palo nero, la lanterna in cima. I piedi in (0, 0), alto 92. acceso 0..1.
+window.G.S2.lampione = function (acceso) {
+  const C = window.G.C, a = acceso || 0;
+  return '<g><path d="M0 0 L0 -78" stroke="#2A2440" stroke-width="5"/><path d="M-8 0 L8 0" stroke="#2A2440" stroke-width="6" stroke-linecap="round"/>' +
+    (a > 0 ? '<circle cx="0" cy="-84" r="34" fill="' + C.luce + '" opacity="' + (0.35 * a).toFixed(2) + '" filter="url(#g-soft)"/>' : '') +
+    '<path d="M-8 -78 L8 -78 L10 -92 L-10 -92 Z" fill="' + mix('#3A3440', '#FFE7A8', a) + '" stroke="#2A2440" stroke-width="2.5"/><path d="M-12 -92 L12 -92 L0 -100 Z" fill="#2A2440"/></g>';
+};
+// Il lucchetto del cancello: centrato in (0, 0), largo 16.
+window.G.S2.lucchetto = function () {
+  return '<g><path d="M-5 -2 L-5 -8 Q-5 -14 0 -14 Q5 -14 5 -8 L5 -2" stroke="#9AA3CF" stroke-width="2.6" fill="none"/><rect x="-8" y="-3" width="16" height="12" rx="2.5" fill="#E0A93B" stroke="#8C6420" stroke-width="1.6"/><circle cx="0" cy="2.5" r="1.6" fill="#8C6420"/></g>';
+};
+// La panchina della stazione: di legno, con lo schienale a doghe. I piedi in (0, 0), larga 84; il sedile a y = -20.
+window.G.S2.panchina = function () {
+  const C = window.G.C;
+  return '<g><path d="M-36 0 L-36 -20 M36 0 L36 -20 M-34 -20 L-34 -44 M34 -20 L34 -44" stroke="#2A2440" stroke-width="4"/>' +
+    '<rect x="-42" y="-24" width="84" height="6" rx="2" fill="' + C.legno + '" stroke="' + C.legnoScuro + '" stroke-width="1.5"/>' +
+    '<rect x="-42" y="-44" width="84" height="5" rx="2" fill="' + C.legno + '" stroke="' + C.legnoScuro + '" stroke-width="1.5"/><rect x="-42" y="-36" width="84" height="5" rx="2" fill="' + C.legno + '" stroke="' + C.legnoScuro + '" stroke-width="1.5"/></g>';
+};
+// I lampioni del viale: dai piedi della ruota su fino alla guardiola, lungo il piede della collina. Coordinate del mondo.
+window.G.S2.VIALE = [[1560, 1006], [1650, 996], [1740, 960], [1814, 908]];
+// Dentro la montagna, un giro intero con le finestre sulla vasca (stagione 2): il treno corre nel fascio di binari, si
+// accendono i fili (da ogni passeggero verso chi gli siede davanti), gli scambi spostano ogni vagone sul suo binario e
+// l'ultimo è tirato via; tre finestre ad arco sull'acqua, e alla terza la camera si avvicina. In fondo, la luce dell'uscita.
+// È la scena delle finestre degli episodi 10–12 resa riutilizzabile, anche dentro un'altra scena (o.t0, o.scala).
+// o: { pre, chi (G.S2.chi…, coi tratti), primo (il colore dell'ultimo prima dei fili: di solito c.biglietto), dopoFili
+//      (il colore dell'ultimo dopo i fili), fili(i, j) → peso (solo per l'ultimo vagone; gli altri hanno fili sottili),
+//      finestre: [conta, conta, conta], seme, t0 (quando comincia, nel tempo della scena), scala (1: 40 secondi),
+//      testa (la camera all'inizio guarda tutto il treno: true; o la coda) }.
+// Monta un <div class="ground"> nella scena; render(t) lo anima e restituisce l'opacità della luce dell'uscita.
+window.G.S2.dentro = function (kit, o) {
+  const G = window.G, C = G.C, I = G.INTERNO, N = o.chi.length, U = N - 1, sc = o.scala || 1, t0 = o.t0 || 0;
+  const c01 = x => Math.max(0, Math.min(1, x)), seg = (t, a, b) => c01((t - a) / (b - a)), lerp = (a, b, p) => a + (b - a) * p;
+  const eo = x => 1 - Math.pow(1 - c01(x), 3), eio = x => { x = c01(x); return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; };
+  const VEL = [[0, 300], [7.0, 300], [7.6, 520], [11.4, 520], [12.4, 40], [13.8, 40], [14.6, 520], [20.8, 520], [21.8, 40], [23.2, 40],
+    [24.0, 520], [30.2, 520], [31.2, 40], [31.8, 30], [37.6, 30], [39.0, 320]];
+  const ULTIMO = [13.0, 22.4, 31.8], uX = I.centri[U];
+  const CAM = [
+    { t: 0, cx: uX - 30, cy: 560, z: 1.05 }, { t: 1.6, cx: uX - 30, cy: 560, z: 1.05 },
+    o.testa ? { t: 3.6, cx: (I.centri[0] + uX) / 2, cy: 540, z: Math.min(1, 1700 / (uX - I.centri[0] + 400)) } : { t: 3.6, cx: uX - 1150, cy: 500, z: 0.55 },
+    o.testa ? { t: 10.4, cx: (I.centri[0] + uX) / 2, cy: 540, z: Math.min(1, 1700 / (uX - I.centri[0] + 400)) } : { t: 10.4, cx: uX - 1150, cy: 500, z: 0.55 },
+    { t: 12.0, cx: uX - 380, cy: 520, z: 0.8 }, { t: 30.2, cx: uX - 380, cy: 520, z: 0.8 },
+    { t: 31.6, cx: uX, cy: 470, z: 1.25 }, { t: 37.4, cx: uX, cy: 470, z: 1.25 }, { t: 39.8, cx: uX - 380, cy: 520, z: 0.8 },
+  ];
+  const CORSIE = [Array(N).fill(2), Array.from({ length: N }, (_, i) => [3, 1, 1, 3, 1][i % 5]), Array.from({ length: N }, (_, i) => [2, 0, 4, 2, 0, 4, 2][i % 7]), Array.from({ length: N }, (_, i) => [3, 1, 3, 1, 1][i % 5])];
+  const passo = Math.min(0.16, 1.4 / N);
+  const TRATTI = [
+    { fili: 1.6, disegna: Math.min(0.2, 2 / N), spegne: [5.6, 6.4], scambi: 6.2, passo },
+    { fili: 15.0, disegna: Math.min(0.06, 0.6 / N), spegne: [16.6, 17.4], scambi: 16.6, passo: passo * 0.8 },
+    { fili: 24.4, disegna: Math.min(0.06, 0.6 / N), spegne: [26.0, 26.8], scambi: 26.0, passo: passo * 0.8 },
+  ];
+  const tipi = o.chi.map(c => c.tipo);
+  const tappe = o.chi.map((c, i) => [i === U ? (o.dopoFili || c.biglietto) : c.biglietto].concat(c.tratti && c.tratti.length === 3 ? c.tratti : [c.biglietto, c.biglietto, c.biglietto]));
+  const primo = o.primo || o.chi[U].biglietto, STOFFA = [3.4, 5.4];
+  const scambi = TRATTI.map((tr, n) => o.chi.map((_, i) => ({ t: tr.scambi + tr.passo * i, da: CORSIE[n][i], a: CORSIE[n + 1][i] })));
+  const pre = o.pre || 'dentro';
+  const finestre = ULTIMO.map((_, k) => '<g class="d-finestra">' + G.finestra(pre + k) + '</g>').join('');
+  const scambiSvg = scambi.map((tr, n) => tr.map((s, i) => {
+    const yd = I.corsie[s.da], ya = I.corsie[s.a];
+    return '<g class="d-scambio" data-n="' + n + '" data-i="' + i + '"><path d="M0 ' + ya + ' C60 ' + ya + ' 80 ' + yd + ' 160 ' + yd + '" stroke="' + C.acciaio + '" stroke-width="5" fill="none"/>' +
+      '<g transform="translate(150 ' + (Math.max(yd, ya) + 46) + ')"><rect x="-4" y="-34" width="8" height="40" fill="' + C.acciaioScuro + '"/><g class="d-disco"><circle cy="-40" r="14" fill="' + C.rosso + '" stroke="' + C.crema + '" stroke-width="3"/><rect x="-12" y="-43" width="24" height="6" fill="' + C.crema + '"/></g></g></g>';
+  }).join('')).join('');
+  const L = uX + 3000;
+  const fondo = '<rect x="-3000" y="-1500" width="' + (L + 3000) + '" height="4500" fill="#07060F"/><rect x="-3000" y="0" width="' + (L + 3000) + '" height="1080" fill="url(#g-interno)"/>';
+  const binari = I.corsie.map(y => '<g><path d="M-3000 ' + (y + 6) + ' L' + L + ' ' + (y + 6) + '" stroke="' + C.legnoScuro + '" stroke-width="14" stroke-dasharray="6 22" class="g-traversine"/><path d="M-3000 ' + y + ' L' + L + ' ' + y + '" stroke="' + C.acciaio + '" stroke-width="4" opacity=".85"/></g>').join('');
+  const linee = '<g class="d-linee" opacity="0"><path d="M0 -10 L60 -14 M4 14 L70 16 M0 38 L54 42" stroke="#FFF4E0" stroke-width="4" stroke-linecap="round"/></g>';
+  const div = kit.h(G.unico('<div class="ground d-ground"><svg class="art" viewBox="0 0 1920 1080">' + G.defs + G.interniDefs +
+    '<defs><radialGradient id="g-uscita" cx="0" cy=".5" r="1"><stop offset="0" stop-color="#FFF6DA"/><stop offset=".35" stop-color="#FFE2A0" stop-opacity=".85"/><stop offset="1" stop-color="#FFE2A0" stop-opacity="0"/></radialGradient></defs>' +
+    '<g class="d-cam">' + fondo + G.interno(o.chi.map((c, i) => ({ tipo: c.tipo, col: i === U ? primo : tappe[i][0], o: c.o })), { corsie: I.corsie, finestre }) + '</g>' +
+    '<rect class="d-luce" x="-200" y="-200" width="2400" height="1480" fill="url(#g-uscita)" opacity="0"/>' +
+    '<rect class="d-nero" x="-200" y="-200" width="2400" height="1480" fill="#07060F"/></svg>' + (o.html || '') + '</div>', pre));
+  kit.stage.append(div);
+  const q = s => div.querySelector(s), qa = s => [...div.querySelectorAll(s)];
+  const lont = q('.g-int-lontano'), vic = q('.g-int-vicino');
+  const ripeti = (el, w) => { const x = el.innerHTML; let h = ''; for (let k = -1; k <= Math.ceil(L / w); k++) h += '<g transform="translate(' + (k * w) + ' 0)">' + x + '</g>'; el.innerHTML = h; };
+  ripeti(lont, 3640); ripeti(vic, 3600);
+  q('.g-int-binari').innerHTML = binari + scambiSvg;
+  q('.g-int-treno').insertAdjacentHTML('beforeend', linee);
+  const vag = qa('.g-vag'), basi = vag.map(v => v.getAttribute('transform')), fin = qa('.d-finestra'), scEl = qa('.d-scambio');
+  const d = t => G.percorso(t, 0, VEL), dUltimo = ULTIMO.map(d);
+  const rgb = c => [1, 3, 5].map(i => parseInt(c.slice(i, i + 2), 16));
+  const dist = (a, b) => { const x = rgb(a), y = rgb(b); return Math.hypot(x[0] - y[0], x[1] - y[1], x[2] - y[2]); };
+  const papere = fin.map((f, k) => {
+    const lista = G.papereFinestra(o.finestre[k], (o.seme || 200) + k), stoffa = tappe[U][k + 1];
+    f.querySelector('.g-fin-papere').innerHTML = lista.map(p => '<g class="d-pap"><g transform="translate(-50 -84)">' + G.paperellaDiLuce(p.col) + '</g></g>').join('');
+    const els = [...f.querySelectorAll('.d-pap')];
+    return lista.map((p, i) => ({ ...p, el: els[i], sim: Math.max(0, 1 - dist(p.col, stoffa) / 170) }));
+  });
+  const peso = (i, j) => i === U ? o.fili(j) : 1 / (i + 1);
+  let fili = '';
+  const filiD = [];
+  TRATTI.forEach((tr, n) => {
+    const dy = CORSIE[n].map(c => I.corsie[c] - I.ruote);
+    for (let i = 0; i < N; i++) for (let j = 0; j <= i; j++) {
+      const w = peso(i, j);
+      if (!(w > 0)) continue;
+      let p;
+      if (i === j) p = G.anello(i, tipi[i], dy[i]);
+      else { const a = G.cima(i, tipi[i], dy[i]), b = G.cima(j, tipi[j], dy[j]), mx = (a[0] + b[0]) / 2, my = Math.min(a[1], b[1]) - 80 - 0.12 * Math.abs(a[0] - b[0]); p = 'M' + b[0] + ' ' + b[1] + ' Q' + mx + ' ' + my + ' ' + a[0] + ' ' + a[1]; }
+      const ww = i === j ? 0.45 * w : w, ult = i === U;
+      fili += '<path class="d-filo" d="' + p + '" fill="none" stroke="#FFF1C9" stroke-width="' + (1.5 + (ult ? 14 : 6) * ww).toFixed(1) + '" stroke-linecap="round" opacity="0" filter="url(#g-glow)"/>';
+      filiD.push({ n, i, j, w, ult });
+    }
+  });
+  q('.g-int-fili').innerHTML = G.unico(fili, pre);
+  const filiEl = qa('.d-filo'), lung = filiEl.map(p => p.getTotalLength());
+  const cam = q('.d-cam'), luce = q('.d-luce'), nero = q('.d-nero'), lin = q('.d-linee');
+  const stati = [];
+  return {
+    div,
+    render(tt) {
+      const t = (tt - t0) / sc;
+      cam.setAttribute('transform', G.camChiavi(CAM, t));
+      nero.setAttribute('opacity', (1 - eio(seg(t, 0, 1.2))).toFixed(3));
+      const dd = d(t);
+      G.scorriInterno({ stage: div }, dd);
+      vic.setAttribute('opacity', (1 - eio(seg(t, 30.4, 31.2)) * (1 - eio(seg(t, 37.6, 38.4)))).toFixed(3));
+      const S = 1.6;
+      fin.forEach((f, k) => {
+        const x = uX + dd - dUltimo[k];
+        f.setAttribute('transform', 'translate(' + (x - 180 * S).toFixed(1) + ' 36) scale(' + S + ')');
+        const fuori = x < -2600 || x > L;
+        f.setAttribute('opacity', fuori ? 0 : 1);
+        if (fuori) return;
+        const ex = (uX - (x - 180 * S)) / S;
+        papere[k].forEach(p => {
+          const a = ULTIMO[k] - 0.7 + p.quando * 1.4, u = seg(t, a, a + 0.4);
+          if (u <= 0) { p.el.setAttribute('opacity', 0); return; }
+          const corsa = k === 2 ? 1.6 : 1, v = eio(seg(t, a + 0.3, a + 2.6)) * p.sim;
+          const px = p.x + Math.max(-60 * corsa, Math.min(60 * corsa, (ex - p.x) * 0.3 * corsa)) * v, py = Math.min(204, p.y + 18 * corsa * v);
+          p.el.setAttribute('opacity', Math.min(1, u * 2).toFixed(3));
+          p.el.setAttribute('transform', 'translate(' + px.toFixed(1) + ' ' + (py + 1.5 * Math.sin(t * 2.4 + p.x)).toFixed(1) + ') scale(' + (0.34 * (0.4 + 0.6 * eo(u)) * (1 + 0.12 * v)).toFixed(3) + ')');
+        });
+      });
+      let li = 0;
+      vag.forEach((v, i) => {
+        let dy = I.corsie[2] - I.ruote, col = i === U ? G.mix(primo, tappe[U][0], Math.round(eio(seg(t, STOFFA[0], STOFFA[1])) * 12) / 12) : tappe[i][0], tir = 0;
+        scambi.forEach((tr, n) => {
+          const s = tr[i], p = eio(seg(t, s.t - 0.25, s.t + 0.3));
+          if (t >= s.t - 0.25) dy = lerp(I.corsie[s.da], I.corsie[s.a], p) - I.ruote;
+          if (t >= s.t) col = G.mix(tappe[i][n], tappe[i][n + 1], Math.round(eio(seg(t, s.t, s.t + 1.4)) * 12) / 12);
+          tir = Math.max(tir, Math.sin(Math.PI * seg(t, s.t - 0.3, s.t + 0.9)));
+        });
+        v.setAttribute('transform', 'translate(0 ' + (dy + 2 * Math.sin(t * 5 + i * 1.3)).toFixed(2) + ') ' + basi[i]);
+        const c = o.chi[i], tirata = i === U && tir > 0.15 && (c.tipo === 'bandierina' || c.tipo === 'emma' || c.tipo === 'chiama');
+        const k = col + tirata;
+        if (stati[i] !== k) { G.cambiaPasseggero(v, c.tipo, col, Object.assign({}, c.o, tirata ? { tirata: true } : {})); stati[i] = k; }
+        if (i === U) {
+          v.querySelector('.g-pass').setAttribute('transform', 'translate(140 40) rotate(' + (-9 * tir).toFixed(2) + ') translate(-140 -40)');
+          const [hx, hy] = G.testa(U, c.tipo, dy);
+          lin.setAttribute('transform', 'translate(' + (hx + 80) + ' ' + hy + ')');
+          li = 0.7 * tir;
+        }
+      });
+      lin.setAttribute('opacity', li.toFixed(3));
+      scEl.forEach(g => {
+        const n = +g.dataset.n, i = +g.dataset.i, s = scambi[n][i], x = I.centri[i] - 80 + dd - d(s.t);
+        g.setAttribute('transform', 'translate(' + x.toFixed(1) + ' 0)');
+        g.setAttribute('opacity', x < -2600 || x > L ? 0 : 1);
+        g.querySelector('.d-disco').setAttribute('transform', 'rotate(' + (90 * eio(seg(t, s.t - 0.45, s.t - 0.25))).toFixed(1) + ' 0 -40)');
+      });
+      filiEl.forEach((el, k) => {
+        const f = filiD[k], tr = TRATTI[f.n], Lk = lung[k], a = tr.fili + tr.disegna * f.i + 0.04 * f.j, u = eo(seg(t, a, a + (f.n === 0 ? 1.2 : 0.6)));
+        el.setAttribute('stroke-dasharray', Lk.toFixed(1));
+        el.setAttribute('stroke-dashoffset', ((1 - u) * Lk).toFixed(1));
+        el.setAttribute('opacity', (u > 0 ? (1 - eio(seg(t, tr.spegne[0], tr.spegne[1]))) * (f.ult ? 0.3 + 0.7 * f.w : 0.15 + 0.3 * f.w) * (1 + 0.08 * Math.sin(t * 3 + k)) : 0).toFixed(3));
+      });
+      const l = 0.95 * eio(seg(t, 37.6, 40.6));
+      luce.setAttribute('opacity', l.toFixed(3));
+      return l;
+    },
+  };
 };
