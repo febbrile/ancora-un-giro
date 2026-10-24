@@ -53,7 +53,7 @@ kit.scene('domanda', {
     const quaderno = '<g class="dm-quad" opacity="0"><g class="dm-q-cam">' + G.quadernoAperto(sinistra, destra) + '</g></g>';
     const titolo = '<g class="dm-titolo" opacity="0"><g transform="translate(960 290)"><g class="dm-insegna"></g></g></g>';
     this.m = G.costruisciMondo(kit, sopra, {
-      pre: 'domanda', manopola: 0, banchina: true, morto: true, davanti: quaderno + titolo,
+      pre: 'domanda', manopola: 0, banchina: true, morto: true, bruco: 'buio', davanti: quaderno + titolo,
       html: G.sottotitolo('NARRATORE', 'Stasera arriva una frase che Ada conosce: «Al parco Emma». L’altra volta la vasca era verde.') +
         G.sottotitolo('ADA', 'E stasera è blu. Perché?'),
     });

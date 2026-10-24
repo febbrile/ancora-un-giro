@@ -176,7 +176,7 @@ function tavole() {
   let segm = '';
   for (let i = 0; i <= BR.segmenti; i++) { const a2 = Math.PI * 0.62 - i * 0.16; segm += '<g transform="translate(' + (BR.c[0] + BR.rx * Math.cos(a2)).toFixed(1) + ' ' + (BR.c[1] + BR.ry * Math.sin(a2)).toFixed(1) + ')">' + S2.segmento(i === 0, i > 0 && i <= 3 ? S2.sulBruco(['#8FB06A', '#5FB04A', '#D24A36'][i - 1]) : '') + '</g>'; }
   s = '<rect width="1920" height="1080" fill="#F3EADB"/>' + titolo('Il Bruco · stagione 2');
-  s += vista(40, 120, 1180, 620, '1930 640 640 336', G.mondo({ banchina: true, manopola: 0 }) + giost.dietro + segm + giost.davanti + '<g transform="' + G.posaCustode(2060, 884) + '">' + G.custode('base', 'base', { occhi: 1 }) + '</g>');
+  s += vista(40, 120, 1180, 620, '984 786 640 336', G.mondo({ banchina: true, manopola: 0 }) + giost.dietro + segm + giost.davanti + '<g transform="' + G.posaCustode(1114, 1030) + '">' + G.custode('base', 'base', { occhi: 1 }) + '</g>');
   s += et(630, 770, 'la giostrina, nell’angolo buio del parco: la mela, la vasca piccola, la sbarra');
   s += pannello(1260, 120, 620, 620);
   s += at(1440, 390, 3.4, S2.segmento(true)) + at(1700, 400, 3.4, S2.segmento(false, S2.sulBruco('#D24A36')));
@@ -186,7 +186,7 @@ function tavole() {
   ['#4ca856', '#8FB06A', '#C9A03E', '#cd4736'].forEach((c2, k) => { s += at(120 + k * 220, 800, 1.0, G.pezzo(c2, '')); });
   s += et(500, 1040, 'chi sale sul Bruco: dal verde al rosso', true);
   [['#4ca856', 'verde'], ['#cd4736', 'rossa']].forEach(([c2, n], k) => { s += at(1080 + k * 200, 900, 1.2, G.paperella(c2)) + et(1140 + k * 200, 1040, n, true); });
-  s += vista(1500, 830, 340, 200, '1930 790 170 100', G.mondo({}) + S2.giostrina({ sbarra: 1 }).davanti) + et(1670, 1040, 'la sbarra abbassata', true);
+  s += vista(1500, 830, 340, 200, '984 936 170 100', G.mondo({}) + S2.giostrina({ sbarra: 1 }).davanti) + et(1670, 1040, 'la sbarra abbassata', true);
   T['Bruco.dc.html'] = { titolo: 'Il Bruco', w: 1920, h: 1080, svg: s };
   // La grammatica: colori e caratteri.
   const sw = [['notte', C.notte1], ['cielo', C.notte2], ['lampadine', C.luce], ['righe', C.rosso], ['crema', C.crema], ['oro', C.oro], ['montagna', C.mont2], ['acqua', C.acqua]];

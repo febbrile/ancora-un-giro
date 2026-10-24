@@ -9,18 +9,18 @@ const BR_CAMMINA = [0.4, 5.4];
 const BR_ALZA = [6.0, 8.0], BR_LUCI = [6.4, 7.6];
 const BR_CAM = [
   { t: 0, cx: 760, cy: 800, z: 2.2 },
-  { t: 5.0, cx: 1800, cy: 800, z: 2.0 },
-  { t: 6.2, cx: 2180, cy: 820, z: 2.3 },
-  { t: 8.4, cx: 2180, cy: 820, z: 2.3 },
-  { t: 9.6, cx: 2178, cy: 826, z: 6.6 },
-  { t: 11.2, cx: 2178, cy: 826, z: 6.6 },
-  { t: 12.4, cx: 2370, cy: 808, z: 3.6 },
-  { t: 14.6, cx: 2370, cy: 808, z: 3.6 },
-  { t: 15.8, cx: 2244, cy: 896, z: 6.2 },
-  { t: 23.6, cx: 2244, cy: 896, z: 6.2 },
-  { t: 25.0, cx: 2030, cy: 852, z: 3.8 },
+  { t: 5.0, cx: 1000, cy: 930, z: 2.4 },
+  { t: 6.2, cx: 1234, cy: 966, z: 2.3 },
+  { t: 8.4, cx: 1234, cy: 966, z: 2.3 },
+  { t: 9.6, cx: 1232, cy: 972, z: 6.6 },
+  { t: 11.2, cx: 1232, cy: 972, z: 6.6 },
+  { t: 12.4, cx: 1424, cy: 954, z: 3.6 },
+  { t: 14.6, cx: 1424, cy: 954, z: 3.6 },
+  { t: 15.8, cx: 1298, cy: 1042, z: 6.2 },
+  { t: 23.6, cx: 1298, cy: 1042, z: 6.2 },
+  { t: 25.0, cx: 1084, cy: 998, z: 3.8 },
 ];
-const BR_CU = [2066, 886], BR_ADA = [1974, 886];
+const BR_CU = [1120, 1032], BR_ADA = [1028, 1032];
 kit.scene('bruco', {
   init(kit) {
     const G = window.G, C = G.C, M = G.MONDO, S2 = G.S2, B = S2.BRUCO, F = G.MOD.seconda.bruco.frasi.parolaccia;
@@ -54,7 +54,7 @@ kit.scene('bruco', {
     this.buio.setAttribute('opacity', (1 - 0.82 * eio(seg(t, BR_LUCI[0], BR_LUCI[1]))).toFixed(3));
     // Il custode cammina davanti, con la lanterna e i biglietti; arrivato, alza la lanterna e accende la giostrina.
     const u = eio(seg(t, BR_CAMMINA[0], BR_CAMMINA[1])), cammina = u > 0 && u < 1;
-    const cx = lerp(980, BR_CU[0], u), cy = lerp(930, BR_CU[1], u) - (cammina ? 3 * Math.abs(Math.sin(t * 6)) : 0);
+    const cx = lerp(760, BR_CU[0], u), cy = lerp(930, BR_CU[1], u) - (cammina ? 3 * Math.abs(Math.sin(t * 6)) : 0);
     const alza = t >= BR_ALZA[0] && t < BR_ALZA[1], dond = Math.round(8 * Math.sin(t * 3));
     const posa = alza ? 'alza' : 'porge';
     this.cambia('cu', posa + dond, this.cu, '<g class="br-cu-in">' + G.unico(G.custode(posa, 'base', { occhi: 1, dondolo: dond }), 'brcu') + '</g>');
@@ -64,7 +64,7 @@ kit.scene('bruco', {
     this.cambia('big', alza ? '' : 'm', this.bigEl, alza ? '' : this.bigHtml);
     this.bigEl.setAttribute('transform', 'translate(' + hx.toFixed(1) + ' ' + (hy - 3).toFixed(1) + ')');
     // Ada lo segue, a due passi; poi guarda la giostrina, a bocca aperta.
-    const ua = eio(seg(t, BR_CAMMINA[0] + 0.5, BR_CAMMINA[1] + 0.6)), ax = lerp(860, BR_ADA[0], ua), ay = lerp(930, BR_ADA[1], ua) - (ua > 0 && ua < 1 ? 4 * Math.abs(Math.sin(t * 8)) : 0);
+    const ua = eio(seg(t, BR_CAMMINA[0] + 0.5, BR_CAMMINA[1] + 0.6)), ax = lerp(680, BR_ADA[0], ua), ay = lerp(930, BR_ADA[1], ua) - (ua > 0 && ua < 1 ? 4 * Math.abs(Math.sin(t * 8)) : 0);
     const espr = t < BR_LUCI[0] ? 'base' : t < 16 ? 'sorpresa' : 'felice';
     this.cambia('ada', espr, this.ada, '<g class="br-ada-in">' + G.ada('base', espr) + '</g>');
     this.ada.firstChild.setAttribute('transform', G.posaAda(ax, ay));

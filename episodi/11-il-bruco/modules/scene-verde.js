@@ -5,7 +5,7 @@ const { seg, eo, ei, eio, lerp } = kit;
 // consegna la striscia ad Ada. Zac, zac: salgono la bandierina d'oro, Storie, Di, Mare, la bandierina d'argento, Al, Mare,
 // Emma e, nell'ultimo vagone, la bandierina d'ottone. Il treno parte.
 // Si apre sul Bruco; finisce sul treno che parte dalla stazione (lo riprende «finestre», dentro).
-const VE_CU = [2066, 886], VE_ADA = [2016, 906];
+const VE_CU = [1120, 1032], VE_ADA = [1070, 1052];
 const VE_ARRIVA = [0, 1.6], VE_ALZA = [0.6, 1.4];
 const VE_GIRO = { sale: 1.9, passo: 0.55, parte: 3.8, giro: 5.0, carta: 10.0 };
 // La stazione: la striscia intera tra le mani del custode, poi ad Ada, poi lo Spezzaparole.
@@ -14,8 +14,8 @@ const VE_TAGLI = Array.from({ length: 9 }, (_, i) => 15.0 + i * 0.42);
 const VE_VOLO = 1.0, VE_VITA = 0.2;
 const VE_SBARRE = [20.6, 21.2], VE_PARTE = 21.2, VE_VEL = [[VE_PARTE, 0], [22.0, 220], [23.6, 700]];
 const VE_CAM = [
-  { t: 0, cx: 2150, cy: 860, z: 2.9 },
-  { t: 11.99, cx: 2150, cy: 860, z: 2.9 },
+  { t: 0, cx: 1204, cy: 1006, z: 2.9 },
+  { t: 11.99, cx: 1204, cy: 1006, z: 2.9 },
   { t: 12.0, cx: 470, cy: 790, z: 4.4 },
   { t: 14.6, cx: 470, cy: 790, z: 4.4 },
   { t: 15.4, cx: 290, cy: 790, z: 2.4 },
@@ -26,7 +26,7 @@ kit.scene('verde', {
   init(kit) {
     const G = window.G, C = G.C, M = G.MONDO, S2 = G.S2, F = G.MOD.seconda.bruco.frasi.mare, GIRO = G.MOD.seconda.bruco.giro;
     const gio = S2.giostrina({ sbarra: 1, luci: 1 });
-    this.cuX = t => t < VE_ARRIVA[1] ? lerp(1990, VE_CU[0], eio(seg(t, VE_ARRIVA[0], VE_ARRIVA[1]))) : VE_CU[0];
+    this.cuX = t => t < VE_ARRIVA[1] ? lerp(1044, VE_CU[0], eio(seg(t, VE_ARRIVA[0], VE_ARRIVA[1]))) : VE_CU[0];
     this.giro = S2.giroBruco({ id: 've', parole: F.frase, vestiti: F.vestiti, uscita: F.uscita, rosse: F.rosse, verdi: F.verdi, seme: 63,
       mano: G.puntoCustode(VE_CU[0], VE_CU[1], G.CUSTODE_MANI.porge), riporta: () => G.puntoCustode(VE_CU[0], VE_CU[1], G.CUSTODE_MANI.porge), t: VE_GIRO });
     // La stazione: il treno di nove vagoni, la striscia, i biglietti.

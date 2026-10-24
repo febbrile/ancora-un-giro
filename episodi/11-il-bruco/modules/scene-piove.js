@@ -4,14 +4,14 @@ const { seg, eo, eio, lerp } = kit;
 // marrone, una blu, una gialla, una rosa, una viola… nessuna molto più delle altre. Ada guarda la vasca, con la mano
 // sospesa sull'acqua. Cartello: «Fine».
 // Si apre sul Bruco; finisce sulla vasca, col cartello.
-const PV_CU = [2066, 886], PV_ADA = [2016, 906];
+const PV_CU = [1120, 1032], PV_ADA = [1070, 1052];
 const PV_BRUCO = { sale: 0.3, passo: 0.3, parte: 1.4, giro: 3.2 };
 const PV_TRENO = { esce: 5.6, vel: [[5.6, 300], [7.0, 300], [7.5, 60], [9.8, 60], [10.4, 240]] };
 const PV_MANO = 11.4;
 const PV_FINE = 17.6;
 const PV_CAM = [
-  { t: 0, cx: 2160, cy: 856, z: 3.0 },
-  { t: 5.39, cx: 2160, cy: 856, z: 3.0 },
+  { t: 0, cx: 1214, cy: 1002, z: 3.0 },
+  { t: 5.39, cx: 1214, cy: 1002, z: 3.0 },
   { t: 5.4, cx: 740, cy: 846, z: 3.6 },
   { t: 10.6, cx: 740, cy: 846, z: 3.6 },
   { t: 12.4, cx: 728, cy: 868, z: 5.2 },

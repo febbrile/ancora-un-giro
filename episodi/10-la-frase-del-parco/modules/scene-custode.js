@@ -42,7 +42,7 @@ kit.scene('custode', {
       '<circle cx="960" cy="560" r="620" fill="' + C.luce + '" opacity=".12" filter="url(#g-velo)"/>' +
       '<g transform="translate(960 560) scale(7.4) translate(-120 -262)">' + G.libroAperto(120, 262, 'frase') + '</g>' + dito + '</g>';
     this.m = G.costruisciMondo(kit, sopra, {
-      pre: 'custode', manopola: 0, banchina: true, morto: true, davanti: quaderno + libro,
+      pre: 'custode', manopola: 0, banchina: true, morto: true, bruco: 'buio', davanti: quaderno + libro,
       html: G.sottotitolo('ADA', 'Ma la frase del parco… non doveva fermarla?') +
         G.sottotitolo('CUSTODE', 'Il regolamento l’ho rispettato: la frase del parco l’ho attaccata.') +
         G.sottotitolo('CUSTODE', 'Il treno non obbedisce a nessuno: porta.') +

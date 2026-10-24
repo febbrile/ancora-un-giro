@@ -1,6 +1,6 @@
 const { seg, eo, eio, lerp } = kit;
 // Arriva un'altra striscia. Il custode la prende, ma questa volta non la porta allo Spezzaparole: si gira e se ne va con
-// la lanterna, lontano dalla stazione, verso un angolo buio del parco. Laggiù, oltre la montagna grande, si intravede una
+// la lanterna, lontano dalla stazione, verso un angolo buio del parco. Laggiù, ai piedi della montagna grande, si intravede una
 // giostrina che Ada non aveva mai notato (il Bruco: lo si presenta nell'episodio dopo). Ada si alza in punta di piedi.
 // Cartello: «Fine».
 // Si apre alla stazione; finisce sul parco intero, con la giostrina laggiù nel buio.
@@ -13,14 +13,14 @@ const GS_CAM = [
   { t: 0, cx: 420, cy: 760, z: 2.6 },
   { t: 2.8, cx: 440, cy: 790, z: 3.0 },
   { t: 4.2, cx: 760, cy: 780, z: 1.7 },
-  { t: 9.6, cx: 1840, cy: 780, z: 1.7 },
-  { t: 10.8, cx: 2150, cy: 820, z: 2.0 },
+  { t: 9.6, cx: 900, cy: 900, z: 1.9 },
+  { t: 10.8, cx: 1204, cy: 966, z: 2.0 },
   { t: 11.4, cx: 520, cy: 790, z: 3.6 },
   { t: 13.0, cx: 520, cy: 790, z: 3.6 },
-  { t: 15.4, cx: 1450, cy: 700, z: 0.88 },
+  { t: 15.4, cx: 1000, cy: 780, z: 1.2 },
 ];
-// La strada del custode: giù dalla banchina, davanti alla vasca, ai piedi della montagna, fino alla giostrina.
-const GS_STRADA = [[436, 836], [600, 836], [660, 900], [900, 932], [1500, 924], [1800, 900], [2010, 884]];
+// La strada del custode: giù dalla banchina, davanti alla vasca, fino alla giostrina, ai piedi della montagna.
+const GS_STRADA = [[436, 836], [600, 836], [660, 900], [860, 962], [1000, 1012], [1064, 1030]];
 function gsBez(p, u) { const a = 1 - u; return [0, 1].map(k => a * a * a * p[0][k] + 3 * a * a * u * p[1][k] + 3 * a * u * u * p[2][k] + u * u * u * p[3][k]); }
 kit.scene('giostrina', {
   init(kit) {

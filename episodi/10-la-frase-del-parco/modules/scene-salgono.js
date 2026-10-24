@@ -42,7 +42,7 @@ kit.scene('salgono', {
       this.parole.map(p => '<g class="sa-big" opacity="0"><g transform="translate(-60 -30)">' + G.biglietto(p) + '</g></g>').join('') + scintille +
       '<g class="sa-ada"></g>';
     this.m = G.costruisciMondo(kit, sopra, {
-      pre: 'salgono', manopola: 0, banchina: true, morto: true,
+      pre: 'salgono', manopola: 0, banchina: true, morto: true, bruco: 'buio',
       html: G.sottotitolo('NARRATORE', 'Davanti al messaggio, una bandierina d’argento. In fondo, una d’ottone, per la risposta.') +
         G.sottotitolo('NARRATORE', 'Salgono tutti, anche le bandierine. E nell’ultimo vagone, stasera, c’è quella d’ottone.') +
         G.sottotitolo('ADA', 'C’è anche Mare!'),

@@ -24,7 +24,7 @@ kit.scene('pesca', {
       this.giro.treno + '<g class="pe-ada"></g>' + this.giro.mano;
     const casa = '<g class="pe-casa" opacity="0"><g class="pe-casa-cam">' + G.salotto('<g class="pe-tel"></g>') + '</g></g>';
     this.m = G.costruisciMondo(kit, sopra, {
-      pre: 'pesca', manopola: 0, banchina: true, morto: true, davanti: casa,
+      pre: 'pesca', manopola: 0, banchina: true, morto: true, bruco: 'buio', davanti: casa,
       html: G.sottotitolo('NARRATORE', 'Sul telefono arriva la risposta: Emma nuota. Al parco.'),
     });
     this.m.q('.g-vasca').insertAdjacentHTML('beforeend', this.giro.papere);

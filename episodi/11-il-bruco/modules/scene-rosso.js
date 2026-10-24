@@ -7,22 +7,22 @@ const { seg, eo, eio, lerp } = kit;
 // vento se li porta via.
 // Si apre sul Bruco, come finisce «bruco»; finisce su Ada che guarda verso la stazione (la riprende «grande»).
 const RS_GIRO = { sale: 0.8, passo: 0.9, parte: 5.0, giro: 6.0, carta: 19.0 };
-const RS_CU = [2066, 886], RS_CONTA = [2134, 930], RS_ADA = [2016, 906];
+const RS_CU = [1120, 1032], RS_CONTA = [1188, 1076], RS_ADA = [1070, 1052];
 const RS_VA = [11.0, 12.2], RS_DITO = [12.4, 14.6];
 const RS_CLONC = 15.2;
 const RS_LEGGE = [16.0, 19.4], RS_STACCA = 17.4, RS_VOLA = [17.8, 20.6];
 const RS_CAM = [
-  { t: 0, cx: 2190, cy: 846, z: 3.4 },
-  { t: 4.6, cx: 2190, cy: 846, z: 3.4 },
-  { t: 6.0, cx: 2236, cy: 830, z: 2.6 },
-  { t: 10.8, cx: 2236, cy: 830, z: 2.6 },
-  { t: 12.0, cx: 2196, cy: 902, z: 6.4 },
-  { t: 14.6, cx: 2196, cy: 902, z: 6.4 },
-  { t: 15.0, cx: 2060, cy: 870, z: 3.4 },
-  { t: 17.2, cx: 2090, cy: 880, z: 4.2 },
-  { t: 19.0, cx: 2090, cy: 880, z: 4.2 },
-  { t: 20.4, cx: 2150, cy: 850, z: 2.8 },
-  { t: 21.0, cx: 2050, cy: 880, z: 4.6 },
+  { t: 0, cx: 1244, cy: 992, z: 3.4 },
+  { t: 4.6, cx: 1244, cy: 992, z: 3.4 },
+  { t: 6.0, cx: 1290, cy: 976, z: 2.6 },
+  { t: 10.8, cx: 1290, cy: 976, z: 2.6 },
+  { t: 12.0, cx: 1250, cy: 1048, z: 6.4 },
+  { t: 14.6, cx: 1250, cy: 1048, z: 6.4 },
+  { t: 15.0, cx: 1114, cy: 1016, z: 3.4 },
+  { t: 17.2, cx: 1144, cy: 1026, z: 4.2 },
+  { t: 19.0, cx: 1144, cy: 1026, z: 4.2 },
+  { t: 20.4, cx: 1204, cy: 996, z: 2.8 },
+  { t: 21.0, cx: 1104, cy: 1026, z: 4.6 },
 ];
 kit.scene('rosso', {
   init(kit) {

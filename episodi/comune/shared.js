@@ -1105,7 +1105,7 @@ function mondo(o) {
     stazione + morto + bancone +
     '<rect x="-3500" y="868" width="7420" height="2000" fill="' + C.terra + '"/>' +
     '<path d="M-3500 868 L3920 868" stroke="#2A2650" stroke-width="3"/>' +
-    vasca + banchina +
+    vasca + banchina + (o.bruco ? window.G.S2.brucoFermo(o.bruco) : '') +
     '</g>';
 }
 // Numeri pseudo-casuali ripetibili (uguali a kit.rng).
@@ -2309,13 +2309,13 @@ window.G.S2.schizzoParco = function (col) {
     [[-34, -86, 38], [34, -86, 38], [0, -120, 44], [0, -80, 40]].map(([x, y, r]) => '<circle cx="' + x + '" cy="' + y + '" r="' + r + '" fill="' + col + '" stroke="#3A3570" stroke-width="5"/>').join('') +
     '<circle cx="-12" cy="-92" r="4" fill="#3A3570"/><circle cx="12" cy="-92" r="4" fill="#3A3570"/><path d="M-10 -76 Q0 -68 10 -76" stroke="#3A3570" stroke-width="4" fill="none" stroke-linecap="round"/></g>';
 };
-// Il Bruco (stagione 2, episodio 2): una giostrina per bambini piccoli, nell'angolo buio del parco, a destra della
-// montagna grande, oltre il tendone. Un bruco verde con la faccia dipinta, le antenne a pallina e un sorriso largo, fatto
+// Il Bruco (stagione 2, episodio 2): una giostrina per bambini piccoli, nell'angolo buio del parco: ai piedi della
+// montagna grande, nella sua ombra, tra la vasca della pesca e la ruota panoramica. Un bruco verde con la faccia dipinta, le antenne a pallina e un sorriso largo, fatto
 // di segmenti tondi uno dietro l'altro, come vagoni; la pista è un anello piatto che passa dentro una piccola montagna a
 // forma di mela; davanti, una vasca piccola (paperelle di due colori soli, verdi e rosse) e una sbarra a righe bianche e
 // rosse, verso la stazione. Coordinate del mondo. La pista: un'ellisse (centro c, raggi rx, ry) percorsa davanti da
 // destra a sinistra, dietro da sinistra a destra; la mela sta sul capo destro, così il bruco gira dentro la mela.
-window.G.S2.BRUCO = { c: [2236, 846], rx: 196, ry: 38, mela: [2400, 806], vasca: [2214, 906], sbarra: [1996, 884], segmenti: 6, passo: 28 };
+window.G.S2.BRUCO = { c: [1290, 992], rx: 196, ry: 38, mela: [1454, 952], vasca: [1268, 1052], sbarra: [1050, 1030], segmenti: 6, passo: 28 };
 // La pista come tracciato SVG, dal capo destro, prima la parte davanti.
 window.G.S2.pistaBruco = function () {
   const B = window.G.S2.BRUCO, [cx, cy] = B.c;
@@ -2495,4 +2495,17 @@ window.G.S2.giroBruco = function (o) {
     },
   };
   return g;
+};
+// Il Bruco fermo, con la testa e tre segmenti vuoti, per le scene della seconda stagione che non lo fanno girare
+// (G.mondo({ bruco: 'buio' | 'acceso' })): nell'angolo buio si intravede appena; acceso, ha le luci accese.
+window.G.S2.brucoFermo = function (stato) {
+  const S2 = window.G.S2, B = S2.BRUCO, gio = S2.giostrina({ sbarra: 0, luci: stato === 'acceso' ? 1 : 0.25 }), L = 444;
+  let segm = '';
+  for (let i = 3; i >= 0; i--) {
+    const a = Math.PI * (140 + 4 * B.passo - i * B.passo) / L;
+    segm += '<g transform="translate(' + (B.c[0] + B.rx * Math.cos(a)).toFixed(1) + ' ' + (B.c[1] + B.ry * Math.sin(a)).toFixed(1) + ')">' + S2.segmento(i === 0) + '</g>';
+  }
+  const buio = stato === 'acceso' ? 0.14 : 0.62;
+  return '<g class="g-bruco-fermo">' + gio.dietro + segm + gio.davanti +
+    '<ellipse cx="' + (B.c[0] + 20) + '" cy="' + (B.c[1] - 10) + '" rx="420" ry="200" fill="#05070F" opacity="' + buio + '" filter="url(#g-velo)"/></g>';
 };

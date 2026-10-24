@@ -34,7 +34,7 @@ kit.scene('fili', {
     const dentro = '<g class="fl-dentro" opacity="0">' + G.interniDefs + '<g class="fl-icam">' + G.interno(this.chi.map(c => ({ tipo: c.tipo, col: c.biglietto, o: c.o }))) + '</g></g>' +
       '<rect class="fl-nero" x="-200" y="-200" width="2320" height="1480" fill="#07060F" opacity="0"/>';
     this.m = G.costruisciMondo(kit, sopra, {
-      pre: 'fili', manopola: 0, banchina: true, morto: true, davanti: dentro,
+      pre: 'fili', manopola: 0, banchina: true, morto: true, bruco: 'buio', davanti: dentro,
       html: G.sottotitolo('NARRATORE', 'Nel buio, la bandierina d’ottone guarda avanti, fino in testa al treno.') +
         G.sottotitolo('NARRATORE', 'Il suo filo più forte arriva a Mare, nella frase del parco. Uno quasi uguale va a Parco.'),
     });

@@ -7,18 +7,18 @@ const { seg, eo, eio, lerp } = kit;
 // Si apre nella casa; finisce sulla vasca piccola, rossa (la riprende «piove»).
 const LU_FRASE = 'Il lupo mangia la nonna';
 const LU_SCRIVE = 0.8, LU_INVIO = 5.2, LU_VIA = [5.8, 6.2];
-const LU_CU = [2066, 886], LU_ADA = [2016, 906];
+const LU_CU = [1120, 1032], LU_ADA = [1070, 1052];
 const LU_BRUCO = { sale: 6.8, passo: 0.5, parte: 10.0, giro: 5.0 };
 const LU_CLONC = 16.0;
 const LU_CASA = [16.8, 17.2, 21.0, 21.4], LU_ARRIVA = 18.0, LU_LIBRO = [18.8, 19.8], LU_NO = [20.0, 20.9];
 const LU_MANICA = [21.6, 24.0];
 const LU_CAM = [
-  { t: 6.0, cx: 2150, cy: 856, z: 3.0 },
-  { t: 15.4, cx: 2150, cy: 856, z: 3.0 },
-  { t: 16.2, cx: 2080, cy: 870, z: 3.6 },
-  { t: 21.4, cx: 2060, cy: 880, z: 4.6 },
-  { t: 29.6, cx: 2060, cy: 880, z: 4.6 },
-  { t: 31.2, cx: 2200, cy: 896, z: 6.0 },
+  { t: 6.0, cx: 1204, cy: 1002, z: 3.0 },
+  { t: 15.4, cx: 1204, cy: 1002, z: 3.0 },
+  { t: 16.2, cx: 1134, cy: 1016, z: 3.6 },
+  { t: 21.4, cx: 1114, cy: 1026, z: 4.6 },
+  { t: 29.6, cx: 1114, cy: 1026, z: 4.6 },
+  { t: 31.2, cx: 1254, cy: 1042, z: 6.0 },
 ];
 kit.scene('lupo', {
   init(kit) {
@@ -87,7 +87,7 @@ kit.scene('lupo', {
     this.bigEl.setAttribute('transform', 'translate(' + hx.toFixed(1) + ' ' + (hy - 3).toFixed(1) + ')');
     // Ada: guarda il giro; poi tira la manica al custode.
     const tira = t >= LU_MANICA[0] && t < LU_MANICA[1], va = eio(seg(t, LU_MANICA[0] - 0.6, LU_MANICA[0]));
-    const ax = lerp(LU_ADA[0], 2046, va), espA = t < 15 ? 'base' : t < 22 ? 'sorpresa' : t < 29.6 ? 'accigliata' : 'pensa';
+    const ax = lerp(LU_ADA[0], 1100, va), espA = t < 15 ? 'base' : t < 22 ? 'sorpresa' : t < 29.6 ? 'accigliata' : 'pensa';
     const ang = tira ? Math.round(-60 + 10 * Math.sin((t - LU_MANICA[0]) * 9)) : 0;
     this.cambia('ada', espA + ang, this.ada, '<g class="lu-ada-in">' + (tira ? G.adaSaluta(espA === 'accigliata' ? 'sorpresa' : espA, ang) : G.adaGira('base', espA, {}, 0)) + '</g>');
     this.ada.firstChild.setAttribute('transform', G.posaAda(ax, LU_ADA[1]));

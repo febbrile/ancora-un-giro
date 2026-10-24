@@ -41,7 +41,7 @@ kit.scene('pagina', {
       '<circle cx="960" cy="560" r="620" fill="' + C.luce + '" opacity=".12" filter="url(#g-velo)"/>' +
       '<g class="pg-libro-cam"><g transform="translate(960 560) scale(7.4) translate(-120 -262)">' + G.libroAperto(120, 262, 'frase') + '</g></g></g>';
     this.m = G.costruisciMondo(kit, sopra, {
-      pre: 'pagina', manopola: 0, banchina: true, morto: true, davanti: libro,
+      pre: 'pagina', manopola: 0, banchina: true, morto: true, bruco: 'buio', davanti: libro,
       html: G.sottotitolo('CUSTODE', 'Da stasera, in questo parco, si raccontano storie di mare.') +
         G.sottotitolo('ADA', 'Perché?') +
         G.sottotitolo('CUSTODE', 'Lo dice il regolamento.') +

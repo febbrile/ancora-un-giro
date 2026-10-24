@@ -3,15 +3,15 @@ const { seg, eo, eio, lerp } = kit;
 // sbarre alzate. Il custode chiude il regolamento. Ada chiede se allora decide il Bruco; il custode guarda il Bruco, poi
 // indica la sbarra: il Bruco fa verde o rosso, la sbarra la abbassa lui.
 // Si apre su Ada che guarda verso la stazione (come finisce «rosso»); finisce sul custode e la sbarra (la riprende «verde»).
-const GR_CU = [2134, 930], GR_ADA = [2016, 906];
+const GR_CU = [1188, 1076], GR_ADA = [1070, 1052];
 const GR_CHIUDE = 9.4, GR_INDICA = [11.4, 14.0], GR_SBARRA = [14.6, 17.6];
 const GR_CAM = [
-  { t: 0, cx: 2050, cy: 880, z: 4.6 },
-  { t: 1.2, cx: 2050, cy: 880, z: 4.6 },
+  { t: 0, cx: 1104, cy: 1026, z: 4.6 },
+  { t: 1.2, cx: 1104, cy: 1026, z: 4.6 },
   { t: 4.2, cx: 1240, cy: 640, z: 0.76 },
   { t: 7.0, cx: 1240, cy: 640, z: 0.76 },
-  { t: 8.2, cx: 2080, cy: 880, z: 3.8 },
-  { t: 17.6, cx: 2080, cy: 880, z: 3.8 },
+  { t: 8.2, cx: 1134, cy: 1026, z: 3.8 },
+  { t: 17.6, cx: 1134, cy: 1026, z: 3.8 },
 ];
 kit.scene('grande', {
   init(kit) {

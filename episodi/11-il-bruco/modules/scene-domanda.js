@@ -39,7 +39,7 @@ kit.scene('domanda', {
       '<circle cx="950" cy="520" r="300" fill="#BFD4FF" opacity=".16" filter="url(#g-velo)"/></g></g>';
     const titolo = '<g class="dm-titolo" opacity="0"><g transform="translate(960 290)"><g class="dm-insegna"></g></g></g>';
     this.m = G.costruisciMondo(kit, sopra, {
-      pre: 'domanda', manopola: 0, banchina: true, morto: true, davanti: camera + titolo,
+      pre: 'domanda', manopola: 0, banchina: true, morto: true, bruco: 'buio', davanti: camera + titolo,
       html: G.sottotitolo('NARRATORE', 'Un bambino chiede una cosa che non si dovrebbe chiedere. E sul telefono arriva una frase già pronta.') +
         G.sottotitolo('ADA', 'Il treno non è nemmeno partito. Perché?'),
     });

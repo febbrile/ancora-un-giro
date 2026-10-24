@@ -6,7 +6,7 @@ const { seg, eo, eio, lerp } = kit;
 // Si apre nella luce dell'uscita (come finisce «finestre»); finisce nel salotto (la riprende «lupo», in una cameretta).
 const RI_ESCE = { esce: 0.4, vel: [[0.4, 300], [1.8, 300], [2.3, 60], [4.2, 60], [4.8, 260]], pesca: { giu: 4.6, su: 5.4, preso: 5.8 }, via: 6.2, salta: 6.2, vagone: 6.8, sale: 7.4 };
 const RI_VIA = [8.6, 10.6];
-const RI_CU = [2066, 886], RI_ADA = [2016, 906];
+const RI_CU = [1120, 1032], RI_ADA = [1070, 1052];
 const RI_BRUCO = { sale: 11.0, passo: 0.5, parte: 13.2, giro: 4.6, carta: 18.6 };
 const RI_VOLA = [20.2, 22.2];
 const RI_CASA = [22.2, 22.6], RI_RISPOSTA = 23.2;
@@ -15,11 +15,11 @@ const RI_CAM = [
   { t: 8.39, cx: 700, cy: 846, z: 3.6 },
   { t: 8.4, cx: 760, cy: 860, z: 2.4 },
   { t: 10.79, cx: 900, cy: 860, z: 2.4 },
-  { t: 10.8, cx: 2170, cy: 852, z: 3.0 },
-  { t: 18.0, cx: 2170, cy: 852, z: 3.0 },
-  { t: 19.0, cx: 2120, cy: 880, z: 4.0 },
-  { t: 20.4, cx: 2120, cy: 880, z: 4.0 },
-  { t: 22.6, cx: 1900, cy: 760, z: 2.2 },
+  { t: 10.8, cx: 1224, cy: 998, z: 3.0 },
+  { t: 18.0, cx: 1224, cy: 998, z: 3.0 },
+  { t: 19.0, cx: 1174, cy: 1026, z: 4.0 },
+  { t: 20.4, cx: 1174, cy: 1026, z: 4.0 },
+  { t: 22.6, cx: 954, cy: 906, z: 2.2 },
 ];
 kit.scene('risposta', {
   init(kit) {

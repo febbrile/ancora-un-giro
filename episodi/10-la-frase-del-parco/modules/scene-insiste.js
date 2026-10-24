@@ -55,7 +55,7 @@ kit.scene('insiste', {
       this.giri.map(g => g.treno).join('') + '<g class="in-ada"></g>' + this.giri.map(g => g.mano).join('');
     const casa = '<g class="in-casa" opacity="0"><g class="in-casa-cam">' + G.salotto('<g class="in-tel"></g>', { muro: ['#1E3A40', '#2E5A58', '#4A6E5C'] }) + '</g></g>';
     this.m = G.costruisciMondo(kit, sopra, {
-      pre: 'insiste', manopola: 0, banchina: true, morto: true, davanti: casa,
+      pre: 'insiste', manopola: 0, banchina: true, morto: true, bruco: 'buio', davanti: casa,
       html: G.sottotitolo('NARRATORE', 'La persona insiste: «Al parco». E a ogni messaggio risale tutta la chat.') +
         G.sottotitolo('NARRATORE', 'Sul treno i Parco sono sempre di più. Al terzo messaggio, la vasca torna verde.'),
     });
