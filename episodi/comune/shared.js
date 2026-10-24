@@ -2585,13 +2585,20 @@ window.G.S2.puntoCabina = function (u) {
 // per i giri con la vasca dichiarata). I primi quattro (la bandierina d'oro e «Storie di mare») hanno i colori di sempre;
 // gli altri il colore del loro biglietto (bandierine, biglietti e paperelle dal modellino).
 window.G.S2.trenoDa = function (frase, trattiUltimo) {
-  const G = window.G, S = G.MOD.seconda, capo = S.parco.giri[0].passeggeri;
-  const colore = w => S.parco.bandierine[w] || S.teleferica.biglietti[w] || S.teleferica.paperelle[w] || S.parco.biglietti[w] ||
-    (G.MOD.finisce.passeggeri[w] || {}).biglietto || '#96969f';
+  const G = window.G, S = G.MOD.seconda, capo = S.parco.giri[0].passeggeri, ott = frase.indexOf('⚑ottone');
+  const mare = { Al: G.MOD.mare.passeggeri.Al.biglietto, mare: G.MOD.mare.passeggeri.mare.biglietto, Emma: G.MOD.mare.passeggeri.Emma.biglietto };
+  // Prima della bandierina d'ottone ci sono i biglietti del messaggio; dopo, le paperelle pescate (che salgono come sono).
+  const biglietto = w => S.parco.bandierine[w] || S.teleferica.biglietti[w] || (S.telone || {}).biglietti && S.telone.biglietti[w] || mare[w] || S.parco.biglietti[w];
+  const paperella = w => S.parco.bandierine[w] || (S.telone || {}).paperelle && S.telone.paperelle[w] || S.teleferica.paperelle[w] || S.teleferica.biglietti[w] ||
+    (G.MOD.finisce.passeggeri[w] || {}).biglietto || S.campanella.biglietti[w];
   return frase.map((w, i) => {
     if (i < 4 && capo[i].parola === w) return this.chi(capo[i]);
-    const b = colore(w);
-    return this.chi({ parola: w, biglietto: b, tratti: i === frase.length - 1 ? trattiUltimo : [b] });
+    const prima = ott < 0 || i < ott, b = (prima ? biglietto(w) : paperella(w)) || '#96969f';
+    const c = this.chi({ parola: w, biglietto: b, tratti: i === frase.length - 1 ? trattiUltimo : [b] });
+    // Un biglietto del messaggio senza un personaggio suo è un sassolino; una parola pescata resta paperella.
+    if (prima && c.tipo === 'paperella') { c.tipo = 'sasso'; c.o = { forma: i % 3 }; }
+    if (!prima && c.tipo !== 'bandierina' && !S.teleferica.biglietti[w]) { c.tipo = 'paperella'; c.o = undefined; }
+    return c;
   });
 };
 // L'orologio da tasca del custode, da vicino (stagione 2, episodio 4): d'ottone, il quadrante crema senza numeri, solo
