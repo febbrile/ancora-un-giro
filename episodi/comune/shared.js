@@ -135,6 +135,7 @@ const RITMO = {
   '11': { finestre: [[34.0, 40.6, 2.8, 1]] },
   '12': { finestre: [[34.4, 40.6, 2.8, 1]] },
   '13': { continua: [[13.4, 25.4, 8.0]] },
+  '14': { finestre: [[34.4, 40.6, 2.8, 1]] },
 };
 // Dove si trova il tempo interno dentro un tratto, dopo tau secondi veri.
 function nelTratto(x0, x1, r, fine, tau) {
@@ -1126,7 +1127,7 @@ function mondo(o) {
     stazione + morto + bancone +
     '<rect x="-3500" y="868" width="7420" height="2000" fill="' + C.terra + '"/>' +
     '<path d="M-3500 868 L3920 868" stroke="#2A2650" stroke-width="3"/>' +
-    vasca + banchina + (o.bruco ? window.G.S2.brucoFermo(o.bruco) : '') +
+    vasca + banchina + (o.bruco ? window.G.S2.brucoFermo(o.bruco) : '') + (o.fiume ? window.G.S2.fiume() : '') +
     '</g>';
 }
 // Numeri pseudo-casuali ripetibili (uguali a kit.rng).
@@ -1200,11 +1201,12 @@ function percorso(t, s0, chiavi) {
   }
   return s;
 }
-// Il mondo, con la camera, i due percorsi (invisibili) e quello che sta sopra (treno, personaggi…).
+// Il mondo, con la camera, i due percorsi (invisibili) e quello che sta sopra (treno, personaggi…). o.prima: quello che
+// sta dietro il mondo, più lontano del suo cielo (il parco gemello, dall'altra parte del fiume).
 function costruisciMondo(kit, sopra, o) {
   o = o || {};
   kit.stage.append(kit.h(unico('<div class="ground"><svg class="art" viewBox="0 0 1920 1080">' + defs +
-    '<g class="g-cam">' + mondo(o) + '<path class="g-p-partenza" d="' + MONDO.partenza + '" fill="none"/>' +
+    '<g class="g-cam">' + (o.prima || '') + mondo(o) + '<path class="g-p-partenza" d="' + MONDO.partenza + '" fill="none"/>' +
     '<path class="g-p-arrivo" d="' + MONDO.arrivo + '" fill="none"/>' + (sopra || '') + '</g>' + (o.davanti || '') + '</svg>' + (o.html || '') + '</div>', o.pre || 'm')));
   const q = sel => kit.stage.querySelector(sel);
   return { cam: q('.g-cam'), ruota: q('.g-ruota'), partenza: q('.g-p-partenza'), arrivo: q('.g-p-arrivo'), q, qa: sel => [...kit.stage.querySelectorAll(sel)] };
@@ -1708,7 +1710,7 @@ window.G.giro7 = function (o) {
   for (let k = 0; k < 10; k++) scintille += '<circle r="2.4" fill="' + G.C.luce + '"/>';
   const passeggeri = o.chi.map(c => ({ tipo: c.tipo, col: c.uscita, o: c.o })).concat(o.nuovo ? [{ tipo: 'paperella', col: o.nuovo }] : []);
   const g = {
-    lista, presa, colPresa,
+    lista, presa, colPresa, t: T,
     treno: '<g class="g7-treno-' + id + '">' + G.treno(passeggeri, { sbarra: 1 }) + '</g><g class="g7-scint-' + id + '" opacity="0">' + scintille + '</g>',
     mano: '<ellipse class="g7-luce-' + id + '" rx="22" ry="18" fill="' + colPresa + '" opacity="0" filter="url(#g-soft)"/>' +
       '<g class="g7-mano-' + id + '" opacity="0"><g transform="translate(-50 -84)"><g class="g7-pv">' + G.paperella(colPresa) + '</g>' +
@@ -1738,6 +1740,14 @@ window.G.giro7 = function (o) {
         return T.esce + 8;
       });
       this.sedile = [FERMO + n * M.passoBanchina + 6, 816];
+      // Ada pesca solo quando sono cadute tutte le paperelle: con i treni lunghi l'ultimo vagone passa sopra la vasca più
+      // tardi, e la pesca (con quello che viene dopo) slitta. T è lo stesso oggetto della scena, che così lo vede.
+      const ultima = Math.max(...this.cade), dt = T.pesca ? ultima + 0.4 - T.pesca.giu : 0;
+      if (dt > 0 && !T.slittato) {
+        ['giu', 'su', 'preso'].forEach(k => { T.pesca[k] += dt; });
+        ['via', 'salta', 'vagone', 'sale', 'tiene'].forEach(k => { if (T[k] !== undefined) T[k] += dt; });
+        T.slittato = dt;
+      }
     },
     sAt(t) { return Math.min(this.sF, G.percorso(t, 0, this.vel)); },
     // Mentre arriva in stazione il treno si accosta: i vagoni passano da MONDO.passo a MONDO.passoBanchina; ripartendo, il contrario.
@@ -2521,12 +2531,13 @@ window.G.S2.giroBruco = function (o) {
 };
 // Il Bruco fermo, con la testa e tre segmenti vuoti, per le scene della seconda stagione che non lo fanno girare
 // (G.mondo({ bruco: 'buio' | 'acceso' })): nell'angolo buio si intravede appena; acceso, ha le luci accese.
-window.G.S2.brucoFermo = function (stato) {
+window.G.S2.brucoFermo = function (stato, o) {
+  o = o || {};
   const S2 = window.G.S2, B = S2.BRUCO, gio = S2.giostrina({ sbarra: 0, luci: stato === 'acceso' ? 1 : 0.25 }), L = 444;
   let segm = '';
   for (let i = 3; i >= 0; i--) {
     const a = Math.PI * (140 + 4 * B.passo - i * B.passo) / L;
-    segm += '<g transform="translate(' + (B.c[0] + B.rx * Math.cos(a)).toFixed(1) + ' ' + (B.c[1] + B.ry * Math.sin(a)).toFixed(1) + ')">' + S2.segmento(i === 0) + '</g>';
+    segm += '<g transform="translate(' + (B.c[0] + B.rx * Math.cos(a)).toFixed(1) + ' ' + (B.c[1] + B.ry * Math.sin(a)).toFixed(1) + ')">' + S2.segmento(i === 0, '', { faccia: o.faccia }) + '</g>';
   }
   const buio = stato === 'acceso' ? 0.14 : 0.62;
   return '<g class="g-bruco-fermo">' + gio.dietro + segm + gio.davanti +
@@ -2792,4 +2803,64 @@ window.G.S2.dentro = function (kit, o) {
       return l;
     },
   };
+};
+// Il telone (stagione 2, episodio 5): un grande telone color arancio, cucito a toppe, che il custode stende sopra i vagoni
+// che salgono dopo la paperella arancio. Coordinate del mondo: copre la banchina da x a fino a x b (i vagoni sotto non si
+// vedono), all'altezza dei passeggeri. o.srotola: da 0 a 1, quanto è srotolato (da a verso b; in fondo, il rotolo);
+// o.lembo: da 0 a 1, il lembo sopra la coda sollevato (si sbircia sotto).
+window.G.S2.COLORI_TELONE = ['#E9822C', '#F29A3E', '#D86F22', '#F5A85A', '#E07A2A'];
+window.G.S2.telone = function (a, b, o) {
+  o = o || {};
+  const K = window.G.S2.COLORI_TELONE, sr = o.srotola === undefined ? 1 : o.srotola, e = a + (b - a) * sr, lembo = o.lembo || 0;
+  if (sr <= 0.001) return '';
+  const y0 = 784, y1 = 836, toppe = [];
+  for (let x = a, k = 0; x < e - 4; x += 34, k++) {
+    const w = Math.min(34, e - x);
+    toppe.push('<rect x="' + x.toFixed(1) + '" y="' + (y0 + 8 + (k % 2) * 4) + '" width="' + w.toFixed(1) + '" height="' + (k % 3 ? 26 : 32) + '" fill="' + K[k % K.length] + '"/>' +
+      '<path d="M' + (x + 2).toFixed(1) + ' ' + (y0 + 10 + (k % 2) * 4) + ' L' + (x + w - 2).toFixed(1) + ' ' + (y0 + 10 + (k % 2) * 4) + '" stroke="#FFF1C9" stroke-width="1.2" stroke-dasharray="3 3" opacity=".7"/>');
+  }
+  // Il lembo in fondo (verso b): si solleva, e sotto si vede il buio.
+  // Il bordo di sopra fa una gobba su ogni vagone (sotto ci sono i passeggeri); l'orlo di sotto ondeggia sulla sponda.
+  let sopra = 'M' + a + ' ' + y1 + ' L' + a + ' ' + (y0 + 26), x = a;
+  while (x < e - 1) { const w = Math.min(76, e - x), su = lembo * Math.max(0, Math.min(1, (x + w - e + 150) / 80)); sopra += ' Q' + (x + w / 2).toFixed(1) + ' ' + (y0 - 14 - 30 * su).toFixed(1) + ' ' + (x + w).toFixed(1) + ' ' + (y0 + 26 - 40 * su).toFixed(1); x += w; }
+  let orlo = ' L' + (e + 4 * lembo).toFixed(1) + ' ' + (y1 - 50 * lembo).toFixed(1);
+  for (let xx = e; xx > a + 1; xx -= 19) orlo += ' Q' + (xx - 9.5).toFixed(1) + ' ' + (y1 + 6 - 46 * lembo * Math.max(0, Math.min(1, (xx - e + 150) / 80))).toFixed(1) + ' ' + Math.max(a, xx - 19).toFixed(1) + ' ' + (y1 - 46 * lembo * Math.max(0, Math.min(1, (xx - 19 - e + 150) / 80))).toFixed(1);
+  const corpo = sopra + orlo + ' Z';
+  const rotolo = sr < 0.999 ? '<ellipse cx="' + e.toFixed(1) + '" cy="' + ((y0 + y1) / 2) + '" rx="12" ry="' + ((y1 - y0) / 2 + 2) + '" fill="#C8641C" stroke="#8A4210" stroke-width="2"/>' +
+    '<ellipse cx="' + e.toFixed(1) + '" cy="' + ((y0 + y1) / 2) + '" rx="5" ry="14" fill="#8A4210" opacity=".6"/>' : '';
+  // Il lembo sollevato: sotto si vede il passeggero (il telone non lo copre più); dentro il lembo, il rovescio in ombra.
+  return '<g class="g-telone">' +
+    '<clipPath id="g-telone-' + Math.round(a) + '"><path d="' + corpo + '"/></clipPath>' +
+    '<path d="' + corpo + '" fill="' + K[0] + '"/><g clip-path="url(#g-telone-' + Math.round(a) + ')">' + toppe.join('') + '</g>' +
+    '<path d="' + corpo + '" fill="none" stroke="#8A4210" stroke-width="2.4" stroke-linejoin="round"/>' + rotolo + '</g>';
+};
+// Il telone piegato sul braccio del custode: un fagotto a strati, centrato in (x, y) del mondo.
+window.G.S2.telonePiegato = function (x, y, s) {
+  const K = window.G.S2.COLORI_TELONE;
+  s = s || 1;
+  return '<g transform="translate(' + x + ' ' + y + ') scale(' + s + ')">' + [0, 1, 2, 3].map(k => '<rect x="-14" y="' + (-10 + k * 5) + '" width="28" height="6" rx="2.5" fill="' + K[k] + '" stroke="#8A4210" stroke-width="1"/>').join('') + '</g>';
+};
+// Il fiume, in fondo al parco oltre il binario morto, col ponte di legno; e sull'altra riva il parco gemello: un parco
+// piccolo come quello di Ada, con la montagna identica (G.mondo spostato di GEMELLO.dx). Coordinate del mondo.
+window.G.S2.GEMELLO = { dx: -5500, fiume: [-3560, -2980], ponte: 858 };
+window.G.S2.fiume = function () {
+  const C = window.G.C, [f0, f1] = window.G.S2.GEMELLO.fiume;
+  let onde = '';
+  for (let y = 905; y < 1080; y += 26) onde += 'M' + (f0 + 20) + ' ' + y + ' q20 -8 40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 ';
+  const pal = [];
+  for (let x = f0 - 20; x <= f1 + 20; x += 60) pal.push('M' + x + ' 838 L' + x + ' 856');
+  return '<g class="g-fiume"><path d="M' + (f0 - 40) + ' 868 Q' + (f0 + 10) + ' 880 ' + (f0 + 20) + ' 900 L' + (f1 - 20) + ' 900 Q' + (f1 - 10) + ' 880 ' + (f1 + 40) + ' 868 L' + (f1 + 40) + ' 1400 L' + (f0 - 40) + ' 1400 Z" fill="#14305A"/>' +
+    '<path d="' + onde + '" stroke="#3E6FA0" stroke-width="3" fill="none" opacity=".6"/>' +
+    // Il ponte: un arco di legno, col parapetto.
+    '<path d="M' + (f0 - 60) + ' 862 Q' + ((f0 + f1) / 2) + ' 840 ' + (f1 + 60) + ' 862 L' + (f1 + 60) + ' 872 Q' + ((f0 + f1) / 2) + ' 852 ' + (f0 - 60) + ' 872 Z" fill="' + C.legno + '" stroke="' + C.legnoScuro + '" stroke-width="3"/>' +
+    '<path d="M' + (f0 + 40) + ' 870 Q' + ((f0 + f1) / 2) + ' 960 ' + (f1 - 40) + ' 870" stroke="' + C.legnoScuro + '" stroke-width="10" fill="none"/>' +
+    '<path d="' + pal.join(' ') + '" stroke="' + C.legnoScuro + '" stroke-width="4"/><path d="M' + (f0 - 40) + ' 840 Q' + ((f0 + f1) / 2) + ' 818 ' + (f1 + 40) + ' 840" stroke="' + C.legno + '" stroke-width="5" fill="none"/></g>';
+};
+// Il parco gemello, sull'altra riva: lo stesso mondo, spostato. o.luci: da 0 (spento) a 1; o.bruco: il Bruco gemello
+// (una faccia di un altro colore). Va disegnato PRIMA del mondo di Ada (che lo copre dove si sovrappongono).
+window.G.S2.parcoGemello = function (o) {
+  o = o || {};
+  const G = window.G, S2 = G.S2, luci = o.luci === undefined ? 1 : o.luci;
+  const mondo = G.mondo({ banchina: true, manopola: 0, spento: 1 - luci, seme: 9 });
+  return '<g class="g-gemello" transform="translate(' + S2.GEMELLO.dx + ' 0)">' + mondo + (o.bruco ? S2.brucoFermo(o.bruco, { faccia: '#BFE6FF' }) : '') + '</g>';
 };

@@ -217,6 +217,25 @@ function tavole() {
   s += at(1000, 1010, 2.2, S2.panchina()) + et(1000, 1040, 'la panchina della stazione', true);
   s += at(1300, 820, 0.5, G.custode('orologio', 'serio', { campanella: true, lancetta: 1, suona: 18 })) + et(1360, 1040, 'drin', true);
   T['Campanella.dc.html'] = { titolo: 'La campanella', w: 1920, h: 1080, svg: s };
+  // Il telone (stagione 2, episodio 5) e il fiume, col parco gemello sull'altra riva (episodi 5 e 6).
+  const TP = G.MOD.seconda.telone.paperelle, M2 = G.MONDO;
+  const coda = (n, x0) => G.treno(Array.from({ length: n }, (_, i) => ({ tipo: 'paperella', col: [TP.telone, TP.Al, TP.piccolo, TP['telone·fine']][i % 4] })), { sbarra: 1 })
+    .split('<g class="g-vag"').slice(1).map((v, i) => '<g transform="translate(' + (x0 + i * M2.passoBanchina) + ' 852) scale(' + M2.scala + ') translate(-120 -150)"' + v.replace(/^ data-i="\d+">/, '>')).join('');
+  s = '<rect width="1920" height="1080" fill="#F3EADB"/>' + titolo('Il telone e il fiume · stagione 2');
+  s += vista(40, 120, 900, 420, '-80 740 420 196', G.mondo({ banchina: true, manopola: 0 }) + coda(4, 0) + S2.telone(36, 268, {}));
+  s += et(490, 570, 'il telone, steso sui vagoni saliti dopo la paperella arancio');
+  s += vista(980, 120, 900, 420, '-80 740 420 196', G.mondo({ banchina: true, manopola: 0 }) + coda(4, 0) + S2.telone(36, 268, { lembo: 1 }));
+  s += et(1430, 570, 'con il lembo sollevato: sotto, i passeggeri di sempre');
+  s += pannello(40, 610, 560, 430);
+  s += at(90, 650, 0.8, G.custode('porge', 'base', {})) + at(150, 650, 0.8, '<g transform="translate(-120 0)"></g>');
+  s += '<g>' + S2.telonePiegato(...G.puntoCustode(186, 984, G.CUSTODE_MANI.porge, 0.8).map((v, k) => v + [5, 2][k]), 0.8 * 3) + '</g>';
+  s += et(320, 1020, 'piegato sul braccio del custode', true);
+  [['telone', 'arancio'], ['telone·fine', 'arancio scura'], ['Al', '«Al»'], ['mare', '«Mare»'], ['Emma', '«Emma»'], ['piccolo', '«piccolo»']].forEach(([w, n], k) => {
+    s += at(300 + (k % 3) * 90, 660 + Math.floor(k / 3) * 150, 0.7, G.paperella(TP[w])) + et(335 + (k % 3) * 90, 780 + Math.floor(k / 3) * 150, n, true, 16);
+  });
+  s += vista(640, 610, 1240, 430, '-6300 -100 4100 1420', S2.parcoGemello({}) + G.mondo({ banchina: true, morto: true, manopola: 0, fiume: true }));
+  s += et(1260, 1066, 'il fiume, col ponte; sull’altra riva il parco gemello, con la montagna identica');
+  T['Telone.dc.html'] = { titolo: 'Il telone e il fiume', w: 1920, h: 1080, svg: s };
   // La grammatica: colori e caratteri.
   const sw = [['notte', C.notte1], ['cielo', C.notte2], ['lampadine', C.luce], ['righe', C.rosso], ['crema', C.crema], ['oro', C.oro], ['montagna', C.mont2], ['acqua', C.acqua]];
   s = '<rect width="1280" height="720" fill="#F3EADB"/>' + titolo('La grammatica');
@@ -241,7 +260,7 @@ const T = tavole();
 fs.mkdirSync(OUT, { recursive: true });
 const posto = { 'Main.dc.html': [0, 0], 'Oggetti.dc.html': [2000, 0], 'LunaPark.dc.html': [0, 1200], 'Montagna.dc.html': [3500, 1200], 'Finestre.dc.html': [0, 2400], 'Grammatica.dc.html': [2000, 2400], 'Parco.dc.html': [0, 3600],
   'Passeggeri.dc.html': [2000, 3600], 'Stagione.dc.html': [0, 4800], 'Immenso.dc.html': [2000, 4800], 'Custode.dc.html': [0, 6000],
-  'Gemello.dc.html': [2000, 6000], 'Frase.dc.html': [0, 7200], 'Bruco.dc.html': [2000, 7200], 'Teleferica.dc.html': [0, 8400], 'Campanella.dc.html': [2000, 8400] };
+  'Gemello.dc.html': [2000, 6000], 'Frase.dc.html': [0, 7200], 'Bruco.dc.html': [2000, 7200], 'Teleferica.dc.html': [0, 8400], 'Campanella.dc.html': [2000, 8400], 'Telone.dc.html': [0, 9600] };
 const canvas = {
   v: 3, createdOnFiles: { v: 1, at: new Date().toISOString().replace(/\.\d+Z$/, 'Z') }, title: 'Ancora un giro · design',
   launch: { view: 'canvas' }, pages: [], boards: {}, order: [], notes: {}, designSystems: [],
