@@ -76,7 +76,7 @@ kit.score(function (S, T) {
   [8.4, 10.1, 12.4].forEach(c => { S.fx('sparkle', R('passeggeri', c), { vel: 40 }); S.fx('ding', R('passeggeri', c + 0.2), { vel: 30 }); });
   [20.6, 20.9, 21.2].forEach(c => S.fx('click', R('passeggeri', c), { vel: 40 }));
   // La partenza: la catena della salita, la discesa, i clac nel buio.
-  for (let k = 0; k < 30; k++) S.fx('tick', R('partenza', 5.4 + k * 0.2), { vel: 30 });
+  for (let k = 0; k < 19; k++) S.fx('tick', R('partenza', 7.0 + k * 0.2), { vel: 30 });
   S.fx('whoosh', R('partenza', 12.4), { dur: 3.0 });
   [16.6, 17.4, 18.9, 20.2, 21.0, 22.6].forEach(c => S.fx('doubleclick', R('partenza', c), { vel: 32 }));
   // La vasca: il treno esce, le paperelle cadono nell'acqua.

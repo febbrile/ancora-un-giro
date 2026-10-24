@@ -68,7 +68,7 @@ kit.score(function (S, T) {
   [9.6, 10.1, 10.6].forEach(c => { S.fx('sparkle', R('carrozza', c), { vel: 38 }); S.fx('ding', R('carrozza', c + 0.15), { vel: 28 }); });
   [20.6, 20.9, 21.2].forEach(c => S.fx('click', R('carrozza', c), { vel: 40 }));
   // Nel buio: la catena, la discesa, il buio.
-  for (let k = 0; k < 22; k++) S.fx('tick', R('buio', 1.8 + k * 0.2), { vel: 30 });
+  for (let k = 0; k < 15; k++) S.fx('tick', R('buio', 3.4 + k * 0.2), { vel: 30 });
   S.fx('whoosh', R('buio', 7.2), { dur: 3.2 });
   S.fx('thud', R('buio', 10.8), { vel: 36 });
   // I fili: si accendono con un tintinnio; i colori scorrono.

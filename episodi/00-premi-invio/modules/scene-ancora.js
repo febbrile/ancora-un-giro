@@ -1,5 +1,6 @@
 const { seg, eo, eio, lerp } = kit;
-// Il treno riparte con un vagone in più e sparisce nella montagna; sul telefono la storia si allunga.
+// Il treno riparte con un vagone in più, esce a sinistra, ricompare sul viadotto e sparisce nella montagna;
+// sul telefono la storia si allunga.
 // Ada, alla vasca, guarda la montagna. Titolo: «Ancora un giro».
 // Si apre dove finisce «pesca».
 const AN_CAM = [
@@ -11,7 +12,9 @@ const AN_CAM = [
   { t: 19.4, cx: 770, cy: 818, z: 3.3 },
   { t: 22.6, cx: 960, cy: 560, z: 1 },
 ];
-const AN_VEL = [[0, 0], [1.6, 0], [2.6, 110], [4.5, 120], [5.0, 110], [8.2, 110], [9, 200], [10, 320]];
+// Velocità del treno [t, v]: parte piano; fuori dall'inquadratura corre sulla banchina lunga e sale (non si vede);
+// ricompare da sinistra sul viadotto ed entra nella montagna quando entrava prima.
+const AN_VEL = [[0, 0], [1.6, 0], [2.6, 110], [4.5, 120], [5.0, 110], [5.4, 110], [6.4, 2382], [7.4, 320]];
 const AN_TEL = [11.8, 12.4, 15.0, 15.6];
 const AN_TITOLO = 19.6;
 kit.scene('ancora', {
