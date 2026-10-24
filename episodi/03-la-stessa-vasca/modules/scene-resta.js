@@ -16,7 +16,10 @@ const RE_CAM = [
 const RE_SALTA = 0.8, RE_VAGONE = 1.8, RE_SALE = 3.4;
 const RE_PASSO = [2.6, 4.0], RE_TORNA = [9.4, 11.2];
 const RE_SBARRA = [3.7, 4.3];
-const RE_PARTE = [4.6, 10.6];
+const RE_PARTE = [4.6, 10.6], RE_CORSA = 2852;
+// Fuori campo, tra a e b, il treno corre il resto della banchina, la salita e un pezzo di viadotto (s in più): così
+// entra nella montagna quando entrava prima, a 10.0.
+const RE_FUORI = [8.0, 8.7, 2031];
 const RE_GIRA = [12.2, 14.2];
 kit.scene('resta', {
   init(kit) {
@@ -55,7 +58,7 @@ kit.scene('resta', {
     m.cam.setAttribute('transform', G.camChiavi(RE_CAM, t));
     G.animaMondo(m, t + 1140);
     // Il treno, fermo in stazione; la sbarra del vagone nuovo si abbassa e il treno riparte, un vagone più lungo.
-    const s = lerp(640 - M.fermo, 2400, ei(seg(t, RE_PARTE[0], RE_PARTE[1])));
+    const s = 640 - M.fermo + RE_CORSA * ei(seg(t, RE_PARTE[0], RE_PARTE[1])) + RE_FUORI[2] * eio(seg(t, RE_FUORI[0], RE_FUORI[1]));
     G.posaTreno(this.vag, m.partenza, s);
     G.nascondiInMontagna(this.vag, m.partenza, s, { fine: true });
     if (t < RE_PARTE[0]) this.vag[3].setAttribute('opacity', eo(seg(t, RE_VAGONE, RE_VAGONE + 0.6)).toFixed(3));

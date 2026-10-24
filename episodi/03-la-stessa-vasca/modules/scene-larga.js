@@ -74,7 +74,7 @@ kit.scene('larga', {
     m.cam.setAttribute('transform', G.camChiavi(LA_CAM, t));
     G.animaMondo(m, t + 1110);
     this.due.setAttribute('opacity', (1 - seg(t, LA_TEL0[0], LA_TEL0[1])).toFixed(3));
-    const sv = lerp(640 - M.fermo, 2400, ei(seg(t, LA_PARTE[0], LA_PARTE[1])));
+    const sv = lerp(640 - M.fermo, m.partenza.getTotalLength(), ei(seg(t, LA_PARTE[0], LA_PARTE[1])));
     G.posaTreno(this.vecchio, m.partenza, sv);
     G.nascondiInMontagna(this.vecchio, m.partenza, sv, { fine: true });
     // La manopola: dalla lucina grande, passando per il mezzo, fino alle lucine piccole, che si accendono una dopo l'altra.

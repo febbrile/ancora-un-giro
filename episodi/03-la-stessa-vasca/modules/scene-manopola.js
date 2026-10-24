@@ -84,7 +84,7 @@ kit.scene('manopola', {
     m.cam.setAttribute('transform', G.camChiavi(MA_CAM, t));
     G.animaMondo(m, t + 1060);
     // Il treno di prima riparte e sparisce nella montagna.
-    const sv = lerp(640 - M.fermo, 2400, ei(seg(t, MA_PARTE[0], MA_PARTE[1])));
+    const sv = lerp(640 - M.fermo, m.partenza.getTotalLength(), ei(seg(t, MA_PARTE[0], MA_PARTE[1])));
     G.posaTreno(this.vecchio, m.partenza, sv);
     G.nascondiInMontagna(this.vecchio, m.partenza, sv, { fine: true });
     // La manopola: urtata dal quaderno trema; poi Ada la gira tutta verso la lucina grande.

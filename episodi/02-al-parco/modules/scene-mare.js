@@ -1,7 +1,7 @@
 const { seg, eo, ei, eio, lerp } = kit;
 // Il primo treno esce come l'altra volta: Emma è blu, e sotto l'ultimo vagone la vasca si riempie di blu. Il treno si
 // ferma in stazione e i vestiti tornano del colore dei biglietti. Ada pesca a occhi chiusi: una paperella blu, «nuota».
-// Le altre scivolano via; la paperella sale su un vagone nuovo. Poi il treno va ad aspettare in cima alla salita.
+// Le altre scivolano via; la paperella sale su un vagone nuovo. Poi il treno va ad aspettare più avanti sulla banchina.
 // Si apre dalla luce dell'uscita; finisce con la stazione libera e la vasca vuota (la riprende «verde»).
 const MR_CAM = [
   { t: 0, cx: 820, cy: 820, z: 3.0 },
@@ -12,14 +12,15 @@ const MR_CAM = [
   { t: 17.4, cx: 640, cy: 846, z: 4.2 },
   { t: 19.6, cx: 520, cy: 816, z: 3.0 },
   { t: 22.0, cx: 520, cy: 816, z: 3.0 },
-  { t: 27.4, cx: 520, cy: 650, z: 1.7 },
+  { t: 27.4, cx: 260, cy: 720, z: 1.7 },
 ];
 const MR_ESCE = 1.0;
 const MR_VEL = [[MR_ESCE, 100], [4.4, 55], [8.0, 55], [9.4, 130], [11.0, 130], [12.8, 0]];
 const MR_ADA = [672, 896];
 const MR_PESCA = { giu: 12.4, su: 14.2, preso: 14.7 };
 const MR_SALTA = 17.4, MR_SALE = 20.6, MR_VAGONE = 19.8;
-const MR_SALITA = [22.4, 27.8], MR_CIMA = 1080;
+// Dove aspetta: più avanti sulla banchina, lasciando la stazione libera al secondo treno.
+const MR_SALITA = [22.4, 27.8], MR_ATTESA = 920;
 kit.scene('mare', {
   init(kit) {
     const G = window.G, M = G.MONDO, D = G.MOD.mare, P = D.passeggeri;
@@ -73,13 +74,13 @@ kit.scene('mare', {
     m.cam.setAttribute('transform', G.camChiavi(MR_CAM, t));
     G.animaMondo(m, t + 760);
     this.uscita.setAttribute('opacity', (0.95 * (1 - eio(seg(t, 0.1, 1.6)))).toFixed(3));
-    // Il treno: esce dalla montagna, si ferma in stazione; poi riparte e va in cima alla salita.
+    // Il treno: esce dalla montagna, si ferma in stazione; poi riparte e va ad aspettare più avanti sulla banchina.
     const s = Math.min(this.sF, G.percorso(t, 0, MR_VEL));
     if (t < MR_SALITA[0]) {
       G.posaTreno(this.vag, m.arrivo, t < MR_ESCE ? -500 : s);
       G.nascondiInMontagna(this.vag, m.arrivo, t < MR_ESCE ? -500 : s, { inizio: true });
     } else {
-      G.posaTreno(this.vag, m.partenza, lerp(640 - M.fermo, MR_CIMA, eio(seg(t, MR_SALITA[0], MR_SALITA[1]))));
+      G.posaTreno(this.vag, m.partenza, lerp(640 - M.fermo, MR_ATTESA, eio(seg(t, MR_SALITA[0], MR_SALITA[1]))));
     }
     const torna = seg(s, this.sF - 150, this.sF);
     this.vag.slice(0, 3).forEach((v, i) => G.cambiaPasseggero(v, this.chi[i][0], G.mix(this.chi[i][1].tratti[2], this.chi[i][1].biglietto, Math.round(torna * 12) / 12)));

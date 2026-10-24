@@ -1,20 +1,27 @@
 const { seg, eo, eio, lerp } = kit;
-// I due treni partono da soli, uno dietro l'altro: il primo dalla cima della salita, il secondo dalla stazione.
-// Spariscono nella montagna. Ada corre alla bancarella della pesca, col quaderno stretto al petto.
+// I due treni partono da soli, uno dietro l'altro, dalla banchina lunga; escono di campo a sinistra e ricompaiono sul
+// viadotto, poi spariscono nella montagna. Ada corre alla bancarella della pesca, col quaderno stretto al petto.
 // Si apre come finisce «parco»; finisce sulla montagna (la riprende «fili», dentro).
 const PR_CAM = [
-  { t: 0, cx: 340, cy: 600, z: 1.9 },
-  { t: 1.8, cx: 340, cy: 600, z: 1.9 },
+  { t: 0, cx: 190, cy: 720, z: 1.8 },
+  { t: 1.8, cx: 190, cy: 720, z: 1.8 },
   { t: 9.0, cx: 860, cy: 560, z: 1.1 },
   { t: 13.4, cx: 960, cy: 540, z: 1 },
   { t: 17.4, cx: 1030, cy: 520, z: 1.3 },
 ];
-const PR_TRENI = [1080, 490];
-// Velocità [t, v]: fermi, poi piano; dopo la salita il secondo prende velocità come il primo.
+const PR_TRENI = [920, 490];
+// Velocità [t, v]: fermi, poi via lungo la banchina; sul viadotto il secondo va piano, poi prende velocità come il primo.
 const PR_VEL = [
-  [[0, 0], [1.4, 0], [3.0, 90], [6.0, 140], [8.0, 220]],
-  [[0, 0], [1.8, 0], [3.4, 80], [5.5, 80], [7.0, 70], [10.4, 70], [11.4, 160], [12.6, 300]],
+  [[0, 0], [1.4, 0], [3.0, 170], [3.6, 240], [6.0, 330], [8.0, 420]],
+  [[0, 0], [1.8, 0], [3.4, 120], [5.0, 260], [6.4, 240], [7.4, 150], [10.4, 150], [11.4, 200], [12.6, 300]],
 ];
+// Fuori campo, tra a e b, il treno corre il resto della banchina, la salita e un pezzo di viadotto, e a b è al punto s:
+// così entra nella montagna quando entrava prima (il primo a 8.0, il secondo a 13.9), con la stessa musica.
+const PR_FUORI = [[3.6, 4.3, 3326], [5.7, 6.7, 3146]];
+function prDove(n, t) {
+  const G = window.G, [a, b, s] = PR_FUORI[n], v = PR_TRENI[n] + G.percorso(t, 0, PR_VEL[n]);
+  return v + (s - PR_TRENI[n] - G.percorso(b, 0, PR_VEL[n])) * eio(seg(t, a, b));
+}
 const PR_CORSA = [3.0, 6.4];
 kit.scene('partenza', {
   init(kit) {
@@ -42,7 +49,7 @@ kit.scene('partenza', {
     m.cam.setAttribute('transform', G.camChiavi(PR_CAM, t));
     G.animaMondo(m, t + 700);
     this.treni.forEach((v, n) => {
-      const s = G.percorso(t, PR_TRENI[n], PR_VEL[n]);
+      const s = prDove(n, t);
       G.posaTreno(v, m.partenza, s);
       G.nascondiInMontagna(v, m.partenza, s, { fine: true });
     });
