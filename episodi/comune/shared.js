@@ -370,16 +370,18 @@ function ada(pose, expr, o) {
 const CU = { giacca: '#5A4A42', giaccaScura: '#3E322D', gilet: '#B5893A', giletScuro: '#8A6527', cravatta: '#7E2F3F', pantaloni: '#2B2A33',
   pelle: '#E8B48F', naso: '#DC9C80', bianco: '#F4F0E8', grigio: '#C9C3B8', grigioScuro: '#A39C90', libro: '#6B3A26', libroScuro: '#47251A',
   ottone: '#E0A93B', ottoneScuro: '#8C6420' };
-// La lanterna del custode, appesa per il manico nel punto (x, y): alta 56.
-function lume(x, y, luce) {
+// La lanterna del custode, appesa per il manico nel punto (x, y): alta 56. v: i colori (quelli d'ottone, se manca).
+const LUME = { metallo: CU.ottone, scuro: CU.ottoneScuro, spento: '#8A7A5A', vetro: '#FFE7A8', alone: C.luce };
+function lume(x, y, luce, v) {
   luce = luce === undefined ? 1 : luce;
-  return '<g><circle cx="' + x + '" cy="' + (y + 34) + '" r="54" fill="' + C.luce + '" opacity="' + (0.4 * luce).toFixed(2) + '" filter="url(#g-soft)"/>' +
+  v = v || LUME;
+  return '<g><circle cx="' + x + '" cy="' + (y + 34) + '" r="54" fill="' + v.alone + '" opacity="' + (0.4 * luce).toFixed(2) + '" filter="url(#g-soft)"/>' +
     '<path d="M' + (x - 9) + ' ' + (y + 12) + ' Q' + x + ' ' + (y - 4) + ' ' + (x + 9) + ' ' + (y + 12) + '" stroke="' + AI + '" stroke-width="3" fill="none"/>' +
-    '<path d="M' + (x - 12) + ' ' + (y + 20) + ' L' + (x + 12) + ' ' + (y + 20) + ' L' + (x + 8) + ' ' + (y + 11) + ' L' + (x - 8) + ' ' + (y + 11) + ' Z" fill="' + CU.ottone + '" stroke="' + CU.ottoneScuro + '" stroke-width="2"/>' +
-    '<rect x="' + (x - 12) + '" y="' + (y + 20) + '" width="24" height="28" rx="3" fill="' + mix('#8A7A5A', '#FFE7A8', luce) + '" stroke="' + CU.ottoneScuro + '" stroke-width="2.5"/>' +
+    '<path d="M' + (x - 12) + ' ' + (y + 20) + ' L' + (x + 12) + ' ' + (y + 20) + ' L' + (x + 8) + ' ' + (y + 11) + ' L' + (x - 8) + ' ' + (y + 11) + ' Z" fill="' + v.metallo + '" stroke="' + v.scuro + '" stroke-width="2"/>' +
+    '<rect x="' + (x - 12) + '" y="' + (y + 20) + '" width="24" height="28" rx="3" fill="' + mix(v.spento, v.vetro, luce) + '" stroke="' + v.scuro + '" stroke-width="2.5"/>' +
     '<ellipse cx="' + x + '" cy="' + (y + 36) + '" rx="5" ry="8" fill="#FFFFFF" opacity="' + (0.85 * luce).toFixed(2) + '"/>' +
-    '<path d="M' + x + ' ' + (y + 20) + ' L' + x + ' ' + (y + 48) + '" stroke="' + CU.ottoneScuro + '" stroke-width="1.5" opacity=".6"/>' +
-    '<rect x="' + (x - 14) + '" y="' + (y + 47) + '" width="28" height="7" rx="2" fill="' + CU.ottone + '" stroke="' + CU.ottoneScuro + '" stroke-width="2"/></g>';
+    '<path d="M' + x + ' ' + (y + 20) + ' L' + x + ' ' + (y + 48) + '" stroke="' + v.scuro + '" stroke-width="1.5" opacity=".6"/>' +
+    '<rect x="' + (x - 14) + '" y="' + (y + 47) + '" width="28" height="7" rx="2" fill="' + v.metallo + '" stroke="' + v.scuro + '" stroke-width="2"/></g>';
 }
 function custodeTesta(expr, o) {
   const dx = 3 * (o.occhi || 0);
@@ -461,6 +463,106 @@ function custode(pose, expr, o) {
       '<g transform="rotate(' + dond + ' 74 296)">' + lume(74, 296, luce) + '</g><circle cx="74" cy="296" r="8" fill="' + CU.pelle + '"/>';
   }
   return '<g>' + gambe + gilet + giacca + chiavi + libro + destro + sinistro + custodeTesta(expr, o) + '</g>';
+}
+// Il custode del parco gemello (stagione 2, episodio 6): fa le stesse cose del custode di Ada, con un altro regolamento.
+// Diverso a colpo d'occhio: basso e tondo, bonario, con la bombetta, i baffi a manubrio e il gilet a quadri; la lanterna
+// e il regolamento sono verdi. Stessa scatola del custode, 240×420, piedi a y = 410: la testa arriva a metà del custode.
+// pose: 'base' (la lanterna in mano, il regolamento sotto il braccio), 'alza' (la lanterna alzata), 'cenno' (il braccio
+// teso, la mano aperta: «prego»; la lanterna appesa al polso), 'legge' (il regolamento aperto con due mani; la lanterna
+// per terra). Espressioni: 'base', 'sorriso', 'serio', 'chiusi'. o.dondolo, o.occhi, o.luce: come per il custode.
+const CG = { giacca: '#3E4A6E', giaccaScura: '#2C3552', quadri: '#C4523C', quadriChiaro: '#F1D9B0', quadriScuro: '#2F6B45',
+  pantaloni: '#3A3340', cappello: '#2A2630', nastro: '#2F7A4A', libro: '#2F7A4A', libroScuro: '#1D5232', baffi: '#E9E2D6', baffiScuri: '#BDB3A3' };
+const LUME_VERDE = { metallo: '#3E8F5C', scuro: '#225E38', spento: '#5E7A5E', vetro: '#D9FFC0', alone: '#A8EE86' };
+function custodeGemelloTesta(expr, o) {
+  const dx = 3 * (o.occhi || 0);
+  let ciglia = '<path d="M98 170 Q105 165 112 169 M128 169 Q135 165 142 170" stroke="' + CG.baffiScuri + '" stroke-width="4" stroke-linecap="round" fill="none"/>';
+  let occhi = '<circle cx="' + (106 + dx) + '" cy="180" r="4.6" fill="' + AI + '"/><circle cx="' + (134 + dx) + '" cy="180" r="4.6" fill="' + AI + '"/>' +
+    '<circle cx="' + (107.6 + dx) + '" cy="178.4" r="1.6" fill="#FFFFFF"/><circle cx="' + (135.6 + dx) + '" cy="178.4" r="1.6" fill="#FFFFFF"/>';
+  let bocca = '<path d="M113 213 Q120 218 127 213" stroke="' + AI + '" stroke-width="2.4" stroke-linecap="round" fill="none"/>';
+  if (expr === 'sorriso') {
+    occhi = '<path d="M100 181 Q106 175 112 181 M128 181 Q134 175 140 181" stroke="' + AI + '" stroke-width="2.8" stroke-linecap="round" fill="none"/>';
+    bocca = '<path d="M110 211 Q120 222 130 211 Z" fill="' + CU.cravatta + '" stroke="' + AI + '" stroke-width="2.2" stroke-linejoin="round"/>';
+  } else if (expr === 'chiusi') {
+    occhi = '<path d="M100 179 Q106 184 112 179 M128 179 Q134 184 140 179" stroke="' + AI + '" stroke-width="2.8" stroke-linecap="round" fill="none"/>';
+  } else if (expr === 'serio') {
+    ciglia = '<path d="M98 169 L112 171 M128 171 L142 169" stroke="' + CG.baffiScuri + '" stroke-width="4" stroke-linecap="round" fill="none"/>';
+    bocca = '<path d="M114 214 L126 214" stroke="' + AI + '" stroke-width="2.4" stroke-linecap="round" fill="none"/>';
+  }
+  return '<ellipse cx="85" cy="186" rx="6" ry="8" fill="' + CU.pelle + '"/><ellipse cx="155" cy="186" rx="6" ry="8" fill="' + CU.pelle + '"/>' +
+    '<ellipse cx="120" cy="184" rx="36" ry="34" fill="' + CU.pelle + '"/>' +
+    // I ciuffi bianchi sopra le orecchie, sotto la bombetta.
+    '<path d="M86 168 C80 176 82 186 88 190 C88 182 90 176 94 170 Z M154 168 C160 176 158 186 152 190 C152 182 150 176 146 170 Z" fill="' + CG.baffi + '"/>' +
+    '<circle cx="97" cy="197" r="7" fill="#FF8F8F" opacity=".35"/><circle cx="143" cy="197" r="7" fill="#FF8F8F" opacity=".35"/>' +
+    ciglia + occhi +
+    '<ellipse cx="120" cy="193" rx="8" ry="7" fill="' + CU.naso + '"/>' +
+    // I baffi a manubrio, con le punte arricciate in su.
+    '<path d="M120 201 C112 197 102 198 96 204 C92 208 88 206 88 200 C86 210 96 214 104 210 C110 208 116 206 120 205 C124 206 130 208 136 210 C144 214 154 210 152 200 C152 206 148 208 144 204 C138 198 128 197 120 201 Z" fill="' + CG.baffi + '" stroke="' + CG.baffiScuri + '" stroke-width="1.5" stroke-linejoin="round"/>' +
+    bocca +
+    // La bombetta, con il nastro verde.
+    '<path d="M90 158 C88 128 102 118 120 118 C138 118 152 128 150 158 Z" fill="' + CG.cappello + '"/>' +
+    '<path d="M90 150 L150 150 L150 158 L90 158 Z" fill="' + CG.nastro + '"/>' +
+    '<ellipse cx="120" cy="159" rx="44" ry="7" fill="' + CG.cappello + '"/>' +
+    '<path d="M100 130 Q110 122 122 122" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" fill="none" opacity=".18"/>';
+}
+// Il regolamento verde, chiuso: scatola 56×74 con l'angolo in alto a sinistra in (x, y).
+function regolamentoVerde(x, y) {
+  return '<rect x="' + x + '" y="' + y + '" width="56" height="74" rx="3" fill="' + CG.libro + '" stroke="' + CG.libroScuro + '" stroke-width="2.5"/>' +
+    '<rect x="' + (x + 51) + '" y="' + (y + 4) + '" width="7" height="66" fill="' + C.crema + '"/>' +
+    '<path d="M' + x + ' ' + (y + 13) + ' L' + (x + 56) + ' ' + (y + 13) + ' M' + x + ' ' + (y + 61) + ' L' + (x + 56) + ' ' + (y + 61) + '" stroke="' + C.oro + '" stroke-width="2"/>' +
+    '<circle cx="' + (x + 28) + '" cy="' + (y + 37) + '" r="9" fill="none" stroke="' + C.oro + '" stroke-width="2"/>' +
+    '<path d="M' + (x + 24) + ' ' + (y + 74) + ' L' + (x + 24) + ' ' + (y + 88) + ' L' + (x + 28) + ' ' + (y + 83) + ' L' + (x + 32) + ' ' + (y + 88) + ' L' + (x + 32) + ' ' + (y + 74) + '" fill="' + C.oro + '"/>';
+}
+function custodeGemello(pose, expr, o) {
+  o = o || {};
+  const luce = o.luce === undefined ? 1 : o.luce, dond = o.dondolo || 0;
+  const gambe = '<rect x="101" y="360" width="16" height="38" fill="' + CG.pantaloni + '"/><rect x="123" y="360" width="16" height="38" fill="' + CG.pantaloni + '"/>' +
+    '<path d="M90 404 Q90 394 108 394 L118 396 L118 408 L92 408 Z M150 404 Q150 394 132 394 L122 396 L122 408 L148 408 Z" fill="#14110F"/>' +
+    '<path d="M96 399 L105 398 M144 399 L135 398" stroke="#FFFFFF" stroke-width="1.5" opacity=".35"/>';
+  // Il gilet a quadri, tondo come la pancia, con i bottoni d'ottone; il colletto e il farfallino verde.
+  const quadri = '<defs><pattern id="g-quadri-gemello" width="18" height="18" patternUnits="userSpaceOnUse">' +
+    '<rect width="18" height="18" fill="' + CG.quadri + '"/><rect width="7" height="18" fill="' + CG.quadriChiaro + '" opacity=".38"/>' +
+    '<rect width="18" height="7" fill="' + CG.quadriChiaro + '" opacity=".38"/><path d="M12.5 0 L12.5 18 M0 12.5 L18 12.5" stroke="' + CG.quadriScuro + '" stroke-width="1.6"/></pattern></defs>';
+  const gilet = '<path d="M98 226 L142 226 C170 262 174 318 152 356 Q120 368 88 356 C66 318 70 262 98 226 Z" fill="url(#g-quadri-gemello)" stroke="#8E3A2A" stroke-width="2"/>' +
+    [256, 284, 312, 340].map(y => '<circle cx="120" cy="' + y + '" r="3.6" fill="' + CU.ottone + '" stroke="' + CU.ottoneScuro + '" stroke-width="1"/>').join('') +
+    '<path d="M106 214 L120 236 L134 214 Z" fill="' + CU.bianco + '"/>' +
+    '<path d="M120 226 L106 218 L106 234 Z M120 226 L134 218 L134 234 Z" fill="' + CG.nastro + '" stroke="' + CG.libroScuro + '" stroke-width="1.2"/><circle cx="120" cy="226" r="4" fill="' + CG.nastro + '"/>';
+  // La giacca corta, aperta sulla pancia.
+  const giacca = '<path d="M104 216 C74 220 48 242 44 282 C40 326 58 360 94 370 L100 358 C74 322 72 262 100 230 Z" fill="' + CG.giacca + '" stroke="' + AI + '" stroke-width="2.5" stroke-linejoin="round"/>' +
+    '<path d="M136 216 C166 220 192 242 196 282 C200 326 182 360 146 370 L140 358 C166 322 168 262 140 230 Z" fill="' + CG.giacca + '" stroke="' + AI + '" stroke-width="2.5" stroke-linejoin="round"/>' +
+    '<path d="M104 218 L92 250 L100 248 L108 228 Z M136 218 L148 250 L140 248 L132 228 Z" fill="' + CG.giaccaScura + '"/>' +
+    // Il fazzoletto verde nel taschino.
+    '<path d="M156 264 L174 262 L173 268 L157 270 Z" fill="' + CG.giaccaScura + '"/><path d="M160 264 L163 256 L166 263 L169 257 L171 263 Z" fill="' + CG.nastro + '"/>';
+  let destro, sinistro, davanti = '';
+  if (pose === 'legge') {
+    // Il regolamento aperto davanti alla pancia, con tutte e due le mani; la lanterna per terra, accanto ai piedi.
+    sinistro = '<g transform="rotate(' + dond + ' 40 354)">' + lume(40, 354, luce, LUME_VERDE) + '</g>' +
+      '<path d="M78 244 Q60 282 80 312 L94 300 Q82 280 92 256 Z" fill="' + CG.giacca + '" stroke="' + AI + '" stroke-width="2.5"/>';
+    destro = '<path d="M162 244 Q180 282 160 312 L146 300 Q158 280 148 256 Z" fill="' + CG.giacca + '" stroke="' + AI + '" stroke-width="2.5"/>';
+    davanti = '<path d="M120 286 Q96 278 66 284 L66 336 Q96 330 120 338 Q144 330 174 336 L174 284 Q144 278 120 286 Z" fill="' + CG.libro + '" stroke="' + CG.libroScuro + '" stroke-width="2.5" stroke-linejoin="round"/>' +
+      '<path d="M120 288 Q98 280 72 285 L72 330 Q98 326 120 332 Q142 326 168 330 L168 285 Q142 280 120 288 Z" fill="' + C.crema + '"/>' +
+      '<path d="M120 288 L120 332" stroke="' + C.cremaScura + '" stroke-width="2"/>' +
+      // Le pagine hanno disegni, non scritte: qui un treno e una paperella, tratteggiati.
+      '<path d="M80 314 L110 316 M82 306 Q86 300 92 306 Q98 300 104 306" stroke="' + C.cremaScura + '" stroke-width="2.4" stroke-linecap="round" fill="none"/>' +
+      '<path d="M134 306 Q142 296 150 304 Q158 302 156 312 Q146 318 134 312 Z" fill="none" stroke="' + C.cremaScura + '" stroke-width="2.4" stroke-linejoin="round"/>' +
+      '<circle cx="80" cy="318" r="8" fill="' + CU.pelle + '"/><circle cx="160" cy="318" r="8" fill="' + CU.pelle + '"/>';
+  } else {
+    // Il regolamento sotto il braccio sinistro di lui (a destra di chi guarda).
+    destro = '<g transform="rotate(-10 196 300)">' + regolamentoVerde(172, 262) + '</g>' +
+      '<path d="M170 238 Q202 272 194 320 L178 322 Q182 284 160 256 Z" fill="' + CG.giacca + '" stroke="' + AI + '" stroke-width="2.5"/><circle cx="186" cy="326" r="8" fill="' + CU.pelle + '"/>';
+    if (pose === 'alza') {
+      sinistro = '<g transform="rotate(' + dond + ' 40 168)">' + lume(40, 168, luce, LUME_VERDE) + '</g>' +
+        '<path d="M84 250 Q52 232 32 182 L50 170 Q62 214 92 234 Z" fill="' + CG.giacca + '" stroke="' + AI + '" stroke-width="2.5"/><circle cx="40" cy="170" r="8" fill="' + CU.pelle + '"/>';
+    } else if (pose === 'cenno') {
+      sinistro = '<g transform="rotate(' + dond + ' 34 236)">' + lume(34, 236, luce, LUME_VERDE) + '</g>' +
+        '<path d="M80 244 Q50 252 30 242 L34 226 Q54 234 86 230 Z" fill="' + CG.giacca + '" stroke="' + AI + '" stroke-width="2.5"/>' +
+        // La mano aperta, il palmo in su.
+        '<path d="M32 228 Q14 226 8 232 Q10 238 20 238 Q14 242 18 246 Q26 246 34 242 Z" fill="' + CU.pelle + '" stroke="' + CU.naso + '" stroke-width="1.5" stroke-linejoin="round"/>';
+    } else {
+      sinistro = '<path d="M70 238 Q40 278 42 324 L56 326 Q58 288 84 254 Z" fill="' + CG.giacca + '" stroke="' + AI + '" stroke-width="2.5"/>' +
+        '<g transform="rotate(' + dond + ' 48 330)">' + lume(48, 330, luce, LUME_VERDE) + '</g><circle cx="48" cy="330" r="8" fill="' + CU.pelle + '"/>';
+    }
+  }
+  return '<g>' + quadri + gambe + gilet + giacca + destro + sinistro + custodeGemelloTesta(expr, o) + davanti + '</g>';
 }
 // La guardiola del custode, accanto al cancello: una casetta di legno col tetto a righe e la finestra accesa.
 // Scatola 120×170, base a y = 170. o.porta da 0 (chiusa) a 1 (aperta), o.luce da 0 a 1.
@@ -1131,7 +1233,7 @@ const MOD = {"mare": {"frase": ["Al", "mare", "Emma"], "passeggeri": {"Al": {"bi
 
 window.G = {
   C, defs, MOD, MONDO, mix, tappa, fade, cam, camChiavi, posa, unico,
-  emma, emmaTirata, al, mare, parco, paperella, ada, adaTesta, custode, guardiola,
+  emma, emmaTirata, al, mare, parco, paperella, ada, adaTesta, custode, custodeGemello, guardiola,
   biglietto, lanterna, striscia, chat, cameretta, spezzaparole, vagone, passeggero, sasso, pezzo, cane, chiama, manopola, laggiu, telefono, bolle, insegna, salotto, SALOTTO,
   mondo, papereVasca, treno, posaTreno, fermoTreno, sbarre, cambiaPasseggero, rng: kitRng, percorso, costruisciMondo, animaMondo, nascondiInMontagna, posaAda,
   finestra, papereFinestra, paperellaDiLuce, INTERNO, interno, interniDefs, testa, cima, anello, scorriInterno,

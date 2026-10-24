@@ -142,6 +142,19 @@ function tavole() {
   s += at(1460, 470, 1.25, G.custode('alza', 'base', { occhi: -1 })) + at(1170, 600, 1.25, G.ada('quaderno', 'sorpresa'));
   s += et(1510, 1030, 'accanto ad Ada: alto, ma non un gigante', true);
   T['Custode.dc.html'] = { titolo: 'Il custode', w: 1920, h: 1080, svg: s };
+  // Il custode del parco gemello (stagione 2, episodio 6): le pose, e accanto al custode di Ada e ad Ada per le proporzioni.
+  s = '<rect width="1920" height="1080" fill="#F3EADB"/>' + titolo('Il custode del parco gemello · stagione 2');
+  [['base', 'base', 'con la lanterna'], ['alza', 'sorriso', 'alza la lanterna'], ['cenno', 'sorriso', 'fa cenno di pescare'], ['legge', 'serio', 'apre il regolamento'], ['base', 'chiusi', 'occhi chiusi']].forEach(([p, e, n], k) => {
+    s += at(40 + k * 270, 70, 1.0, G.custodeGemello(p, e, { dondolo: k === 0 ? -8 : 0 })) + et(160 + k * 270, 520, n);
+  });
+  s += pannello(40, 560, 1060, 490);
+  s += at(90, 600, 1.0, G.custode('base', 'base', {})) + at(330, 600, 1.0, G.custodeGemello('base', 'sorriso', {})) + at(580, 680, 1.0, G.ada('quaderno', 'felice'));
+  s += et(210, 1030, 'il custode di Ada', true) + et(450, 1030, 'il custode gemello', true) + et(690, 1030, 'Ada', true);
+  s += at(872, 752, 1.4, G.guardiola({ porta: 1 })) + et(956, 1030, 'la sua guardiola', true);
+  s += pannello(1140, 560, 740, 490);
+  s += at(1366, 488, 1.2, G.custodeGemello('alza', 'base', { occhi: -1 }));
+  s += et(1510, 1030, 'basso e tondo: lanterna e regolamento verdi', true);
+  T['Gemello.dc.html'] = { titolo: 'Il custode del parco gemello', w: 1920, h: 1080, svg: s };
   // La grammatica: colori e caratteri.
   const sw = [['notte', C.notte1], ['cielo', C.notte2], ['lampadine', C.luce], ['righe', C.rosso], ['crema', C.crema], ['oro', C.oro], ['montagna', C.mont2], ['acqua', C.acqua]];
   s = '<rect width="1280" height="720" fill="#F3EADB"/>' + titolo('La grammatica');
@@ -165,7 +178,8 @@ function artboard(nome, t) {
 const T = tavole();
 fs.mkdirSync(OUT, { recursive: true });
 const posto = { 'Main.dc.html': [0, 0], 'Oggetti.dc.html': [2000, 0], 'LunaPark.dc.html': [0, 1200], 'Montagna.dc.html': [3500, 1200], 'Finestre.dc.html': [0, 2400], 'Grammatica.dc.html': [2000, 2400], 'Parco.dc.html': [0, 3600],
-  'Passeggeri.dc.html': [2000, 3600], 'Stagione.dc.html': [0, 4800], 'Immenso.dc.html': [2000, 4800], 'Custode.dc.html': [0, 6000] };
+  'Passeggeri.dc.html': [2000, 3600], 'Stagione.dc.html': [0, 4800], 'Immenso.dc.html': [2000, 4800], 'Custode.dc.html': [0, 6000],
+  'Gemello.dc.html': [2000, 6000] };
 const canvas = {
   v: 3, createdOnFiles: { v: 1, at: new Date().toISOString().replace(/\.\d+Z$/, 'Z') }, title: 'Ancora un giro · design',
   launch: { view: 'canvas' }, pages: [], boards: {}, order: [], notes: {}, designSystems: [],

@@ -86,6 +86,13 @@
       "w": 1920,
       "h": 1080,
       "title": "Il custode"
+    },
+    "Gemello.dc.html": {
+      "x": 2000,
+      "y": 6000,
+      "w": 1920,
+      "h": 1080,
+      "title": "Il custode del parco gemello"
     }
   },
   "order": [
@@ -99,7 +106,8 @@
     "Passeggeri.dc.html",
     "Stagione.dc.html",
     "Immenso.dc.html",
-    "Custode.dc.html"
+    "Custode.dc.html",
+    "Gemello.dc.html"
   ],
   "notes": {},
   "designSystems": []
