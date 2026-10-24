@@ -131,4 +131,5 @@ kit.score(function (S, T) {
   for (let k = 0; k < 18; k++) S.fx('tick', R('ancora', 11.0 + k * 0.13), { vel: 12 });
   S.fx('click', R('ancora', 13.7), { vel: 32 });
   for (let k = 0; k < 14; k++) S.fx('tick', R('ancora', 15.2 + k * 0.24), { vel: 22 });
+  S.fx('whoosh', R('ancora', 20.4), { dur: 1.8 });
 });

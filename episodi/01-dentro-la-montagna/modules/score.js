@@ -105,4 +105,6 @@ kit.score(function (S, T) {
   // Il quaderno: la matita.
   for (let k = 0; k < 24; k++) S.fx('tick', R('quaderno', 0.7 + k * 0.3), { vel: 14 });
   for (let k = 0; k < 14; k++) S.fx('tick', R('quaderno', 12.6 + k * 0.2), { vel: 24 });
+  // Sul viadotto della stazione lunga il treno arriva alla montagna prima della fine: ci entra di corsa.
+  S.fx('whoosh', R('quaderno', 20.6), { dur: 1.8, vel: 22 });
 });
