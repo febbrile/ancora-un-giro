@@ -1,5 +1,5 @@
 const { seg, eo, ei, eio, lerp } = kit;
-// Ada corre dal binario morto alla stazione e infila la striscia nello Spezzaparole: zac, zac, zac, zac, zac, zac.
+// Ada arriva di corsa lungo la banchina, dal binario morto laggiù in fondo, e infila la striscia nello Spezzaparole: zac, zac, zac, zac, zac, zac.
 // Sei biglietti, uno per parola, volano sui sedili del trenino e prendono vita, uno dietro l'altro: il sassolino «Il»,
 // Cane (un cucciolo di luce color nocciola, senza collare, che scodinzola), il sassolino «di», Emma col suo vestito
 // rosa antico, il sassolino «si» e, nell'ultimo vagone, Chiama, la campanella del trenino, azzurro pervinca.
@@ -63,10 +63,11 @@ kit.scene('biglietti', {
     const G = this.G, M = G.MONDO, m = this.m;
     m.cam.setAttribute('transform', G.camChiavi(BG_CAM, t));
     G.animaMondo(m, t + 1000);
-    // Ada corre dal binario morto alla stazione, con la striscia in mano; poi la dà allo Spezzaparole.
+    // Ada arriva di corsa lungo la banchina, con la striscia in mano; poi la dà allo Spezzaparole. Parte da -95, appena
+    // fuori campo: il resto della banchina, fino al binario morto, l'ha già fatto.
     const u = eio(seg(t, BG_CORSA[0], BG_CORSA[1]));
     const corre = u > 0 && u < 1;
-    const ax = lerp(-95, BG_ADA[0], u), ay = (ax < 40 ? 860 : 836) - (corre ? 6 * Math.abs(Math.sin(t * 10)) : 0);
+    const ax = lerp(-95, BG_ADA[0], u), ay = 836 - (corre ? 6 * Math.abs(Math.sin(t * 10)) : 0);
     const tiene = t < BG_VIA;
     const guarda = eio(seg(t, BG_GUARDA[0], BG_GUARDA[0] + 0.4)) * (1 - eio(seg(t, BG_GUARDA[1], BG_GUARDA[1] + 0.4)));
     const no = t > BG_NO[0] && t < BG_NO[1] ? 10 * Math.sin((t - BG_NO[0]) * 12) * Math.sin(Math.PI * seg(t, BG_NO[0], BG_NO[1])) : 0;

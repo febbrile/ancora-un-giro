@@ -5,15 +5,17 @@ const { seg, eo, ei, eio, lerp } = kit;
 // tanti cani: con Mare, con Parco. Ogni volta che un treno esce sopra la vasca dopo «si chiama», sopra l'acqua resta
 // acceso un biglietto, ogni volta di un colore caldo diverso (caramello, miele, nocciola), e un brivido corre all'indietro
 // nella montagna: la pista si piega di un capello. Nessun treno porta Emma. Di nuovo oggi: Ada guarda la vasca vuota.
-// Si apre come finisce «frase»; finisce su Ada, seduta, e la vasca vuota laggiù (la riprende «biglietti»).
-const PR_ADA = [-95, 835];
+// Si apre come finisce «frase»; finisce con uno stacco su quello che guarda Ada, la vasca vuota laggiù (la riprende
+// «biglietti»).
+const PR_ADA = [-1463, 835];
 const PR_OGGI_CAM = [
-  { t: 0, cx: -110, cy: 795, z: 4.4 },
-  { t: 3.4, cx: -300, cy: 800, z: 5.2 },
-  { t: 20.6, cx: -300, cy: 800, z: 5.2 },
-  { t: 20.61, cx: -70, cy: 800, z: 3.4, da: 20.6 },
-  { t: 23.4, cx: -70, cy: 800, z: 3.4 },
-  { t: 26.4, cx: 772, cy: 852, z: 3.4 },
+  { t: 0, cx: -1478, cy: 795, z: 4.4 },
+  { t: 3.4, cx: -1668, cy: 800, z: 5.2 },
+  { t: 20.6, cx: -1668, cy: 800, z: 5.2 },
+  { t: 20.61, cx: -1438, cy: 800, z: 3.4, da: 20.6 },
+  { t: 23.6, cx: -1438, cy: 800, z: 3.4, da: 23.59 },
+  { t: 23.61, cx: 800, cy: 846, z: 3.0, da: 23.6 },
+  { t: 27.0, cx: 772, cy: 852, z: 3.4 },
 ];
 const PR_IERI_CAM = [
   { t: 2.6, cx: 760, cy: 560, z: 1.12 },
@@ -30,8 +32,8 @@ const PR_TRENI = [
   { esce: 14.8, chi: ['Il', 'cane', 'si', 'chiama'], nome: 'Fido' },
 ];
 const PR_V = 118;
-// Un treno di prova che sale la salita, nella prima inquadratura.
-const PR_SALE = { s0: 260, v: 70, chi: ['Il', 'cane', 'si', 'chiama'] };
+// Un treno di prova che corre sul viadotto verso la montagna, nella prima inquadratura (il viadotto parte da s 2448).
+const PR_SALE = { s0: 3720, v: 70, chi: ['Il', 'cane', 'si', 'chiama'] };
 const PR_STRISCE = 7;
 const PR_LANTERNA = [772, 842];
 kit.scene('prima', {
@@ -135,7 +137,7 @@ kit.scene('prima', {
     const ci = G.camChiavi(PR_IERI_CAM, t);
     this.camIeri.setAttribute('transform', ci); this.camIeri2.setAttribute('transform', ci);
     G.animaMondo({ ruota: this.camIeri.querySelector('.g-ruota') }, t + 300);
-    // Il treno di prova che sale piano la salita e sparisce nella montagna.
+    // Il treno di prova che corre piano sul viadotto e sparisce nella montagna.
     const ss = PR_SALE.s0 + PR_SALE.v * Math.max(0, t - 2.6);
     G.posaTreno(this.sale, this.partenza, ss, M.scala, M.passoBanchina);
     G.nascondiInMontagna(this.sale, this.partenza, ss, { fine: true, passo: M.passoBanchina });

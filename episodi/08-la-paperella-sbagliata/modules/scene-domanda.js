@@ -3,17 +3,19 @@ const { seg, eo, eio, lerp } = kit;
 // treni di prova: grigi, senza vernice e senza lucine, col fanale spento. Accanto all'ultimo, seduta su una pila di
 // traversine, c'è Ada, col quaderno sulle ginocchia e in mano la striscia arrivata l'altra volta, ancora arrotolata.
 // Guarda i treni grigi, poi la montagna accesa. Titolo: «La paperella sbagliata».
-// Si apre sul parco intero; finisce su Ada piccola, seduta, con la montagna accesa sullo sfondo (la riprende «frase»).
+// Si apre sul parco intero e corre lungo la banchina fino al binario morto; quando Ada si gira, uno stacco su quello che
+// guarda: la montagna accesa, dove arriva il titolo.
 const DM_CAM = [
   { t: 0, cx: 760, cy: 560, z: 1.05 },
-  { t: 1.6, cx: 760, cy: 560, z: 1.05 },
-  { t: 7.0, cx: -330, cy: 770, z: 2.1 },
-  { t: 10.4, cx: -150, cy: 780, z: 3.4 },
-  { t: 12.2, cx: -150, cy: 780, z: 3.4 },
-  { t: 16.4, cx: 520, cy: 620, z: 1.1 },
+  { t: 1.2, cx: 760, cy: 560, z: 1.05 },
+  { t: 7.4, cx: -1698, cy: 770, z: 2.1 },
+  { t: 10.4, cx: -1518, cy: 780, z: 3.4 },
+  { t: 13.6, cx: -1518, cy: 780, z: 3.4, da: 13.59 },
+  { t: 13.61, cx: 700, cy: 600, z: 1.25, da: 13.6 },
+  { t: 17.4, cx: 520, cy: 620, z: 1.1 },
 ];
 // Ada, seduta sulle traversine accanto all'ultimo vagone grigio.
-const DM_ADA = [-95, 835];
+const DM_ADA = [-1463, 835];
 const DM_GIRA = 11.0;
 const DM_TITOLO = 17.6;
 kit.scene('domanda', {
