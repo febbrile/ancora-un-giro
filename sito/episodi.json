@@ -120,6 +120,14 @@
         "titolo": "La campanella",
         "personaggio": "campanella",
         "racconto": "Una storia si è fermata a metà frase, ma nessuno ha pescato la paperella scura. Ada segue il custode nel suo giro di ogni sera: la guardiola, i lampioni, il cancello, l’orologio da tasca."
+      },
+      {
+        "n": 5,
+        "etichetta": "Episodio 5",
+        "cartella": "14-il-telone",
+        "titolo": "Il telone",
+        "personaggio": "telone",
+        "racconto": "A un indovinello il treno gira e gira, ma il telefono resta muto. Questa volta Ada guarda dall’inizio: il custode ha un grande telone arancio, cucito a toppe."
       }
     ]
   }

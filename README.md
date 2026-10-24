@@ -35,6 +35,7 @@ Seconda stagione, «Intorno alla giostra».
 | 2 | Il Bruco | 4:06 | Prima del treno grande c’è il Bruco, una giostrina piccola con due colori soli nella vasca: se escono più rosse che verdi, la sbarra si abbassa e la montagna grande quella frase non la vede mai. Ma il Bruco può sbagliare | [guarda](https://febbrile.github.io/ancora-un-giro/sito/guarda.html?ep=11-il-bruco) |
 | 3 | La teleferica | 4:14 | Il treno non sa se domani piove. Quando Ada pesca le paperelle viola, il custode manda una cabina oltre le colline: la striscia che torna sale sul treno come un passeggero qualunque, anche quando è sbagliata | [guarda](https://febbrile.github.io/ancora-un-giro/sito/guarda.html?ep=12-la-teleferica) |
 | 4 | La campanella | 3:49 | Una storia si ferma a metà, ma nessuno ha pescato la Fine. Il regolamento dice quanti giri può fare una risposta: il custode li conta sull’orologio, e all’ultimo suona la campanella | [guarda](https://febbrile.github.io/ancora-un-giro/sito/guarda.html?ep=13-la-campanella) |
+| 5 | Il telone | 4:25 | Il telefono resta muto mentre il treno gira: i giri sono sotto il telone. Lì sotto ci sono altri giri, come gli altri; e se si pesca una paperella sbagliata, la risposta la segue con la stessa sicurezza | [guarda](https://febbrile.github.io/ancora-un-giro/sito/guarda.html?ep=14-il-telone) |
 
 Argomento, domanda e idea di ogni episodio sono nella [scaletta](mondo/SCALETTA.md) e nella [scaletta della seconda stagione](mondo/SCALETTA-2.md).
 
