@@ -3,7 +3,8 @@ const { seg, eo, ei, eio, lerp } = kit;
 // zac… a ogni parola un biglietto esce dalla bocca e vola sul suo sedile, dall'ultimo vagone in avanti (il treno si
 // allunga di due vagoni). I passeggeri prendono vita, ognuno col colore del suo biglietto: Al, Mare, Emma rosa antico,
 // la paperella blu che si scrolla le piume, l'altro Al, Parco che agita i rametti. Ada li saluta. Poi si vede la
-// banchina intera, con le due sbarre a righe ai suoi capi: tra Parco e la sbarra di dietro c'è posto per un vagone solo.
+// banchina intera, con le due sbarre a righe ai suoi capi: il treno ne occupa solo l'ultimo pezzo, accanto allo
+// Spezzaparole, e davanti ad Al, fino alla sbarra laggiù ai piedi della salita, restano tante assi vuote.
 // Si apre come finisce «striscia»; finisce sulla banchina intera (la riprende «fili»).
 const BA_CAM = [
   { t: 0, cx: 400, cy: 780, z: 2.55 },
@@ -13,7 +14,8 @@ const BA_CAM = [
   { t: 12.0, cx: 380, cy: 784, z: 2.6 },
   { t: 15.6, cx: 330, cy: 790, z: 3.2 },
   { t: 18.6, cx: 330, cy: 790, z: 3.2 },
-  { t: 21.0, cx: 377, cy: 786, z: 2.45 },
+  { t: 20.6, cx: 377, cy: 786, z: 2.45 },
+  { t: 23.4, cx: -307, cy: 700, z: 0.9 },
 ];
 // La striscia: la stessa linea su cui l'ha lasciata «striscia», che poi scende nella fessura dello Spezzaparole.
 const BA_PASSO = 76, BA_ALTO = 18;
@@ -23,8 +25,8 @@ const BA_VOLO = 1.2, BA_VITA = 0.2;
 const BA_VAGONI = [0.7, 1.3];
 const BA_GUIDA = [0.3, 1.9], BA_VIA = [2.6, 4.2];
 const BA_CIAO = [8.6, 11.8];
-// La banchina: la luce corre sulle assi da una sbarra all'altra, poi resta sul posto libero.
-const BA_LUCE = [20.4, 22.8], BA_POSTO = [22.6, 27.2];
+// La banchina: la luce corre sulle assi da una sbarra all'altra, poi resta sulle assi vuote davanti al treno.
+const BA_LUCE = [22.4, 25.0], BA_POSTO = [24.6, 28.2];
 kit.scene('banchina', {
   init(kit) {
     const G = window.G, M = G.MONDO, H = G.MOD.chat;
@@ -35,7 +37,7 @@ kit.scene('banchina', {
     for (let i = 0; i < 8; i++) { scintille += '<g class="ba-scint" opacity="0">'; for (let k = 0; k < 8; k++) scintille += '<circle r="2.2" fill="' + G.C.luce + '"/>'; scintille += '</g>'; }
     const [b0, b1] = M.banchina;
     const luce = '<rect class="ba-luce" x="-60" y="826" width="120" height="26" rx="13" fill="' + G.C.luce + '" opacity="0" filter="url(#g-glow)"/>' +
-      '<rect class="ba-posto" x="' + (M.fermo + 6 * M.passoBanchina - 38) + '" y="792" width="76" height="60" rx="14" fill="' + G.C.luce + '" opacity="0" filter="url(#g-soft)"/>' +
+      '<rect class="ba-posto" x="' + (b0 + 30) + '" y="826" width="' + (M.fermo - 50 - b0 - 30) + '" height="26" rx="13" fill="' + G.C.luce + '" opacity="0" filter="url(#g-soft)"/>' +
       [b0, b1].map(x => '<circle class="ba-lampada" cx="' + x + '" cy="802" r="14" fill="' + G.C.rosso + '" opacity="0" filter="url(#g-glow)"/>').join('');
     const sopra = '<g class="ba-macchina"></g>' + luce +
       '<g class="ba-treno">' + G.treno(this.chi.map(c => ({ tipo: c[0], col: c[1] })), { sbarra: 0 }) + '</g>' +
@@ -46,7 +48,7 @@ kit.scene('banchina', {
       pre: 'banchina', manopola: 0, banchina: true,
       html: G.sottotitolo('ADA', 'Siete di nuovo voi!') +
         G.sottotitolo('NARRATORE', 'Il treno non si ricorda niente: a ogni messaggio risalgono tutti, dal principio.') +
-        G.sottotitolo('NARRATORE', 'E la banchina è lunga così: ci stanno sette vagoni, non uno di più.'),
+        G.sottotitolo('NARRATORE', 'E la banchina è lunga così, da una sbarra all’altra: non un vagone di più.'),
     });
     this.G = G;
     const q = this.m.q;
@@ -132,7 +134,7 @@ kit.scene('banchina', {
     const lu = seg(t, BA_LUCE[0], BA_LUCE[1]);
     this.luce.setAttribute('transform', 'translate(' + lerp(M.banchina[0], M.banchina[1], eio(lu)).toFixed(1) + ' 0)');
     this.luce.setAttribute('opacity', (0.8 * Math.sin(Math.PI * lu)).toFixed(3));
-    this.posto.setAttribute('opacity', (0.7 * eio(seg(t, BA_POSTO[0], BA_POSTO[0] + 0.8)) * (1 - eio(seg(t, BA_POSTO[1] - 0.8, BA_POSTO[1]))) * (0.85 + 0.15 * Math.sin(t * 4))).toFixed(3));
+    this.posto.setAttribute('opacity', (0.5 * eio(seg(t, BA_POSTO[0], BA_POSTO[0] + 0.8)) * (1 - eio(seg(t, BA_POSTO[1] - 0.8, BA_POSTO[1]))) * (0.85 + 0.15 * Math.sin(t * 4))).toFixed(3));
     this.sub(t);
   },
 });

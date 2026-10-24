@@ -6,14 +6,16 @@ const { seg, eo, ei, eio, lerp } = kit;
 // fino a Emma e brilla come una lampadina. Lungo il filo scorre un po' del rosa di Emma; alla fine il vestito di Emma
 // si fa lilla grigio e la chioma di Parco di un verde più grigio.
 // Si apre come finisce «banchina»; finisce sul treno intero, nel buio (lo riprende «finestre»).
+// Il treno corre lungo tutta la banchina, sale la salita laggiù in fondo e torna sul viadotto fino alla montagna.
 const FI_CAM = [
-  { t: 0, cx: 377, cy: 786, z: 2.45 },
-  { t: 1.6, cx: 377, cy: 786, z: 2.45 },
-  { t: 4.6, cx: 260, cy: 700, z: 1.9 },
-  { t: 7.6, cx: 640, cy: 560, z: 1.25 },
+  { t: 0, cx: -307, cy: 700, z: 0.9 },
+  { t: 3.4, cx: -307, cy: 700, z: 0.9 },
+  { t: 5.6, cx: -700, cy: 620, z: 0.9 },
+  { t: 7.2, cx: -700, cy: 620, z: 0.9 },
+  { t: 8.6, cx: 400, cy: 500, z: 0.95 },
   { t: 9.8, cx: 960, cy: 500, z: 1.5 },
 ];
-const FI_VEL = [[0, 0], [1.6, 0], [3.2, 70], [5.0, 110], [6.6, 260], [8.0, 420]];
+const FI_VEL = [[0, 0], [1.6, 0], [3.2, 90], [5.0, 350], [6.6, 800], [8.0, 1100]];
 const FI_SBARRE = [0.4, 1.2];
 const FI_NERO = [9.4, 10.0, 10.4, 11.8];
 // Dentro: la camera sul treno (coordinate dell'interno).

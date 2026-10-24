@@ -16,7 +16,7 @@ const VU_CAM = [
   { t: 20.8, cx: 300, cy: 790, z: 2.9 },
   { t: 24.4, cx: 360, cy: 760, z: 2.3 },
 ];
-// Il treno scivola lungo la banchina (distanza sul percorso di partenza: il primo vagone si ferma ai piedi della salita).
+// Il treno scivola lungo la banchina (distanza sul percorso di partenza: il primo vagone si ferma al solito posto, a x 150).
 const VU_ARRIVA = [0, 4.0], VU_DA = 290, VU_FERMO = 490;
 const VU_SALOTTO = [4.2, 4.6, 8.8, 9.2];
 const VU_SBARRE = [9.4, 10.2];

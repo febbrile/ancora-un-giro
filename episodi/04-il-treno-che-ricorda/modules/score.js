@@ -47,20 +47,23 @@ kit.score(function (S, T) {
   sez(R('fili', 19.8), T.finestre, ['Em', 'C', 'F', 'G'], { pad: 30, vib: 28 });
   sez(T.finestre, R('finestre', 38.8), ['F', 'G', 'C', 'Am'], { pad: 30, box: 'x.x.x.x.', bv: 30, mallet: 'x...x...', mv: 32, bass: 42 });
   sez(R('finestre', 38.8), T.pesca, ['F', 'G', 'C', 'C'], { pad: 36, keys: 32 });
-  // Fuori: la vasca, la pesca, l'ultimo posto; il telefono.
+  // Fuori: la vasca, la pesca, il posto nuovo; il telefono.
   sez(T.pesca, R('pesca', 10.2), giro, { pad: 28, mallet: 'x.x.X.x.', mv: 40, bass: 50 });
   sez(R('pesca', 10.2), R('pesca', 20.0), ['F', 'C', 'Dm', 'G'], { pad: 28, keys: 28, box: 'x...x...', bv: 28 });
   sez(R('pesca', 20.0), T.giu, ['Am', 'Em', 'F', 'G'], { pad: 30, vib: 24 });
   // Troppo lunga: il vento, il salotto, la striscia, i due biglietti che restano giù.
   sez(T.giu, R('giu', 5.4), vuoto, { pad: 28, vib: 22 });
-  sez(R('giu', 5.4), R('giu', 10.6), ['F', 'C', 'Am', 'G'], { pad: 26, keys: 24 });
-  sez(R('giu', 10.6), R('giu', 23.4), giro, { pad: 28, box: 'x.x.x.x.', bv: 30, bass: 48 });
-  sez(R('giu', 23.4), T.pista, vuoto, { pad: 30, keys: 26 });
+  sez(R('giu', 5.4), R('giu', 9.4), ['F', 'C', 'Am', 'G'], { pad: 26, keys: 24 });
+  sez(R('giu', 9.4), R('giu', 21.6), giro, { pad: 28, mallet: 'x.x.X.x.', mv: 40, bass: 48 });
+  sez(R('giu', 21.6), R('giu', 26.6), ['F', 'C', 'Am', 'G'], { pad: 26, keys: 24 });
+  sez(R('giu', 26.6), R('giu', 39.0), giro, { pad: 28, box: 'x.x.x.x.', bv: 30, bass: 48 });
+  sez(R('giu', 39.0), T.pista, vuoto, { pad: 30, keys: 26 });
   // La pista: Ada e i due biglietti, il treno nella montagna, la domanda; la fine.
   sez(T.pista, R('pista', 19.8), ['Am', 'F', 'C', 'G'], { pad: 28, vib: 24 });
   S.drums({ kick: 'x...x...', shaker: 'oxoxoxox' }, { from: Math.ceil(bt(R('banchina', 1.2))), repeat: 4, vel: 30 });
   S.drums({ kick: 'x...x...', shaker: 'oxoxoxox' }, { from: Math.ceil(bt(R('pesca', 1.0))), repeat: 3, vel: 28 });
-  S.drums({ kick: 'x...x...', shaker: 'oxoxoxox' }, { from: Math.ceil(bt(R('giu', 16.0))), repeat: 3, vel: 28 });
+  S.drums({ kick: 'x...x...', shaker: 'oxoxoxox' }, { from: Math.ceil(bt(R('giu', 9.6))), repeat: 4, vel: 28 });
+  S.drums({ kick: 'x...x...', shaker: 'oxoxoxox' }, { from: Math.ceil(bt(R('giu', 32.0))), repeat: 2, vel: 28 });
   // I due cartelli: il titolo e la fine.
   [R('vuoto', 21.6), R('pista', 19.8)].forEach((a, k) => {
     S.fx('revswell', a - 0.6, { dur: 1.2 });
@@ -115,7 +118,7 @@ kit.score(function (S, T) {
   [15.2, 26.6].forEach(c => S.fx('sparkle', R('finestre', c), { vel: 30 }));
   [9.6, 22.0, 33.6].forEach(c => S.fx('chime', R('finestre', c - 0.4)));
   S.fx('whoosh', R('finestre', 38.8), { dur: 2.6 });
-  // L'ultimo posto: l'uscita, le paperelle che cadono, la pesca, la corsa, il vagone nuovo, il telefono.
+  // Un posto nuovo: l'uscita, le paperelle che cadono, la pesca, la corsa, il vagone nuovo, il telefono.
   S.fx('whoosh', R('pesca', 1.0), { dur: 1.6 });
   for (let k = 0; k < 18; k++) S.fx('pop', R('pesca', 4.4 + k * 0.16), { vel: 28 + (k % 3) * 6 });
   S.fx('sparkle', R('pesca', 13.1), { vel: 50 }); S.fx('chime', R('pesca', 13.4));
@@ -125,27 +128,37 @@ kit.score(function (S, T) {
   S.fx('sparkle', R('pesca', 16.6), { vel: 44 }); S.fx('boing', R('pesca', 16.8), { vel: 30 }); S.fx('ding', R('pesca', 17.4), { vel: 40 });
   S.fx('ding', R('pesca', 17.9), { vel: 34, pitch: 'G6' });
   S.fx('pop', R('pesca', 21.0), { vel: 40 });
-  // Troppo lunga: i biglietti di carta e il vento, il salotto, il rotolo, zac zac, i due che restano giù, la partenza.
+  // Troppo lunga: i biglietti di carta e il vento; la chat che si allunga e il montaggio dei giri; di nuovo «Al parco»,
+  // il rotolo, zac zac, i due che restano giù, la partenza.
   for (let k = 0; k < 7; k++) S.fx('click', R('giu', 0.5 + k * 0.12), { vel: 30 });
   for (let k = 0; k < 7; k++) S.fx('pop', R('giu', 1.4 + k * 0.2), { vel: 30 });
   [2.2, 3.2].forEach(c => S.fx('whoosh', R('giu', c), { dur: 2.6 }));
-  for (let k = 0; k < 8; k++) S.fx('tick', R('giu', 6.5 + k * 0.26), { vel: 18 });
-  S.fx('click', R('giu', 8.6), { vel: 46 });
-  S.fx('whoosh', R('giu', 10.8), { dur: 1.4 });
-  S.fx('boing', R('giu', 12.2), { vel: 36 });
-  S.fx('whoosh', R('giu', 12.6), { dur: 3.0 });
-  [16.4, 17.25, 18.1, 18.95, 19.8, 20.65, 21.5, 22.35, 23.2].forEach((c, j) => {
-    S.fx('click', R('giu', c), { vel: 56 }); S.fx('doubleclick', R('giu', c + 0.05), { vel: 38 }); S.fx('pop', R('giu', c + 0.1), { vel: 40 });
-    if (j < 7) { S.fx('sparkle', R('giu', c + 1.45), { vel: 30 }); S.fx('ding', R('giu', c + 1.6), { vel: 22 }); }
-    else { S.fx('revswell', R('giu', c + 1.6), { dur: 1.6, vel: 26 }); S.fx('tick', R('giu', c + 5.6), { vel: 26 }); }
+  for (let k = 0; k < 10; k++) S.fx('pop', R('giu', 5.9 + k * 0.32 - k * k * 0.006), { vel: 20 + (k % 2) * 6 });
+  [[9.6, 12.2], [12.2, 14.4], [14.4, 16.3], [16.3, 18.0], [18.0, 20.2]].forEach(([a, b]) => {
+    const D = b - a;
+    S.fx('sparkle', R('giu', a + 0.15 * D), { vel: 24 });
+    S.fx('whoosh', R('giu', a + 0.38 * D), { dur: 0.8 });
+    S.fx('woodblock', R('giu', a + 0.84 * D), { vel: 26 });
   });
-  for (let k = 0; k < 7; k++) S.fx('click', R('giu', 27.6 + k * 0.1), { vel: 34 });
-  for (let k = 0; k < 18; k++) S.fx('tick', R('giu', 28.9 + k * 0.26), { vel: 26 });
+  S.fx('ding', R('giu', 20.0), { vel: 30, pitch: 'G6' });
+  for (let k = 0; k < 8; k++) S.fx('tick', R('giu', 22.7 + k * 0.26), { vel: 18 });
+  S.fx('click', R('giu', 25.0), { vel: 46 });
+  S.fx('whoosh', R('giu', 26.8), { dur: 1.4 });
+  S.fx('boing', R('giu', 28.2), { vel: 36 });
+  S.fx('whoosh', R('giu', 28.4), { dur: 3.0 });
+  for (let j = 0; j < 27; j++) {
+    const c = 32.0 + j * 0.24;
+    S.fx('click', R('giu', c), { vel: 48 }); S.fx('pop', R('giu', c + 0.06), { vel: 30 });
+    if (j < 25) { if (j % 3 === 0) S.fx('sparkle', R('giu', c + 1.6), { vel: 24 }); }
+    else { S.fx('revswell', R('giu', c + 1.6), { dur: 1.6, vel: 26 }); S.fx('tick', R('giu', c + 4.6), { vel: 26 }); }
+  }
+  for (let k = 0; k < 8; k++) S.fx('click', R('giu', 40.8 + k * 0.1), { vel: 34 });
+  for (let k = 0; k < 8; k++) S.fx('tick', R('giu', 42.0 + k * 0.26), { vel: 26 });
   // La pista: la catena, i biglietti raccolti, il quaderno, i clac dal buio della montagna.
   for (let k = 0; k < 30; k++) S.fx('tick', R('pista', 0.1 + k * 0.3), { vel: 22 - Math.floor(k / 3) });
   for (let k = 0; k < 9; k++) S.fx('woodblock', R('pista', 0.3 + k * 0.28), { vel: 16 });
-  [3.4, 4.4].forEach(c => S.fx('pop', R('pista', c), { vel: 30 }));
-  S.fx('sparkle', R('pista', 6.2), { vel: 26 });
-  S.fx('whoosh', R('pista', 10.6), { dur: 1.6 });
-  [11.8, 12.2, 12.5, 12.9, 13.6].forEach(c => S.fx('doubleclick', R('pista', c), { vel: 30 }));
+  [4.6, 5.6].forEach(c => S.fx('pop', R('pista', c), { vel: 30 }));
+  S.fx('sparkle', R('pista', 7.4), { vel: 26 });
+  S.fx('whoosh', R('pista', 12.2), { dur: 1.6 });
+  [13.4, 13.8, 14.1, 14.5, 15.2].forEach(c => S.fx('doubleclick', R('pista', c), { vel: 30 }));
 });

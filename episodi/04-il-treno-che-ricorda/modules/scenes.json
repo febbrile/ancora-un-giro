@@ -19,7 +19,7 @@
       "id": "banchina",
       "name": "Risalgono tutti",
       "dur": 28.4,
-      "desc": "Lo Spezzaparole strappa la striscia: i biglietti risalgono tutti, ognuno col colore del suo biglietto. Si vede la banchina intera, con le due sbarre a righe: ci stanno sette vagoni."
+      "desc": "Lo Spezzaparole strappa la striscia: i biglietti risalgono tutti, ognuno col colore del suo biglietto. Si vede la banchina intera, con le due sbarre a righe: il treno ne occupa solo l'ultimo pezzo, e davanti restano tante assi vuote."
     },
     {
       "id": "fili",
@@ -35,15 +35,15 @@
     },
     {
       "id": "pesca",
-      "name": "L'ultimo posto",
+      "name": "Un posto nuovo",
       "dur": 27,
-      "desc": "Il treno esce sopra la vasca: sotto Parco cadono paperelle verdi. Ada pesca «corre»: la paperella prende l'ultimo posto della banchina. Sul telefono compare «corre»."
+      "desc": "Il treno esce sopra la vasca: sotto Parco cadono paperelle verdi. Ada pesca «corre»: la paperella prende un posto nuovo, in fondo al treno. Sul telefono compare «corre»."
     },
     {
       "id": "giu",
       "name": "Troppo lunga",
-      "dur": 33.4,
-      "desc": "I passeggeri scendono. Si scrive di nuovo «Al parco»: la striscia è più lunga della banchina. I biglietti salgono dall'ultimo vagone in avanti; Al e Mare restano giù, e il treno parte senza di loro."
+      "dur": 44,
+      "desc": "I passeggeri scendono. A montaggio la chat si allunga e il treno, a ogni messaggio, risale tutto e si allunga lungo la banchina, fino alla sbarra davanti. Si scrive di nuovo «Al parco»: la striscia è più lunga della banchina. I biglietti salgono dall'ultimo vagone in avanti; Al e Mare restano giù, e il treno parte senza di loro."
     },
     {
       "id": "pista",
