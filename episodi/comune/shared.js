@@ -132,6 +132,7 @@ const RITMO = {
   '08': {},
   '09': { collina: [[11.6, 15.0, 2.4, 1]] },
   '10': { finestre: [[34.4, 40.6, 2.8, 1]] },
+  '11': { finestre: [[34.0, 40.6, 2.8, 1]] },
 };
 // Dove si trova il tempo interno dentro un tratto, dopo tau secondi veri.
 function nelTratto(x0, x1, r, fine, tau) {
@@ -2260,7 +2261,8 @@ window.G.schizzoEmma = function (x, y, col, s) {
 // I passeggeri della seconda stagione, dalle parole del modellino: le bandierine («⚑oro»…), i sassolini delle parole corte
 // che non hanno un personaggio («storie», «di»), Al, Mare, Parco ed Emma, e le paperelle salite (le parole pescate).
 window.G.S2 = {
-  TIPI: { Al: ['al'], mare: ['mare'], Emma: ['emma'], parco: ['parco'], storie: ['sasso', { forma: 0 }], di: ['sasso', { forma: 1 }] },
+  TIPI: { Al: ['al'], mare: ['mare'], Emma: ['emma'], parco: ['parco'], storie: ['sasso', { forma: 0 }], di: ['sasso', { forma: 1 }],
+    Domani: ['sasso', { forma: 2 }], piove: ['sasso', { forma: 0 }], '?': ['sasso', { forma: 1 }], pioggia: ['sasso', { forma: 2 }], sole: ['sasso', { forma: 0 }] },
   // { tipo, o } di una parola.
   tipo(parola) {
     if (parola.charAt(0) === '⚑') return { tipo: 'bandierina', o: { metallo: parola.slice(1) } };
@@ -2313,7 +2315,7 @@ window.G.S2.schizzoParco = function (col) {
 // forma di mela; davanti, una vasca piccola (paperelle di due colori soli, verdi e rosse) e una sbarra a righe bianche e
 // rosse, verso la stazione. Coordinate del mondo. La pista: un'ellisse (centro c, raggi rx, ry) percorsa davanti da
 // destra a sinistra, dietro da sinistra a destra; la mela sta sul capo destro, così il bruco gira dentro la mela.
-window.G.S2.BRUCO = { c: [2236, 846], rx: 196, ry: 38, mela: [2400, 806], vasca: [2214, 906], sbarra: [1996, 884], fermo: 236, segmenti: 6, passo: 31 };
+window.G.S2.BRUCO = { c: [2236, 846], rx: 196, ry: 38, mela: [2400, 806], vasca: [2214, 906], sbarra: [1996, 884], segmenti: 6, passo: 28 };
 // La pista come tracciato SVG, dal capo destro, prima la parte davanti.
 window.G.S2.pistaBruco = function () {
   const B = window.G.S2.BRUCO, [cx, cy] = B.c;
@@ -2371,13 +2373,17 @@ window.G.S2.giostrina = function (o) {
     '<path d="M' + (mx - 104) + ' ' + (my + 66) + ' L' + (mx - 104) + ' ' + (my + 34) + ' Q' + (mx - 82) + ' ' + (my + 6) + ' ' + (mx - 58) + ' ' + (my + 34) + ' L' + (mx - 56) + ' ' + (my + 70) + ' Z" fill="' + C.buio + '" stroke="' + K.melaScura + '" stroke-width="4"/>' +
     [[-100, 32], [-82, 14], [-62, 30]].map(([dx, dy]) => '<circle cx="' + (mx + dx) + '" cy="' + (my + dy) + '" r="3" fill="' + C.luce + '" opacity="' + (0.3 + 0.7 * luci).toFixed(2) + '"/>').join('') + '</g>';
   const vasca = '<g class="g-bruco-vasca"><path d="M' + (vx - 46) + ' ' + vy + ' L' + (vx + 46) + ' ' + vy + ' L' + (vx + 40) + ' ' + (vy + 20) + ' Q' + vx + ' ' + (vy + 27) + ' ' + (vx - 40) + ' ' + (vy + 20) + ' Z" fill="' + C.legno + '" stroke="' + C.legnoScuro + '" stroke-width="3"/>' +
-    '<ellipse cx="' + vx + '" cy="' + vy + '" rx="46" ry="7" fill="url(#g-acqua)" stroke="' + C.legnoScuro + '" stroke-width="3"/></g>';
+    '<ellipse cx="' + vx + '" cy="' + vy + '" rx="46" ry="7" fill="url(#g-acqua)" stroke="' + C.legnoScuro + '" stroke-width="3"/>' +
+    // Il cartello della vasca piccola: due paperelle, una verde e una rossa (la vasca grande ne ha una gialla).
+    '<line x1="' + (vx + 66) + '" y1="' + (vy + 22) + '" x2="' + (vx + 66) + '" y2="' + (vy - 4) + '" stroke="' + C.legnoScuro + '" stroke-width="4"/>' +
+    '<rect x="' + (vx + 46) + '" y="' + (vy - 22) + '" width="40" height="20" rx="10" fill="' + C.crema + '" stroke="' + C.oro + '" stroke-width="3"/>' +
+    '<g transform="translate(' + (vx + 49) + ' ' + (vy - 21) + ') scale(.17)">' + G.paperella('#3cb45a') + '</g><g transform="translate(' + (vx + 66) + ' ' + (vy - 21) + ') scale(.17)">' + G.paperella('#dc3c32') + '</g></g>';
   const [sx, sy] = B.sbarra, giu = o.sbarra || 0;
   let righe = '';
   for (let k = 0; k < 6; k++) righe += '<rect x="' + (k * 16) + '" y="-4" width="8" height="8" fill="' + C.rosso + '"/>';
   // La sbarra: alzata sta in piedi; abbassata sbarra la strada verso la stazione (punta a sinistra).
   const sbarra = '<g class="g-bruco-sbarra"><rect x="' + (sx - 6) + '" y="' + (sy - 40) + '" width="12" height="40" rx="3" fill="' + C.crema + '" stroke="' + C.legnoScuro + '" stroke-width="2.5"/>' +
-    '<g transform="translate(' + sx + ' ' + (sy - 34) + ') rotate(' + (90 - 90 * giu).toFixed(1) + ') scale(-1 1)"><rect x="0" y="-4" width="96" height="8" rx="4" fill="' + C.crema + '" stroke="' + C.legnoScuro + '" stroke-width="2"/>' + righe + '</g>' +
+    '<g class="g-bruco-asta" transform="' + G.S2.astaBruco(giu) + '"><rect x="0" y="-4" width="96" height="8" rx="4" fill="' + C.crema + '" stroke="' + C.legnoScuro + '" stroke-width="2"/>' + righe + '</g>' +
     '<circle cx="' + sx + '" cy="' + (sy - 34) + '" r="5" fill="' + C.rosso + '"/></g>';
   return { dietro, davanti: mela + vasca + sbarra };
 };
@@ -2394,4 +2400,99 @@ window.G.S2.posaBruco = function (els, path, s, passo) {
   const padre = els[0].parentNode;
   pos.sort((a, b) => a.y - b.y).forEach(p => padre.appendChild(p.el));
   return pos;
+};
+// L'asta della sbarra del Bruco: giu da 0 (alzata, in piedi) a 1 (abbassata, verso la stazione).
+window.G.S2.astaBruco = function (giu) {
+  const B = window.G.S2.BRUCO;
+  return 'translate(' + B.sbarra[0] + ' ' + (B.sbarra[1] - 34) + ') rotate(' + (90 - 90 * giu).toFixed(1) + ') scale(-1 1)';
+};
+// Un giro sul Bruco. Il custode porta i biglietti: volano dalla sua mano sui segmenti e prendono vita, con i colori del
+// Bruco (un pezzo intero, dal verde al rosso: G.S2.sulBruco); il Bruco fa un giro, passa nella mela, e quando esce, sotto
+// l'ultimo segmento cadono nella vasca piccola le paperelle, verdi e rosse (dal modellino); il Bruco si ferma. Poi (con
+// t.carta) i passeggeri tornano biglietti e il vento se li porta via. Il Bruco ha un segmento per biglietto, più la testa.
+// o: { id, parole, vestiti, uscita (l'ultimo, dopo il giro), rosse, verdi, seme, faccia, mano: [x, y] (da dove volano i
+//      biglietti), riporta (t => [x, y]: invece del vento, i biglietti tornano nella mano del custode),
+//      t: { sale (il primo biglietto), passo (tra un biglietto e l'altro), parte, giro (quanto dura), carta } }.
+// .bruco, .biglietti, .papere: gli SVG (il bruco tra G.S2.giostrina().dietro e .davanti; le papere sopra la vasca piccola).
+// Dopo costruisciMondo, monta(m); render(t) restituisce { rosse, verdi, cadute } (quante ne sono cadute).
+window.G.S2.giroBruco = function (o) {
+  const G = window.G, S2 = G.S2, B = S2.BRUCO, T = o.t, n = o.parole.length, id = o.id;
+  // Dove si ferma la testa: più avanti se il Bruco è lungo, così la coda resta fuori dalla mela.
+  const FERMO = 140 + (n + 1) * B.passo;
+  const c01 = x => Math.max(0, Math.min(1, x)), seg = (t, a, b) => c01((t - a) / (b - a)), lerp = (a, b, p) => a + (b - a) * p;
+  const eo = x => 1 - Math.pow(1 - c01(x), 3), eio = x => { x = c01(x); return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; };
+  const ROSSA = '#dc3c32', VERDE = '#3cb45a';
+  const r = G.rng(o.seme || 5), papere = [];
+  for (let k = 0; k < o.rosse + o.verdi; k++) papere.push({ col: k < o.rosse ? ROSSA : VERDE });
+  for (let i = papere.length - 1; i > 0; i--) { const j = Math.floor(r() * (i + 1)); [papere[i], papere[j]] = [papere[j], papere[i]]; }
+  papere.forEach((p, i) => { p.x = B.vasca[0] - 38 + r() * 76; p.y = B.vasca[1] - 1 + (i % 3) * 2.4 + r() * 1.5; });
+  const g = {
+    bruco: '<g class="gb-' + id + '">' + Array.from({ length: n + 1 }, (_, i) => '<g class="gb-seg" data-i="' + i + '"></g>').join('') + '</g>',
+    biglietti: o.parole.map(w => '<g class="gb-big-' + id + '" opacity="0"><g transform="translate(-60 -30)">' + G.biglietto(w) + '</g></g>').join(''),
+    papere: papere.map((p, i) => '<g class="gb-pap-' + id + '" opacity="0"><g transform="translate(-50 -84)">' + G.paperella(p.col) + '</g></g>').join(''),
+    monta(m) {
+      this.m = m;
+      m.cam.insertAdjacentHTML('beforeend', '<path class="gb-pista-' + id + '" d="' + S2.pistaBruco() + '" fill="none"/>');
+      this.path = m.q('.gb-pista-' + id); this.L = this.path.getTotalLength();
+      this.segs = m.qa('.gb-' + id + ' .gb-seg'); this.big = m.qa('.gb-big-' + id); this.pap = m.qa('.gb-pap-' + id);
+      this.stati = [];
+      this.sAt = t => FERMO + this.L * eio(seg(t, T.parte, T.parte + T.giro));
+      // Quando cade ogni paperella: quando l'ultimo segmento, uscito dalla mela, le passa sopra.
+      this.cade = papere.map(p => {
+        for (let t = T.parte + T.giro * 0.5; t < T.parte + T.giro; t += 0.02) {
+          const sl = this.sAt(t) - n * B.passo, q = this.path.getPointAtLength(((sl % this.L) + this.L) % this.L);
+          if (q.y > B.c[1] && q.x <= p.x + 4) return t;
+        }
+        return T.parte + T.giro;
+      });
+      // I sedili, quando il Bruco è fermo: dove volano i biglietti.
+      this.sedili = o.parole.map((w, i) => { const q = this.path.getPointAtLength(FERMO - (i + 1) * B.passo); return [q.x, q.y - 26]; });
+    },
+    render(t) {
+      const s = this.sAt(t), giro = seg(t, T.parte, T.parte + T.giro);
+      // Chi siede dove: vivo (dopo il suo biglietto), di carta (dopo t.carta, e poi via col vento), o nessuno.
+      this.segs.forEach((el, i) => {
+        let k = 'testa', html;
+        if (i === 0) html = S2.segmento(true, '', { faccia: o.faccia });
+        else {
+          const j = i - 1, nasce = T.sale + j * T.passo + 0.9, vivo = t >= nasce && (T.carta === undefined || t < T.carta);
+          let col = o.vestiti[j];
+          if (j === n - 1) col = G.mix(o.vestiti[j], o.uscita, Math.round(eio(seg(giro, 0.35, 0.8)) * 8) / 8);
+          k = vivo ? col : 'vuoto';
+          html = S2.segmento(false, vivo ? S2.sulBruco(col) : '');
+        }
+        if (this.stati[i] !== k) { el.innerHTML = html; this.stati[i] = k; }
+      });
+      S2.posaBruco(this.segs, this.path, s);
+      // I biglietti: volano dalla mano del custode ai sedili; poi, tornati di carta, il vento se li porta via.
+      this.big.forEach((b, j) => {
+        const a = T.sale + j * T.passo, u = eio(seg(t, a, a + 0.8)), [sx, sy] = this.sedili[j], [mx, my] = o.mano;
+        let x = lerp(mx, sx, u), y = lerp(my, sy, u) - 26 * Math.sin(Math.PI * u), sc = 0.16, op = t < a ? 0 : 1 - seg(t, a + 0.75, a + 0.95), rot = 0;
+        if (T.carta !== undefined && t >= T.carta && o.riporta) {
+          // Il custode se li riprende: tornano nella sua mano (o.riporta: dove sta la mano, adesso).
+          const w = eio(seg(t, T.carta + 0.3 + j * 0.15, T.carta + 1.1 + j * 0.15)), [rx, ry] = o.riporta(t);
+          x = lerp(sx, rx + 2 * j, w); y = lerp(sy, ry - 3 - 2 * j, w) - 20 * Math.sin(Math.PI * w); rot = (-12 + 8 * j) * w;
+          op = seg(t, T.carta, T.carta + 0.3); sc = lerp(0.16, 0.13, w);
+        } else if (T.carta !== undefined && t >= T.carta) {
+          const v = seg(t, T.carta + 0.4 + j * 0.15, T.carta + 2.6 + j * 0.15), w = eio(v);
+          x = sx + 260 * w + 30 * Math.sin(v * 9 + j); y = sy - 220 * w + 10 * Math.sin(v * 7); rot = 300 * w * (j % 2 ? 1 : -1);
+          op = seg(t, T.carta, T.carta + 0.3) * (1 - seg(v, 0.7, 1));
+        }
+        b.setAttribute('transform', 'translate(' + x.toFixed(1) + ' ' + y.toFixed(1) + ') rotate(' + rot.toFixed(1) + ') scale(' + sc + ')');
+        b.setAttribute('opacity', op.toFixed(3));
+      });
+      // Le paperelle della vasca piccola.
+      let cadute = 0, rosse = 0, verdi = 0;
+      this.pap.forEach((el, i) => {
+        const t0 = this.cade[i], p = papere[i], u = seg(t, t0, t0 + 0.45);
+        if (u > 0) { cadute++; if (p.col === ROSSA) rosse++; else verdi++; }
+        const via = T.carta !== undefined ? eio(seg(t, T.carta + 0.2 + (i % 5) * 0.1, T.carta + 1.4 + (i % 5) * 0.1)) : 0;
+        const y = lerp(p.y - 30, p.y, eo(u)) + (u >= 1 ? 0.6 * Math.sin(t * 2.4 + i) : 0);
+        el.setAttribute('transform', 'translate(' + lerp(p.x, B.vasca[0], via).toFixed(1) + ' ' + lerp(y, B.vasca[1] + 3, via).toFixed(1) + ') scale(' + (0.09 * (1 - via)).toFixed(4) + ')');
+        el.setAttribute('opacity', t < t0 ? 0 : (1 - seg(via, 0.85, 1)).toFixed(3));
+      });
+      return { rosse, verdi, cadute };
+    },
+  };
+  return g;
 };
