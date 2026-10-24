@@ -136,6 +136,7 @@ const RITMO = {
   '12': { finestre: [[34.4, 40.6, 2.8, 1]] },
   '13': { continua: [[13.4, 25.4, 8.0]] },
   '14': { finestre: [[34.4, 40.6, 2.8, 1]] },
+  '15': { finestre: [[34.4, 40.6, 2.8, 1]] },
 };
 // Dove si trova il tempo interno dentro un tratto, dopo tau secondi veri.
 function nelTratto(x0, x1, r, fine, tau) {
@@ -1023,6 +1024,7 @@ function laggiu() {
   return '<ellipse cx="1760" cy="740" rx="760" ry="170" fill="#FF9E5E" opacity=".35" filter="url(#g-velo)"/>' +
     '<ellipse cx="1760" cy="740" rx="420" ry="90" fill="#FFD27A" opacity=".25" filter="url(#g-velo)"/>' + cime + lucine;
 }
+const VERDE_GEMELLO = '#3E8F5C', VERDE_GEMELLO_SCURO = '#2A6B42';
 function mondo(o) {
   o = o || {};
   const r = kitRng(o.seme || 3);
@@ -1076,13 +1078,13 @@ function mondo(o) {
     '<path d="' + d + '" stroke="' + C.acciaio + '" stroke-width="4" fill="none"/>';
   // La stazione: pedana, pensilina a righe, lampadine.
   let righe = '', lamp = '';
-  for (let k = -34, x = -1330; x < 630; k++, x += 40) righe += '<path d="M' + x + ' 612 L' + (x + 40) + ' 612 L' + (x + 40) + ' 654 Q' + (x + 20) + ' 672 ' + x + ' 654 Z" fill="' + (k % 2 === 0 ? C.rosso : C.crema) + '"/>';
+  for (let k = -34, x = -1330; x < 630; k++, x += 40) righe += '<path d="M' + x + ' 612 L' + (x + 40) + ' 612 L' + (x + 40) + ' 654 Q' + (x + 20) + ' 672 ' + x + ' 654 Z" fill="' + (k % 2 === 0 ? (o.gemello ? VERDE_GEMELLO : C.rosso) : C.crema) + '"/>';
   for (let x = -1310; x < 630; x += 40) lamp += '<circle class="g-lampadina g-luce-parco"' + acc + ' cx="' + x + '" cy="664" r="5" fill="' + C.luce + '"/>';
   let pali = '';
   for (let x = -1286; x < 630; x += 270) pali += '<line x1="' + x + '" y1="836" x2="' + x + '" y2="640"/>';
   const stazione = '<rect x="-1328" y="836" width="1958" height="34" fill="' + C.legno + '"/><rect x="-1328" y="836" width="1958" height="7" fill="#B98058"/>' +
     '<g stroke="' + C.legnoScuro + '" stroke-width="10">' + pali + '</g>' +
-    '<path d="M-1344 612 L636 612 L626 590 Q-354 548 -1334 590 Z" fill="' + C.rossoScuro + '"/>' + righe + lamp;
+    '<path d="M-1344 612 L636 612 L626 590 Q-354 548 -1334 590 Z" fill="' + (o.gemello ? VERDE_GEMELLO_SCURO : C.rossoScuro) + '"/>' + righe + lamp;
   // La vasca della pesca, sotto il ponte, con il suo palo e la bandierina.
   const vasca = '<g class="g-vasca">' +
     '<path d="M684 880 L860 880 L850 914 Q772 926 694 914 Z" fill="' + C.legno + '" stroke="' + C.legnoScuro + '" stroke-width="4"/>' +
@@ -1093,7 +1095,8 @@ function mondo(o) {
     '<g transform="translate(866 840) scale(.27)">' + paperella('#FFD23F') + '</g>' +
     '<rect x="652" y="896" width="40" height="18" rx="3" fill="' + C.legnoScuro + '"/>';
   // Un tendone sullo sfondo, a destra.
-  const tendone = '<path d="M1760 880 L1780 700 L1900 640 L1920 700 L1920 880 Z" fill="' + C.rossoScuro + '"/><path d="M1780 700 L1810 880 M1840 668 L1850 880 M1900 640 L1890 880" stroke="' + C.crema + '" stroke-width="16" opacity=".8"/>';
+  // Il parco gemello (stagione 2, episodio 6) è identico, ma le sue righe sono verdi come la lanterna del suo custode.
+  const tendone = '<path d="M1760 880 L1780 700 L1900 640 L1920 700 L1920 880 Z" fill="' + (o.gemello ? VERDE_GEMELLO_SCURO : C.rossoScuro) + '"/><path d="M1780 700 L1810 880 M1840 668 L1850 880 M1900 640 L1890 880" stroke="' + C.crema + '" stroke-width="16" opacity=".8"/>';
   // Il binario morto dei treni di prova (episodio 5): una massicciata bassa, mezza coperta dall'erba.
   let morto = '';
   if (o.morto) {
@@ -1127,7 +1130,7 @@ function mondo(o) {
     stazione + morto + bancone +
     '<rect x="-3500" y="868" width="7420" height="2000" fill="' + C.terra + '"/>' +
     '<path d="M-3500 868 L3920 868" stroke="#2A2650" stroke-width="3"/>' +
-    vasca + banchina + (o.bruco ? window.G.S2.brucoFermo(o.bruco) : '') + (o.fiume ? window.G.S2.fiume() : '') +
+    vasca + banchina + (o.bruco ? window.G.S2.brucoFermo(o.bruco, { faccia: o.gemello ? window.G.S2.FACCIA_GEMELLO : undefined }) : '') + (o.fiume ? window.G.S2.fiume(o.fiume === true ? 0 : o.fiume) : '') + (o.gemello ? window.G.S2.cancelloGemello(o.porta || 0) : '') +
     '</g>';
 }
 // Numeri pseudo-casuali ripetibili (uguali a kit.rng).
@@ -2557,12 +2560,7 @@ window.G.S2.teleferica = function (o) {
   const ruota = (x, y) => '<circle cx="' + x + '" cy="' + y + '" r="7" fill="#2A2440" stroke="' + C.acciaio + '" stroke-width="2.5"/><circle cx="' + x + '" cy="' + y + '" r="2" fill="' + C.oro + '"/>';
   const lamp = (x, y) => '<circle cx="' + x + '" cy="' + y + '" r="4" fill="' + mix('#3A3440', C.luce, luce) + '"/>' + (luce > 0 ? '<circle cx="' + x + '" cy="' + y + '" r="16" fill="' + C.luce + '" opacity="' + (0.5 * luce).toFixed(2) + '" filter="url(#g-glow)"/>' : '');
   // Le nuvole di pioggia, oltre le colline, dove sparisce il filo.
-  const [nx, ny] = T.nuvole;
-  let pioggia = '';
-  for (let k = 0; k < 26; k++) { const x = nx - 260 + k * 20 + (k % 3) * 6, y = ny + 70 + (k % 4) * 30; pioggia += 'M' + x + ' ' + y + ' l-10 44 '; }
-  const nuvole = '<g class="g-tel-nuvole"><path d="' + pioggia + '" stroke="#7FA8D8" stroke-width="3" opacity=".55" stroke-linecap="round"/>' +
-    [[-200, 30, 130], [-60, -10, 170], [120, 20, 150], [260, 50, 110]].map(([dx, dy, r]) => '<ellipse cx="' + (nx + dx) + '" cy="' + (ny + dy) + '" rx="' + r + '" ry="' + (r * 0.55).toFixed(0) + '" fill="#4A4F72"/>').join('') +
-    '<ellipse cx="' + nx + '" cy="' + (ny + 64) + '" rx="380" ry="40" fill="#3A3E60"/></g>';
+  const nuvole = G.S2.nuvolePioggia(true);
   // Il filo, che si accende dal basso verso le nuvole.
   const L1 = Math.hypot(b[0] - a[0], b[1] - a[1]), L2 = Math.hypot(c[0] - b[0], c[1] - b[1]), Lf = (L1 + L2) * filo;
   const d = 'M' + a[0] + ' ' + a[1] + ' L' + b[0] + ' ' + b[1] + ' L' + c[0] + ' ' + c[1];
@@ -2571,6 +2569,16 @@ window.G.S2.teleferica = function (o) {
     traliccio(a[0], 870, a[1] - 6, 14) + ruota(a[0], a[1]) +
     traliccio(b[0], 560, b[1] - 6, 22) + ruota(b[0], b[1]) + lamp(b[0] - 12, b[1] + 30) + lamp(b[0] + 12, b[1] + 30) + lamp(b[0], b[1] - 14) +
     '<path d="' + d + '" fill="none" stroke="#C9CBD4" stroke-width="3.4" stroke-dasharray="' + Lf.toFixed(1) + ' 9999"/></g>';
+};
+// Le nuvole scure oltre le colline (coordinate del mondo, T.nuvole): con la pioggia, dove sparisce il filo della teleferica;
+// senza, viste da un parco che non ha la teleferica. dove: un altro punto del cielo, se serve.
+window.G.S2.nuvolePioggia = function (piove, dove) {
+  const [nx, ny] = dove || window.G.S2.TELEFERICA.nuvole;
+  let pioggia = '';
+  for (let k = 0; k < 26; k++) { const x = nx - 260 + k * 20 + (k % 3) * 6, y = ny + 70 + (k % 4) * 30; pioggia += 'M' + x + ' ' + y + ' l-10 44 '; }
+  return '<g class="g-tel-nuvole">' + (piove ? '<path d="' + pioggia + '" stroke="#7FA8D8" stroke-width="3" opacity=".55" stroke-linecap="round"/>' : '') +
+    [[-200, 30, 130], [-60, -10, 170], [120, 20, 150], [260, 50, 110]].map(([dx, dy, r]) => '<ellipse cx="' + (nx + dx) + '" cy="' + (ny + dy) + '" rx="' + r + '" ry="' + (r * 0.55).toFixed(0) + '" fill="#4A4F72"/>').join('') +
+    '<ellipse cx="' + nx + '" cy="' + (ny + 64) + '" rx="380" ry="40" fill="#3A3E60"/></g>';
 };
 // La cabina viola, appesa al filo per il gancio nel punto (0, 0); alta 40. o.gocce: da 0 a 1, quanto gocciola.
 window.G.S2.cabina = function (o) {
@@ -2842,9 +2850,9 @@ window.G.S2.telonePiegato = function (x, y, s) {
 };
 // Il fiume, in fondo al parco oltre il binario morto, col ponte di legno; e sull'altra riva il parco gemello: un parco
 // piccolo come quello di Ada, con la montagna identica (G.mondo spostato di GEMELLO.dx). Coordinate del mondo.
-window.G.S2.GEMELLO = { dx: -5500, fiume: [-3560, -2980], ponte: 858 };
-window.G.S2.fiume = function () {
-  const C = window.G.C, [f0, f1] = window.G.S2.GEMELLO.fiume;
+window.G.S2.GEMELLO = { dx: -5700, fiume: [-3560, -2980], ponte: 858 };
+window.G.S2.fiume = function (dx) {
+  const C = window.G.C, [f0, f1] = window.G.S2.GEMELLO.fiume.map(x => x + (dx || 0));
   let onde = '';
   for (let y = 905; y < 1080; y += 26) onde += 'M' + (f0 + 20) + ' ' + y + ' q20 -8 40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 ';
   const pal = [];
@@ -2861,6 +2869,44 @@ window.G.S2.fiume = function () {
 window.G.S2.parcoGemello = function (o) {
   o = o || {};
   const G = window.G, S2 = G.S2, luci = o.luci === undefined ? 1 : o.luci;
-  const mondo = G.mondo({ banchina: true, manopola: 0, spento: 1 - luci, seme: 9 });
-  return '<g class="g-gemello" transform="translate(' + S2.GEMELLO.dx + ' 0)">' + mondo + (o.bruco ? S2.brucoFermo(o.bruco, { faccia: '#BFE6FF' }) : '') + '</g>';
+  const mondo = G.mondo({ banchina: true, manopola: 0, spento: 1 - luci, seme: 9, gemello: true });
+  return '<g class="g-gemello" transform="translate(' + S2.GEMELLO.dx + ' 0)">' + mondo + (o.bruco ? S2.brucoFermo(o.bruco, { faccia: S2.FACCIA_GEMELLO }) : '') + '</g>';
 };
+// Il Bruco del parco gemello ha la faccia dipinta di un altro colore.
+window.G.S2.FACCIA_GEMELLO = '#BFE6FF';
+// Il cancello del parco gemello, verso il fiume, con la guardiola del suo custode (coordinate del parco gemello: è il suo
+// G.mondo, con o.gemello). porta: 0 chiusa, 1 aperta.
+window.G.S2.CANCELLO_GEMELLO = [1990, 868];
+window.G.S2.cancelloGemello = function (porta) {
+  const G = window.G, C = G.C, [cx] = window.G.S2.CANCELLO_GEMELLO;
+  let archi = '';
+  for (let k = 0; k < 8; k++) archi += '<rect x="' + (cx - 48 + k * 12) + '" y="734" width="12" height="18" fill="' + (k % 2 ? C.crema : '#3E8F5C') + '"/>';
+  let lamp = '';
+  for (let k = 0; k <= 8; k++) lamp += '<circle cx="' + (cx - 48 + k * 12) + '" cy="' + (730 - 10 * Math.sin(Math.PI * k / 8)).toFixed(1) + '" r="4" fill="' + C.luce + '"/>';
+  const anta = l => { const px = cx + 43 * l, w = 43 * (1 - 0.88 * porta); let sb = ''; for (let k = 1; k < 4; k++) sb += 'M' + (px - l * k * w / 4) + ' 812 L' + (px - l * k * w / 4) + ' 864 ';
+    return '<path d="M' + px + ' 810 L' + (px - l * w) + ' 816 L' + (px - l * w) + ' 866 L' + px + ' 866 Z" fill="none" stroke="' + C.legnoScuro + '" stroke-width="5" stroke-linejoin="round"/><path d="' + sb + '" stroke="' + C.legnoScuro + '" stroke-width="3"/>'; };
+  return '<g class="g-cancello-gemello"><g transform="translate(' + (cx - 150) + ' 734) scale(.8)">' + G.guardiola({ porta: 0 }).replace(/#D9483B/g, '#3E8F5C').replace(/#A8322A/g, '#2A6B42') + '</g>' +
+    '<g stroke="' + C.legnoScuro + '" stroke-width="10"><line x1="' + (cx - 48) + '" y1="870" x2="' + (cx - 48) + '" y2="740"/><line x1="' + (cx + 48) + '" y1="870" x2="' + (cx + 48) + '" y2="740"/></g>' +
+    '<path d="M' + (cx - 58) + ' 754 L' + (cx + 58) + ' 754 L' + (cx + 52) + ' 730 Q' + cx + ' 706 ' + (cx - 52) + ' 730 Z" fill="#2A6B42"/>' + archi + lamp + anta(-1) + anta(1) + '</g>';
+};
+// Le pagine dei regolamenti messi a confronto (episodio 6): i disegni del regolamento di Ada e di quello del custode
+// gemello. Nessuna scritta.
+(function () {
+  const G = window.G, C = G.C, P = G.PAGINE, M = '#5C8FD0', V = '#5DAE3C', R = '#D9483B', cs = C.cremaScura;
+  const striscia = (onde) => '<g transform="translate(76 260) scale(.62)">' + G.segnoBandierina('oro') + '</g>' +
+    '<path d="M88 252 L112 250 L110 262 L112 274 L88 272 L91 262 Z" fill="none" stroke="' + cs + '" stroke-width="1.8"/>' + onde;
+  P.fraseParco = striscia('<circle cx="100" cy="258" r="4" fill="' + V + '"/><circle cx="96" cy="262" r="4" fill="' + V + '"/><circle cx="104" cy="262" r="4" fill="' + V + '"/><path d="M100 264 L100 270" stroke="' + C.legno + '" stroke-width="1.6"/>') +
+    '<path d="M130 268 L170 268 M134 268 L134 258 L166 258 L166 268" stroke="' + cs + '" stroke-width="1.8" fill="none"/><g transform="translate(140 252) scale(.42)">' + G.segnoBandierina('oro') + '</g>';
+  const lupo = col => '<g transform="translate(80 262)"><path d="M-12 8 Q-10 -6 0 -8 Q10 -6 12 8 Z" fill="none" stroke="' + cs + '" stroke-width="1.6"/><path d="M-8 -4 L-10 -12 L-4 -7 M8 -4 L10 -12 L4 -7" stroke="' + cs + '" stroke-width="1.6" fill="none"/></g>' +
+    '<g transform="translate(150 266) scale(.32)">' + G.paperella(col) + '</g><path d="M128 252 L176 252" stroke="' + cs + '" stroke-width="1.6"/>' +
+    '<path d="M134 248 L134 256 M134 252 L' + (col === R ? '160 252' : '146 240') + '" stroke="' + R + '" stroke-width="2.4" stroke-linecap="round"/>';
+  P.brucoRosso = lupo(R);
+  P.brucoVerde = lupo(V);
+  // Nel parco gemello la pagina della teleferica c'è, ma la collina è vuota: nessun pilone, nessun filo.
+  P.telefericaNo = '<path d="M60 278 Q90 250 120 266 Q140 276 178 270" stroke="' + cs + '" stroke-width="1.8" fill="none"/>' +
+    '<path d="M138 250 l10 10 M148 250 l-10 10" stroke="' + R + '" stroke-width="2"/>';
+  const telone = (a, b) => '<path d="M' + a + ' 266 Q' + (a + 10) + ' 254 ' + (a + 20) + ' 266 Q' + (a + 30) + ' 254 ' + b + ' 266 L' + b + ' 272 L' + a + ' 272 Z" fill="#F29A3E" stroke="#8A4210" stroke-width="1.2"/>';
+  P.telone = telone(70, 110) + '<path d="M130 268 L174 268" stroke="' + cs + '" stroke-width="1.6"/>';
+  P.teloneGemello = telone(130, 170) + '<path d="M66 268 L110 268" stroke="' + cs + '" stroke-width="1.6"/>';
+  P.campanellaGemella = P.campanella.replace('rx="12" ry="5"', 'rx="20" ry="9"');
+})();
