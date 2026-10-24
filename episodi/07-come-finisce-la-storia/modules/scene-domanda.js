@@ -12,8 +12,8 @@ const DM_CAM = [
   { t: 16.4, cx: 706, cy: 846, z: 3.8 },
   { t: 19.0, cx: 760, cy: 760, z: 2.4 },
 ];
-// Il treno sul cielo: dove si trova all'inizio del luna park, e la sua velocità.
-const DM_TRENO = 1150, DM_VEL = [[DM_STACCO, 230]];
+// Il treno sul cielo, in fondo al viadotto: dove si trova all'inizio del luna park, e la sua velocità.
+const DM_TRENO = 3886, DM_VEL = [[DM_STACCO, 230]];
 const DM_TITOLO = 17.0;
 kit.scene('domanda', {
   init(kit) {

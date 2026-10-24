@@ -3,21 +3,22 @@ const { seg, eo, ei, eio, lerp } = kit;
 // l'altro: i primi tre biglietti salgono sul primo (Al, Mare, Emma), gli altri tre sul secondo (Al, Parco, Emma).
 // Parco si presenta da vicino; Emma è rosa antico in tutti e due. Le sbarre si abbassano.
 // Si apre come finisce «frasi»; finisce sui due treni fermi (li riprende «partenza»).
-// Dove stanno i due treni sul percorso di partenza: il primo in cima alla salita, il secondo in stazione.
-const PA_TRENI = [1080, 490];
+// Dove stanno i due treni sul percorso di partenza, tutti e due sulla banchina lunga: il primo più avanti, il secondo
+// davanti allo Spezzaparole.
+const PA_TRENI = [920, 490];
 const PA_CAM = [
   { t: 0, cx: 534, cy: 790, z: 4.6 },
   { t: 1.6, cx: 556, cy: 784, z: 4.2 },
   { t: 4.4, cx: 556, cy: 784, z: 4.2 },
-  { t: 7.0, cx: 300, cy: 560, z: 2.1 },
-  { t: 8.6, cx: 300, cy: 560, z: 2.1 },
+  { t: 7.0, cx: -150, cy: 780, z: 2.8 },
+  { t: 8.6, cx: -150, cy: 780, z: 2.8 },
   { t: 10.2, cx: 556, cy: 784, z: 4.2 },
   { t: 12.2, cx: 556, cy: 784, z: 4.2 },
   { t: 14.4, cx: 300, cy: 800, z: 3.6 },
   { t: 15.2, cx: 300, cy: 800, z: 3.6 },
   { t: 17.0, cx: 238, cy: 790, z: 7.6 },
   { t: 22.4, cx: 238, cy: 790, z: 7.6 },
-  { t: 25.0, cx: 340, cy: 600, z: 1.9 },
+  { t: 25.0, cx: 190, cy: 720, z: 1.8 },
 ];
 // Le due strisce: quando lasciano le mani di Ada, i colpi di forbice, quando escono i biglietti.
 const PA_STRISCE = [
@@ -55,10 +56,10 @@ kit.scene('parco', {
     this.pass = this.treni.map(v => v.map(x => x.querySelector('.g-pass')));
     this.ada = this.m.q('.pa-ada'); this.mac = this.m.q('.pa-macchina');
     this.str = this.m.qa('.pa-striscia'); this.big = this.m.qa('.pa-big'); this.scint = this.m.qa('.pa-scint');
-    // I treni fermi: il primo in fondo alla stazione, all'attacco della salita; il secondo dietro.
+    // I treni fermi sulla banchina, uno dietro l'altro.
     const path = this.m.partenza;
     this.treni.forEach((v, n) => G.posaTreno(v, path, PA_TRENI[n]));
-    // I sedili, nel mondo: il punto del vagone dove siede il passeggero, anche sulla salita.
+    // I sedili, nel mondo: il punto del vagone dove siede il passeggero.
     const svg = this.m.cam.ownerSVGElement, base = this.m.cam.getCTM().inverse();
     this.sedili = this.treni.map(v => v.map(el => { const pt = svg.createSVGPoint(); pt.x = 138; pt.y = 42; const w = pt.matrixTransform(base.multiply(el.querySelector('.g-vag-in').getCTM())); return [w.x, w.y]; }));
     this.seconda = this.m.q('.pa-seconda');

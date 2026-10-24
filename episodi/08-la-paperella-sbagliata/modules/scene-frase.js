@@ -10,7 +10,7 @@ const FR_CITTA_CAM = [{ t: 0, cx: 960, cy: 600, z: 1 }, { t: 3.6, cx: 1140, cy: 
 const FR_SALOTTO = [3.3, 3.9, 10.6, 11.2];
 const FR_SCRIVE = 4.4, FR_INVIO = 9.2;
 const FR_VOLO = [11.0, 14.6];
-const FR_ADA = [-95, 835];
+const FR_ADA = [-1463, 835];
 const FR_STAZ = [14.4, 15.2];
 const FR_SROTOLA = [15.6, 17.0];
 const FR_LEGGE = 17.6, FR_ACCIGLIA = 19.0;
@@ -19,13 +19,13 @@ const FR_QUADERNO = [19.8, 20.3, 24.9, 25.4];
 const FR_FOGLI = [21.4, 22.9];
 const FR_NO = [27.0, 28.6];
 const FR_CAM = [
-  { t: FR_STAZ[0], cx: -110, cy: 790, z: 3.6 },
-  { t: 15.4, cx: -110, cy: 790, z: 3.6 },
-  { t: FR_LEGGE, cx: -95, cy: 812, z: 8.5 },
-  { t: 19.4, cx: -95, cy: 812, z: 8.5 },
-  { t: 21.0, cx: -100, cy: 790, z: 5.0 },
-  { t: 26.0, cx: -100, cy: 790, z: 5.0 },
-  { t: 29.6, cx: -110, cy: 795, z: 4.4 },
+  { t: FR_STAZ[0], cx: -1478, cy: 790, z: 3.6 },
+  { t: 15.4, cx: -1478, cy: 790, z: 3.6 },
+  { t: FR_LEGGE, cx: -1463, cy: 812, z: 8.5 },
+  { t: 19.4, cx: -1463, cy: 812, z: 8.5 },
+  { t: 21.0, cx: -1468, cy: 790, z: 5.0 },
+  { t: 26.0, cx: -1468, cy: 790, z: 5.0 },
+  { t: 29.6, cx: -1478, cy: 795, z: 4.4 },
 ];
 function frBez(p, u) { const a = 1 - u; return [0, 1].map(k => a * a * a * p[0][k] + 3 * a * a * u * p[1][k] + 3 * a * u * u * p[2][k] + u * u * u * p[3][k]); }
 kit.scene('frase', {

@@ -6,16 +6,18 @@ const { seg, eo, ei, eio, lerp } = kit;
 // Si apre sulla vasca e sul ponte (come finisce «finestre»); finisce sul telefono acceso (lo riprende «oggi»).
 const AP_CAM = [
   { t: 0, cx: 860, cy: 820, z: 3.4 },
-  { t: 5.0, cx: 860, cy: 820, z: 3.4 },
-  { t: 7.2, cx: -220, cy: 740, z: 1.35 },
-  { t: 11.2, cx: -120, cy: 740, z: 1.35 },
-  { t: 13.6, cx: 880, cy: 560, z: 1.0 },
+  // Stacco sul binario morto, in fondo alla banchina lunga; poi stacco sul parco intero.
+  { t: 6.4, cx: 860, cy: 820, z: 3.4 },
+  { t: 6.41, cx: -1620, cy: 740, z: 1.35 },
+  { t: 12.8, cx: -1470, cy: 740, z: 1.35 },
+  { t: 12.81, cx: 880, cy: 560, z: 1.0 },
   { t: 17.4, cx: 900, cy: 540, z: 1.03 },
 ];
 // Gli ultimi brividi: quando partono, di che colore (le lanterne di prima), e di quanto tremano ancora i binari.
 const AP_BRIVIDI = [0.4, 1.7, 3.0, 4.3];
-// I treni grigi vanno a dormire: quando parte ognuno (il primo va più lontano).
-const AP_DORMIRE = [6.6, 8.0, 9.4], AP_CORSA = 2.6;
+// I treni grigi vanno a dormire: quando parte ognuno (il primo va più lontano), e da dove lungo il binario morto
+// (sulla banchina, appena fuori dall'inquadratura).
+const AP_DORMIRE = [6.6, 8.0, 9.4], AP_CORSA = 2.6, AP_DA = 1448;
 const AP_CREMA = [11.6, 14.0], AP_ACCENDE = 14.2;
 const AP_CITTA = [17.2, 17.8, 19.6, 20.0], AP_TELEFONO = 20.4;
 const AP_ONDA = 'M 772 796 L 846 796 C 888 796 910 818 962 818 L 996 818';
@@ -97,7 +99,7 @@ kit.scene('apre', {
     // I treni grigi vanno sul binario morto, uno dopo l'altro, e spengono il fanale.
     this.dormono.forEach((v, k) => {
       const j = 2 - k, a = AP_DORMIRE[j], u = eio(seg(t, a, a + AP_CORSA));
-      G.posaTreno(v, this.morto, lerp(80, G.DORMONO[k], u), M.scala, M.passoBanchina);
+      G.posaTreno(v, this.morto, lerp(AP_DA, G.DORMONO[k], u), M.scala, M.passoBanchina);
       v.forEach(el => el.setAttribute('opacity', (t < a ? 0 : seg(t, a, a + 0.4)).toFixed(3)));
       const f = Math.round((1 - seg(t, a + AP_CORSA + 0.2, a + AP_CORSA + 0.8)) * 10) / 10;
       if (this.fanale[k] !== f) {

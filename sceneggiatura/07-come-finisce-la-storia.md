@@ -3,7 +3,7 @@
 **La domanda.** Il treno potrebbe girare per sempre? (È la domanda con cui finisce l'episodio 6.)
 **La risposta.** Il treno non si ferma da solo. Nella vasca c'è sempre stata una paperella scura, del colore della notte: quando Ada la pesca, non sale nessuno, le luci del treno si spengono e la risposta è finita. Più la storia sembra finita, più paperelle scure cadono nella vasca.
 **Cosa presenta.** Una cosa sola: la paperella Fine, la paperella del colore della notte.
-**Cosa dà per scontato.** Il prologo e gli episodi da 1 a 6: Ada e il suo quaderno, i passeggeri, il treno, la montagna con i fili di luce, gli scambi e le finestre sulla vasca, la vasca, la pesca, il telefono nel salotto; la banchina di sette vagoni (episodio 4), che il treno riempie all'ultimo giro; i treni di prova (episodio 5), nominati nella domanda finale.
+**Cosa dà per scontato.** Il prologo e gli episodi da 1 a 6: Ada e il suo quaderno, i passeggeri, il treno, la montagna con i fili di luce, gli scambi e le finestre sulla vasca, la vasca, la pesca, il telefono nel salotto; la banchina dell'episodio 4, dove il treno ci sta sempre; i treni di prova (episodio 5), nominati nella domanda finale.
 **Cosa lascia per dopo.** E se nessun treno di prova ha mai portato la risposta? (La paperella sbagliata, episodio 8.)
 
 Durata: 3:50 · Voci: narratore, Ada.
@@ -55,7 +55,7 @@ Ogni volta, in un angolo della vasca, galleggia una paperella scura, del colore 
 
 ### punto · Il punto · 0:24
 
-**VISIVO.** Il treno esce sopra la vasca: nell'ultimo vagone la paperella turchese è diventata grigia. Cadono tantissime paperelle grigio chiaro, e adesso le paperelle scure sono più di una: sono tante. Ada le indica col dito, una per una, sorpresa. Poi chiude gli occhi e pesca una grigio chiaro: sul telefono, dopo *gioca*, compare un punto. La paperella grigia corre a sedersi in fondo al treno, nell'ultimo posto della banchina, e il treno riparte.
+**VISIVO.** Il treno esce sopra la vasca: nell'ultimo vagone la paperella turchese è diventata grigia. Cadono tantissime paperelle grigio chiaro, e adesso le paperelle scure sono più di una: sono tante. Ada le indica col dito, una per una, sorpresa. Poi chiude gli occhi e pesca una grigio chiaro: sul telefono, dopo *gioca*, compare un punto. La paperella grigia corre a sedersi in fondo al treno, e il treno riparte, lungo sette vagoni.
 
 **NARRATORE.**
 > Adesso le paperelle scure sono tante. Ma Ada pesca una paperella grigia.
@@ -67,7 +67,7 @@ Ogni volta, in un angolo della vasca, galleggia una paperella scura, del colore 
 
 ### finestre · Le finestre sulla vasca · 0:42
 
-**VISIVO.** Dentro la montagna, nel buio. Il treno è lungo sette vagoni, quanto tutta la banchina; in fondo, nell'ultimo vagone, la paperella grigio chiaro del punto, e davanti a lei la paperella turchese. Si accendono i fili di luce, da ogni passeggero verso chi gli siede davanti; *clac, clac, clac*, gli scambi spostano ogni vagone sul suo binario. Poi, nella parete, la finestra ad arco sull'acqua della vasca, e il treno rallenta.
+**VISIVO.** Dentro la montagna, nel buio. Il treno è lungo sette vagoni; in fondo, nell'ultimo vagone, la paperella grigio chiaro del punto, e davanti a lei la paperella turchese. Si accendono i fili di luce, da ogni passeggero verso chi gli siede davanti; *clac, clac, clac*, gli scambi spostano ogni vagone sul suo binario. Poi, nella parete, la finestra ad arco sull'acqua della vasca, e il treno rallenta.
 - **Prima finestra.** Passano gli altri vagoni: l'acqua resta vuota. Passa l'ultimo, e si accendono paperelle di luce di tanti colori; le grigie e le scure, quasi alla pari, le nuotano un po' incontro.
 - Fili di luce, scambi: la paperella del punto si fa scura.
 - **Seconda finestra.** Con gli altri niente; con l'ultimo vagone le paperelle di luce, e adesso le scure sono le più numerose.
@@ -158,5 +158,5 @@ In fondo al tunnel si accende la luce dell'uscita.
 - **Si spengono solo il fanale del treno e la stazione**, non il luna park: un parco che chiude tutto farebbe pensare al custode che chiude a metà frase (il troncamento per lunghezza, nei rimandi della scaletta), e intorno le giostre continuano per le frasi degli altri.
 - **Le scene di montaggio** (giri, punto) mostrano solo l'uscita e la pesca; dentro la montagna si entra solo nell'ultimo giro.
 - **La domanda finale** nomina i treni di prova dell'episodio 5, senza mostrarli. La striscia nuova non si legge: cosa c'è scritto lo decide l'episodio 8.
-- **Con gli episodi 3–6**: se nei loro film la bancarella ha la manopola (episodio 3) o la banchina ha una lunghezza (episodio 4), qui si vedono come le lasciano loro, senza usarle. All'ultimo giro il treno ha sette vagoni e riempie la banchina dell'episodio 4: nessun biglietto resta giù.
+- **Con gli episodi 3–6**: se nei loro film la bancarella ha la manopola (episodio 3) o la banchina ha una lunghezza (episodio 4), qui si vedono come le lasciano loro, senza usarle. All'ultimo giro il treno ha sette vagoni e ci sta sulla banchina dell'episodio 4: nessun biglietto resta giù. (Fino al 23 ottobre 2026 la banchina era di sette posti e il treno la riempiva; ora è di venticinque: dove il film mostra la banchina piena, va ritoccato.)
 - **Cosa non diciamo**: i nomi veri, il custode che chiude il parco, perché la paperella scura aumenta proprio quando la storia sembra finita (lo fa la pista, e nessuno sa dire come).

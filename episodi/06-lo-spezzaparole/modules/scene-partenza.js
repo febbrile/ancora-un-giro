@@ -1,6 +1,6 @@
 const { seg, eo, eio, lerp } = kit;
-// Il trenino parte da solo, cinque vagoni in fila, senza nessuno alla guida: sale piano, scende di colpo e sparisce nella
-// bocca buia della montagna (dal buio arrivano i clac). Ada non corre alla bancarella: resta davanti allo Spezzaparole,
+// Il trenino parte da solo, cinque vagoni in fila, senza nessuno alla guida: corre via lungo la banchina, esce di campo a
+// sinistra, ricompare in alto sul viadotto, scende di colpo e sparisce nella bocca buia della montagna (dal buio arrivano i clac). Ada non corre alla bancarella: resta davanti allo Spezzaparole,
 // lo guarda, apre il quaderno e ne strappa un foglio.
 // Si apre come finisce «zac»; finisce su Ada col foglio in mano, davanti allo Spezzaparole (la riprende «prova»).
 const PR_CAM = [
@@ -12,8 +12,9 @@ const PR_CAM = [
   { t: 10.8, cx: 556, cy: 790, z: 4.0 },
 ];
 const PR_PASSO = 76, PR_TRENO = 490;
-// Velocità [t, v]: fermo, poi piano sulla salita; in cima prende velocità e scende di colpo.
-const PR_VEL = [[0, 0], [1.2, 0], [2.6, 90], [4.8, 120], [6.2, 280], [7.6, 420]];
+// Velocità [t, v]: fermo, poi sempre più svelto lungo la banchina; fuori campo (banchina, salita) corre, e ricompare sul
+// viadotto quando la camera si è allargata (5.6), per entrare in montagna quando ci entrava prima (8.4).
+const PR_VEL = [[0, 0], [1.2, 0], [3.6, 480], [4.6, 1940], [5.6, 420]];
 const PR_GUARDA = 8.4, PR_QUADERNO = 9.8, PR_STRAPPA = 11.0;
 kit.scene('partenza', {
   init(kit) {

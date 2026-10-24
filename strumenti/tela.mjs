@@ -45,14 +45,15 @@ function tavole() {
   s += '<g transform="translate(1600 770)">' + G.insegna('Ancora un giro', 520, 150, 0) + '</g>';
   s += '<g transform="translate(1600 950)">' + G.insegna('Fine', 300, 110, 0) + '</g>';
   T['Oggetti.dc.html'] = { titolo: 'Gli oggetti', w: 1920, h: 1080, svg: s };
-  // Il luna park: la stazione, il treno fermo, Ada e lo Spezzaparole.
+  // Il luna park intero, dalla salita in fondo alla banchina fino alla ruota: la stazione, il treno fermo, Ada e lo
+  // Spezzaparole. La tavola è larga quanto il parco (x da −1460 a 1920).
   const treno = G.treno([{ tipo: 'al', col: P.Al.biglietto }, { tipo: 'mare', col: P.mare.biglietto }, { tipo: 'emma', col: P.Emma.biglietto }], { sbarra: 1 });
   const M = G.MONDO;
   const vag = treno.split('<g class="g-vag"').slice(1).map((v, i) => '<g transform="translate(' + (M.fermo + i * M.passo) + ' 852) scale(' + M.scala + ') translate(-120 -150)"' + v.replace(/^ data-i="\d+">/, '>'));
-  s = G.mondo() + vag.join('') +
+  s = '<g transform="translate(1460 0)">' + G.mondo() + vag.join('') +
     '<g transform="' + G.posa(M.spezzaparole[0], M.spezzaparole[1], 0.34, 220, 300) + '">' + G.spezzaparole({}) + '</g>' +
-    '<g transform="' + G.posaAda(M.ada[0], M.ada[1]) + '">' + G.ada('base', 'felice') + '</g>';
-  T['LunaPark.dc.html'] = { titolo: 'Il luna park', w: 1920, h: 1080, svg: s };
+    '<g transform="' + G.posaAda(M.ada[0], M.ada[1]) + '">' + G.ada('base', 'felice') + '</g></g>';
+  T['LunaPark.dc.html'] = { titolo: 'Il luna park', w: 3380, h: 1080, svg: s };
   // Dentro la montagna: i fili di luce del primo tratto.
   const tipi = ['al', 'mare', 'emma'];
   const pesi = [[0, 0, P.Al.fili.Al], [1, 0, P.mare.fili.Al], [1, 1, P.mare.fili.mare], [2, 0, P.Emma.fili.Al], [2, 1, P.Emma.fili.mare], [2, 2, P.Emma.fili.Emma]];
@@ -112,8 +113,12 @@ function tavole() {
   s += [0, 1, 2].map(i => at(80 + i * 250, 560, 1.0, G.vagone({ primo: i === 0, grigio: true, fanale: 1 }))).join('') + et(420, 740, 'un treno di prova: grigio, senza vernice, solo il fanale', true);
   // Le scene intere stanno in finestre (svg annidati), che tagliano quello che esce.
   const vista = (x, y, w, h, vb, dentro) => '<svg x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" viewBox="' + vb + '" preserveAspectRatio="xMidYMid slice">' + dentro + '</svg>';
-  s += vista(900, 480, 960, 260, '20 700 760 206', G.mondo({ banchina: true, manopola: 0, morto: true }));
-  s += et(1380, 740, 'la banchina con le sue due sbarre, il bancone con la manopola', true);
+  // La banchina intera, col treno dell'ultimo «Al parco» dell'episodio 4: venticinque vagoni, da una sbarra all'altra.
+  const H = G.MOD.chat.messaggi.at(-1), TIPO = { Al: 'al', mare: 'mare', Emma: 'emma', parco: 'parco' };
+  const lungo = G.treno(H.sale.map((w, i) => ({ tipo: TIPO[w] || 'paperella', col: H.biglietti[i] })), { sbarra: 1 }).split('<g class="g-vag"').slice(1)
+    .map((v, i) => '<g transform="translate(' + (G.fermoTreno(H.sale.length) + i * M.passoBanchina) + ' 852) scale(' + M.scala + ') translate(-120 -150)"' + v.replace(/^ data-i="\d+">/, '>')).join('');
+  s += vista(900, 480, 960, 260, '-1340 500 2040 553', G.mondo({ banchina: true, manopola: 0 }) + lungo);
+  s += et(1380, 740, 'la banchina con le sue due sbarre: venticinque vagoni', true);
   s += vista(40, 790, 560, 250, '400 260 1120 500', G.salotto(G.telefono({ chat: [['io', 'Al mare Emma'], ['ai', 'nuota'], ['io', 'Al parco'], ['ai', 'corre'], ['io', 'Al parco']] })));
   s += vista(680, 790, 560, 250, '160 330 1120 500', G.salotto(G.telefono({ chat: [['io', 'Al mare Zampirù'], ['ai', 12]] }), { cameretta: true }));
   s += vista(1320, 790, 560, 250, '400 360 1120 500', G.salotto(G.telefono({ chat: [['io', 'Al mare Emma'], ['ai', 'nuota']], puntini: 0.3 })));
@@ -159,7 +164,7 @@ function artboard(nome, t) {
 
 const T = tavole();
 fs.mkdirSync(OUT, { recursive: true });
-const posto = { 'Main.dc.html': [0, 0], 'Oggetti.dc.html': [2000, 0], 'LunaPark.dc.html': [0, 1200], 'Montagna.dc.html': [2000, 1200], 'Finestre.dc.html': [0, 2400], 'Grammatica.dc.html': [2000, 2400], 'Parco.dc.html': [0, 3600],
+const posto = { 'Main.dc.html': [0, 0], 'Oggetti.dc.html': [2000, 0], 'LunaPark.dc.html': [0, 1200], 'Montagna.dc.html': [3500, 1200], 'Finestre.dc.html': [0, 2400], 'Grammatica.dc.html': [2000, 2400], 'Parco.dc.html': [0, 3600],
   'Passeggeri.dc.html': [2000, 3600], 'Stagione.dc.html': [0, 4800], 'Immenso.dc.html': [2000, 4800], 'Custode.dc.html': [0, 6000] };
 const canvas = {
   v: 3, createdOnFiles: { v: 1, at: new Date().toISOString().replace(/\.\d+Z$/, 'Z') }, title: 'Ancora un giro · design',

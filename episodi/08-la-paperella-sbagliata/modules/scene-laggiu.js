@@ -17,7 +17,8 @@ const LG_CAM = [
   { t: 17.0, cx: 1300, cy: 640, z: 1.0 },
 ];
 const LG_SBARRE = [0.8, 1.8];
-const LG_VEL = [[0, 0], [2.2, 0], [3.6, 70], [6.0, 70], [8.0, 120], [9.5, 300]];
+// Velocità [t, v]: riparte piano; fuori campo corre la banchina lunga, sale ed entra in montagna circa quando entrava prima.
+const LG_VEL = [[0, 0], [2.2, 0], [3.6, 70], [6.0, 70], [8.0, 700], [9.5, 900]];
 const LG_ADA = [672, 896];
 const LG_CHIUDE = 5.2, LG_SU = 6.2;
 const LG_LAGGIU = [8.2, 11.6];

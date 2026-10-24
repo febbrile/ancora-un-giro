@@ -4,8 +4,8 @@ const { seg, eo, ei, eio, lerp } = kit;
 // con le stesse paperelle. Ada pesca, sicura: questa volta esce una paperella turchese, «gioca». Cartello: «Fine».
 // Si apre come finisce «pesca».
 const AN_CAM = [
-  { t: 0, cx: 340, cy: 600, z: 1.9 },
-  { t: 1.2, cx: 340, cy: 600, z: 1.9 },
+  { t: 0, cx: 190, cy: 720, z: 1.8 },
+  { t: 1.2, cx: 190, cy: 720, z: 1.8 },
   { t: 5.6, cx: 900, cy: 560, z: 1.05 },
   // La striscia arriva ad Ada.
   { t: 8.4, cx: 534, cy: 790, z: 4.0, da: 8.39 },
@@ -24,8 +24,14 @@ const AN_CAM = [
   { t: 28.6, cx: 640, cy: 846, z: 3.6 },
   { t: 31.6, cx: 760, cy: 700, z: 1.7 },
 ];
-const AN_VEL = [[[0, 0], [1.0, 0], [2.6, 120], [4.4, 220]], [[0, 0], [1.4, 0], [3.0, 110], [4.6, 200]]];
-const AN_PARTENZE = [1080, 490];
+const AN_VEL = [[[0, 0], [1.0, 0], [2.4, 160], [3.2, 220]], [[0, 0], [1.4, 0], [3.0, 150], [4.6, 220]]];
+const AN_PARTENZE = [920, 490];
+// Fuori campo, tra a e b, il treno corre il resto della banchina, la salita e un pezzo di viadotto, e a b è al punto s.
+const AN_FUORI = [[3.05, 3.6, 3380], [5.0, 5.6, 3540]];
+function anDove(n, t) {
+  const G = window.G, [a, b, s] = AN_FUORI[n], v = AN_PARTENZE[n] + G.percorso(t, 0, AN_VEL[n]);
+  return v + (s - AN_PARTENZE[n] - G.percorso(b, 0, AN_VEL[n])) * eio(seg(t, a, b));
+}
 const AN_CASA = [5.6, 6.0, 8.0, 8.4];
 const AN_CASA_DI_NUOVO = [22.6, 23.0, 25.4, 25.8];
 const AN_STRISCIA = [8.4, 9.8];
@@ -105,7 +111,7 @@ kit.scene('ancora', {
     this.nero.setAttribute('opacity', (seg(t, AN_NERO[0], AN_NERO[1]) * (1 - seg(t, AN_NERO[1], AN_NERO[2]))).toFixed(3));
     // I due treni di prima ripartono e spariscono nella montagna.
     [0, 1].forEach(n => {
-      const v = this.treni[n], s = G.percorso(t, AN_PARTENZE[n], AN_VEL[n]);
+      const v = this.treni[n], s = anDove(n, t);
       G.posaTreno(v, m.partenza, s);
       G.nascondiInMontagna(v, m.partenza, s, { fine: true });
       if (t > 8) v.forEach(el => el.setAttribute('opacity', 0));

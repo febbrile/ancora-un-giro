@@ -1,15 +1,26 @@
 const { seg, eo, eio, lerp } = kit;
-// Il treno parte da solo, sale la salita, attraversa il cielo ed entra in alto nella montagna. Ada resta a terra.
+// Il treno parte da solo, corre lungo la banchina ed esce dall'inquadratura; stacco sulla salita, in fondo alla
+// banchina: il treno sale piano, poi corre sul viadotto ed entra in alto nella montagna. Ada resta a terra.
 // Si apre dove finisce «passeggeri»; finisce sulla montagna (la riprende «vasca»).
+const PT_STACCO = 7.0;
+// Prima dello stacco: la stazione, il treno che parte.
 const PT_CAM = [
   { t: 0, cx: 380, cy: 770, z: 2.5 },
   { t: 2.8, cx: 380, cy: 770, z: 2.5 },
-  { t: 10, cx: 900, cy: 560, z: 1.08 },
+  { t: PT_STACCO, cx: 330, cy: 760, z: 1.9 },
+];
+// Dopo lo stacco: la salita, poi la camera segue il treno sul viadotto fino alla montagna.
+const PT_CAM2 = [
+  { t: PT_STACCO, cx: -620, cy: 570, z: 1.1 },
+  { t: 10.4, cx: -580, cy: 560, z: 1.1 },
   { t: 15.8, cx: 960, cy: 540, z: 1 },
   { t: 21, cx: 1100, cy: 600, z: 1.45 },
 ];
-// Velocità del treno [t, v] (pixel del mondo al secondo): fermo, piano fino alla salita, su piano, poi giù veloce.
-const PT_VEL = [[0, 0], [2.6, 0], [4.0, 80], [5.5, 80], [6.2, 70], [11.8, 70], [12.8, 150], [14, 300]];
+// Velocità del treno [t, v] (pixel del mondo al secondo). Prima dello stacco: parte e corre sulla banchina.
+const PT_VEL = [[0, 0], [2.6, 0], [4.6, 170]];
+// Dopo lo stacco il treno è a metà salita (PT_SALITA_S lungo la pista): su piano, poi veloce sul viadotto.
+const PT_SALITA_S = 2200;
+const PT_SALITA = [[PT_STACCO, 90], [10.4, 90], [11.8, 340], [13.0, 540]];
 kit.scene('partenza', {
   init(kit) {
     const G = window.G, M = G.MONDO, P = G.MOD.mare.passeggeri;
@@ -30,9 +41,10 @@ kit.scene('partenza', {
   render(t, kit) {
     t = window.G.tempo('00', 'partenza', t);
     const G = this.G, M = G.MONDO, m = this.m;
-    m.cam.setAttribute('transform', G.camChiavi(PT_CAM, t));
+    const dopo = t >= PT_STACCO;
+    m.cam.setAttribute('transform', G.camChiavi(dopo ? PT_CAM2 : PT_CAM, t));
     G.animaMondo(m, t + 114);
-    const s = G.percorso(t, this.s0, PT_VEL);
+    const s = dopo ? G.percorso(t, PT_SALITA_S, PT_SALITA) : G.percorso(t, this.s0, PT_VEL);
     G.posaTreno(this.vag, m.partenza, s);
     G.nascondiInMontagna(this.vag, m.partenza, s, { fine: true });
     const espr = t < 3 ? 'felice' : t < 16 ? 'base' : 'pensa';

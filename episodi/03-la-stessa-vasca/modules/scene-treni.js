@@ -1,16 +1,16 @@
 const { seg, eo, ei, eio, lerp } = kit;
 // Ada infila le tre strisce nello Spezzaparole, una dopo l'altra: zac, zac per ognuna. Sulla pista aspettano tre trenini
-// uguali, uno dietro l'altro: in cima alla salita, a metà salita, in stazione. I biglietti volano sui sedili e prendono
-// vita: in tutti e tre Al, Mare ed Emma, rosa antico. Le sbarre si abbassano, i tre treni partono da soli, uno dietro
-// l'altro, e spariscono nella montagna. Ada corre alla bancarella col quaderno stretto al petto.
+// uguali, uno dietro l'altro sulla banchina lunga. I biglietti volano sui sedili e prendono vita: in tutti e tre Al, Mare
+// ed Emma, rosa antico. Le sbarre si abbassano, i tre treni partono da soli, uno dietro l'altro, escono di campo a
+// sinistra, ricompaiono sul viadotto e spariscono nella montagna. Ada corre alla bancarella col quaderno stretto al petto.
 // Si apre come finisce «case» (Ada con le tre strisce in fila); finisce sulla montagna (la riprende «finestre», dentro).
-const TR_TRENI = [1080, 800, 490];
+const TR_TRENI = [1170, 830, 490];
 const TR_CAM = [
   { t: 0, cx: 522, cy: 806, z: 6.6 },
   { t: 1.2, cx: 556, cy: 784, z: 4.2 },
   { t: 5.0, cx: 556, cy: 784, z: 4.2 },
-  { t: 7.4, cx: 330, cy: 640, z: 1.75 },
-  { t: 9.6, cx: 330, cy: 640, z: 1.75 },
+  { t: 7.4, cx: 30, cy: 740, z: 1.55 },
+  { t: 9.6, cx: 30, cy: 740, z: 1.55 },
   { t: 11.0, cx: 236, cy: 800, z: 5.2 },
   { t: 12.8, cx: 236, cy: 800, z: 5.2 },
   { t: 14.6, cx: 560, cy: 600, z: 1.4 },
@@ -21,9 +21,17 @@ const TR_CAM = [
 const TR_STRISCE = [0.8, 2.4, 4.0].map(via => ({ via, tagli: [via + 1.5, via + 1.85], uscite: [via + 2.1, via + 2.35, via + 2.6] }));
 const TR_VOLO = 1.3, TR_VITA = 0.25;
 const TR_SBARRE = [11.8, 12.8];
-// La partenza: la stessa velocità per i tre treni, uno dopo l'altro.
-const TR_VEL = [[0, 0], [1.2, 90], [3.6, 170], [6.0, 300]];
+// La partenza: uno dopo l'altro; il terzo, che parte sotto i nostri occhi, lascia la banchina più svelto.
+const TR_VEL0 = [[0, 0], [1.2, 90], [3.6, 170], [6.0, 300]];
+const TR_VEL = [TR_VEL0, TR_VEL0, [[0, 0], [1.0, 170], [2.2, 300], [3.4, 200], [5.4, 300]]];
 const TR_PARTE = [13.2, 13.6, 14.0];
+// Fuori campo, tra a e b, il treno corre il resto della banchina, la salita e un pezzo di viadotto, e a b è al punto s:
+// così entra nella montagna quando entrava prima (a 18.7, 20.05 e 21.5).
+const TR_FUORI = [[13.2, 13.9, 3832], [13.6, 13.95, 3540], [16.5, 17.2, 3431]];
+function trDove(n, t) {
+  const G = window.G, [a, b, s] = TR_FUORI[n], p = TR_PARTE[n], v = TR_TRENI[n] + G.percorso(t - p, 0, TR_VEL[n]);
+  return v + (s - TR_TRENI[n] - G.percorso(b - p, 0, TR_VEL[n])) * eio(seg(t, a, b));
+}
 const TR_CORSA = [15.0, 18.0];
 function trBez(p, u) { const a = 1 - u; return [0, 1].map(k => a * a * a * p[0][k] + 3 * a * a * u * p[1][k] + 3 * a * u * u * p[2][k] + u * u * u * p[3][k]); }
 kit.scene('treni', {
@@ -50,7 +58,7 @@ kit.scene('treni', {
     this.pass = this.treni.map(v => v.map(x => x.querySelector('.g-pass')));
     this.ada = this.m.q('.tr-ada'); this.mac = this.m.q('.tr-macchina');
     this.str = this.m.qa('.tr-striscia'); this.strC = this.m.qa('.tr-striscia-c'); this.big = this.m.qa('.tr-big'); this.scint = this.m.qa('.tr-scint');
-    // I treni fermi; i sedili, nel mondo, anche sulla salita.
+    // I treni fermi; i sedili, nel mondo.
     this.treni.forEach((v, n) => G.posaTreno(v, this.m.partenza, TR_TRENI[n]));
     const svg = this.m.cam.ownerSVGElement, base = this.m.cam.getCTM().inverse();
     this.sedili = this.treni.map(v => v.map(el => { const pt = svg.createSVGPoint(); pt.x = 138; pt.y = 42; const w = pt.matrixTransform(base.multiply(el.querySelector('.g-vag-in').getCTM())); return [w.x, w.y]; }));
@@ -115,7 +123,7 @@ kit.scene('treni', {
     // Le sbarre si abbassano; i tre treni partono da soli, uno dietro l'altro, e spariscono nella montagna.
     G.sbarre(this.treni.flat(), i => eio(seg(t, TR_SBARRE[0] + i * 0.08, TR_SBARRE[1] + i * 0.08)));
     this.treni.forEach((v, n) => {
-      const s = TR_TRENI[n] + G.percorso(t - TR_PARTE[n], 0, TR_VEL);
+      const s = trDove(n, t);
       G.posaTreno(v, m.partenza, s);
       G.nascondiInMontagna(v, m.partenza, s, { fine: true });
     });

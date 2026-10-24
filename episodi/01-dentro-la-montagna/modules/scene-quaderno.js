@@ -7,7 +7,9 @@ const QU_CAM = [
   { t: 14.0, cx: 560, cy: 806, z: 2.6 },
   { t: 20.0, cx: 760, cy: 640, z: 1.5 },
 ];
-const QU_VEL = [[0, 0], [11.4, 0], [12.6, 110], [16, 120], [18, 200]];
+// Velocità del treno [t, v]: riparte piano; fuori dall'inquadratura corre sulla banchina lunga e sale (non si vede),
+// e ricompare in alto sul viadotto quando ci passava prima.
+const QU_VEL = [[0, 0], [11.4, 0], [12.6, 110], [14.6, 116], [16.0, 2074], [17.4, 176], [18, 200]];
 const QU_FINE = 20.6;
 kit.scene('quaderno', {
   init(kit) {

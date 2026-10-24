@@ -92,7 +92,7 @@ kit.scene('notti', {
       G.posaTreno(this.treno, m.partenza, s, M.scala, M.passoBanchina);
       G.nascondiInMontagna(this.treno, m.partenza, s, { fine: true, passo: M.passoBanchina });
     } else if (shot === 'mont' && !b.vasca) {
-      const s = 1600 + 320 * lento;
+      const s = 4336 + 320 * lento;
       G.posaTreno(this.treno, m.partenza, s, M.scala, M.passoBanchina);
       G.nascondiInMontagna(this.treno, m.partenza, s, { fine: true, passo: M.passoBanchina });
     } else this.treno.forEach(v => v.setAttribute('opacity', 0));

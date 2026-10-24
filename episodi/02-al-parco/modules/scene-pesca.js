@@ -1,21 +1,22 @@
 const { seg, eo, ei, eio, lerp } = kit;
 // Ada pesca a occhi chiusi: una paperella verde. «Corre!». Le altre scivolano via; la paperella corre al secondo treno e
 // sale su un vagone nuovo, dietro Emma. Stacco sulle due case: «Al mare Emma nuota», «Al parco Emma corre».
-// Si apre come finisce «verde»; finisce sui due treni, uno in cima alla salita e uno in stazione (li riprende «ancora»).
+// Si apre come finisce «verde»; finisce sui due treni sulla banchina, uno dietro l'altro (li riprende «ancora»).
 const PS_CAM = [
   { t: 0, cx: 600, cy: 830, z: 3.2 },
   { t: 1.8, cx: 728, cy: 846, z: 4.2 },
   { t: 9.0, cx: 728, cy: 846, z: 4.2 },
   { t: 11.6, cx: 470, cy: 806, z: 3.0 },
   { t: 14.4, cx: 470, cy: 806, z: 3.0 },
-  { t: 25.6, cx: 340, cy: 600, z: 1.9, da: 25.0 },
+  { t: 25.6, cx: 190, cy: 720, z: 1.8, da: 25.0 },
 ];
 const PS_ADA = [672, 896];
 const PS_PESCA = { giu: 2.4, su: 4.2, preso: 4.7 };
 const PS_SALTA = 9.4, PS_SALE = 12.8, PS_VAGONE = 12.0;
 const PS_CASE = [14.2, 14.8, 25.2, 26.0];
 const PS_RISPOSTE = [16.0, 17.4];
-const PS_CIMA = 1080;
+// Dove aspetta il primo treno: più avanti sulla banchina (ci è andato in «mare»).
+const PS_ATTESA = 920;
 kit.scene('pesca', {
   init(kit) {
     const G = window.G, M = G.MONDO, A = G.MOD.mare, D = G.MOD.parco, P = D.passeggeri;
@@ -53,7 +54,7 @@ kit.scene('pesca', {
     this.m.q('.g-vasca').insertAdjacentHTML('beforeend', papere);
     this.G = G;
     this.treni = [0, 1].map(n => this.m.qa('.ps-treno[data-n="' + n + '"] .g-vag'));
-    G.posaTreno(this.treni[0], this.m.partenza, PS_CIMA);
+    G.posaTreno(this.treni[0], this.m.partenza, PS_ATTESA);
     G.posaTreno(this.treni[1], this.m.arrivo, this.m.arrivo.getTotalLength() - (M.fermo - 40));
     this.vagNuovo = this.treni[1][3]; this.passNuovo = this.vagNuovo.querySelector('.g-pass');
     this.ada = this.m.q('.ps-ada'); this.mano = this.m.q('.ps-mano'); this.luce = this.m.q('.ps-luce'); this.scint = this.m.q('.ps-scint');

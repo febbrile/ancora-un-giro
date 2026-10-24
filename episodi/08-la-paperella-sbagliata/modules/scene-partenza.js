@@ -1,19 +1,25 @@
 const { seg, eo, eio, lerp } = kit;
-// Il treno parte da solo, senza nessuno alla guida: sale piano la salita, scende di colpo e sparisce nella bocca buia
-// della montagna. Dal buio arrivano i clac. Ada scende alla bancarella della pesca (sul bancone la manopola, sulla tacca
+// Il treno parte da solo, senza nessuno alla guida, e lascia la stazione; stacco: in fondo alla banchina lunga sale piano
+// la salita, in cima prende velocità, corre sul viadotto e sparisce nella bocca buia della montagna. Dal buio arrivano i clac. Ada scende alla bancarella della pesca (sul bancone la manopola, sulla tacca
 // di mezzo), si siede accanto alla vasca vuota, apre il quaderno e aspetta, sicura, con la matita pronta.
 // Si apre come finisce «biglietti»; finisce su Ada seduta accanto alla vasca (la riprende «finestre», dentro).
 const PT_CAM = [
   { t: 0, cx: 410, cy: 794, z: 3.6 },
   { t: 1.0, cx: 410, cy: 794, z: 3.6 },
-  { t: 3.6, cx: 240, cy: 700, z: 2.2 },
-  { t: 7.0, cx: 360, cy: 560, z: 1.6 },
-  { t: 10.0, cx: 820, cy: 560, z: 1.2 },
+  { t: 2.4, cx: 340, cy: 780, z: 3.1, da: 2.39 },
+  { t: 2.41, cx: -1090, cy: 720, z: 2.4, da: 2.4 },
+  { t: 3.6, cx: -1128, cy: 700, z: 2.2 },
+  { t: 7.0, cx: -1008, cy: 560, z: 1.6 },
+  { t: 7.8, cx: -1008, cy: 560, z: 1.6 },
+  { t: 10.6, cx: 820, cy: 560, z: 1.2 },
   { t: 12.6, cx: 820, cy: 560, z: 1.2 },
   { t: 15.0, cx: 724, cy: 856, z: 4.2 },
 ];
-// Velocità [t, v]: fermo, poi piano su per la salita; in cima prende velocità e scende di colpo nella montagna.
-const PT_VEL = [[0, 0], [1.2, 0], [2.6, 70], [5.0, 70], [7.0, 120], [8.5, 300]];
+// Velocità [t, v]: fermo, poi piano su per la salita; in cima prende velocità e corre sul viadotto fino alla montagna.
+// Allo stacco (PT_STACCO) il treno passa dalla stazione ai piedi della salita: salta i 1368 px di banchina lunga, fuori
+// campo, così sale, entra in montagna e fa i clac agli stessi istanti di prima.
+const PT_VEL = [[0, 0], [1.2, 0], [2.6, 70], [5.0, 70], [7.0, 120], [8.5, 750]];
+const PT_STACCO = 2.4, PT_SALTO = 1368;
 const PT_ADA = [650, 836], PT_SEDE = [672, 896];
 const PT_SCENDE = [8.6, 10.0];
 const PT_QUADERNO = 13.4;
@@ -39,7 +45,7 @@ kit.scene('partenza', {
     const G = this.G, M = G.MONDO, m = this.m;
     m.cam.setAttribute('transform', G.camChiavi(PT_CAM, t));
     G.animaMondo(m, t + 1040);
-    const s = 490 + G.percorso(t, 0, PT_VEL);
+    const s = 490 + G.percorso(t, 0, PT_VEL) + (t >= PT_STACCO ? PT_SALTO : 0);
     G.posaTreno(this.vag, m.partenza, s, M.scala, M.passoBanchina);
     G.nascondiInMontagna(this.vag, m.partenza, s, { fine: true, passo: M.passoBanchina });
     // Ada guarda il treno partire, poi scende alla bancarella con due saltelli e si siede accanto alla vasca.

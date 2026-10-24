@@ -9,14 +9,17 @@ const DM_CAM = [
   { t: 3.6, cx: 960, cy: 540, z: 1 },
   { t: 6.8, cx: 690, cy: 816, z: 3.8 },
   { t: 9.4, cx: 700, cy: 812, z: 3.8 },
-  { t: 13.4, cx: -330, cy: 790, z: 2.2 },
-  { t: 16.0, cx: -300, cy: 790, z: 2.2 },
+  // Ada si gira: stacco sui treni grigi, in fondo alla banchina lunga; poi stacco di nuovo su di lei.
+  { t: 11.6, cx: 680, cy: 812, z: 3.8 },
+  { t: 11.61, cx: -1698, cy: 790, z: 2.2 },
+  { t: 16.8, cx: -1668, cy: 790, z: 2.2 },
+  { t: 16.81, cx: 460, cy: 800, z: 3.2 },
   { t: 17.8, cx: 470, cy: 800, z: 3.2 },
   { t: 20.4, cx: 470, cy: 800, z: 3.2 },
   { t: 22.4, cx: 420, cy: 640, z: 1.5 },
 ];
 // Il trenino di oggi sale e sparisce nella montagna.
-const DM_TRENO = [1250, [[0, 230], [3.2, 300]]];
+const DM_TRENO = [3986, [[0, 230], [3.2, 300]]];
 // Ada, dove guarda: i binari (a destra), poi i treni grigi (a sinistra).
 const DM_GUARDA = [[6.0, 9.0], [11.0, 13.4], [17.0, 18.0]];
 const DM_TITOLO = 21.4;

@@ -15,7 +15,7 @@ const PR_CAM = [
   { t: 22.8, cx: 460, cy: 790, z: 2.2 },
 ];
 // Il treno carico sale nella montagna; quello vuoto aspetta in stazione.
-const PR_SALE = [1080, [[0, 70], [2, 150], [5, 200]]];
+const PR_SALE = [3816, [[0, 70], [2, 150], [5, 200]]];
 const PR_VUOTO = 490;
 // La città: quando si vede.
 const PR_CITTA = [7.6, 8.2, 12.2, 12.8];

@@ -6,8 +6,9 @@ const { seg, eo, eio, lerp } = kit;
 const QD_CAM = [
   { t: 0, cx: 2560, cy: 548, z: 2.9 },
   { t: 1.6, cx: 2560, cy: 548, z: 2.9 },
-  { t: 5.0, cx: 2520, cy: 500, z: 0.42 },
-  { t: 12.4, cx: 2540, cy: 500, z: 0.42 },
+  // Larga: a sinistra tutta la stazione di Ada (il trenino parte lungo la banchina ed esce di campo), a destra il parco immenso.
+  { t: 5.0, cx: 2440, cy: 500, z: 0.40 },
+  { t: 12.4, cx: 2460, cy: 500, z: 0.40 },
   { t: 14.4, cx: 2560, cy: 560, z: 1.8 },
   { t: 17.2, cx: 2470, cy: 600, z: 1.6 },
   { t: 21.6, cx: 2180, cy: 740, z: 1.9 },
@@ -53,7 +54,7 @@ kit.scene('quaderno', {
     const G = this.G, M = G.MONDO, m = this.m;
     m.cam.setAttribute('transform', G.camChiavi(QD_CAM, t));
     G.animaPaesaggio(m, t + 420, { treni: true, biglietti: true });
-    // Il trenino di Ada: le sbarre si abbassano, le lucine si accendono, e riparte su per la salita.
+    // Il trenino di Ada: le sbarre si abbassano, le lucine si accendono, e riparte lungo la banchina.
     const s = G.percorso(t, 490, QD_VEL);
     G.posaTreno(this.vag, m.partenza, s);
     G.nascondiInMontagna(this.vag, m.partenza, s, { fine: true });

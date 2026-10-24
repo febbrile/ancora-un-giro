@@ -3,7 +3,7 @@
 **La domanda.** Perché quella parola è salita in tre vagoni? (Nasce dalla fine dell'episodio 5, quando arriva una parola mai vista: un nome che nessuno ha mai sentito.)
 **La risposta.** Lo Spezzaparole ha un biglietto intero per le parole che passano tutti i giorni. Una parola mai vista la taglia nei pezzi per cui ha un biglietto, e ogni pezzo sale nel suo vagone, con il suo vestito. Il treno la porta lo stesso: dentro la montagna i fili di luce legano i pezzi, e la storia va avanti.
 **Cosa presenta.** Una cosa sola: la parola nuova, che lo Spezzaparole non ha mai visto intera, e che sale sul treno a pezzi.
-**Cosa dà per scontato.** Il prologo e gli episodi da 1 a 5: Ada, lo Spezzaparole, i passeggeri, il treno, la montagna con i fili di luce, gli scambi e le finestre sulla vasca, la vasca, la pesca, le case con il telefono; la banchina di sette vagoni (episodio 4), che il treno riempie nel montaggio finale.
+**Cosa dà per scontato.** Il prologo e gli episodi da 1 a 5: Ada, lo Spezzaparole, i passeggeri, il treno, la montagna con i fili di luce, gli scambi e le finestre sulla vasca, la vasca, la pesca, le case con il telefono; la banchina (episodio 4), lungo la quale il treno cresce nel montaggio finale.
 **Cosa lascia per dopo.** Il treno potrebbe girare per sempre? (Come finisce la storia, episodio 7.)
 
 Durata: 3:56 · Voci: narratore, Ada.
@@ -118,7 +118,7 @@ In fondo al tunnel si accende la luce dell'uscita.
 
 ### ancora · Ancora un giro · 0:22
 
-**VISIVO.** Le sbarre si abbassano e il treno riparte, un vagone più lungo. A montaggio, da lontano: il treno entra nella montagna, esce, rientra in stazione, e una paperella sale in fondo, finché il treno arriva alla sbarra di dietro della banchina. Nella cameretta, sul telefono, la storia si allunga riga dopo riga (troppo piccola per leggerla), e non smette. Ada guarda il treno che riparte ancora, e si gratta la testa con la matita. Cartello: **Fine**.
+**VISIVO.** Le sbarre si abbassano e il treno riparte, un vagone più lungo. A montaggio, da lontano: il treno entra nella montagna, esce, rientra in stazione, e una paperella sale in fondo, finché l'ultimo vagone arriva accanto alla sbarra di dietro della banchina. Nella cameretta, sul telefono, la storia si allunga riga dopo riga (troppo piccola per leggerla), e non smette. Ada guarda il treno che riparte ancora, e si gratta la testa con la matita. Cartello: **Fine**.
 
 **NARRATORE.**
 > E il treno riparte, giro dopo giro. La storia di Zampirù si allunga.
@@ -156,5 +156,5 @@ In fondo al tunnel si accende la luce dell'uscita.
 - **La bestiolina del disegno resta nella cameretta**: sul treno viaggiano solo i pezzi, e nessun pezzo «è» una zampa o una coda.
 - **La cameretta** è una casa col telefono, come quelle dell'episodio 2; le mani piccole dicono che a scrivere è un bambino.
 - **La prova di Ada** sta tutta fuori dalla montagna: Ada usa lo Spezzaparole, non manda niente sul treno.
-- **Nel montaggio finale** non si vedono vasche da vicino: solo il treno da lontano, le paperelle che salgono e il telefono. Il treno cresce fino ai sette vagoni della banchina (episodio 4) e non oltre; il montaggio si ferma prima che un biglietto resti giù. A crescere senza fine è la storia sul telefono.
+- **Nel montaggio finale** non si vedono vasche da vicino: solo il treno da lontano, le paperelle che salgono e il telefono. Il treno cresce lungo la banchina (episodio 4) e non oltre; il montaggio si ferma prima che un biglietto resti giù. A crescere senza fine è la storia sul telefono.
 - **Cosa non diciamo**: i nomi veri, come sono nati i pezzi dello Spezzaparole, perché proprio «Zam», «pi» e «rù», come finisce la storia (episodio 7).

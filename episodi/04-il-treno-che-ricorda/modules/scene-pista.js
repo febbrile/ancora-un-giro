@@ -1,34 +1,39 @@
 const { seg, eo, ei, eio, lerp } = kit;
-// Ada corre in testa alla banchina, si china e raccoglie i due biglietti rimasti giù, Al e Mare. Li guarda, poi li mette
-// nel quaderno, tra le pagine. Il treno sale piano la salita, senza il mare, e sparisce nella montagna; dal buio arrivano
-// i clac. Ada segue con gli occhi la pista: la salita, le curve, la bocca buia della montagna. Cartello: «Fine».
-// Si apre come finisce «giu» (il treno sulla salita, i due biglietti sulle assi).
+// Ada corre lungo tutta la banchina, fino in testa, si china e raccoglie i due biglietti rimasti giù, Al e Mare. Li
+// guarda, poi li mette nel quaderno, tra le pagine. Il treno sale piano la salita, senza il mare, corre sul viadotto e
+// sparisce nella montagna; dal buio arrivano i clac. Ada segue con gli occhi la pista: la salita, il viadotto, la bocca
+// buia della montagna. Cartello: «Fine».
+// Si apre come finisce «giu» (la banchina intera, il treno che comincia a salire, i due biglietti sulle assi).
 const PI_CAM = [
-  { t: 0, cx: 330, cy: 740, z: 2.1 },
-  { t: 3.0, cx: 150, cy: 796, z: 3.4 },
-  { t: 7.0, cx: 150, cy: 796, z: 3.4 },
-  { t: 10.0, cx: 760, cy: 560, z: 1.15 },
-  { t: 12.6, cx: 760, cy: 560, z: 1.15 },
-  { t: 14.4, cx: 260, cy: 620, z: 1.7 },
+  { t: 0, cx: -307, cy: 700, z: 0.9 },
+  { t: 2.4, cx: -307, cy: 700, z: 0.9 },
+  { t: 4.2, cx: -1150, cy: 790, z: 3.0 },
+  { t: 8.0, cx: -1150, cy: 790, z: 3.0 },
+  { t: 10.6, cx: -820, cy: 560, z: 1.15 },
+  { t: 12.6, cx: -820, cy: 560, z: 1.15 },
+  { t: 14.6, cx: -100, cy: 470, z: 1.1 },
   { t: 16.6, cx: 640, cy: 430, z: 1.6 },
   { t: 18.8, cx: 920, cy: 480, z: 1.5 },
   { t: 21.2, cx: 760, cy: 560, z: 1.12 },
 ];
-// Il treno riprende da dove l'ha lasciato «giu» (distanza sul percorso di partenza).
-const PI_S0 = 836, PI_VEL = [[0, 90], [3, 110], [8, 170]];
-const PI_ADA = [672, 896], PI_TESTA = [44, 834], PI_CORSA = [0.2, 2.8];
-// I due biglietti sulle assi (come li lascia «giu»), quando Ada li raccoglie e quando li mette nel quaderno.
-const PI_ASSI = [[52, 841, -8], [78, 843, 6]];
-const PI_PRENDE = [3.4, 4.4], PI_QUADERNO = [5.4, 6.4];
+// Il treno riprende da dove l'ha lasciato «giu» (distanza sul percorso di partenza): piano sulla salita, più svelto sul
+// viadotto, e alla fine della scena è tutto dentro la montagna.
+const PI_S0 = 1953, PI_VEL = [[0, 80], [3, 110], [7, 230], [11, 380], [15, 420]];
+const PI_ADA = [672, 896], PI_TESTA = [-1242, 834], PI_CORSA = [0.2, 3.8];
+// I due biglietti sulle assi, accanto alla sbarra davanti (come li lascia «giu»), quando Ada li raccoglie e quando li
+// mette nel quaderno. Dietro di lei passa il treno.
+const PI_ASSI = [[-1226, 841, -8], [-1202, 843, 6]];
+const PI_PRENDE = [4.6, 5.6], PI_QUADERNO = [6.6, 7.6];
 const PI_FINE = 19.8;
 kit.scene('pista', {
   init(kit) {
     const G = window.G, M = G.MONDO, H = G.MOD.chat;
     const TIPO = { Al: 'al', mare: 'mare', Emma: 'emma', nuota: 'paperella', parco: 'parco', corre: 'paperella' };
-    const sale = H.messaggi[2].sale.map((w, i) => ({ tipo: TIPO[w], col: H.messaggi[2].biglietti[i] }));
+    const ultimo = H.messaggi.at(-1);
+    const sale = ultimo.sale.map((w, i) => ({ tipo: TIPO[w] || 'paperella', col: ultimo.biglietti[i] }));
     const sopra = '<g transform="' + G.posa(M.spezzaparole[0], M.spezzaparole[1], 0.34, 220, 300) + '">' + G.spezzaparole({}) + '</g>' +
       '<g class="pi-treno">' + G.treno(sale, { sbarra: 1 }) + '</g>' +
-      H.messaggi[2].giu.map(w => '<g class="pi-big"><g transform="translate(-60 -30)">' + G.biglietto(w) + '</g></g>').join('') +
+      ultimo.giu.map(w => '<g class="pi-big"><g transform="translate(-60 -30)">' + G.biglietto(w) + '</g></g>').join('') +
       '<g class="pi-ada"></g><g class="pi-mano"></g>';
     const fine = '<g class="pi-fine" opacity="0"><g transform="translate(960 330)"><g class="pi-insegna"></g></g></g>';
     this.m = G.costruisciMondo(kit, sopra, {
@@ -59,7 +64,7 @@ kit.scene('pista', {
     PI_PRENDE.forEach(a => { giu = Math.max(giu, Math.sin(Math.PI * seg(t, a - 0.5, a + 0.5))); });
     const giuQ = Math.round(giu * 20) / 20;
     const posa = t < PI_PRENDE[0] - 0.6 ? 'base' : t < PI_QUADERNO[0] ? 'pesca' : 'quaderno';
-    const espr = t < PI_PRENDE[0] - 0.6 ? 'base' : t < PI_QUADERNO[0] ? 'sorpresa' : t < 12.6 ? 'pensa' : t < 18.2 ? 'pensa' : 'felice';
+    const espr = t < PI_PRENDE[0] - 0.6 ? 'base' : t < PI_QUADERNO[0] ? 'sorpresa' : t < 18.2 ? 'pensa' : 'felice';
     const k = posa + espr + giuQ;
     if (k !== this.stato) { this.ada.innerHTML = '<g class="pi-ada-in">' + G.ada(posa, espr, { giu: posa === 'pesca' ? giuQ : 0 }) + '</g>'; this.stato = k; }
     this.ada.firstChild.setAttribute('transform', G.posaAda(ax, ay));

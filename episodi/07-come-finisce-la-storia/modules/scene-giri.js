@@ -1,19 +1,20 @@
 const { seg, eo, eio, lerp } = kit;
 // Giro dopo giro, a montaggio, sempre più veloce. Il treno esce sopra la vasca: nell'ultimo vagone la paperella blu è
 // diventata color sabbia, e sotto di lei cadono paperelle di tanti colori. Ada pesca una paperella rosa salmone, che
-// corre a sedersi in un vagone nuovo; sul telefono compare «e». Il treno riparte, sale e sparisce nella montagna; esce
+// corre a sedersi in un vagone nuovo; sul telefono compare «e». Il treno riparte, corre lungo la banchina, sale, torna
+// sul viadotto e sparisce nella montagna; esce
 // di nuovo: questa volta la vasca si riempie di turchesi, blu e verdi. Ada pesca una turchese: «gioca».
 // Ogni volta, in un angolo della vasca, galleggia una paperella scura, del colore della notte, e ogni volta scivola via
 // con le altre. Al secondo giro Ada la vede, si sporge e la guarda andare via.
 // Si apre su Ada alla bancarella, come finisce «domanda»; finisce sul treno che riparte, un vagone più lungo (dalla
-// stazione lo riprende «quaderno», con Ada alla bancarella).
+// stazione lo riprende «quaderno», con Ada alla bancarella; il treno corre via lungo la banchina).
 const GR_CAM = [
   { t: 0, cx: 760, cy: 780, z: 2.4 },
   { t: 1.6, cx: 740, cy: 846, z: 3.6 },
   { t: 10.99, cx: 740, cy: 846, z: 3.6 },
-  // Il treno riparte: tutto il luna park, la salita, il cielo, la montagna; e di nuovo l'uscita.
-  { t: 11.0, cx: 960, cy: 560, z: 1.02 },
-  { t: 15.4, cx: 960, cy: 560, z: 1.02 },
+  // Il treno riparte: il luna park, la banchina, il viadotto, la montagna; e di nuovo l'uscita.
+  { t: 11.0, cx: 640, cy: 560, z: 0.86 },
+  { t: 15.4, cx: 640, cy: 560, z: 0.86 },
   { t: 17.0, cx: 740, cy: 846, z: 3.6 },
   { t: 19.6, cx: 740, cy: 846, z: 3.6 },
   // La paperella scura, in un angolo.
@@ -29,7 +30,7 @@ const GR_CAM = [
 const GR_A = {
   esce: 0.4, vel: [[0.4, 240], [1.7, 240], [2.1, 80], [3.6, 80], [4.4, 200]],
   pesca: { giu: 5.4, su: 6.4, preso: 6.8 }, via: 7.4, salta: 7.4, vagone: 8.4, sale: 9.0,
-  riparte: 11.0, velParte: [[11.0, 0], [11.8, 140], [12.8, 420], [13.6, 640]],
+  riparte: 11.0, velParte: [[11.0, 0], [11.8, 300], [12.8, 1100], [13.6, 1550]],
 };
 const GR_B = {
   esce: 15.4, vel: [[15.4, 260], [16.8, 260], [17.3, 70], [19.4, 70], [20.2, 200]],

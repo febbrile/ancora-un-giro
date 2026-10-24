@@ -1,5 +1,5 @@
 const { seg, eo, eio, lerp } = kit;
-// Dentro la montagna, nel buio. Il treno è lungo sette vagoni, quanto tutta la banchina: in fondo la paperella grigio
+// Dentro la montagna, nel buio. Il treno è lungo sette vagoni: in fondo la paperella grigio
 // chiaro del punto, davanti a lei la paperella turchese. Si accendono i fili di luce, da ogni passeggero verso chi gli
 // siede davanti e verso sé stesso; clac, clac, clac: gli scambi spostano ogni vagone sul suo binario. Poi, nella parete,
 // la finestra ad arco sull'acqua della vasca: passa sopra tutti i vagoni, e l'acqua resta vuota; passa l'ultimo e si

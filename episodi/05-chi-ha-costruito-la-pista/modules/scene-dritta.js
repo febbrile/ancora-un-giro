@@ -1,5 +1,5 @@
 const { seg, eo, ei, eio, lerp } = kit;
-// Il treno grigio parte da solo, sale ed entra nella montagna. Dentro, nel buio, il fascio di binari corre dritto: tra i
+// Il treno grigio parte da solo, corre sul viadotto ed entra nella montagna. Dentro, nel buio, il fascio di binari corre dritto: tra i
 // passeggeri si accendono i fili di luce, sottili, ma lungo i fili non scorre nessun colore; gli scambi passano sotto
 // i vagoni e non spostano nessuno. Le tre finestre sulla vasca: con Al e Mare l'acqua resta vuota, con Emma si accendono
 // paperelle di luce di tutti i colori, un po' per uno, e nella seconda e nella terza sono le stesse. Il treno esce sopra
@@ -8,15 +8,17 @@ const { seg, eo, ei, eio, lerp } = kit;
 // Si apre come finisce «prova»; finisce sul treno fermo in stazione e sulla vasca piena (lo riprende «brivido»).
 const DR_CAM = [
   { t: 0, cx: 460, cy: 790, z: 2.2 },
-  { t: 0.8, cx: 460, cy: 790, z: 2.2 },
+  // Il treno esce a sinistra lungo la banchina; stacco sul parco, col treno già sul viadotto.
+  { t: 2.3, cx: 460, cy: 790, z: 2.2 },
+  { t: 2.31, cx: 880, cy: 520, z: 1.05 },
   { t: 3.8, cx: 880, cy: 520, z: 1.05 },
   { t: 31.0, cx: 860, cy: 826, z: 3.4, da: 30.99 },
   { t: 33.4, cx: 780, cy: 846, z: 3.8 },
   { t: 35.6, cx: 780, cy: 846, z: 3.8 },
   { t: 38.6, cx: 520, cy: 820, z: 2.4 },
 ];
-// Fuori: la partenza e l'uscita.
-const DR_PARTE = [490, [[0.6, 0], [1.8, 300], [3.6, 560]]];
+// Fuori: la partenza e l'uscita. Allo stacco il treno salta avanti di DR_SALTO, sul viadotto (la salita non si vede).
+const DR_PARTE = [490, [[0.6, 0], [1.8, 300], [3.6, 560]]], DR_SALTO = [2.31, 2736];
 const DR_ESCE = [31.0, [[31.0, 170], [33.4, 90], [35.0, 180], [38.4, 0]]], DR_FERMO = 831;
 // Dentro: quando si vede, la corsa, quando Emma passa sotto ogni finestra.
 const DR_DENTRO = [4.2, 4.8, 5.4, 30.2, 31.0];
@@ -122,7 +124,7 @@ kit.scene('dritta', {
     m.cam.setAttribute('transform', G.camChiavi(DR_CAM, t));
     // Fuori: il treno parte e sale; poi esce sopra la vasca e si ferma.
     if (t < DR_ESCE[0]) {
-      const s = G.percorso(t, DR_PARTE[0], DR_PARTE[1]);
+      const s = G.percorso(t, DR_PARTE[0], DR_PARTE[1]) + (t >= DR_SALTO[0] ? DR_SALTO[1] : 0);
       G.posaTreno(this.treno, m.partenza, s, M.scala, M.passoBanchina);
       G.nascondiInMontagna(this.treno, m.partenza, s, { fine: true, passo: M.passoBanchina });
     } else {

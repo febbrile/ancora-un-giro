@@ -1,10 +1,10 @@
 const { seg, eo, ei, eio, lerp } = kit;
 // Quella sera dalla città vola una striscia nuova e atterra in mano ad Ada, sulla banchina. Ada la legge (la striscia è
 // girata verso di lei: noi non leggiamo niente), aggrotta la fronte e guarda lo Spezzaparole. Cartello: «Fine».
-// Si apre come finisce «oggi» (Ada e i treni grigi).
+// Si apre come finisce «oggi» (Ada sulla banchina).
 const FI_CAM = [
-  { t: 0, cx: 220, cy: 770, z: 1.6 },
-  { t: 1.0, cx: 240, cy: 790, z: 1.9 },
+  { t: 0, cx: 540, cy: 796, z: 2.3 },
+  { t: 1.0, cx: 540, cy: 790, z: 2.2 },
   { t: 3.0, cx: 620, cy: 640, z: 1.7 },
   { t: 4.4, cx: 600, cy: 700, z: 1.9 },
   { t: 6.0, cx: 530, cy: 800, z: 4.2 },
