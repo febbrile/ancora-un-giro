@@ -114,5 +114,6 @@ kit.score(function (S, T) {
   S.fx('pop', R('continua', 32.8), { vel: 40 });
   // L'indovinello.
   S.fx('whoosh', R('indovinello', 0.2), { dur: 2.4 });
-  for (let k = 0; k < 6; k++) S.fx('whoosh', R('indovinello', 4.0 + k * 2.2), { dur: 1.2, vel: 18 });
+  // Un whoosh a ogni giro, un secondo prima che il treno entri nella montagna (un giro ogni 2600/900 s, come nella scena).
+  for (let k = 1; k < 7; k++) S.fx('whoosh', R('indovinello', 1.46 + k * 2600 / 900), { dur: 1.2, vel: 18 });
 });

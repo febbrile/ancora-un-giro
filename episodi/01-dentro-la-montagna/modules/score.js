@@ -56,6 +56,7 @@ kit.score(function (S, T) {
   });
 
   // ── Rumori ─────────────────────────────────────────────────────────────────────────────────────────
+  S.fx('whoosh', R('domanda', 0.2), { dur: 1.8, vel: 24 });
   [0.6, 1.8, 3.2].forEach(c => S.fx('doubleclick', R('domanda', c), { vel: 30 }));
   for (let k = 0; k < 14; k++) S.fx('tick', R('domanda', 6.2 + k * 0.6), { vel: 16 });
   // In carrozza: la striscia, la biglietteria, i biglietti, i passeggeri, le sbarre.
