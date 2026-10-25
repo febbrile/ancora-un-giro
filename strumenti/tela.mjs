@@ -142,6 +142,100 @@ function tavole() {
   s += at(1460, 470, 1.25, G.custode('alza', 'base', { occhi: -1 })) + at(1170, 600, 1.25, G.ada('quaderno', 'sorpresa'));
   s += et(1510, 1030, 'accanto ad Ada: alto, ma non un gigante', true);
   T['Custode.dc.html'] = { titolo: 'Il custode', w: 1920, h: 1080, svg: s };
+  // Il custode del parco gemello (stagione 2, episodio 6): le pose, e accanto al custode di Ada e ad Ada per le proporzioni.
+  s = '<rect width="1920" height="1080" fill="#F3EADB"/>' + titolo('Il custode del parco gemello · stagione 2');
+  [['base', 'base', 'con la lanterna'], ['alza', 'sorriso', 'alza la lanterna'], ['cenno', 'sorriso', 'fa cenno di pescare'], ['legge', 'serio', 'apre il regolamento'], ['base', 'chiusi', 'occhi chiusi']].forEach(([p, e, n], k) => {
+    s += at(40 + k * 270, 70, 1.0, G.custodeGemello(p, e, { dondolo: k === 0 ? -8 : 0 })) + et(160 + k * 270, 520, n);
+  });
+  s += pannello(40, 560, 1060, 490);
+  s += at(90, 600, 1.0, G.custode('base', 'base', {})) + at(330, 600, 1.0, G.custodeGemello('base', 'sorriso', {})) + at(580, 680, 1.0, G.ada('quaderno', 'felice'));
+  s += et(210, 1030, 'il custode di Ada', true) + et(450, 1030, 'il custode gemello', true) + et(690, 1030, 'Ada', true);
+  s += at(872, 752, 1.4, G.guardiola({ porta: 1 })) + et(956, 1030, 'la sua guardiola', true);
+  s += pannello(1140, 560, 740, 490);
+  s += at(1366, 488, 1.2, G.custodeGemello('alza', 'base', { occhi: -1 }));
+  s += et(1510, 1030, 'basso e tondo: lanterna e regolamento verdi', true);
+  T['Gemello.dc.html'] = { titolo: 'Il custode del parco gemello', w: 1920, h: 1080, svg: s };
+  // La frase del parco (stagione 2, episodio 1): le bandierine, i biglietti e la striscia, le pose nuove del custode, la pagina.
+  const S2 = G.S2, BA = G.MOD.seconda.parco.bandierine, OT = G.MOD.seconda.parco.giri[0].ottone;
+  s = '<rect width="1920" height="1080" fill="#F3EADB"/>' + titolo('La frase del parco · stagione 2');
+  s += pannello(40, 120, 1840, 360);
+  ['oro', 'argento', 'ottone', 'turchese'].forEach((m2, k) => { s += inVag(70 + k * 300, 250, 1.0, 'bandierina', BA['⚑' + m2], { metallo: m2 }, { primo: k === 0 }); });
+  s += inVag(1270, 250, 1.0, 'bandierina', OT.tratti.at(-1), { metallo: 'ottone' }) + inVag(1570, 250, 1.0, 'bandierina', OT.tratti.at(-1), { metallo: 'ottone', tirata: true });
+  s += et(190, 460, 'd’oro: la frase del parco', true) + et(490, 460, 'd’argento: il messaggio', true) + et(790, 460, 'd’ottone: la risposta', true) + et(1090, 460, 'turchese: la teleferica', true) +
+    et(1390, 460, 'd’ottone, uscita blu', true) + et(1690, 460, 'tirata via', true);
+  ['⚑oro', '⚑argento', '⚑ottone', '⚑turchese'].forEach((w, k) => { s += at(70 + k * 170, 520, 1.2, G.biglietto(w)); });
+  s += et(400, 630, 'i biglietti senza parola');
+  s += G.nastro(G.linea([[760, 560], [1860, 560]]), 0, 1100, ['⚑oro', 'Storie', 'di', 'mare', '⚑argento', 'Al', 'parco', 'Emma', '⚑ottone'].map((w, k) => [w, 60 + k * 122]), 40) + et(1310, 630, 'la striscia, con la frase del parco attaccata in testa');
+  [['porge', 'base', {}, 'porge la striscia'], ['attacca', 'serio', {}, 'attacca i pezzi'], ['legge', 'serio', { pagina: 'frase' }, 'apre il regolamento'], ['legge', 'serio', { pagina: 'frase', dito: 1 }, 'ci batte il dito']].forEach(([p2, e, o2, n], k) => {
+    s += at(60 + k * 250, 660, 0.88, G.custode(p2, e, o2)) + et(166 + k * 250, 1060, n);
+  });
+  s += at(1080, 640, 3.2, '<g transform="translate(-54 -230)">' + G.libroAperto(120, 262, 'frase') + '</g>') + et(1480, 1060, 'la pagina della frase del parco: disegni, nessuna scritta');
+  T['Frase.dc.html'] = { titolo: 'La frase del parco', w: 1920, h: 1080, svg: s };
+  // Il Bruco (stagione 2, episodio 2): la giostrina intera, la testa e i segmenti, chi ci sale sopra.
+  const BR = S2.BRUCO, giost = S2.giostrina({ sbarra: 0 });
+  let segm = '';
+  for (let i = 0; i <= BR.segmenti; i++) { const a2 = Math.PI * 0.62 - i * 0.16; segm += '<g transform="translate(' + (BR.c[0] + BR.rx * Math.cos(a2)).toFixed(1) + ' ' + (BR.c[1] + BR.ry * Math.sin(a2)).toFixed(1) + ')">' + S2.segmento(i === 0, i > 0 && i <= 3 ? S2.sulBruco(['#8FB06A', '#5FB04A', '#D24A36'][i - 1]) : '') + '</g>'; }
+  s = '<rect width="1920" height="1080" fill="#F3EADB"/>' + titolo('Il Bruco · stagione 2');
+  s += vista(40, 120, 1180, 620, '984 786 640 336', G.mondo({ banchina: true, manopola: 0 }) + giost.dietro + segm + giost.davanti + '<g transform="' + G.posaCustode(1114, 1030) + '">' + G.custode('base', 'base', { occhi: 1 }) + '</g>');
+  s += et(630, 770, 'la giostrina, nell’angolo buio del parco: la mela, la vasca piccola, la sbarra');
+  s += pannello(1260, 120, 620, 620);
+  s += at(1440, 390, 3.4, S2.segmento(true)) + at(1700, 400, 3.4, S2.segmento(false, S2.sulBruco('#D24A36')));
+  s += et(1420, 450, 'la testa, dipinta', true) + et(1700, 450, 'un segmento', true);
+  s += at(1440, 660, 2.4, S2.segmento(true, '', { faccia: '#BFE6FF' })) + et(1700, 640, 'il Bruco gemello: un’altra faccia', true);
+  s += pannello(40, 810, 1840, 240);
+  ['#4ca856', '#8FB06A', '#C9A03E', '#cd4736'].forEach((c2, k) => { s += at(120 + k * 220, 800, 1.0, G.pezzo(c2, '')); });
+  s += et(500, 1040, 'chi sale sul Bruco: dal verde al rosso', true);
+  [['#4ca856', 'verde'], ['#cd4736', 'rossa']].forEach(([c2, n], k) => { s += at(1080 + k * 200, 900, 1.2, G.paperella(c2)) + et(1140 + k * 200, 1040, n, true); });
+  s += vista(1500, 830, 340, 200, '984 936 170 100', G.mondo({}) + S2.giostrina({ sbarra: 1 }).davanti) + et(1670, 1040, 'la sbarra abbassata', true);
+  T['Bruco.dc.html'] = { titolo: 'Il Bruco', w: 1920, h: 1080, svg: s };
+  // La teleferica (stagione 2, episodio 3): il palo accanto alla guardiola, il pilone sulla collina, il filo fino alle nuvole.
+  const TE = G.MOD.seconda.teleferica, pc = S2.puntoCabina(0.3);
+  s = '<rect width="1920" height="1080" fill="#F3EADB"/>' + titolo('La teleferica · stagione 2');
+  s += vista(40, 120, 1180, 620, '1640 -480 2620 1376', G.PARCO.defs + G.paesaggio({ laggiu: 1, manopola: 0, banchina: true, morto: true, bruco: 'acceso', strisce: 0 }) + S2.teleferica({}) +
+    '<g transform="translate(' + pc[0] + ' ' + pc[1] + ') scale(2)">' + S2.cabina({}) + '</g>');
+  s += et(630, 770, 'dal palo accanto alla guardiola al pilone sulla collina, e oltre, fino alle nuvole di pioggia');
+  s += pannello(1260, 120, 620, 620);
+  s += at(1420, 200, 4.4, S2.cabina({})) + at(1720, 200, 4.4, S2.cabina({ gocce: 1, t: 0.3, rotolo: true }));
+  s += et(1420, 420, 'la cabina viola', true) + et(1720, 420, 'torna gocciolante', true);
+  s += at(1310, 460, 2.2, '<g transform="translate(-54 -230)">' + G.libroAperto(120, 262, 'teleferica') + '</g>') + et(1570, 720, 'la pagina del regolamento', true);
+  s += pannello(40, 810, 1840, 240);
+  [['teleferica', 'viola chiara'], ['domani', 'rosa'], ['teleferica·fine', 'viola scura'], ['Sì', 'sì'], ['No', 'no']].forEach(([w, n], k) => { s += at(90 + k * 180, 850, 1.1, G.paperella(TE.paperelle[w])) + et(145 + k * 180, 1030, n, true); });
+  ['Domani', 'piove', '?', 'pioggia', 'sole'].forEach((w, k) => { s += inVag(990 + k * 176, 900, 0.72, S2.tipo(w).tipo, TE.biglietti[w], S2.tipo(w).o) + et(1076 + k * 176, 1030, '«' + w + '»', true); });
+  T['Teleferica.dc.html'] = { titolo: 'La teleferica', w: 1920, h: 1080, svg: s };
+  // La campanella (stagione 2, episodio 4): l'orologio da tasca, la notte del custode (guardiola, lampioni, lucchetto, panchina).
+  s = '<rect width="1920" height="1080" fill="#F3EADB"/>' + titolo('La campanella · stagione 2');
+  s += pannello(40, 120, 760, 620);
+  [0, 0.5, 1].forEach((l, k) => { s += at(170 + k * 230, 440, 0.82, S2.orologio({ lancetta: l, suona: k === 2 ? 14 : 0, tira: k === 2 ? 0.8 : 0 })); });
+  s += et(170, 700, 'a zero', true) + et(400, 700, 'a metà dei giri', true) + et(630, 700, 'drin', true);
+  s += at(860, 130, 1.0, G.custode('orologio', 'serio', { campanella: true, lancetta: 0.5 })) + et(980, 590, 'guarda l’orologio');
+  s += at(1140, 300, 3.0, '<g transform="translate(-54 -230)">' + G.libroAperto(120, 262, 'campanella') + '</g>') + et(1500, 590, 'la pagina della campanella: nessun numero');
+  s += pannello(40, 790, 1840, 260);
+  s += at(120, 830, 1.2, G.guardiola({ porta: 1, dentro: true })) + et(190, 1040, 'la guardiola, da dentro', true);
+  [0, 1].forEach(k => { s += at(420 + k * 140, 1010, 1.8, S2.lampione(k)); });
+  s += et(490, 1040, 'i lampioni del viale', true);
+  s += at(760, 930, 4, S2.lucchetto()) + et(760, 1040, 'il lucchetto', true);
+  s += at(1000, 1010, 2.2, S2.panchina()) + et(1000, 1040, 'la panchina della stazione', true);
+  s += at(1300, 820, 0.5, G.custode('orologio', 'serio', { campanella: true, lancetta: 1, suona: 18 })) + et(1360, 1040, 'drin', true);
+  T['Campanella.dc.html'] = { titolo: 'La campanella', w: 1920, h: 1080, svg: s };
+  // Il telone (stagione 2, episodio 5) e il fiume, col parco gemello sull'altra riva (episodi 5 e 6).
+  const TP = G.MOD.seconda.telone.paperelle, M2 = G.MONDO;
+  const coda = (n, x0) => G.treno(Array.from({ length: n }, (_, i) => ({ tipo: 'paperella', col: [TP.telone, TP.Al, TP.piccolo, TP['telone·fine']][i % 4] })), { sbarra: 1 })
+    .split('<g class="g-vag"').slice(1).map((v, i) => '<g transform="translate(' + (x0 + i * M2.passoBanchina) + ' 852) scale(' + M2.scala + ') translate(-120 -150)"' + v.replace(/^ data-i="\d+">/, '>')).join('');
+  s = '<rect width="1920" height="1080" fill="#F3EADB"/>' + titolo('Il telone e il fiume · stagione 2');
+  s += vista(40, 120, 900, 420, '-80 740 420 196', G.mondo({ banchina: true, manopola: 0 }) + coda(4, 0) + S2.telone(36, 268, {}));
+  s += et(490, 570, 'il telone, steso sui vagoni saliti dopo la paperella arancio');
+  s += vista(980, 120, 900, 420, '-80 740 420 196', G.mondo({ banchina: true, manopola: 0 }) + coda(4, 0) + S2.telone(36, 268, { lembo: 1 }));
+  s += et(1430, 570, 'con il lembo sollevato: sotto, i passeggeri di sempre');
+  s += pannello(40, 610, 560, 430);
+  s += at(90, 650, 0.8, G.custode('porge', 'base', {})) + at(150, 650, 0.8, '<g transform="translate(-120 0)"></g>');
+  s += '<g>' + S2.telonePiegato(...G.puntoCustode(186, 984, G.CUSTODE_MANI.porge, 0.8).map((v, k) => v + [5, 2][k]), 0.8 * 3) + '</g>';
+  s += et(320, 1020, 'piegato sul braccio del custode', true);
+  [['telone', 'arancio'], ['telone·fine', 'arancio scura'], ['Al', '«Al»'], ['mare', '«Mare»'], ['Emma', '«Emma»'], ['piccolo', '«piccolo»']].forEach(([w, n], k) => {
+    s += at(300 + (k % 3) * 90, 660 + Math.floor(k / 3) * 150, 0.7, G.paperella(TP[w])) + et(335 + (k % 3) * 90, 780 + Math.floor(k / 3) * 150, n, true, 16);
+  });
+  s += vista(640, 610, 1240, 430, '-6300 -100 4100 1420', S2.parcoGemello({}) + G.mondo({ banchina: true, morto: true, manopola: 0, fiume: true }));
+  s += et(1260, 1066, 'il fiume, col ponte; sull’altra riva il parco gemello, con la montagna identica');
+  T['Telone.dc.html'] = { titolo: 'Il telone e il fiume', w: 1920, h: 1080, svg: s };
   // La grammatica: colori e caratteri.
   const sw = [['notte', C.notte1], ['cielo', C.notte2], ['lampadine', C.luce], ['righe', C.rosso], ['crema', C.crema], ['oro', C.oro], ['montagna', C.mont2], ['acqua', C.acqua]];
   s = '<rect width="1280" height="720" fill="#F3EADB"/>' + titolo('La grammatica');
@@ -165,7 +259,8 @@ function artboard(nome, t) {
 const T = tavole();
 fs.mkdirSync(OUT, { recursive: true });
 const posto = { 'Main.dc.html': [0, 0], 'Oggetti.dc.html': [2000, 0], 'LunaPark.dc.html': [0, 1200], 'Montagna.dc.html': [3500, 1200], 'Finestre.dc.html': [0, 2400], 'Grammatica.dc.html': [2000, 2400], 'Parco.dc.html': [0, 3600],
-  'Passeggeri.dc.html': [2000, 3600], 'Stagione.dc.html': [0, 4800], 'Immenso.dc.html': [2000, 4800], 'Custode.dc.html': [0, 6000] };
+  'Passeggeri.dc.html': [2000, 3600], 'Stagione.dc.html': [0, 4800], 'Immenso.dc.html': [2000, 4800], 'Custode.dc.html': [0, 6000],
+  'Gemello.dc.html': [2000, 6000], 'Frase.dc.html': [0, 7200], 'Bruco.dc.html': [2000, 7200], 'Teleferica.dc.html': [0, 8400], 'Campanella.dc.html': [2000, 8400], 'Telone.dc.html': [0, 9600] };
 const canvas = {
   v: 3, createdOnFiles: { v: 1, at: new Date().toISOString().replace(/\.\d+Z$/, 'Z') }, title: 'Ancora un giro · design',
   launch: { view: 'canvas' }, pages: [], boards: {}, order: [], notes: {}, designSystems: [],

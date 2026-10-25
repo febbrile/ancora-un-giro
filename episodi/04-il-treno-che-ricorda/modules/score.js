@@ -155,7 +155,8 @@ kit.score(function (S, T) {
   for (let k = 0; k < 8; k++) S.fx('click', R('giu', 40.8 + k * 0.1), { vel: 34 });
   for (let k = 0; k < 8; k++) S.fx('tick', R('giu', 42.0 + k * 0.26), { vel: 26 });
   // La pista: la catena, i biglietti raccolti, il quaderno, i clac dal buio della montagna.
-  for (let k = 0; k < 30; k++) S.fx('tick', R('pista', 0.1 + k * 0.3), { vel: 22 - Math.floor(k / 3) });
+  // La catena suona finché anche l'ultimo vagone del treno lungo non è in cima.
+  for (let k = 0; k < 40; k++) S.fx('tick', R('pista', 0.1 + k * 0.3), { vel: 22 - Math.floor(k / 4) });
   for (let k = 0; k < 9; k++) S.fx('woodblock', R('pista', 0.3 + k * 0.28), { vel: 16 });
   [4.6, 5.6].forEach(c => S.fx('pop', R('pista', c), { vel: 30 }));
   S.fx('sparkle', R('pista', 7.4), { vel: 26 });

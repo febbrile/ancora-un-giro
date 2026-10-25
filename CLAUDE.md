@@ -110,6 +110,9 @@ L'elenco completo, tradotto nel luna park, è nel §7 del soggetto. Le più impo
   occhiali a mezzaluna; **niente divisa**. Tiene il parco con la lanterna, le chiavi, l'orologio e il regolamento; compare alla fine dell'episodio 9
   ed è il personaggio della seconda stagione. **Non entra nella montagna e non pesca.** È il contrario di Ada: lei pesca a
   caso e chiede perché, lui fa sempre la stessa cosa e risponde «Lo dice il regolamento».
+- **Il custode gemello**: il custode del parco gemello (episodio 15), che fa le stesse cose del custode di Ada con un altro
+  regolamento. Diverso a colpo d'occhio: **basso e tondo**, bonario, bombetta, baffi a manubrio, gilet a quadri;
+  **lanterna e regolamento verdi**.
 - I modelli dei personaggi sono nella tela di design (link nel [README](README.md)) e, in SVG, in
   `episodi/comune/shared.js`: ogni cambio di aspetto parte dalla tela e si riporta in `shared.js`.
 - **La tela pubblicata e `design/project/` sono sempre identiche.** Dopo ogni pubblicazione della tela si fa commit

@@ -84,5 +84,59 @@
         "racconto": "Oltre le colline si accendono le luci di un altro parco, e quasi tutte le frasi volano là. Ada lascia il trenino e sale sulla collina a guardare."
       }
     ]
+  },
+  {
+    "n": 2,
+    "titolo": "Seconda stagione",
+    "episodi": [
+      {
+        "n": 1,
+        "etichetta": "Episodio 1",
+        "cartella": "10-la-frase-del-parco",
+        "titolo": "La frase del parco",
+        "personaggio": "bandierina",
+        "racconto": "Stasera «Al parco Emma» non fa la vasca verde, come l’altra volta. Prima che la striscia salga sul treno, il custode ci attacca qualcosa in testa: Ada vuole sapere cosa."
+      },
+      {
+        "n": 2,
+        "etichetta": "Episodio 2",
+        "cartella": "11-il-bruco",
+        "titolo": "Il Bruco",
+        "personaggio": "bruco",
+        "racconto": "A un bambino, sul telefono, non arriva la risposta del treno ma una frase già pronta. Ada segue il custode in un angolo buio del parco, dove c’è una giostrina che non aveva mai visto."
+      },
+      {
+        "n": 3,
+        "etichetta": "Episodio 3",
+        "cartella": "12-la-teleferica",
+        "titolo": "La teleferica",
+        "personaggio": "cabina",
+        "racconto": "Alla stessa domanda, «Domani piove?», la stessa vasca dà a una casa «sì» e a un’altra «no». Il treno non può sapere il tempo che farà: il custode, però, ha una pagina nuova nel regolamento."
+      },
+      {
+        "n": 4,
+        "etichetta": "Episodio 4",
+        "cartella": "13-la-campanella",
+        "titolo": "La campanella",
+        "personaggio": "campanella",
+        "racconto": "Una storia si è fermata a metà frase, ma nessuno ha pescato la paperella scura. Ada segue il custode nel suo giro di ogni sera: la guardiola, i lampioni, il cancello, l’orologio da tasca."
+      },
+      {
+        "n": 5,
+        "etichetta": "Episodio 5",
+        "cartella": "14-il-telone",
+        "titolo": "Il telone",
+        "personaggio": "telone",
+        "racconto": "A un indovinello il treno gira e gira, ma il telefono resta muto. Questa volta Ada guarda dall’inizio: il custode ha un grande telone arancio, cucito a toppe."
+      },
+      {
+        "n": 6,
+        "etichetta": "Episodio 6",
+        "cartella": "15-il-parco-gemello",
+        "titolo": "Il parco gemello",
+        "personaggio": "custodeGemello",
+        "racconto": "Oltre il fiume c’è un parco piccolo come quello di Ada, con la stessa montagna. Ma la stessa frase, laggiù, torna con un’altra parola."
+      }
+    ]
   }
 ]

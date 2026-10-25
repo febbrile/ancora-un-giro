@@ -1,0 +1,61 @@
+{
+  "width": 1920,
+  "height": 1080,
+  "background": "#0B1030",
+  "scenes": [
+    {
+      "id": "domanda",
+      "name": "La domanda",
+      "dur": 32,
+      "desc": "Ada, alla stazione, guarda nel quaderno il disegno di «Al parco»: la vasca era verde. Arriva «Al parco Emma»; la prende il custode, ci attacca qualcosa in testa e la porge ad Ada. Il treno esce sopra la vasca: tante blu, tante turchesi, qualche verde. Titolo."
+    },
+    {
+      "id": "pesca",
+      "name": "Al parco, nuota",
+      "dur": 14.6,
+      "desc": "Ada pesca una paperella blu, che corre verso il treno. Sul telefono, sotto «Al parco Emma», compare «nuota»."
+    },
+    {
+      "id": "pagina",
+      "name": "La pagina nuova",
+      "dur": 35.6,
+      "desc": "Arriva di nuovo «Al parco Emma», e questa volta Ada guarda bene: il custode apre il regolamento su una pagina nuova, attacca in testa «Storie di mare» dietro una bandierina d'oro, una bandierina d'argento davanti al messaggio, una d'ottone in fondo."
+    },
+    {
+      "id": "salgono",
+      "name": "Le bandierine",
+      "dur": 26.0,
+      "desc": "Lo Spezzaparole taglia: salgono la bandierina d'oro, Storie, Di e Mare, la bandierina d'argento, Al, Parco ed Emma, e nell'ultimo vagone la bandierina d'ottone. Nove vagoni. Il treno parte."
+    },
+    {
+      "id": "fili",
+      "name": "Fino in testa",
+      "dur": 25.6,
+      "desc": "Dentro la montagna, i fili di luce. Dalla bandierina d'ottone il filo più forte arriva in testa, a Mare; uno quasi uguale va a Parco. La stoffa si fa azzurra."
+    },
+    {
+      "id": "finestre",
+      "name": "Le finestre sulla vasca",
+      "dur": 37.0,
+      "desc": "Scambi e finestre: l'acqua si accende solo quando passa la bandierina d'ottone, e finestra dopo finestra le paperelle di luce si fanno blu."
+    },
+    {
+      "id": "insiste",
+      "name": "Al parco!",
+      "dur": 42.8,
+      "desc": "Il treno esce: Ada pesca «nuota». La persona insiste, «Al parco», due volte: a ogni messaggio risale tutta la chat, i Parco sul treno sono sempre di più, e la vasca passa da turchese a verde. «Corre»."
+    },
+    {
+      "id": "custode",
+      "name": "Il regolamento",
+      "dur": 28.4,
+      "desc": "Ada mostra al custode le tre vasche. Lui batte il dito sulla pagina della frase del parco: l'ha attaccata, come dice il regolamento. Il treno non obbedisce a nessuno: porta."
+    },
+    {
+      "id": "giostrina",
+      "name": "La giostrina",
+      "dur": 20.4,
+      "desc": "Il custode prende un'altra striscia e la porta lontano dalla stazione, verso una giostrina nell'angolo buio del parco. Fine."
+    }
+  ]
+}

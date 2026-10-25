@@ -144,7 +144,7 @@ kit.score(function (S, T) {
   S.fx('revswell', R('telefono', 17.0), { dur: 1.6, vel: 26 });
   // Laggiù: le sbarre, la catena, le luci lontane che si accendono, Ada in punta di piedi.
   for (let k = 0; k < 7; k++) S.fx('click', R('laggiu', 0.8 + k * 0.12), { vel: 34 });
-  for (let k = 0; k < 18; k++) S.fx('tick', R('laggiu', 3.6 + k * 0.24), { vel: 22 });
+  for (let k = 0; k < 25; k++) S.fx('tick', R('laggiu', 3.6 + k * 0.24), { vel: 22 });
   S.fx('whoosh', R('laggiu', 9.2), { dur: 2.0, vel: 28 });
   S.fx('revswell', R('laggiu', 8.0), { dur: 3.0 });
   for (let k = 0; k < 6; k++) S.fx('sparkle', R('laggiu', 8.4 + k * 0.55), { vel: 24 + k * 3 });

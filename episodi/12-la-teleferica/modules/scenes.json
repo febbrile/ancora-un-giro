@@ -1,0 +1,55 @@
+{
+  "width": 1920,
+  "height": 1080,
+  "background": "#0B1030",
+  "scenes": [
+    {
+      "id": "domanda",
+      "name": "La domanda",
+      "dur": 28.0,
+      "desc": "Alla stessa domanda, «Domani piove?», la stessa vasca dà a una casa «Sì» e a un'altra «No». Come fa il treno a saperlo? Titolo."
+    },
+    {
+      "id": "pagina",
+      "name": "La teleferica",
+      "dur": 30.6,
+      "desc": "Alla guardiola, il custode apre il regolamento sulla pagina della cabina. Sulla collina si accende un pilone: un filo sale oltre le colline. Alla frase del parco il custode attacca una bandierina turchese."
+    },
+    {
+      "id": "viola",
+      "name": "Le paperelle viola",
+      "dur": 35.8,
+      "desc": "Di nuovo «Domani piove?»: nella vasca ci sono tante paperelle viola. Ada ne pesca una, poi una rosa, poi una viola scura: si parte."
+    },
+    {
+      "id": "cabina",
+      "name": "La cabina",
+      "dur": 28.6,
+      "desc": "La cabina porta la richiesta oltre le colline, nella pioggia, e torna con una striscia: «pioggia» sale in fondo al treno."
+    },
+    {
+      "id": "finestre",
+      "name": "Le finestre sulla vasca",
+      "dur": 37.0,
+      "desc": "Dentro la montagna, nell'ultimo vagone c'è la striscia tornata da fuori: finestra dopo finestra le paperelle di luce si fanno bianche."
+    },
+    {
+      "id": "si",
+      "name": "Sì",
+      "dur": 32.2,
+      "desc": "Ada pesca una bianca, poi la Fine: sul telefono arriva «Sì», e questa volta viene da oltre le colline."
+    },
+    {
+      "id": "sole",
+      "name": "Il sole bagnato",
+      "dur": 40.6,
+      "desc": "Un'altra notte la cabina torna bagnata di pioggia, ma sulla striscia c'è «sole». Il treno la porta con la calma di sempre: «No»."
+    },
+    {
+      "id": "storia",
+      "name": "Mezza riga",
+      "dur": 21.2,
+      "desc": "Una storia si ferma a metà frase, ma nessuno ha pescato la Fine. Fine."
+    }
+  ]
+}

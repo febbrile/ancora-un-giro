@@ -1,0 +1,55 @@
+{
+  "width": 1920,
+  "height": 1080,
+  "background": "#0B1030",
+  "scenes": [
+    {
+      "id": "domanda",
+      "name": "La domanda",
+      "dur": 22,
+      "desc": "Sul telefono la storia dell'altra notte è ferma a metà frase, e niente puntini. Nel quaderno di Ada le paperelle pescate quella notte: nessuna è scura. Chi l'ha fermata? Titolo."
+    },
+    {
+      "id": "guardiola",
+      "name": "La notte del custode",
+      "dur": 32.4,
+      "desc": "Ada segue il custode nel suo giro: esce dalla guardiola, accende i lampioni del viale, controlla il lucchetto del cancello, saluta la ruota, carica l'orologio. Lo dice il regolamento."
+    },
+    {
+      "id": "orologio",
+      "name": "L'orologio",
+      "dur": 26.6,
+      "desc": "Sulla panchina della stazione il custode mostra ad Ada l'orologio da tasca: al posto della corona c'è una campanella. Il regolamento dice quanti giri può fare una risposta."
+    },
+    {
+      "id": "primo",
+      "name": "Il primo giro",
+      "dur": 44.6,
+      "desc": "Al mare Emma passa il Bruco, sale dietro la frase del parco e fa il giro di sempre: fili, scambi, finestre. Ada pesca «nuota», e la lancetta scatta di una tacca."
+    },
+    {
+      "id": "giri",
+      "name": "Giro dopo giro",
+      "dur": 26.0,
+      "desc": "A montaggio, sempre più veloce: una rosa, una turchese, un'altra rosa; sul telefono la storia si allunga, e la lancetta scatta."
+    },
+    {
+      "id": "campanella",
+      "name": "La campanella",
+      "dur": 25.4,
+      "desc": "All'ultimo giro il custode tira la cordicella: drin. Il treno si ferma, anche a metà frase. Il regolamento non legge le storie: conta i giri."
+    },
+    {
+      "id": "continua",
+      "name": "Continua",
+      "dur": 31.6,
+      "desc": "Chi scrive chiede di continuare: la chat intera risale sul treno, e la storia finisce con la paperella scura."
+    },
+    {
+      "id": "indovinello",
+      "name": "L'indovinello",
+      "dur": 20.6,
+      "desc": "Arriva un indovinello. Il treno gira e gira, e il telefono non dice niente. Fine."
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "width": 1920,
+  "height": 1080,
+  "background": "#0B1030",
+  "scenes": [
+    {
+      "id": "domanda",
+      "name": "La domanda",
+      "dur": 25.6,
+      "desc": "In una cameretta un bambino chiede una cosa che non si dovrebbe chiedere. Il custode prende la striscia, la fa tagliare e se ne va coi biglietti; sul telefono arriva una frase già pronta. Il treno non è nemmeno partito. Titolo."
+    },
+    {
+      "id": "bruco",
+      "name": "Il Bruco",
+      "dur": 26.6,
+      "desc": "Ada segue il custode nell'angolo buio del parco: c'è una giostrina per bambini piccoli, il Bruco, con la sua piccola montagna a forma di mela, la sua vasca e la sua sbarra."
+    },
+    {
+      "id": "rosso",
+      "name": "Rosso",
+      "dur": 26.2,
+      "desc": "I biglietti salgono sul Bruco, coi colori del Bruco. Dalla mela escono paperelle quasi tutte rosse: il custode le conta, la sbarra si abbassa, e al telefono parte la frase già pronta."
+    },
+    {
+      "id": "grande",
+      "name": "Non l'ha mai vista",
+      "dur": 20.4,
+      "desc": "La montagna grande, scura e silenziosa, quella frase non l'ha mai vista. Il Bruco fa verde o rosso; la sbarra la abbassa il custode."
+    },
+    {
+      "id": "verde",
+      "name": "Verde",
+      "dur": 23.4,
+      "desc": "«Al mare Emma» esce verde dal Bruco: la sbarra resta su. Il custode attacca la frase del parco e le bandierine, e il treno grande parte."
+    },
+    {
+      "id": "finestre",
+      "name": "Le finestre sulla vasca",
+      "dur": 36.8,
+      "desc": "Dentro la montagna, il giro di sempre: i fili della bandierina d'ottone vanno ai due Mare, e finestra dopo finestra le paperelle di luce si fanno blu."
+    },
+    {
+      "id": "risposta",
+      "name": "Anche la risposta",
+      "dur": 24.8,
+      "desc": "Ada pesca «nuota». Prima di arrivare al telefono, anche la risposta fa un giro sul Bruco: verde, può andare."
+    },
+    {
+      "id": "lupo",
+      "name": "Il lupo",
+      "dur": 40.6,
+      "desc": "Una bambina con un libro di fiabe scrive «Il lupo mangia la nonna». Sul Bruco escono più rosse che verdi: la sbarra si abbassa. Il Bruco non inventa niente, ma può sbagliare."
+    },
+    {
+      "id": "piove",
+      "name": "Tutti i colori",
+      "dur": 21.6,
+      "desc": "«Domani piove?» passa il Bruco e fa il giro grande: nella vasca, paperelle di tutti i colori. Fine."
+    }
+  ]
+}

@@ -131,6 +131,12 @@ const RITMO = {
   },
   '08': {},
   '09': { collina: [[11.6, 15.0, 2.4, 1]] },
+  '10': { finestre: [[34.4, 40.6, 2.8, 1]] },
+  '11': { finestre: [[34.0, 40.6, 2.8, 1]] },
+  '12': { finestre: [[34.4, 40.6, 2.8, 1]] },
+  '13': { continua: [[13.4, 25.4, 8.0]] },
+  '14': { finestre: [[34.4, 40.6, 2.8, 1]] },
+  '15': { finestre: [[34.4, 40.6, 2.8, 1]] },
 };
 // Dove si trova il tempo interno dentro un tratto, dopo tau secondi veri.
 function nelTratto(x0, x1, r, fine, tau) {
@@ -331,6 +337,38 @@ function chiama(col, o) {
     occhi(84, 108, 116, 108) +
     '<path d="M92 132 Q100 139 108 132" stroke="#1C1F4A" stroke-width="3.5" stroke-linecap="round" fill="none"/></g></g>';
 }
+// Le bandierine (seconda stagione): biglietti senza parola che il custode attacca alla striscia, d'oro davanti alla frase
+// del parco, d'argento davanti a ogni messaggio, d'ottone davanti a ogni risposta, turchese per la teleferica. Il bastoncino
+// e il pomello sono del loro metallo, sempre; la stoffa è il vestito, e cambia colore come ogni vestito.
+const METALLI = { oro: ['#F3C74E', '#B8862A'], argento: ['#C9CBD4', '#7E8190'], ottone: ['#C9AE78', '#87703F'], turchese: ['#3FA8B2', '#1F6F78'] };
+const metallo = nome => METALLI[String(nome || 'oro').replace('⚑', '')] || METALLI.oro;
+// Il segno della bandierina, per biglietti e strisce: centrato in (0, 0), alto circa 34.
+function segnoBandierina(nome) {
+  const [m, sc] = metallo(nome);
+  return '<g><path d="M-8 17 L-8 -15" stroke="' + sc + '" stroke-width="3.4" stroke-linecap="round"/><circle cx="-8" cy="-16" r="3.6" fill="' + m + '" stroke="' + sc + '" stroke-width="1.5"/>' +
+    '<path d="M-6 -13 Q4 -17 12 -12 Q8 -6 13 1 Q4 -3 -6 1 Z" fill="' + m + '" stroke="' + sc + '" stroke-width="1.8" stroke-linejoin="round"/></g>';
+}
+// Chi siede nel vagone: una bandierina con due occhi. Scatola 200×180; o.metallo: 'oro' | 'argento' | 'ottone' | 'turchese';
+// o.tirata: la posa «tirata via» (il bastoncino va avanti, la stoffa resta indietro), come quella di Emma.
+function bandierina(col, o) {
+  o = o || {};
+  const [m, sc] = metallo(o.metallo), t = o.tirata ? 1 : 0;
+  const stoffa = t ?
+    'M78 46 Q118 40 150 50 Q176 56 196 48 Q188 66 198 86 Q172 92 148 86 Q114 80 78 92 Z' :
+    'M78 42 Q112 32 138 44 Q156 52 170 44 Q162 70 172 98 Q156 106 136 98 Q108 88 78 102 Z';
+  const scie = t ? '<path d="M198 56 L232 56 M204 72 L240 72 M198 88 L226 88" stroke="#FFF4E0" stroke-width="3" stroke-linecap="round" opacity=".4"/>' : '';
+  return '<g style="color:' + col + '">' + scie +
+    '<ellipse cx="' + (124 + 20 * t) + '" cy="76" rx="' + (70 + 22 * t) + '" ry="52" fill="currentColor" opacity=".35" filter="url(#g-soft)"/>' +
+    '<g transform="rotate(' + (-10 * t) + ' 76 170)">' +
+    '<rect x="71" y="34" width="10" height="140" rx="5" fill="' + m + '" stroke="' + sc + '" stroke-width="2.5"/>' +
+    '<path d="M74 44 L74 166" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" opacity=".4"/>' +
+    '<circle cx="76" cy="28" r="12" fill="' + m + '" stroke="' + sc + '" stroke-width="2.5"/><circle cx="72" cy="24" r="4" fill="#FFFFFF" opacity=".6"/>' +
+    '<path d="' + stoffa + '" fill="currentColor" stroke="' + C.crema + '" stroke-width="4" stroke-opacity=".9" stroke-linejoin="round"/>' +
+    '<path d="M86 52 Q108 44 128 52" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" fill="none" opacity=".3"/>' +
+    (t ? occhi(102, 66, 128, 64) + '<path d="M106 80 Q113 85 120 80" stroke="#1C1F4A" stroke-width="3.5" stroke-linecap="round" fill="none"/>' :
+      occhi(100, 66, 126, 66) + '<path d="M104 84 Q112 90 120 84" stroke="#1C1F4A" stroke-width="3.5" stroke-linecap="round" fill="none"/>') +
+    '</g></g>';
+}
 // Ada: pose 'base', 'quaderno', 'striscia', 'pesca', 'disegna'; espressioni di adaHead più 'chiusi' e 'pensa'.
 function adaTesta(expr) {
   if (expr === 'chiusi') return adaHead('nessuno').replace(/<circle cx="87" cy="88"[^>]*>|<circle cx="115" cy="88"[^>]*>|<circle cx="88.2"[^>]*>|<circle cx="116.2"[^>]*>|<path d="M92 106 Q100 112 108 106"[^>]*>/g, '') +
@@ -366,20 +404,26 @@ function ada(pose, expr, o) {
 // senza scritte. Scatola 240×420, piedi a y = 410.
 // pose: 'base' (la lanterna in mano), 'alza' (la lanterna alzata, per fare luce), 'orologio' (guarda l'orologio; la
 // lanterna è appesa al polso). Espressioni: 'base' (altero), 'sorriso', 'serio', 'chiusi'.
+// Dalla seconda stagione: 'porge' (il braccio teso, la mano che tiene o porge qualcosa; la lanterna appesa al polso),
+// 'attacca' (le due mani davanti al petto, il regolamento sotto il braccio; la lanterna per terra), 'legge' (il regolamento
+// aperto con due mani; la lanterna per terra; o.dito da 0 a 1: la mano destra lascia il libro e ci batte sopra un dito;
+// o.pagina: il disegno sulle pagine, PAGINE). Dove stanno le mani: CUSTODE_MANI. Le scene ci mettono la striscia.
 // o.dondolo: di quanti gradi dondola la lanterna; o.occhi: dove guarda (da -1, a sinistra, a 1); o.luce: da 0 a 1.
 const CU = { giacca: '#5A4A42', giaccaScura: '#3E322D', gilet: '#B5893A', giletScuro: '#8A6527', cravatta: '#7E2F3F', pantaloni: '#2B2A33',
   pelle: '#E8B48F', naso: '#DC9C80', bianco: '#F4F0E8', grigio: '#C9C3B8', grigioScuro: '#A39C90', libro: '#6B3A26', libroScuro: '#47251A',
   ottone: '#E0A93B', ottoneScuro: '#8C6420' };
-// La lanterna del custode, appesa per il manico nel punto (x, y): alta 56.
-function lume(x, y, luce) {
+// La lanterna del custode, appesa per il manico nel punto (x, y): alta 56. v: i colori (quelli d'ottone, se manca).
+const LUME = { metallo: CU.ottone, scuro: CU.ottoneScuro, spento: '#8A7A5A', vetro: '#FFE7A8', alone: C.luce };
+function lume(x, y, luce, v) {
   luce = luce === undefined ? 1 : luce;
-  return '<g><circle cx="' + x + '" cy="' + (y + 34) + '" r="54" fill="' + C.luce + '" opacity="' + (0.4 * luce).toFixed(2) + '" filter="url(#g-soft)"/>' +
+  v = v || LUME;
+  return '<g><circle cx="' + x + '" cy="' + (y + 34) + '" r="54" fill="' + v.alone + '" opacity="' + (0.4 * luce).toFixed(2) + '" filter="url(#g-soft)"/>' +
     '<path d="M' + (x - 9) + ' ' + (y + 12) + ' Q' + x + ' ' + (y - 4) + ' ' + (x + 9) + ' ' + (y + 12) + '" stroke="' + AI + '" stroke-width="3" fill="none"/>' +
-    '<path d="M' + (x - 12) + ' ' + (y + 20) + ' L' + (x + 12) + ' ' + (y + 20) + ' L' + (x + 8) + ' ' + (y + 11) + ' L' + (x - 8) + ' ' + (y + 11) + ' Z" fill="' + CU.ottone + '" stroke="' + CU.ottoneScuro + '" stroke-width="2"/>' +
-    '<rect x="' + (x - 12) + '" y="' + (y + 20) + '" width="24" height="28" rx="3" fill="' + mix('#8A7A5A', '#FFE7A8', luce) + '" stroke="' + CU.ottoneScuro + '" stroke-width="2.5"/>' +
+    '<path d="M' + (x - 12) + ' ' + (y + 20) + ' L' + (x + 12) + ' ' + (y + 20) + ' L' + (x + 8) + ' ' + (y + 11) + ' L' + (x - 8) + ' ' + (y + 11) + ' Z" fill="' + v.metallo + '" stroke="' + v.scuro + '" stroke-width="2"/>' +
+    '<rect x="' + (x - 12) + '" y="' + (y + 20) + '" width="24" height="28" rx="3" fill="' + mix(v.spento, v.vetro, luce) + '" stroke="' + v.scuro + '" stroke-width="2.5"/>' +
     '<ellipse cx="' + x + '" cy="' + (y + 36) + '" rx="5" ry="8" fill="#FFFFFF" opacity="' + (0.85 * luce).toFixed(2) + '"/>' +
-    '<path d="M' + x + ' ' + (y + 20) + ' L' + x + ' ' + (y + 48) + '" stroke="' + CU.ottoneScuro + '" stroke-width="1.5" opacity=".6"/>' +
-    '<rect x="' + (x - 14) + '" y="' + (y + 47) + '" width="28" height="7" rx="2" fill="' + CU.ottone + '" stroke="' + CU.ottoneScuro + '" stroke-width="2"/></g>';
+    '<path d="M' + x + ' ' + (y + 20) + ' L' + x + ' ' + (y + 48) + '" stroke="' + v.scuro + '" stroke-width="1.5" opacity=".6"/>' +
+    '<rect x="' + (x - 14) + '" y="' + (y + 47) + '" width="28" height="7" rx="2" fill="' + v.metallo + '" stroke="' + v.scuro + '" stroke-width="2"/></g>';
 }
 function custodeTesta(expr, o) {
   const dx = 3 * (o.occhi || 0);
@@ -454,13 +498,169 @@ function custode(pose, expr, o) {
       '<path d="M84 186 Q66 234 88 256 L106 240 Q90 228 96 204 Z" fill="' + CU.giacca + '" stroke="' + AI + '" stroke-width="2.5"/>' +
       '<path d="M104 236 Q112 254 120 240" stroke="' + CU.ottone + '" stroke-width="2" fill="none"/>' +
       '<circle cx="104" cy="224" r="11" fill="' + CU.ottone + '" stroke="' + CU.ottoneScuro + '" stroke-width="2"/><circle cx="104" cy="224" r="8" fill="' + C.crema + '"/>' +
-      '<path d="M104 224 L104 218 M104 224 L108 226" stroke="' + AI + '" stroke-width="1.6" stroke-linecap="round"/><circle cx="104" cy="211" r="3" fill="none" stroke="' + CU.ottone + '" stroke-width="2"/>' +
+      // Dalla seconda stagione (o.campanella) al posto della corona c'è la campanella, e la lancetta conta i giri (o.lancetta).
+      (o.campanella ? '<path d="M104 224 L' + (104 + 7 * Math.sin(Math.PI * (1 + (o.lancetta || 0)))).toFixed(1) + ' ' + (224 - 7 * Math.cos(Math.PI * (1 + (o.lancetta || 0)))).toFixed(1) + '" stroke="' + AI + '" stroke-width="1.8" stroke-linecap="round"/>' +
+        '<g transform="rotate(' + (o.suona || 0) + ' 104 212)"><path d="M100 212 Q100 204 104 204 Q108 204 108 212 L110 214 L98 214 Z" fill="' + CU.ottone + '" stroke="' + CU.ottoneScuro + '" stroke-width="1.2"/></g>' :
+        '<path d="M104 224 L104 218 M104 224 L108 226" stroke="' + AI + '" stroke-width="1.6" stroke-linecap="round"/><circle cx="104" cy="211" r="3" fill="none" stroke="' + CU.ottone + '" stroke-width="2"/>') +
       '<circle cx="98" cy="238" r="8" fill="' + CU.pelle + '"/>';
   } else {
     sinistro = '<path d="M84 186 Q64 232 68 290 L82 292 Q80 240 96 204 Z" fill="' + CU.giacca + '" stroke="' + AI + '" stroke-width="2.5"/>' +
       '<g transform="rotate(' + dond + ' 74 296)">' + lume(74, 296, luce) + '</g><circle cx="74" cy="296" r="8" fill="' + CU.pelle + '"/>';
   }
+  let davanti = '';
+  if (pose === 'porge') {
+    sinistro = '<path d="M86 188 Q56 198 26 196 L26 214 Q58 218 92 208 Z" fill="' + CU.giacca + '" stroke="' + AI + '" stroke-width="2.5"/>' +
+      '<g transform="rotate(' + dond + ' 30 212)">' + lume(30, 212, luce) + '</g><circle cx="20" cy="205" r="8" fill="' + CU.pelle + '"/>';
+  } else if (pose === 'attacca') {
+    sinistro = '<g transform="rotate(' + dond + ' 40 356)">' + lume(40, 356, luce) + '</g>' +
+      '<path d="M84 186 Q64 230 86 258 L102 246 Q86 228 96 204 Z" fill="' + CU.giacca + '" stroke="' + AI + '" stroke-width="2.5"/><circle cx="100" cy="252" r="8" fill="' + CU.pelle + '"/>';
+    return '<g>' + gambe + gilet + giacca + chiavi + libro +
+      '<path d="M156 182 Q180 222 170 254 L148 258 Q160 230 146 202 Z" fill="' + CU.giacca + '" stroke="' + AI + '" stroke-width="2.5"/><circle cx="144" cy="254" r="8" fill="' + CU.pelle + '"/>' +
+      sinistro + custodeTesta(expr, o) + '</g>';
+  } else if (pose === 'legge') {
+    const dito = o.dito || 0, hx = 168 - 22 * dito, hy = 282 - 20 * dito;
+    sinistro = '<g transform="rotate(' + dond + ' 40 356)">' + lume(40, 356, luce) + '</g>' +
+      '<path d="M84 186 Q64 232 66 280 L80 284 Q80 240 96 204 Z" fill="' + CU.giacca + '" stroke="' + AI + '" stroke-width="2.5"/>';
+    const dx = '<path d="M156 182 Q176 230 ' + (hx + 6) + ' ' + (hy - 2) + ' L' + (hx - 8) + ' ' + (hy + 2) + ' Q160 240 144 204 Z" fill="' + CU.giacca + '" stroke="' + AI + '" stroke-width="2.5"/>';
+    davanti = libroAperto(120, 262, o.pagina) + '<circle cx="72" cy="284" r="8" fill="' + CU.pelle + '"/>' + dx +
+      '<circle cx="' + hx + '" cy="' + hy + '" r="8" fill="' + CU.pelle + '"/>' +
+      (dito > 0 ? '<path d="M' + (hx - 4) + ' ' + (hy - 2) + ' L' + (hx - 12) + ' ' + (hy - 8) + '" stroke="' + CU.pelle + '" stroke-width="5" stroke-linecap="round"/>' : '');
+    return '<g>' + gambe + gilet + giacca + chiavi + sinistro + custodeTesta(expr, o) + davanti + '</g>';
+  }
   return '<g>' + gambe + gilet + giacca + chiavi + libro + destro + sinistro + custodeTesta(expr, o) + '</g>';
+}
+// Dove stanno le mani del custode, nella sua scatola (240×420): per metterci la striscia.
+const CUSTODE_MANI = { porge: [20, 205], attacca: [[100, 252], [144, 254]], legge: [[72, 284], [168, 282]] };
+// Il regolamento aperto, rilegato in cuoio: centrato in (x, y), largo 132. Sulle pagine nessuna scritta, solo disegni
+// (pagina: una chiave di PAGINE, o niente: pagine bianche con le righe dei disegni a matita).
+function libroAperto(x, y, pagina, colori) {
+  const k = colori || { libro: CU.libro, scuro: CU.libroScuro };
+  return '<g transform="translate(' + (x - 120) + ' ' + (y - 262) + ')">' +
+    '<path d="M120 236 Q90 228 54 234 L54 290 Q90 284 120 292 Q150 284 186 290 L186 234 Q150 228 120 236 Z" fill="' + k.libro + '" stroke="' + k.scuro + '" stroke-width="2.5" stroke-linejoin="round"/>' +
+    '<path d="M120 238 Q92 230 60 236 L60 284 Q92 280 120 287 Q148 280 180 284 L180 236 Q148 230 120 238 Z" fill="' + C.crema + '"/>' +
+    '<path d="M120 238 L120 287" stroke="' + C.cremaScura + '" stroke-width="2"/>' +
+    (PAGINE[pagina] || '') + '</g>';
+}
+// I disegni del regolamento, a matita: nessuna scritta. Coordinate del libro aperto (pagine da x 60 a 180, y 236–284).
+const PAGINE = {
+  // La campanella: un trenino che fa il giro della pista, più volte (tre anelli), e una campanella. Nessun numero.
+  campanella: '<g fill="none" stroke="' + C.cremaScura + '" stroke-width="1.8"><ellipse cx="90" cy="262" rx="24" ry="12"/><ellipse cx="90" cy="262" rx="18" ry="8"/><ellipse cx="90" cy="262" rx="12" ry="5"/>' +
+    '<path d="M108 252 l6 2 l-6 3"/></g><rect x="62" y="254" width="12" height="7" rx="2" fill="' + C.rosso + '"/><rect x="74" y="255" width="9" height="6" rx="2" fill="' + C.crema + '" stroke="' + C.cremaScura + '" stroke-width="1"/>' +
+    '<path d="M150 246 Q140 246 140 262 L138 268 L162 268 L160 262 Q160 246 150 246 Z" fill="' + CU.ottone + '" stroke="' + CU.ottoneScuro + '" stroke-width="1.4"/><circle cx="150" cy="270" r="2.4" fill="' + CU.ottoneScuro + '"/>' +
+    '<path d="M134 250 l-4 -3 M134 258 l-5 0 M166 250 l4 -3 M166 258 l5 0" stroke="' + CU.ottoneScuro + '" stroke-width="1.4"/>',
+  // La teleferica: un filo che sale tra due pali, la cabina appesa, una nuvola; accanto la bandierina turchese.
+  teleferica: '<path d="M64 278 L64 252 M114 248 L114 240" stroke="' + C.cremaScura + '" stroke-width="2.4"/><path d="M62 254 L116 240" stroke="' + C.cremaScura + '" stroke-width="1.6"/>' +
+    '<path d="M88 247 L88 252" stroke="' + C.cremaScura + '" stroke-width="1.6"/><rect x="82" y="252" width="12" height="11" rx="2" fill="#A064D7"/>' +
+    '<path d="M100 248 q4 -6 10 -2 q6 -6 10 2 q4 6 -2 6 l-16 0 q-6 0 -2 -6 Z" fill="none" stroke="' + C.cremaScura + '" stroke-width="1.6"/>' +
+    '<path d="M104 258 l-2 6 M110 258 l-2 6 M116 258 l-2 6" stroke="#5C8FD0" stroke-width="1.4"/>' +
+    '<g transform="translate(150 262) scale(.7)">' + segnoBandierina('turchese') + '</g>',
+  // La frase del parco: una bandierina d'oro davanti a una striscia con le onde del mare.
+  frase: '<g transform="translate(76 260) scale(.62)">' + segnoBandierina('oro') + '</g>' +
+    '<path d="M88 252 L112 250 L110 262 L112 274 L88 272 L91 262 Z" fill="none" stroke="' + C.cremaScura + '" stroke-width="1.8"/>' +
+    '<path d="M93 262 q3 -3 6 0 t6 0" stroke="#5C8FD0" stroke-width="1.8" fill="none"/>' +
+    '<path d="M130 268 L170 268 M134 268 L134 258 L166 258 L166 268" stroke="' + C.cremaScura + '" stroke-width="1.8" fill="none"/>' +
+    '<g transform="translate(140 252) scale(.42)">' + segnoBandierina('oro') + '</g>' +
+    '<path d="M146 252 l12 0 M146 256 l14 0" stroke="#5C8FD0" stroke-width="1.6"/>',
+};
+// Il custode del parco gemello (stagione 2, episodio 6): fa le stesse cose del custode di Ada, con un altro regolamento.
+// Diverso a colpo d'occhio: basso e tondo, bonario, con la bombetta, i baffi a manubrio e il gilet a quadri; la lanterna
+// e il regolamento sono verdi. Stessa scatola del custode, 240×420, piedi a y = 410: la testa arriva a metà del custode.
+// pose: 'base' (la lanterna in mano, il regolamento sotto il braccio), 'alza' (la lanterna alzata), 'cenno' (il braccio
+// teso, la mano aperta: «prego»; la lanterna appesa al polso), 'legge' (il regolamento aperto con due mani; la lanterna
+// per terra). Espressioni: 'base', 'sorriso', 'serio', 'chiusi'. o.dondolo, o.occhi, o.luce: come per il custode.
+const CG = { giacca: '#3E4A6E', giaccaScura: '#2C3552', quadri: '#C4523C', quadriChiaro: '#F1D9B0', quadriScuro: '#2F6B45',
+  pantaloni: '#3A3340', cappello: '#2A2630', nastro: '#2F7A4A', libro: '#2F7A4A', libroScuro: '#1D5232', baffi: '#E9E2D6', baffiScuri: '#BDB3A3' };
+const LUME_VERDE = { metallo: '#3E8F5C', scuro: '#225E38', spento: '#5E7A5E', vetro: '#D9FFC0', alone: '#A8EE86' };
+function custodeGemelloTesta(expr, o) {
+  const dx = 3 * (o.occhi || 0);
+  let ciglia = '<path d="M98 170 Q105 165 112 169 M128 169 Q135 165 142 170" stroke="' + CG.baffiScuri + '" stroke-width="4" stroke-linecap="round" fill="none"/>';
+  let occhi = '<circle cx="' + (106 + dx) + '" cy="180" r="4.6" fill="' + AI + '"/><circle cx="' + (134 + dx) + '" cy="180" r="4.6" fill="' + AI + '"/>' +
+    '<circle cx="' + (107.6 + dx) + '" cy="178.4" r="1.6" fill="#FFFFFF"/><circle cx="' + (135.6 + dx) + '" cy="178.4" r="1.6" fill="#FFFFFF"/>';
+  let bocca = '<path d="M113 213 Q120 218 127 213" stroke="' + AI + '" stroke-width="2.4" stroke-linecap="round" fill="none"/>';
+  if (expr === 'sorriso') {
+    occhi = '<path d="M100 181 Q106 175 112 181 M128 181 Q134 175 140 181" stroke="' + AI + '" stroke-width="2.8" stroke-linecap="round" fill="none"/>';
+    bocca = '<path d="M110 211 Q120 222 130 211 Z" fill="' + CU.cravatta + '" stroke="' + AI + '" stroke-width="2.2" stroke-linejoin="round"/>';
+  } else if (expr === 'chiusi') {
+    occhi = '<path d="M100 179 Q106 184 112 179 M128 179 Q134 184 140 179" stroke="' + AI + '" stroke-width="2.8" stroke-linecap="round" fill="none"/>';
+  } else if (expr === 'serio') {
+    ciglia = '<path d="M98 169 L112 171 M128 171 L142 169" stroke="' + CG.baffiScuri + '" stroke-width="4" stroke-linecap="round" fill="none"/>';
+    bocca = '<path d="M114 214 L126 214" stroke="' + AI + '" stroke-width="2.4" stroke-linecap="round" fill="none"/>';
+  }
+  return '<ellipse cx="85" cy="186" rx="6" ry="8" fill="' + CU.pelle + '"/><ellipse cx="155" cy="186" rx="6" ry="8" fill="' + CU.pelle + '"/>' +
+    '<ellipse cx="120" cy="184" rx="36" ry="34" fill="' + CU.pelle + '"/>' +
+    // I ciuffi bianchi sopra le orecchie, sotto la bombetta.
+    '<path d="M86 168 C80 176 82 186 88 190 C88 182 90 176 94 170 Z M154 168 C160 176 158 186 152 190 C152 182 150 176 146 170 Z" fill="' + CG.baffi + '"/>' +
+    '<circle cx="97" cy="197" r="7" fill="#FF8F8F" opacity=".35"/><circle cx="143" cy="197" r="7" fill="#FF8F8F" opacity=".35"/>' +
+    ciglia + occhi +
+    '<ellipse cx="120" cy="193" rx="8" ry="7" fill="' + CU.naso + '"/>' +
+    // I baffi a manubrio, con le punte arricciate in su.
+    '<path d="M120 201 C112 197 102 198 96 204 C92 208 88 206 88 200 C86 210 96 214 104 210 C110 208 116 206 120 205 C124 206 130 208 136 210 C144 214 154 210 152 200 C152 206 148 208 144 204 C138 198 128 197 120 201 Z" fill="' + CG.baffi + '" stroke="' + CG.baffiScuri + '" stroke-width="1.5" stroke-linejoin="round"/>' +
+    bocca +
+    // La bombetta, con il nastro verde.
+    '<path d="M90 158 C88 128 102 118 120 118 C138 118 152 128 150 158 Z" fill="' + CG.cappello + '"/>' +
+    '<path d="M90 150 L150 150 L150 158 L90 158 Z" fill="' + CG.nastro + '"/>' +
+    '<ellipse cx="120" cy="159" rx="44" ry="7" fill="' + CG.cappello + '"/>' +
+    '<path d="M100 130 Q110 122 122 122" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" fill="none" opacity=".18"/>';
+}
+// Il regolamento verde, chiuso: scatola 56×74 con l'angolo in alto a sinistra in (x, y).
+function regolamentoVerde(x, y) {
+  return '<rect x="' + x + '" y="' + y + '" width="56" height="74" rx="3" fill="' + CG.libro + '" stroke="' + CG.libroScuro + '" stroke-width="2.5"/>' +
+    '<rect x="' + (x + 51) + '" y="' + (y + 4) + '" width="7" height="66" fill="' + C.crema + '"/>' +
+    '<path d="M' + x + ' ' + (y + 13) + ' L' + (x + 56) + ' ' + (y + 13) + ' M' + x + ' ' + (y + 61) + ' L' + (x + 56) + ' ' + (y + 61) + '" stroke="' + C.oro + '" stroke-width="2"/>' +
+    '<circle cx="' + (x + 28) + '" cy="' + (y + 37) + '" r="9" fill="none" stroke="' + C.oro + '" stroke-width="2"/>' +
+    '<path d="M' + (x + 24) + ' ' + (y + 74) + ' L' + (x + 24) + ' ' + (y + 88) + ' L' + (x + 28) + ' ' + (y + 83) + ' L' + (x + 32) + ' ' + (y + 88) + ' L' + (x + 32) + ' ' + (y + 74) + '" fill="' + C.oro + '"/>';
+}
+function custodeGemello(pose, expr, o) {
+  o = o || {};
+  const luce = o.luce === undefined ? 1 : o.luce, dond = o.dondolo || 0;
+  const gambe = '<rect x="101" y="360" width="16" height="38" fill="' + CG.pantaloni + '"/><rect x="123" y="360" width="16" height="38" fill="' + CG.pantaloni + '"/>' +
+    '<path d="M90 404 Q90 394 108 394 L118 396 L118 408 L92 408 Z M150 404 Q150 394 132 394 L122 396 L122 408 L148 408 Z" fill="#14110F"/>' +
+    '<path d="M96 399 L105 398 M144 399 L135 398" stroke="#FFFFFF" stroke-width="1.5" opacity=".35"/>';
+  // Il gilet a quadri, tondo come la pancia, con i bottoni d'ottone; il colletto e il farfallino verde.
+  const quadri = '<defs><pattern id="g-quadri-gemello" width="18" height="18" patternUnits="userSpaceOnUse">' +
+    '<rect width="18" height="18" fill="' + CG.quadri + '"/><rect width="7" height="18" fill="' + CG.quadriChiaro + '" opacity=".38"/>' +
+    '<rect width="18" height="7" fill="' + CG.quadriChiaro + '" opacity=".38"/><path d="M12.5 0 L12.5 18 M0 12.5 L18 12.5" stroke="' + CG.quadriScuro + '" stroke-width="1.6"/></pattern></defs>';
+  const gilet = '<path d="M98 226 L142 226 C170 262 174 318 152 356 Q120 368 88 356 C66 318 70 262 98 226 Z" fill="url(#g-quadri-gemello)" stroke="#8E3A2A" stroke-width="2"/>' +
+    [256, 284, 312, 340].map(y => '<circle cx="120" cy="' + y + '" r="3.6" fill="' + CU.ottone + '" stroke="' + CU.ottoneScuro + '" stroke-width="1"/>').join('') +
+    '<path d="M106 214 L120 236 L134 214 Z" fill="' + CU.bianco + '"/>' +
+    '<path d="M120 226 L106 218 L106 234 Z M120 226 L134 218 L134 234 Z" fill="' + CG.nastro + '" stroke="' + CG.libroScuro + '" stroke-width="1.2"/><circle cx="120" cy="226" r="4" fill="' + CG.nastro + '"/>';
+  // La giacca corta, aperta sulla pancia.
+  const giacca = '<path d="M104 216 C74 220 48 242 44 282 C40 326 58 360 94 370 L100 358 C74 322 72 262 100 230 Z" fill="' + CG.giacca + '" stroke="' + AI + '" stroke-width="2.5" stroke-linejoin="round"/>' +
+    '<path d="M136 216 C166 220 192 242 196 282 C200 326 182 360 146 370 L140 358 C166 322 168 262 140 230 Z" fill="' + CG.giacca + '" stroke="' + AI + '" stroke-width="2.5" stroke-linejoin="round"/>' +
+    '<path d="M104 218 L92 250 L100 248 L108 228 Z M136 218 L148 250 L140 248 L132 228 Z" fill="' + CG.giaccaScura + '"/>' +
+    // Il fazzoletto verde nel taschino.
+    '<path d="M156 264 L174 262 L173 268 L157 270 Z" fill="' + CG.giaccaScura + '"/><path d="M160 264 L163 256 L166 263 L169 257 L171 263 Z" fill="' + CG.nastro + '"/>';
+  let destro, sinistro, davanti = '';
+  if (pose === 'legge') {
+    // Il regolamento aperto davanti alla pancia, con tutte e due le mani; la lanterna per terra, accanto ai piedi.
+    sinistro = '<g transform="rotate(' + dond + ' 40 354)">' + lume(40, 354, luce, LUME_VERDE) + '</g>' +
+      '<path d="M78 244 Q60 282 80 312 L94 300 Q82 280 92 256 Z" fill="' + CG.giacca + '" stroke="' + AI + '" stroke-width="2.5"/>';
+    destro = '<path d="M162 244 Q180 282 160 312 L146 300 Q158 280 148 256 Z" fill="' + CG.giacca + '" stroke="' + AI + '" stroke-width="2.5"/>';
+    davanti = '<path d="M120 286 Q96 278 66 284 L66 336 Q96 330 120 338 Q144 330 174 336 L174 284 Q144 278 120 286 Z" fill="' + CG.libro + '" stroke="' + CG.libroScuro + '" stroke-width="2.5" stroke-linejoin="round"/>' +
+      '<path d="M120 288 Q98 280 72 285 L72 330 Q98 326 120 332 Q142 326 168 330 L168 285 Q142 280 120 288 Z" fill="' + C.crema + '"/>' +
+      '<path d="M120 288 L120 332" stroke="' + C.cremaScura + '" stroke-width="2"/>' +
+      // Le pagine hanno disegni, non scritte: qui un treno e una paperella, tratteggiati.
+      '<path d="M80 314 L110 316 M82 306 Q86 300 92 306 Q98 300 104 306" stroke="' + C.cremaScura + '" stroke-width="2.4" stroke-linecap="round" fill="none"/>' +
+      '<path d="M134 306 Q142 296 150 304 Q158 302 156 312 Q146 318 134 312 Z" fill="none" stroke="' + C.cremaScura + '" stroke-width="2.4" stroke-linejoin="round"/>' +
+      '<circle cx="80" cy="318" r="8" fill="' + CU.pelle + '"/><circle cx="160" cy="318" r="8" fill="' + CU.pelle + '"/>';
+  } else {
+    // Il regolamento sotto il braccio sinistro di lui (a destra di chi guarda).
+    destro = '<g transform="rotate(-10 196 300)">' + regolamentoVerde(172, 262) + '</g>' +
+      '<path d="M170 238 Q202 272 194 320 L178 322 Q182 284 160 256 Z" fill="' + CG.giacca + '" stroke="' + AI + '" stroke-width="2.5"/><circle cx="186" cy="326" r="8" fill="' + CU.pelle + '"/>';
+    if (pose === 'alza') {
+      sinistro = '<g transform="rotate(' + dond + ' 40 168)">' + lume(40, 168, luce, LUME_VERDE) + '</g>' +
+        '<path d="M84 250 Q52 232 32 182 L50 170 Q62 214 92 234 Z" fill="' + CG.giacca + '" stroke="' + AI + '" stroke-width="2.5"/><circle cx="40" cy="170" r="8" fill="' + CU.pelle + '"/>';
+    } else if (pose === 'cenno') {
+      sinistro = '<g transform="rotate(' + dond + ' 34 236)">' + lume(34, 236, luce, LUME_VERDE) + '</g>' +
+        '<path d="M80 244 Q50 252 30 242 L34 226 Q54 234 86 230 Z" fill="' + CG.giacca + '" stroke="' + AI + '" stroke-width="2.5"/>' +
+        // La mano aperta, il palmo in su.
+        '<path d="M32 228 Q14 226 8 232 Q10 238 20 238 Q14 242 18 246 Q26 246 34 242 Z" fill="' + CU.pelle + '" stroke="' + CU.naso + '" stroke-width="1.5" stroke-linejoin="round"/>';
+    } else {
+      sinistro = '<path d="M70 238 Q40 278 42 324 L56 326 Q58 288 84 254 Z" fill="' + CG.giacca + '" stroke="' + AI + '" stroke-width="2.5"/>' +
+        '<g transform="rotate(' + dond + ' 48 330)">' + lume(48, 330, luce, LUME_VERDE) + '</g><circle cx="48" cy="330" r="8" fill="' + CU.pelle + '"/>';
+    }
+  }
+  return '<g>' + quadri + gambe + gilet + giacca + destro + sinistro + custodeGemelloTesta(expr, o) + davanti + '</g>';
 }
 // La guardiola del custode, accanto al cancello: una casetta di legno col tetto a righe e la finestra accesa.
 // Scatola 120×170, base a y = 170. o.porta da 0 (chiusa) a 1 (aperta), o.luce da 0 a 1.
@@ -478,8 +678,13 @@ function guardiola(o) {
     '<rect x="20" y="74" width="40" height="38" rx="3" fill="' + mix('#3A3060', C.luce, luce) + '" stroke="' + C.legnoScuro + '" stroke-width="3"/>' +
     '<path d="M40 74 L40 112 M20 93 L60 93" stroke="' + C.legnoScuro + '" stroke-width="3"/>' +
     '<rect x="14" y="74" width="52" height="60" fill="' + C.luce + '" opacity="' + (0.18 * luce).toFixed(2) + '" filter="url(#g-soft)"/>' +
-    // La porta: aperta, dentro si vede la luce.
+    // La porta: aperta, dentro si vede la luce (e, con o.dentro, gli scaffali, le chiavi al chiodo, la teiera e il leggio).
     '<rect x="70" y="94" width="30" height="76" fill="' + mix('#2A2240', C.luce2, 0.8 * luce) + '"/>' +
+    (o.dentro ? '<path d="M72 112 L98 112 M72 128 L98 128" stroke="' + C.legnoScuro + '" stroke-width="2.4"/>' +
+      '<rect x="74" y="104" width="4" height="8" fill="#7E2F3F"/><rect x="79" y="105" width="3" height="7" fill="#3F6FA8"/><rect x="83" y="103" width="4" height="9" fill="#5A7A3A"/>' +
+      '<circle cx="92" cy="118" r="1.6" fill="' + C.legnoScuro + '"/><path d="M92 118 L90 124 M92 118 L94 125 M92 118 L92 126" stroke="' + CU.ottone + '" stroke-width="1.6"/>' +
+      '<path d="M74 128 Q74 121 79 121 Q84 121 84 128 Z" fill="#C9553E"/><path d="M84 124 L88 122" stroke="#C9553E" stroke-width="1.6"/>' +
+      '<path d="M86 170 L90 146 L94 170 M84 146 L97 141 L97 147 L84 151 Z" fill="' + CU.libro + '" stroke="' + C.legnoScuro + '" stroke-width="1"/>' : '') +
     '<g transform="translate(70 0) scale(' + (1 - 0.8 * porta).toFixed(3) + ' 1) translate(-70 0)"><rect x="70" y="94" width="30" height="76" fill="' + C.legnoScuro + '" stroke="#4A2E20" stroke-width="2"/>' +
     '<circle cx="94" cy="134" r="3" fill="' + CU.ottone + '"/></g></g>';
 }
@@ -503,8 +708,10 @@ function biglietto(testo, o) {
       ' L' + (s ? 0 : 6) + ' 60 ' + (s ? bordoStrappato(0, true, -1) : 'Q0 60 0 54 L0 6 Q0 0 6 0') + ' Z' :
     'M0 6 Q0 0 6 0 L114 0 Q120 0 120 6 L120 22 Q112 30 120 38 L120 54 Q120 60 114 60 L6 60 Q0 60 0 54 L0 38 Q8 30 0 22 Z';
   const segno = s ? '' : '<line x1="26" y1="8" x2="26" y2="52" stroke="' + C.cremaScura + '" stroke-width="2" stroke-dasharray="4 4"/><circle cx="13" cy="30" r="5" fill="' + C.rosso + '"/>';
-  return '<g><path d="' + forma + '" fill="' + (o.fondo || C.crema) + '" stroke="' + C.cremaScura + '" stroke-width="2" stroke-linejoin="round"/>' + segno +
-    '<text x="' + (s ? 60 : 73) + '" y="39" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="600" font-size="24" fill="' + C.inchiostro + '">' + testo + '</text></g>';
+  // Una bandierina (seconda stagione) non ha parola: sul biglietto c'è il suo segno.
+  const dentro = String(testo).charAt(0) === '⚑' ? '<g transform="translate(' + (s ? 60 : 73) + ' 30)">' + segnoBandierina(testo) + '</g>' :
+    '<text x="' + (s ? 60 : 73) + '" y="39" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="600" font-size="24" fill="' + C.inchiostro + '">' + testo + '</text>';
+  return '<g><path d="' + forma + '" fill="' + (o.fondo || C.crema) + '" stroke="' + C.cremaScura + '" stroke-width="2" stroke-linejoin="round"/>' + segno + dentro + '</g>';
 }
 // La lanterna dei treni di prova (episodio 5): il biglietto della parola dopo, che non sale e resta acceso sopra la
 // vasca, del colore della sua parola. luce da 0 (spenta) a 1. Scatola 120×60, come il biglietto.
@@ -584,15 +791,17 @@ function vagone(o, dentro) {
 const POSTO = {
   emma: 'translate(62 -100) scale(.8)', al: 'translate(38 -100)', mare: 'translate(34 -118)', parco: 'translate(40 -122)', paperella: 'translate(80 -20) scale(1.1)',
   sasso: 'translate(38 -100)', pezzo: 'translate(38 -100)', cane: 'translate(40 -104)', chiama: 'translate(40 -104)',
+  bandierina: 'translate(20 -104)',
 };
-// o: { tirata, bocca (Emma), ciao (Parco), forma (sasso), strappo (pezzo), coda (Cane), suona (Chiama) }.
+// o: { tirata, bocca (Emma), ciao (Parco), forma (sasso), strappo (pezzo), coda (Cane), suona (Chiama), metallo (bandierina) }.
 function passeggero(tipo, col, o) {
   o = o || {};
   if (!POSTO[tipo]) return '';
   const dentro = tipo === 'emma' ? (o.tirata ? emmaTirata(col) : emma(col, { mouth: o.bocca })) :
     tipo === 'al' ? al(col) : tipo === 'mare' ? mare(col) : tipo === 'parco' ? parco(col, { ciao: o.ciao }) :
     tipo === 'sasso' ? sasso(col, o.forma) : tipo === 'pezzo' ? pezzo(col, o.strappo) : tipo === 'cane' ? cane(col, { coda: o.coda }) :
-    tipo === 'chiama' ? chiama(col, { tirata: o.tirata, suona: o.suona }) : paperella(col, { glow: true });
+    tipo === 'chiama' ? chiama(col, { tirata: o.tirata, suona: o.suona }) : tipo === 'bandierina' ? bandierina(col, { metallo: o.metallo, tirata: o.tirata }) :
+    paperella(col, { glow: true });
   return '<g transform="' + POSTO[tipo] + '">' + dentro + '</g>';
 }
 // Il telefono con la chat. Scatola 360×700. o.scritto: il testo nel campo; o.messaggi: le bolle già inviate.
@@ -815,6 +1024,7 @@ function laggiu() {
   return '<ellipse cx="1760" cy="740" rx="760" ry="170" fill="#FF9E5E" opacity=".35" filter="url(#g-velo)"/>' +
     '<ellipse cx="1760" cy="740" rx="420" ry="90" fill="#FFD27A" opacity=".25" filter="url(#g-velo)"/>' + cime + lucine;
 }
+const VERDE_GEMELLO = '#3E8F5C', VERDE_GEMELLO_SCURO = '#2A6B42';
 function mondo(o) {
   o = o || {};
   const r = kitRng(o.seme || 3);
@@ -868,13 +1078,13 @@ function mondo(o) {
     '<path d="' + d + '" stroke="' + C.acciaio + '" stroke-width="4" fill="none"/>';
   // La stazione: pedana, pensilina a righe, lampadine.
   let righe = '', lamp = '';
-  for (let k = -34, x = -1330; x < 630; k++, x += 40) righe += '<path d="M' + x + ' 612 L' + (x + 40) + ' 612 L' + (x + 40) + ' 654 Q' + (x + 20) + ' 672 ' + x + ' 654 Z" fill="' + (k % 2 === 0 ? C.rosso : C.crema) + '"/>';
+  for (let k = -34, x = -1330; x < 630; k++, x += 40) righe += '<path d="M' + x + ' 612 L' + (x + 40) + ' 612 L' + (x + 40) + ' 654 Q' + (x + 20) + ' 672 ' + x + ' 654 Z" fill="' + (k % 2 === 0 ? (o.gemello ? VERDE_GEMELLO : C.rosso) : C.crema) + '"/>';
   for (let x = -1310; x < 630; x += 40) lamp += '<circle class="g-lampadina g-luce-parco"' + acc + ' cx="' + x + '" cy="664" r="5" fill="' + C.luce + '"/>';
   let pali = '';
   for (let x = -1286; x < 630; x += 270) pali += '<line x1="' + x + '" y1="836" x2="' + x + '" y2="640"/>';
   const stazione = '<rect x="-1328" y="836" width="1958" height="34" fill="' + C.legno + '"/><rect x="-1328" y="836" width="1958" height="7" fill="#B98058"/>' +
     '<g stroke="' + C.legnoScuro + '" stroke-width="10">' + pali + '</g>' +
-    '<path d="M-1344 612 L636 612 L626 590 Q-354 548 -1334 590 Z" fill="' + C.rossoScuro + '"/>' + righe + lamp;
+    '<path d="M-1344 612 L636 612 L626 590 Q-354 548 -1334 590 Z" fill="' + (o.gemello ? VERDE_GEMELLO_SCURO : C.rossoScuro) + '"/>' + righe + lamp;
   // La vasca della pesca, sotto il ponte, con il suo palo e la bandierina.
   const vasca = '<g class="g-vasca">' +
     '<path d="M684 880 L860 880 L850 914 Q772 926 694 914 Z" fill="' + C.legno + '" stroke="' + C.legnoScuro + '" stroke-width="4"/>' +
@@ -885,7 +1095,8 @@ function mondo(o) {
     '<g transform="translate(866 840) scale(.27)">' + paperella('#FFD23F') + '</g>' +
     '<rect x="652" y="896" width="40" height="18" rx="3" fill="' + C.legnoScuro + '"/>';
   // Un tendone sullo sfondo, a destra.
-  const tendone = '<path d="M1760 880 L1780 700 L1900 640 L1920 700 L1920 880 Z" fill="' + C.rossoScuro + '"/><path d="M1780 700 L1810 880 M1840 668 L1850 880 M1900 640 L1890 880" stroke="' + C.crema + '" stroke-width="16" opacity=".8"/>';
+  // Il parco gemello (stagione 2, episodio 6) è identico, ma le sue righe sono verdi come la lanterna del suo custode.
+  const tendone = '<path d="M1760 880 L1780 700 L1900 640 L1920 700 L1920 880 Z" fill="' + (o.gemello ? VERDE_GEMELLO_SCURO : C.rossoScuro) + '"/><path d="M1780 700 L1810 880 M1840 668 L1850 880 M1900 640 L1890 880" stroke="' + C.crema + '" stroke-width="16" opacity=".8"/>';
   // Il binario morto dei treni di prova (episodio 5): una massicciata bassa, mezza coperta dall'erba.
   let morto = '';
   if (o.morto) {
@@ -919,7 +1130,7 @@ function mondo(o) {
     stazione + morto + bancone +
     '<rect x="-3500" y="868" width="7420" height="2000" fill="' + C.terra + '"/>' +
     '<path d="M-3500 868 L3920 868" stroke="#2A2650" stroke-width="3"/>' +
-    vasca + banchina +
+    vasca + banchina + (o.bruco ? window.G.S2.brucoFermo(o.bruco, { faccia: o.gemello ? window.G.S2.FACCIA_GEMELLO : undefined }) : '') + (o.fiume ? window.G.S2.fiume(o.fiume === true ? 0 : o.fiume) : '') + (o.gemello ? window.G.S2.cancelloGemello(o.porta || 0) : '') +
     '</g>';
 }
 // Numeri pseudo-casuali ripetibili (uguali a kit.rng).
@@ -993,11 +1204,12 @@ function percorso(t, s0, chiavi) {
   }
   return s;
 }
-// Il mondo, con la camera, i due percorsi (invisibili) e quello che sta sopra (treno, personaggi…).
+// Il mondo, con la camera, i due percorsi (invisibili) e quello che sta sopra (treno, personaggi…). o.prima: quello che
+// sta dietro il mondo, più lontano del suo cielo (il parco gemello, dall'altra parte del fiume).
 function costruisciMondo(kit, sopra, o) {
   o = o || {};
   kit.stage.append(kit.h(unico('<div class="ground"><svg class="art" viewBox="0 0 1920 1080">' + defs +
-    '<g class="g-cam">' + mondo(o) + '<path class="g-p-partenza" d="' + MONDO.partenza + '" fill="none"/>' +
+    '<g class="g-cam">' + (o.prima || '') + mondo(o) + '<path class="g-p-partenza" d="' + MONDO.partenza + '" fill="none"/>' +
     '<path class="g-p-arrivo" d="' + MONDO.arrivo + '" fill="none"/>' + (sopra || '') + '</g>' + (o.davanti || '') + '</svg>' + (o.html || '') + '</div>', o.pre || 'm')));
   const q = sel => kit.stage.querySelector(sel);
   return { cam: q('.g-cam'), ruota: q('.g-ruota'), partenza: q('.g-p-partenza'), arrivo: q('.g-p-arrivo'), q, qa: sel => [...kit.stage.querySelectorAll(sel)] };
@@ -1062,7 +1274,8 @@ function paperellaDiLuce(col) {
 // Vagoni a scala 1.25, ruote a y = 770, centri a x = 470, 820, 1170 (Al, Mare, Emma).
 // I treni più lunghi (dall'episodio 4, fino ai sette vagoni della banchina) continuano verso destra, a 380 l'uno dall'altro:
 // la camera li segue.
-const INTERNO = { scala: 1.45, ruote: 800, centri: [430, 810, 1190, 1570, 1950, 2330, 2710, 3090], corsie: [720, 760, 800, 840, 880] };
+// Dalla seconda stagione i treni arrivano a venticinque vagoni: un centro ogni 380.
+const INTERNO = { scala: 1.45, ruote: 800, centri: Array.from({ length: 26 }, (_, i) => 430 + 380 * i), corsie: [720, 760, 800, 840, 880] };
 function interno(passeggeri, o) {
   o = o || {};
   const r = kitRng(o.seme || 12);
@@ -1078,7 +1291,7 @@ function interno(passeggeri, o) {
   const binari = (o.corsie || [INTERNO.ruote]).map(y => '<g><path d="M-400 ' + (y + 6) + ' L2400 ' + (y + 6) + '" stroke="' + C.legnoScuro + '" stroke-width="14" stroke-dasharray="6 22" class="g-traversine"/><path d="M-400 ' + y + ' L2400 ' + y + '" stroke="' + C.acciaio + '" stroke-width="4" opacity=".85"/></g>').join('');
   const S = INTERNO.scala;
   const vag = passeggeri.map((p, i) => '<g class="g-vag" data-i="' + i + '" transform="translate(' + (INTERNO.centri[i] - 120 * S) + ' ' + (INTERNO.ruote - 150 * S) + ') scale(' + S + ')">' +
-    vagone({ primo: i === 0, sbarra: 1 }, '<g class="g-pass">' + passeggero(p.tipo, p.col) + '</g>') + '</g>').join('');
+    vagone({ primo: i === 0, sbarra: 1 }, '<g class="g-pass">' + passeggero(p.tipo, p.col, p.o) + '</g>') + '</g>').join('');
   return '<rect x="-200" y="-200" width="2320" height="1480" fill="#07060F"/>' +
     '<rect x="-200" y="0" width="2320" height="1080" fill="url(#g-interno)"/>' +
     '<g class="g-int-lontano">' + lontano + '</g>' +
@@ -1091,21 +1304,21 @@ function interno(passeggeri, o) {
 }
 const interniDefs = '<defs><linearGradient id="g-interno" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0B0920"/><stop offset=".7" stop-color="#151230"/><stop offset="1" stop-color="#0A0818"/></linearGradient></defs>';
 // Il centro di un passeggero nell'interno (per l'anello di luce intorno a sé).
-const CENTRO = { emma: [142, -36], al: [140, 19], mare: [136, 0], parco: [140, -24], paperella: [120, 17], sasso: [140, 30], pezzo: [140, 18], cane: [140, -10], chiama: [140, 8] };
+const CENTRO = { emma: [142, -36], al: [140, 19], mare: [136, 0], parco: [140, -24], paperella: [120, 17], sasso: [140, 30], pezzo: [140, 18], cane: [140, -10], chiama: [140, 8], bandierina: [144, -32] };
 function testa(i, tipo, dy) {
   const S = INTERNO.scala, x0 = INTERNO.centri[i] - 120 * S, y0 = INTERNO.ruote - 150 * S + (dy || 0);
   const l = CENTRO[tipo] || CENTRO.al;
   return [x0 + l[0] * S, y0 + l[1] * S];
 }
 // La sommità della testa (da qui partono e arrivano i fili tra due passeggeri).
-const CIMA = { emma: [142, -70], al: [140, -26], mare: [150, -48], parco: [140, -84], paperella: [120, -7], sasso: [142, -4], pezzo: [140, -16], cane: [140, -54], chiama: [140, -60] };
+const CIMA = { emma: [142, -70], al: [140, -26], mare: [150, -48], parco: [140, -84], paperella: [120, -7], sasso: [142, -4], pezzo: [140, -16], cane: [140, -54], chiama: [140, -60], bandierina: [124, -66] };
 function cima(i, tipo, dy) {
   const S = INTERNO.scala, x0 = INTERNO.centri[i] - 120 * S, y0 = INTERNO.ruote - 150 * S + (dy || 0);
   const l = CIMA[tipo] || CIMA.al;
   return [x0 + l[0] * S, y0 + l[1] * S];
 }
 // L'anello di luce intorno a un passeggero (il filo verso sé stesso): il tracciato SVG.
-const ANELLO = { emma: [50, 58], al: [66, 52], mare: [70, 54], parco: [72, 64], paperella: [50, 40], sasso: [54, 42], pezzo: [74, 46], cane: [62, 60], chiama: [60, 58] };
+const ANELLO = { emma: [50, 58], al: [66, 52], mare: [70, 54], parco: [72, 64], paperella: [50, 40], sasso: [54, 42], pezzo: [74, 46], cane: [62, 60], chiama: [60, 58], bandierina: [58, 46] };
 function anello(i, tipo, dy) {
   const a = testa(i, tipo, dy), r = ANELLO[tipo] || ANELLO.al, rx = r[0], ry = r[1];
   return 'M' + (a[0] - rx) + ' ' + a[1] + ' a' + rx + ' ' + ry + ' 0 1 0 ' + (2 * rx) + ' 0 a' + rx + ' ' + ry + ' 0 1 0 ' + (-2 * rx) + ' 0';
@@ -1131,7 +1344,8 @@ const MOD = {"mare": {"frase": ["Al", "mare", "Emma"], "passeggeri": {"Al": {"bi
 
 window.G = {
   C, defs, MOD, MONDO, mix, tappa, fade, cam, camChiavi, posa, unico,
-  emma, emmaTirata, al, mare, parco, paperella, ada, adaTesta, custode, guardiola,
+  emma, emmaTirata, al, mare, parco, paperella, ada, adaTesta, custode, custodeGemello, guardiola, CUSTODE_MANI, libroAperto, PAGINE,
+  bandierina, segnoBandierina, METALLI,
   biglietto, lanterna, striscia, chat, cameretta, spezzaparole, vagone, passeggero, sasso, pezzo, cane, chiama, manopola, laggiu, telefono, bolle, insegna, salotto, SALOTTO,
   mondo, papereVasca, treno, posaTreno, fermoTreno, sbarre, cambiaPasseggero, rng: kitRng, percorso, costruisciMondo, animaMondo, nascondiInMontagna, posaAda,
   finestra, papereFinestra, paperellaDiLuce, INTERNO, interno, interniDefs, testa, cima, anello, scorriInterno,
@@ -1158,7 +1372,7 @@ window.G.pescata = function (o) {
   const ordine = lista.map((p, i) => i).sort((a, b) => lista[a].y - lista[b].y);
   let scintille = '';
   for (let k = 0; k < 10; k++) scintille += '<circle r="2.4" fill="' + G.C.luce + '"/>';
-  const passeggeri = o.chi.map(c => ({ tipo: c.tipo, col: c.uscita })).concat(o.nuovo ? [{ tipo: 'paperella', col: o.nuovo }] : []);
+  const passeggeri = o.chi.map(c => ({ tipo: c.tipo, col: c.uscita, o: c.o })).concat(o.nuovo ? [{ tipo: 'paperella', col: o.nuovo }] : []);
   const P = {
     lista, presa, colPresa,
     treno: '<g class="pv-treno-' + id + '">' + G.treno(passeggeri, { sbarra: 1 }) + '</g><g class="pv-scint-' + id + '" opacity="0">' + scintille + '</g>',
@@ -1295,13 +1509,14 @@ window.G.nastro = function (linea, a, b, parole, alto, o) {
   let out = '<path d="' + d + '" fill="none" stroke="' + C.cremaScura + '" stroke-width="' + (alto + 2.4).toFixed(1) + '" stroke-linejoin="round"/>' +
     '<path d="' + d + '" fill="none" stroke="' + C.crema + '" stroke-width="' + alto.toFixed(1) + '" stroke-linejoin="round"/>';
   parole.forEach(([testo, s], k) => {
-    const sc = o.scala ? o.scala(k) : 1, w = alto * 0.17 * testo.length * sc;
+    const band = testo.charAt(0) === '⚑', sc = o.scala ? o.scala(k) : 1, w = alto * 0.17 * (band ? 2 : testo.length) * sc;
     if (s - w < a || s + w > b) return;
     const [x, y] = su(s), p0 = su(Math.max(a, s - 3)), p1 = su(Math.min(b, s + 3));
     const ang = Math.atan2(p1[1] - p0[1], p1[0] - p0[0]) * 180 / Math.PI, r = ang > 90 || ang < -90 ? ang - 180 : ang, lu = o.luce ? o.luce(k) : 0;
     out += '<g transform="translate(' + x.toFixed(1) + ' ' + y.toFixed(1) + ') rotate(' + r.toFixed(1) + ') scale(' + sc.toFixed(3) + ')">' +
       (lu > 0 ? '<ellipse rx="' + (w + alto * 0.5).toFixed(1) + '" ry="' + (alto * 0.62).toFixed(1) + '" fill="' + C.luce + '" opacity="' + (0.75 * lu).toFixed(2) + '" filter="url(#g-glow)"/>' : '') +
-      '<text y="' + (alto * 0.2).toFixed(1) + '" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="600" font-size="' + (alto * 0.56).toFixed(1) + '" fill="' + C.inchiostro + '">' + testo + '</text></g>';
+      (band ? '<g transform="scale(' + (alto / 44).toFixed(3) + ')">' + segnoBandierina(testo) + '</g>' :
+        '<text y="' + (alto * 0.2).toFixed(1) + '" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="600" font-size="' + (alto * 0.56).toFixed(1) + '" fill="' + C.inchiostro + '">' + testo + '</text>') + '</g>';
   });
   return out;
 };
@@ -1469,12 +1684,15 @@ window.G.primaSera = function () {
 // via dallo scarico (da t.via). Con t.riparte il treno riparte, sale e sparisce nella montagna.
 // o: { id (unico nella scena), chi: [{ tipo, biglietto, uscita }], vasca (dal modellino), seme, parola (la pescata),
 //      nuovo (il biglietto del passeggero nuovo), angolo (la paperella Fine in un angolo della vasca), ultimaFine (le Fine
-//      scivolano via per ultime), t: { esce, vel, pesca: { giu, su, preso }, via, salta, sale, vagone, tiene, riparte, velParte } }.
+//      scivolano via per ultime), fermo (dove si ferma il primo vagone: MONDO.fermo, o G.fermoTreno per i treni lunghi),
+//      t: { esce, vel, pesca: { giu, su, preso }, via, salta, sale, vagone, tiene, riparte, velParte } }.
 // Se la velocità non finisce a zero, il treno frena dall'ultima chiave e si ferma proprio in stazione (ferma: quando).
 // .treno, .mano, .papere: gli SVG da mettere nel mondo (.papere nella vasca, .g-vasca). Dopo costruisciMondo, monta(m);
 // render(t) muove tutto e restituisce { giu, mano: [x, y] } (da t.tiene la paperella in mano la muove la scena).
 window.G.giro7 = function (o) {
   const G = window.G, M = G.MONDO, id = o.id, T = o.t, n = o.chi.length, ADA = [672, 896];
+  // Dove si ferma il primo vagone (dalla seconda stagione i treni lunghi si fermano più avanti: G.fermoTreno).
+  const FERMO = o.fermo === undefined ? M.fermo : o.fermo;
   const c01 = x => Math.max(0, Math.min(1, x)), seg = (t, a, b) => c01((t - a) / (b - a)), lerp = (a, b, p) => a + (b - a) * p;
   const eo = x => 1 - Math.pow(1 - c01(x), 3), ei = x => Math.pow(c01(x), 3);
   const eio = x => { x = c01(x); return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; };
@@ -1493,9 +1711,9 @@ window.G.giro7 = function (o) {
   const ordine = lista.map((p, i) => i).sort((a, b) => lista[a].y - lista[b].y);
   let scintille = '';
   for (let k = 0; k < 10; k++) scintille += '<circle r="2.4" fill="' + G.C.luce + '"/>';
-  const passeggeri = o.chi.map(c => ({ tipo: c.tipo, col: c.uscita })).concat(o.nuovo ? [{ tipo: 'paperella', col: o.nuovo }] : []);
+  const passeggeri = o.chi.map(c => ({ tipo: c.tipo, col: c.uscita, o: c.o })).concat(o.nuovo ? [{ tipo: 'paperella', col: o.nuovo }] : []);
   const g = {
-    lista, presa, colPresa,
+    lista, presa, colPresa, t: T,
     treno: '<g class="g7-treno-' + id + '">' + G.treno(passeggeri, { sbarra: 1 }) + '</g><g class="g7-scint-' + id + '" opacity="0">' + scintille + '</g>',
     mano: '<ellipse class="g7-luce-' + id + '" rx="22" ry="18" fill="' + colPresa + '" opacity="0" filter="url(#g-soft)"/>' +
       '<g class="g7-mano-' + id + '" opacity="0"><g transform="translate(-50 -84)"><g class="g7-pv">' + G.paperella(colPresa) + '</g>' +
@@ -1508,8 +1726,10 @@ window.G.giro7 = function (o) {
       this.manoEl = m.q('.g7-mano-' + id); this.luce = m.q('.g7-luce-' + id); this.scint = m.q('.g7-scint-' + id);
       this.pv = m.q('.g7-mano-' + id + ' .g7-pv'); this.pb = m.q('.g7-mano-' + id + ' .g7-pb');
       this.pap = m.qa('.g7-pap-' + id).map(el => ({ el, i: +el.dataset.i, vera: el.querySelector('.g7-vera'), luce: el.querySelector('.g7-dilu') }));
-      const path = m.arrivo;
-      this.sF = path.getTotalLength() - (M.fermo - 40);
+      // Il binario d'arrivo continua lungo tutta la banchina, per i treni che si fermano oltre la fine di MONDO.arrivo.
+      m.cam.insertAdjacentHTML('beforeend', '<path class="g7-arrivo-' + id + '" d="' + M.arrivo.replace(/L 40 852$/, 'L -1400 852') + '" fill="none"/>');
+      const path = this.path = m.q('.g7-arrivo-' + id);
+      this.sF = path.getTotalLength() - (FERMO + 1400);
       this.Lp = m.partenza.getTotalLength();
       // Se l'ultima chiave della velocità non è ferma, il treno frena da lì e si ferma proprio in stazione.
       const [tl, vl] = T.vel[T.vel.length - 1];
@@ -1522,12 +1742,20 @@ window.G.giro7 = function (o) {
         }
         return T.esce + 8;
       });
-      this.sedile = [M.fermo + n * M.passoBanchina + 6, 816];
+      this.sedile = [FERMO + n * M.passoBanchina + 6, 816];
+      // Ada pesca solo quando sono cadute tutte le paperelle: con i treni lunghi l'ultimo vagone passa sopra la vasca più
+      // tardi, e la pesca (con quello che viene dopo) slitta. T è lo stesso oggetto della scena, che così lo vede.
+      const ultima = Math.max(...this.cade), dt = T.pesca ? ultima + 0.4 - T.pesca.giu : 0;
+      if (dt > 0 && !T.slittato) {
+        ['giu', 'su', 'preso'].forEach(k => { T.pesca[k] += dt; });
+        ['via', 'salta', 'vagone', 'sale', 'tiene'].forEach(k => { if (T[k] !== undefined) T[k] += dt; });
+        T.slittato = dt;
+      }
     },
     sAt(t) { return Math.min(this.sF, G.percorso(t, 0, this.vel)); },
     // Mentre arriva in stazione il treno si accosta: i vagoni passano da MONDO.passo a MONDO.passoBanchina; ripartendo, il contrario.
     passoA(s) { return lerp(M.passo, M.passoBanchina, c01((s - (this.sF - 220)) / 220)); },
-    passoP(s) { return lerp(M.passoBanchina, M.passo, c01((s - (640 - M.fermo)) / 260)); },
+    passoP(s) { return lerp(M.passoBanchina, M.passo, c01((s - (640 - FERMO)) / 260)); },
     manoAt(giu) {
       const s = 0.28, mx = 150 + 26 * giu - 6, my = 230 + 50 * giu + 6;
       return [ADA[0] - 100 * s + mx * s, ADA[1] - 304 * s + my * s];
@@ -1545,25 +1773,25 @@ window.G.giro7 = function (o) {
       const nuovo = T.vagone !== undefined ? eo(seg(t, T.vagone, T.vagone + 0.6)) : 0;
       if (!parte) {
         const ps = this.passoA(s);
-        G.posaTreno(this.vag, m.arrivo, s, undefined, ps);
+        G.posaTreno(this.vag, this.path, s, undefined, ps);
         this.vag.forEach((el, i) => el.setAttribute('opacity', (i < n ? c01((s - i * ps - 4) / 26) : nuovo).toFixed(3)));
         // Fermo in stazione, anche il settimo vagone, accanto alla sbarra di dietro, sta in piano, sulle assi (come quando riparte).
-        const ferma = seg(s, this.sF - 150, this.sF), L = m.arrivo.getTotalLength();
+        const ferma = seg(s, this.sF - 150, this.sF), L = this.path.getTotalLength();
         if (ferma > 0) this.vag.forEach((el, i) => {
-          const si = Math.max(0.5, Math.min(L - 0.5, s - i * ps)), p = m.arrivo.getPointAtLength(si);
+          const si = Math.max(0.5, Math.min(L - 0.5, s - i * ps)), p = this.path.getPointAtLength(si);
           if (p.x > 650 || p.x < 560) return;
-          const q = m.arrivo.getPointAtLength(Math.min(L, si + 1)), q0 = m.arrivo.getPointAtLength(Math.max(0, si - 1));
+          const q = this.path.getPointAtLength(Math.min(L, si + 1)), q0 = this.path.getPointAtLength(Math.max(0, si - 1));
           const a = (Math.atan2(q.y - q0.y, q.x - q0.x) * 180 / Math.PI - 180) * (1 - ferma);
           el.setAttribute('transform', 'translate(' + p.x.toFixed(2) + ' ' + lerp(p.y, 852, ferma).toFixed(2) + ') rotate(' + a.toFixed(2) + ') scale(' + M.scala + ') translate(-120 -150)');
         });
       } else {
-        const sp = G.percorso(t, 640 - M.fermo, T.velParte), pp = this.passoP(sp);
+        const sp = G.percorso(t, 640 - FERMO, T.velParte), pp = this.passoP(sp);
         G.posaTreno(this.vag, m.partenza, sp, undefined, pp);
         this.vag.forEach((el, i) => el.setAttribute('opacity', (c01((this.Lp - 4 - (sp - i * pp)) / 26) * (i < n ? 1 : nuovo)).toFixed(3)));
       }
       // In stazione i vestiti tornano del colore dei biglietti.
       const torna = parte ? 1 : Math.round(seg(s, this.sF - 150, this.sF) * 12) / 12;
-      o.chi.forEach((c, i) => G.cambiaPasseggero(this.vag[i], c.tipo, G.mix(c.uscita, c.biglietto, torna)));
+      o.chi.forEach((c, i) => G.cambiaPasseggero(this.vag[i], c.tipo, G.mix(c.uscita, c.biglietto, torna), c.o));
       // Le paperelle cadono dove passa l'ultimo vagone: di luce, e toccano l'acqua vere. Poi scivolano via dallo scarico.
       this.pap.forEach(({ el, i, vera, luce }) => {
         const t0 = this.cade[i], p = lista[i], u = seg(t, t0, t0 + 0.55), vv = seg(u, 0.55, 1);
@@ -1935,13 +2163,15 @@ window.G.schizzoEmma = function (x, y, col, s) {
     let strisce = '';
     for (let k = 0; k < (o.strisce === undefined ? 44 : o.strisce); k++) strisce += '<g class="pi-str" opacity="0"><g transform="translate(-150 -22)">' + G.striscia('', 300) + '</g></g>';
     return '<rect x="-2400" y="-4000" width="16500" height="4000" fill="' + C.notte1 + '"/><rect x="3880" y="0" width="10200" height="900" fill="url(#g-cielo)"/><rect x="-2400" y="900" width="16500" height="3400" fill="' + C.terra + '"/>' +
-      G.mondo(o) +
+      G.mondo(Object.assign({}, o, { bruco: false })) +
       stelle.map((l, k) => '<path d="' + puntini(l) + '" fill="#FFF4DA" opacity="' + [0.8, 0.55, 0.35][k] + '"/>').join('') +
       '<path d="M1880 760 Q2600 700 3400 734 Q4400 772 5400 728 Q6600 690 7800 736 Q9000 772 10400 730 L14000 740 L14000 1300 L1880 1300 Z" fill="#171A44"/>' +
       '<g class="pi-parco" transform="translate(' + PARCO.origine[0] + ' ' + PARCO.origine[1] + ') scale(' + PARCO.scala + ')">' + G.parcoImmenso(o) + '</g>' +
       '<path d="' + collina + '" fill="url(#g-pi-collina)"/><path d="' + collina.replace(/^M1500 3200 L1500 1010 C1660 990 1790 920 1880 872 /, 'M1880 872 ').replace(/ L4300 3200 Z$/, '') + '" fill="none" stroke="#2E3270" stroke-width="5"/>' +
       '<path d="' + ciuffi + '" stroke="#2E5A3E" stroke-width="3" fill="none" stroke-linecap="round"/>' +
       '<path d="' + sentiero + '" stroke="#3E3A72" stroke-width="12" fill="none" stroke-linecap="round" stroke-linejoin="round"/>' + cancello +
+      // Il Bruco (seconda stagione) sta davanti ai piedi della collina.
+      (o.bruco ? G.S2.brucoFermo(o.bruco) : '') +
       '<g class="pi-strisce">' + strisce + '</g>';
   };
   // Le ante del cancello del parco di Ada: a = 1 aperte contro i pali, a = 0 chiuse.
@@ -2061,4 +2291,622 @@ window.G.schizzoEmma = function (x, y, col, s) {
       '</g>' + omino(440, 400, rosa) + omino(1400, 610, blu) + papere;
   };
   G.PARCO = PARCO;
+})();
+
+// ── Stagione 2 ──────────────────────────────────────────────────────────────────────────────────────
+// I passeggeri della seconda stagione, dalle parole del modellino: le bandierine («⚑oro»…), i sassolini delle parole corte
+// che non hanno un personaggio («storie», «di»), Al, Mare, Parco ed Emma, e le paperelle salite (le parole pescate).
+window.G.S2 = {
+  TIPI: { Al: ['al'], mare: ['mare'], Emma: ['emma'], parco: ['parco'], storie: ['sasso', { forma: 0 }], di: ['sasso', { forma: 1 }],
+    Domani: ['sasso', { forma: 2 }], piove: ['sasso', { forma: 0 }], '?': ['sasso', { forma: 1 }], pioggia: ['sasso', { forma: 2 }], sole: ['sasso', { forma: 0 }] },
+  // { tipo, o } di una parola.
+  tipo(parola) {
+    if (parola.charAt(0) === '⚑') return { tipo: 'bandierina', o: { metallo: parola.slice(1) } };
+    const t = this.TIPI[parola];
+    return t ? { tipo: t[0], o: t[1] } : { tipo: 'paperella' };
+  },
+  // Un passeggero del modellino ({ parola, biglietto, tratti }) pronto per G.treno, G.interno e G.giro7.
+  chi(p) { const t = this.tipo(p.parola); return { tipo: t.tipo, o: t.o, parola: p.parola, biglietto: p.biglietto, tratti: p.tratti, col: p.biglietto, uscita: p.tratti.at(-1) }; },
+  // Tutto il treno di un giro del modellino: i passeggeri, e in fondo la bandierina d'ottone (giro.ottone).
+  treno(giro) {
+    const ott = giro.ottone;
+    return giro.passeggeri.map(p => this.chi(p)).concat([Object.assign(this.chi({ parola: '⚑ottone', biglietto: ott.biglietto, tratti: ott.tratti }), { dopo_fili: ott.dopo_fili, fili: ott.fili })]);
+  },
+};
+// Il custode nel mondo, con i piedi nel punto (x, y): alto come serve accanto ad Ada (scala 0.28, come nell'episodio 9).
+window.G.posaCustode = function (x, y, s) { return window.G.posa(x, y, s || 0.28, 240, 410); };
+// Dove sta, nel mondo, un punto della scatola del custode (per la striscia nella sua mano).
+window.G.puntoCustode = function (x, y, p, s) { s = s || 0.28; return [x - 120 * s + p[0] * s, y - 410 * s + p[1] * s]; };
+// Il quaderno di Ada: una vasca disegnata a matita, con le paperelle di quella sera (colori e quantità dal modellino,
+// in ordine sparso, al più n). Il bordo della vasca ha il centro in (x, y); s la scala.
+window.G.S2.vascaDisegnata = function (vasca, x, y, s, seme, n) {
+  const G = window.G, lista = G.papereVasca(vasca, seme || 5).slice(0, n || 18), r = G.rng((seme || 5) + 1);
+  const papere = lista.map((p, i) => {
+    const riga = Math.floor(i / 6), c = i % 6;
+    return '<g transform="translate(' + (-170 + c * 60 + (riga % 2) * 26 + (r() - 0.5) * 12).toFixed(1) + ' ' + (-44 + riga * 30 + (r() - 0.5) * 6).toFixed(1) + ') scale(.5)">' + G.paperella(p.col) + '</g>';
+  }).join('');
+  return '<g transform="translate(' + x + ' ' + y + ') scale(' + s + ')">' + papere +
+    '<path d="M-220 40 L220 40 L196 130 Q0 150 -196 130 Z" fill="' + G.C.crema + '" stroke="#3A3570" stroke-width="8" stroke-linejoin="round"/>' +
+    '<path d="M-200 80 L200 80" stroke="#3A3570" stroke-width="5" stroke-dasharray="14 12"/>' +
+    '<path d="M-240 36 q30 -14 60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0 t60 0" stroke="#5C8FD0" stroke-width="6" fill="none" stroke-linecap="round"/></g>';
+};
+// Un vagone disegnato a matita sul quaderno, con dentro un disegno (dentro, in coordinate del vagone: il sedile è in
+// (0, 0)). Centro del sedile (x, y), scala s.
+window.G.S2.vagoneDisegnato = function (x, y, s, dentro) {
+  const C = window.G.C;
+  return '<g transform="translate(' + x + ' ' + y + ') scale(' + s + ')">' + (dentro || '') +
+    '<path d="M-110 0 L110 0 L100 70 L-96 70 Z" fill="' + C.crema + '" stroke="#3A3570" stroke-width="7" stroke-linejoin="round"/>' +
+    '<path d="M-104 30 L104 30" stroke="' + C.rosso + '" stroke-width="10"/>' +
+    '<circle cx="-60" cy="84" r="18" fill="' + C.crema + '" stroke="#3A3570" stroke-width="6"/><circle cx="60" cy="84" r="18" fill="' + C.crema + '" stroke="#3A3570" stroke-width="6"/></g>';
+};
+// Parco disegnato a matita: la chioma del suo colore e il tronco; i piedi (la base del tronco) in (0, 0).
+window.G.S2.schizzoParco = function (col) {
+  return '<g><path d="M0 0 L0 -60" stroke="#3A3570" stroke-width="8" stroke-linecap="round"/>' +
+    [[-34, -86, 38], [34, -86, 38], [0, -120, 44], [0, -80, 40]].map(([x, y, r]) => '<circle cx="' + x + '" cy="' + y + '" r="' + r + '" fill="' + col + '" stroke="#3A3570" stroke-width="5"/>').join('') +
+    '<circle cx="-12" cy="-92" r="4" fill="#3A3570"/><circle cx="12" cy="-92" r="4" fill="#3A3570"/><path d="M-10 -76 Q0 -68 10 -76" stroke="#3A3570" stroke-width="4" fill="none" stroke-linecap="round"/></g>';
+};
+// Il Bruco (stagione 2, episodio 2): una giostrina per bambini piccoli, nell'angolo buio del parco: ai piedi della
+// montagna grande, nella sua ombra, tra la vasca della pesca e la ruota panoramica. Un bruco verde con la faccia dipinta, le antenne a pallina e un sorriso largo, fatto
+// di segmenti tondi uno dietro l'altro, come vagoni; la pista è un anello piatto che passa dentro una piccola montagna a
+// forma di mela; davanti, una vasca piccola (paperelle di due colori soli, verdi e rosse) e una sbarra a righe bianche e
+// rosse, verso la stazione. Coordinate del mondo. La pista: un'ellisse (centro c, raggi rx, ry) percorsa davanti da
+// destra a sinistra, dietro da sinistra a destra; la mela sta sul capo destro, così il bruco gira dentro la mela.
+window.G.S2.BRUCO = { c: [1290, 992], rx: 196, ry: 38, mela: [1454, 952], vasca: [1268, 1052], sbarra: [1050, 1030], segmenti: 6, passo: 28 };
+// La pista come tracciato SVG, dal capo destro, prima la parte davanti.
+window.G.S2.pistaBruco = function () {
+  const B = window.G.S2.BRUCO, [cx, cy] = B.c;
+  return 'M' + (cx + B.rx) + ' ' + cy + ' A' + B.rx + ' ' + B.ry + ' 0 0 1 ' + (cx - B.rx) + ' ' + cy + ' A' + B.rx + ' ' + B.ry + ' 0 0 1 ' + (cx + B.rx) + ' ' + cy;
+};
+// I colori del Bruco. o.faccia: il colore della faccia dipinta (il Bruco del parco gemello ne ha un altro).
+window.G.S2.COLORI_BRUCO = { corpo: '#6CC04A', scuro: '#3F8A2E', chiaro: '#A6E07E', faccia: '#FFE08A', mela: '#D9483B', melaScura: '#A8322A', foglia: '#5DAE3C' };
+// Un segmento del Bruco, centrato sul binario in (0, 0), che guarda a sinistra. testa: la testa con la faccia dipinta.
+// dentro: chi siede sul segmento (nel punto (0, -26)).
+window.G.S2.segmento = function (testa, dentro, o) {
+  o = o || {};
+  const K = window.G.S2.COLORI_BRUCO, C = window.G.C, fc = o.faccia || K.faccia;
+  if (testa) {
+    return '<g><circle cx="0" cy="-20" r="21" fill="' + K.corpo + '" stroke="' + K.scuro + '" stroke-width="2.5"/>' +
+      '<path d="M-6 -38 Q-12 -54 -20 -60 M6 -38 Q4 -56 0 -64" stroke="' + K.scuro + '" stroke-width="2.4" fill="none" stroke-linecap="round"/>' +
+      '<circle cx="-20" cy="-61" r="4.5" fill="' + C.rosso + '"/><circle cx="0" cy="-65" r="4.5" fill="' + C.oro + '"/>' +
+      // La faccia dipinta, sul davanti: un tondo chiaro, gli occhi grandi, le guance e il sorriso largo.
+      '<ellipse cx="-11" cy="-19" rx="13" ry="15" fill="' + fc + '"/>' +
+      '<circle cx="-16" cy="-24" r="3.6" fill="#FFFFFF"/><circle cx="-16.6" cy="-24" r="2" fill="' + C.inchiostro + '"/>' +
+      '<circle cx="-6" cy="-24" r="3.6" fill="#FFFFFF"/><circle cx="-6.6" cy="-24" r="2" fill="' + C.inchiostro + '"/>' +
+      '<path d="M-21 -15 Q-12 -4 -2 -14" stroke="' + C.inchiostro + '" stroke-width="2" fill="' + C.rossoScuro + '" stroke-linejoin="round"/>' +
+      '<circle cx="-21" cy="-16" r="2.4" fill="#FF8F8F" opacity=".7"/><circle cx="-1" cy="-16" r="2.4" fill="#FF8F8F" opacity=".7"/>' +
+      '<rect x="-14" y="-2" width="28" height="5" rx="2.5" fill="' + K.scuro + '"/></g>';
+  }
+  return '<g><circle cx="0" cy="-12" r="15" fill="' + K.corpo + '" stroke="' + K.scuro + '" stroke-width="2.5"/>' +
+    '<path d="M-9 -22 Q0 -27 9 -22" stroke="' + K.chiaro + '" stroke-width="3" fill="none" stroke-linecap="round"/>' +
+    '<path d="M-14 -12 L14 -12" stroke="' + K.scuro + '" stroke-width="2" opacity=".5"/>' +
+    (dentro ? '<g transform="translate(0 -26)">' + dentro + '</g>' : '') +
+    '<rect x="-12" y="-1" width="24" height="5" rx="2.5" fill="' + K.scuro + '"/></g>';
+};
+// Chi siede sul Bruco: un biglietto con gli occhi (un pezzo intero), piccolo, del colore che gli dà il Bruco.
+window.G.S2.sulBruco = function (col) { return '<g transform="scale(.17) translate(-102 -150)">' + window.G.pezzo(col, '') + '</g>'; };
+// La giostrina, in due strati: dietro (il binario, la pedana) e davanti (la mela, la vasca piccola, la sbarra); in mezzo,
+// i segmenti (G.S2.posaBruco). o.sbarra: 0 alzata, 1 abbassata; o.luci: da 0 (spente) a 1.
+window.G.S2.giostrina = function (o) {
+  o = o || {};
+  const G = window.G, C = G.C, K = G.S2.COLORI_BRUCO, B = G.S2.BRUCO, [cx, cy] = B.c, [mx, my] = B.mela, [vx, vy] = B.vasca;
+  const luci = o.luci === undefined ? 1 : o.luci;
+  let lampadine = '';
+  for (let k = 0; k < 14; k++) { const a = Math.PI * (0.05 + k / 13 * 0.9); lampadine += '<circle cx="' + (cx + (B.rx + 16) * Math.cos(a)).toFixed(1) + '" cy="' + (cy + 12 + (B.ry + 10) * Math.sin(a)).toFixed(1) + '" r="2.6" fill="' + (k % 2 ? C.luce : '#9BE07A') + '" opacity="' + (0.25 + 0.75 * luci).toFixed(2) + '"/>'; }
+  const dietro = '<g class="g-bruco-dietro">' +
+    '<ellipse cx="' + cx + '" cy="' + (cy + 18) + '" rx="' + (B.rx + 34) + '" ry="' + (B.ry + 28) + '" fill="#241E44"/>' +
+    '<ellipse cx="' + cx + '" cy="' + (cy + 12) + '" rx="' + (B.rx + 22) + '" ry="' + (B.ry + 16) + '" fill="' + C.legno + '" stroke="' + C.legnoScuro + '" stroke-width="3"/>' +
+    '<ellipse cx="' + cx + '" cy="' + cy + '" rx="' + B.rx + '" ry="' + B.ry + '" fill="none" stroke="' + C.legnoScuro + '" stroke-width="10" stroke-dasharray="3 6"/>' +
+    '<ellipse cx="' + cx + '" cy="' + cy + '" rx="' + B.rx + '" ry="' + B.ry + '" fill="none" stroke="' + C.acciaio + '" stroke-width="3"/>' +
+    '<ellipse cx="' + cx + '" cy="' + cy + '" rx="' + (B.rx - 40) + '" ry="' + (B.ry - 14) + '" fill="#3F8A2E" opacity=".55"/>' + lampadine + '</g>';
+  // La mela: una piccola montagna rossa e lucida, col picciolo e la foglia; il binario ci entra da una galleria.
+  const mela = '<g class="g-bruco-mela" transform="translate(' + mx + ' ' + (my + 86) + ') scale(.78) translate(' + (-mx) + ' ' + (-my - 86) + ')"><path d="M' + mx + ' ' + (my - 70) + ' C' + (mx - 40) + ' ' + (my - 96) + ' ' + (mx - 116) + ' ' + (my - 74) + ' ' + (mx - 112) + ' ' + (my + 6) +
+    ' C' + (mx - 108) + ' ' + (my + 60) + ' ' + (mx - 70) + ' ' + (my + 86) + ' ' + (mx - 30) + ' ' + (my + 86) + ' L' + (mx + 30) + ' ' + (my + 86) +
+    ' C' + (mx + 70) + ' ' + (my + 86) + ' ' + (mx + 108) + ' ' + (my + 60) + ' ' + (mx + 112) + ' ' + (my + 6) + ' C' + (mx + 116) + ' ' + (my - 74) + ' ' + (mx + 40) + ' ' + (my - 96) + ' ' + mx + ' ' + (my - 70) + ' Z" fill="' + K.mela + '" stroke="' + K.melaScura + '" stroke-width="4"/>' +
+    '<path d="M' + (mx - 70) + ' ' + (my - 40) + ' Q' + (mx - 84) + ' ' + (my - 4) + ' ' + (mx - 70) + ' ' + (my + 30) + '" stroke="#FFFFFF" stroke-width="9" stroke-linecap="round" fill="none" opacity=".35"/>' +
+    '<path d="M' + mx + ' ' + (my - 70) + ' Q' + (mx + 4) + ' ' + (my - 92) + ' ' + (mx + 14) + ' ' + (my - 104) + '" stroke="' + C.legnoScuro + '" stroke-width="7" stroke-linecap="round" fill="none"/>' +
+    '<path d="M' + (mx + 10) + ' ' + (my - 92) + ' Q' + (mx + 44) + ' ' + (my - 118) + ' ' + (mx + 62) + ' ' + (my - 94) + ' Q' + (mx + 34) + ' ' + (my - 76) + ' ' + (mx + 10) + ' ' + (my - 92) + ' Z" fill="' + K.foglia + '" stroke="' + K.scuro + '" stroke-width="2.5"/>' +
+    // La galleria, sul davanti a sinistra: il bruco ci entra e ne esce.
+    '<path d="M' + (mx - 104) + ' ' + (my + 66) + ' L' + (mx - 104) + ' ' + (my + 34) + ' Q' + (mx - 82) + ' ' + (my + 6) + ' ' + (mx - 58) + ' ' + (my + 34) + ' L' + (mx - 56) + ' ' + (my + 70) + ' Z" fill="' + C.buio + '" stroke="' + K.melaScura + '" stroke-width="4"/>' +
+    [[-100, 32], [-82, 14], [-62, 30]].map(([dx, dy]) => '<circle cx="' + (mx + dx) + '" cy="' + (my + dy) + '" r="3" fill="' + C.luce + '" opacity="' + (0.3 + 0.7 * luci).toFixed(2) + '"/>').join('') + '</g>';
+  const vasca = '<g class="g-bruco-vasca"><path d="M' + (vx - 46) + ' ' + vy + ' L' + (vx + 46) + ' ' + vy + ' L' + (vx + 40) + ' ' + (vy + 20) + ' Q' + vx + ' ' + (vy + 27) + ' ' + (vx - 40) + ' ' + (vy + 20) + ' Z" fill="' + C.legno + '" stroke="' + C.legnoScuro + '" stroke-width="3"/>' +
+    '<ellipse cx="' + vx + '" cy="' + vy + '" rx="46" ry="7" fill="url(#g-acqua)" stroke="' + C.legnoScuro + '" stroke-width="3"/>' +
+    // Il cartello della vasca piccola: due paperelle, una verde e una rossa (la vasca grande ne ha una gialla).
+    '<line x1="' + (vx + 66) + '" y1="' + (vy + 22) + '" x2="' + (vx + 66) + '" y2="' + (vy - 4) + '" stroke="' + C.legnoScuro + '" stroke-width="4"/>' +
+    '<rect x="' + (vx + 46) + '" y="' + (vy - 22) + '" width="40" height="20" rx="10" fill="' + C.crema + '" stroke="' + C.oro + '" stroke-width="3"/>' +
+    '<g transform="translate(' + (vx + 49) + ' ' + (vy - 21) + ') scale(.17)">' + G.paperella('#3cb45a') + '</g><g transform="translate(' + (vx + 66) + ' ' + (vy - 21) + ') scale(.17)">' + G.paperella('#dc3c32') + '</g></g>';
+  const [sx, sy] = B.sbarra, giu = o.sbarra || 0;
+  let righe = '';
+  for (let k = 0; k < 6; k++) righe += '<rect x="' + (k * 16) + '" y="-4" width="8" height="8" fill="' + C.rosso + '"/>';
+  // La sbarra: alzata sta in piedi; abbassata sbarra la strada verso la stazione (punta a sinistra).
+  const sbarra = '<g class="g-bruco-sbarra"><rect x="' + (sx - 6) + '" y="' + (sy - 40) + '" width="12" height="40" rx="3" fill="' + C.crema + '" stroke="' + C.legnoScuro + '" stroke-width="2.5"/>' +
+    '<g class="g-bruco-asta" transform="' + G.S2.astaBruco(giu) + '"><rect x="0" y="-4" width="96" height="8" rx="4" fill="' + C.crema + '" stroke="' + C.legnoScuro + '" stroke-width="2"/>' + righe + '</g>' +
+    '<circle cx="' + sx + '" cy="' + (sy - 34) + '" r="5" fill="' + C.rosso + '"/></g>';
+  return { dietro, davanti: mela + vasca + sbarra };
+};
+// Posa i segmenti del Bruco lungo la pista (path: il <path> di G.S2.pistaBruco; s: dove sta la testa). Dietro la pista i
+// segmenti sono un po' più piccoli e guardano dall'altra parte; chi è più indietro si disegna prima.
+window.G.S2.posaBruco = function (els, path, s, passo) {
+  const B = window.G.S2.BRUCO, L = path.getTotalLength(), cy = B.c[1];
+  const pos = els.map((el, i) => {
+    const si = ((s - i * (passo || B.passo)) % L + L) % L, p = path.getPointAtLength(si), q = path.getPointAtLength((si + 1) % L);
+    const dietro = p.y < cy, sc = 1 - 0.14 * Math.max(0, (cy - p.y) / B.ry);
+    el.setAttribute('transform', 'translate(' + p.x.toFixed(1) + ' ' + p.y.toFixed(1) + ') scale(' + ((q.x > p.x ? -1 : 1) * sc).toFixed(3) + ' ' + sc.toFixed(3) + ')');
+    return { el, y: p.y, dietro };
+  });
+  const padre = els[0].parentNode;
+  pos.sort((a, b) => a.y - b.y).forEach(p => padre.appendChild(p.el));
+  return pos;
+};
+// L'asta della sbarra del Bruco: giu da 0 (alzata, in piedi) a 1 (abbassata, verso la stazione).
+window.G.S2.astaBruco = function (giu) {
+  const B = window.G.S2.BRUCO;
+  return 'translate(' + B.sbarra[0] + ' ' + (B.sbarra[1] - 34) + ') rotate(' + (90 - 90 * giu).toFixed(1) + ') scale(-1 1)';
+};
+// Un giro sul Bruco. Il custode porta i biglietti: volano dalla sua mano sui segmenti e prendono vita, con i colori del
+// Bruco (un pezzo intero, dal verde al rosso: G.S2.sulBruco); il Bruco fa un giro, passa nella mela, e quando esce, sotto
+// l'ultimo segmento cadono nella vasca piccola le paperelle, verdi e rosse (dal modellino); il Bruco si ferma. Poi (con
+// t.carta) i passeggeri tornano biglietti e il vento se li porta via. Il Bruco ha un segmento per biglietto, più la testa.
+// o: { id, parole, vestiti, uscita (l'ultimo, dopo il giro), rosse, verdi, seme, faccia, mano: [x, y] (da dove volano i
+//      biglietti), riporta (t => [x, y]: invece del vento, i biglietti tornano nella mano del custode),
+//      t: { sale (il primo biglietto), passo (tra un biglietto e l'altro), parte, giro (quanto dura), carta } }.
+// .bruco, .biglietti, .papere: gli SVG (il bruco tra G.S2.giostrina().dietro e .davanti; le papere sopra la vasca piccola).
+// Dopo costruisciMondo, monta(m); render(t) restituisce { rosse, verdi, cadute } (quante ne sono cadute).
+window.G.S2.giroBruco = function (o) {
+  const G = window.G, S2 = G.S2, B = S2.BRUCO, T = o.t, n = o.parole.length, id = o.id;
+  // Dove si ferma la testa: più avanti se il Bruco è lungo, così la coda resta fuori dalla mela.
+  const FERMO = 140 + (n + 1) * B.passo;
+  const c01 = x => Math.max(0, Math.min(1, x)), seg = (t, a, b) => c01((t - a) / (b - a)), lerp = (a, b, p) => a + (b - a) * p;
+  const eo = x => 1 - Math.pow(1 - c01(x), 3), eio = x => { x = c01(x); return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; };
+  const ROSSA = '#dc3c32', VERDE = '#3cb45a';
+  const r = G.rng(o.seme || 5), papere = [];
+  for (let k = 0; k < o.rosse + o.verdi; k++) papere.push({ col: k < o.rosse ? ROSSA : VERDE });
+  for (let i = papere.length - 1; i > 0; i--) { const j = Math.floor(r() * (i + 1)); [papere[i], papere[j]] = [papere[j], papere[i]]; }
+  papere.forEach((p, i) => { p.x = B.vasca[0] - 38 + r() * 76; p.y = B.vasca[1] - 1 + (i % 3) * 2.4 + r() * 1.5; });
+  const g = {
+    bruco: '<g class="gb-' + id + '">' + Array.from({ length: n + 1 }, (_, i) => '<g class="gb-seg" data-i="' + i + '"></g>').join('') + '</g>',
+    biglietti: o.parole.map(w => '<g class="gb-big-' + id + '" opacity="0"><g transform="translate(-60 -30)">' + G.biglietto(w) + '</g></g>').join(''),
+    papere: papere.map((p, i) => '<g class="gb-pap-' + id + '" opacity="0"><g transform="translate(-50 -84)">' + G.paperella(p.col) + '</g></g>').join(''),
+    monta(m) {
+      this.m = m;
+      m.cam.insertAdjacentHTML('beforeend', '<path class="gb-pista-' + id + '" d="' + S2.pistaBruco() + '" fill="none"/>');
+      this.path = m.q('.gb-pista-' + id); this.L = this.path.getTotalLength();
+      this.segs = m.qa('.gb-' + id + ' .gb-seg'); this.big = m.qa('.gb-big-' + id); this.pap = m.qa('.gb-pap-' + id);
+      this.stati = [];
+      this.sAt = t => FERMO + this.L * eio(seg(t, T.parte, T.parte + T.giro));
+      // Quando cade ogni paperella: quando l'ultimo segmento, uscito dalla mela, le passa sopra.
+      this.cade = papere.map(p => {
+        for (let t = T.parte + T.giro * 0.5; t < T.parte + T.giro; t += 0.02) {
+          const sl = this.sAt(t) - n * B.passo, q = this.path.getPointAtLength(((sl % this.L) + this.L) % this.L);
+          if (q.y > B.c[1] && q.x <= p.x + 4) return t;
+        }
+        return T.parte + T.giro;
+      });
+      // I sedili, quando il Bruco è fermo: dove volano i biglietti.
+      this.sedili = o.parole.map((w, i) => { const q = this.path.getPointAtLength(FERMO - (i + 1) * B.passo); return [q.x, q.y - 26]; });
+    },
+    render(t) {
+      const s = this.sAt(t), giro = seg(t, T.parte, T.parte + T.giro);
+      // Chi siede dove: vivo (dopo il suo biglietto), di carta (dopo t.carta, e poi via col vento), o nessuno.
+      this.segs.forEach((el, i) => {
+        let k = 'testa', html;
+        if (i === 0) html = S2.segmento(true, '', { faccia: o.faccia });
+        else {
+          const j = i - 1, nasce = T.sale + j * T.passo + 0.9, vivo = t >= nasce && (T.carta === undefined || t < T.carta);
+          let col = o.vestiti[j];
+          if (j === n - 1) col = G.mix(o.vestiti[j], o.uscita, Math.round(eio(seg(giro, 0.35, 0.8)) * 8) / 8);
+          k = vivo ? col : 'vuoto';
+          html = S2.segmento(false, vivo ? S2.sulBruco(col) : '');
+        }
+        if (this.stati[i] !== k) { el.innerHTML = html; this.stati[i] = k; }
+      });
+      S2.posaBruco(this.segs, this.path, s);
+      // I biglietti: volano dalla mano del custode ai sedili; poi, tornati di carta, il vento se li porta via.
+      this.big.forEach((b, j) => {
+        const a = T.sale + j * T.passo, u = eio(seg(t, a, a + 0.8)), [sx, sy] = this.sedili[j], [mx, my] = o.mano;
+        let x = lerp(mx, sx, u), y = lerp(my, sy, u) - 26 * Math.sin(Math.PI * u), sc = 0.16, op = t < a ? 0 : 1 - seg(t, a + 0.75, a + 0.95), rot = 0;
+        if (T.carta !== undefined && t >= T.carta && o.riporta) {
+          // Il custode se li riprende: tornano nella sua mano (o.riporta: dove sta la mano, adesso).
+          const w = eio(seg(t, T.carta + 0.3 + j * 0.15, T.carta + 1.1 + j * 0.15)), [rx, ry] = o.riporta(t);
+          x = lerp(sx, rx + 2 * j, w); y = lerp(sy, ry - 3 - 2 * j, w) - 20 * Math.sin(Math.PI * w); rot = (-12 + 8 * j) * w;
+          op = seg(t, T.carta, T.carta + 0.3); sc = lerp(0.16, 0.13, w);
+        } else if (T.carta !== undefined && t >= T.carta) {
+          const v = seg(t, T.carta + 0.4 + j * 0.15, T.carta + 2.6 + j * 0.15), w = eio(v);
+          x = sx + 260 * w + 30 * Math.sin(v * 9 + j); y = sy - 220 * w + 10 * Math.sin(v * 7); rot = 300 * w * (j % 2 ? 1 : -1);
+          op = seg(t, T.carta, T.carta + 0.3) * (1 - seg(v, 0.7, 1));
+        }
+        b.setAttribute('transform', 'translate(' + x.toFixed(1) + ' ' + y.toFixed(1) + ') rotate(' + rot.toFixed(1) + ') scale(' + sc + ')');
+        b.setAttribute('opacity', op.toFixed(3));
+      });
+      // Le paperelle della vasca piccola.
+      let cadute = 0, rosse = 0, verdi = 0;
+      this.pap.forEach((el, i) => {
+        const t0 = this.cade[i], p = papere[i], u = seg(t, t0, t0 + 0.45);
+        if (u > 0) { cadute++; if (p.col === ROSSA) rosse++; else verdi++; }
+        const via = T.carta !== undefined ? eio(seg(t, T.carta + 0.2 + (i % 5) * 0.1, T.carta + 1.4 + (i % 5) * 0.1)) : 0;
+        const y = lerp(p.y - 30, p.y, eo(u)) + (u >= 1 ? 0.6 * Math.sin(t * 2.4 + i) : 0);
+        el.setAttribute('transform', 'translate(' + lerp(p.x, B.vasca[0], via).toFixed(1) + ' ' + lerp(y, B.vasca[1] + 3, via).toFixed(1) + ') scale(' + (0.09 * (1 - via)).toFixed(4) + ')');
+        el.setAttribute('opacity', t < t0 ? 0 : (1 - seg(via, 0.85, 1)).toFixed(3));
+      });
+      return { rosse, verdi, cadute };
+    },
+  };
+  return g;
+};
+// Il Bruco fermo, con la testa e tre segmenti vuoti, per le scene della seconda stagione che non lo fanno girare
+// (G.mondo({ bruco: 'buio' | 'acceso' })): nell'angolo buio si intravede appena; acceso, ha le luci accese.
+window.G.S2.brucoFermo = function (stato, o) {
+  o = o || {};
+  const S2 = window.G.S2, B = S2.BRUCO, gio = S2.giostrina({ sbarra: 0, luci: stato === 'acceso' ? 1 : 0.25 }), L = 444;
+  let segm = '';
+  for (let i = 3; i >= 0; i--) {
+    const a = Math.PI * (140 + 4 * B.passo - i * B.passo) / L;
+    segm += '<g transform="translate(' + (B.c[0] + B.rx * Math.cos(a)).toFixed(1) + ' ' + (B.c[1] + B.ry * Math.sin(a)).toFixed(1) + ')">' + S2.segmento(i === 0, '', { faccia: o.faccia }) + '</g>';
+  }
+  const buio = stato === 'acceso' ? 0.14 : 0.62;
+  return '<g class="g-bruco-fermo">' + gio.dietro + segm + gio.davanti +
+    '<ellipse cx="' + (B.c[0] + 20) + '" cy="' + (B.c[1] - 10) + '" rx="420" ry="200" fill="#05070F" opacity="' + buio + '" filter="url(#g-velo)"/></g>';
+};
+// La teleferica (stagione 2, episodio 3): da un palo accanto alla guardiola, vicino al cancello, un filo sale al pilone sulla
+// cima della collina (dietro la ruota panoramica) e da lì oltre le colline, fino a sparire tra le nuvole di pioggia. Sul
+// filo è appesa una cabina viola. Coordinate del paesaggio (G.costruisciPaesaggio). TELEFERICA.filo: i punti del filo.
+window.G.S2.TELEFERICA = { filo: [[1826, 762], [2550, 452], [3700, -420]], nuvole: [3760, -470] };
+// o.luce: da 0 (spenta) a 1, le lampadine del pilone; o.filo: da 0 a 1, quanto filo si vede (si accende dal basso).
+window.G.S2.teleferica = function (o) {
+  o = o || {};
+  const G = window.G, C = G.C, T = G.S2.TELEFERICA, [a, b, c] = T.filo, luce = o.luce === undefined ? 1 : o.luce, filo = o.filo === undefined ? 1 : o.filo;
+  const traliccio = (x, y0, y1, w) => '<path d="M' + (x - w) + ' ' + y0 + ' L' + (x - 3) + ' ' + y1 + ' L' + (x + 3) + ' ' + y1 + ' L' + (x + w) + ' ' + y0 + '" fill="none" stroke="#3E3A72" stroke-width="4"/>' +
+    [0.25, 0.5, 0.75].map(u => { const y = y0 + (y1 - y0) * u, ww = w + (3 - w) * u; return '<path d="M' + (x - ww) + ' ' + y + ' L' + (x + ww) + ' ' + y + '" stroke="#3E3A72" stroke-width="3"/>'; }).join('') +
+    '<path d="M' + (x - w) + ' ' + y0 + ' L' + (x + w * 0.5) + ' ' + (y0 + (y1 - y0) * 0.5) + ' M' + (x + w) + ' ' + y0 + ' L' + (x - w * 0.5) + ' ' + (y0 + (y1 - y0) * 0.5) + '" stroke="#3E3A72" stroke-width="2"/>';
+  const ruota = (x, y) => '<circle cx="' + x + '" cy="' + y + '" r="7" fill="#2A2440" stroke="' + C.acciaio + '" stroke-width="2.5"/><circle cx="' + x + '" cy="' + y + '" r="2" fill="' + C.oro + '"/>';
+  const lamp = (x, y) => '<circle cx="' + x + '" cy="' + y + '" r="4" fill="' + mix('#3A3440', C.luce, luce) + '"/>' + (luce > 0 ? '<circle cx="' + x + '" cy="' + y + '" r="16" fill="' + C.luce + '" opacity="' + (0.5 * luce).toFixed(2) + '" filter="url(#g-glow)"/>' : '');
+  // Le nuvole di pioggia, oltre le colline, dove sparisce il filo.
+  const nuvole = G.S2.nuvolePioggia(true);
+  // Il filo, che si accende dal basso verso le nuvole.
+  const L1 = Math.hypot(b[0] - a[0], b[1] - a[1]), L2 = Math.hypot(c[0] - b[0], c[1] - b[1]), Lf = (L1 + L2) * filo;
+  const d = 'M' + a[0] + ' ' + a[1] + ' L' + b[0] + ' ' + b[1] + ' L' + c[0] + ' ' + c[1];
+  return '<g class="g-teleferica">' + nuvole +
+    // Il palo dietro la guardiola, con la sua ruota; il pilone sulla cima, con le lampadine.
+    traliccio(a[0], 870, a[1] - 6, 14) + ruota(a[0], a[1]) +
+    traliccio(b[0], 560, b[1] - 6, 22) + ruota(b[0], b[1]) + lamp(b[0] - 12, b[1] + 30) + lamp(b[0] + 12, b[1] + 30) + lamp(b[0], b[1] - 14) +
+    '<path d="' + d + '" fill="none" stroke="#C9CBD4" stroke-width="3.4" stroke-dasharray="' + Lf.toFixed(1) + ' 9999"/></g>';
+};
+// Le nuvole scure oltre le colline (coordinate del mondo, T.nuvole): con la pioggia, dove sparisce il filo della teleferica;
+// senza, viste da un parco che non ha la teleferica. dove: un altro punto del cielo, se serve.
+window.G.S2.nuvolePioggia = function (piove, dove) {
+  const [nx, ny] = dove || window.G.S2.TELEFERICA.nuvole;
+  let pioggia = '';
+  for (let k = 0; k < 26; k++) { const x = nx - 260 + k * 20 + (k % 3) * 6, y = ny + 70 + (k % 4) * 30; pioggia += 'M' + x + ' ' + y + ' l-10 44 '; }
+  return '<g class="g-tel-nuvole">' + (piove ? '<path d="' + pioggia + '" stroke="#7FA8D8" stroke-width="3" opacity=".55" stroke-linecap="round"/>' : '') +
+    [[-200, 30, 130], [-60, -10, 170], [120, 20, 150], [260, 50, 110]].map(([dx, dy, r]) => '<ellipse cx="' + (nx + dx) + '" cy="' + (ny + dy) + '" rx="' + r + '" ry="' + (r * 0.55).toFixed(0) + '" fill="#4A4F72"/>').join('') +
+    '<ellipse cx="' + nx + '" cy="' + (ny + 64) + '" rx="380" ry="40" fill="#3A3E60"/></g>';
+};
+// La cabina viola, appesa al filo per il gancio nel punto (0, 0); alta 40. o.gocce: da 0 a 1, quanto gocciola.
+window.G.S2.cabina = function (o) {
+  o = o || {};
+  const C = window.G.C, g = o.gocce || 0, t = o.t || 0;
+  let gocce = '';
+  if (g > 0) for (let k = 0; k < 4; k++) { const u = ((t * 1.3 + k * 0.27) % 1); gocce += '<ellipse cx="' + (-10 + k * 7) + '" cy="' + (42 + 30 * u) + '" rx="1.6" ry="2.6" fill="#9CC8F0" opacity="' + (g * (1 - u)).toFixed(2) + '"/>'; }
+  return '<g><path d="M0 0 L0 10" stroke="#5A5F80" stroke-width="2.4"/><circle cx="0" cy="0" r="3.4" fill="#5A5F80"/>' +
+    '<path d="M-16 12 L16 12 L18 18 L-18 18 Z" fill="#6E3FA8"/>' +
+    '<rect x="-15" y="17" width="30" height="22" rx="4" fill="#A064D7" stroke="#5A328C" stroke-width="2"/>' +
+    '<rect x="-11" y="21" width="22" height="9" rx="2" fill="' + C.luce + '" opacity=".75"/><path d="M0 21 L0 30" stroke="#5A328C" stroke-width="1.6"/>' +
+    (o.rotolo ? '<g transform="translate(0 26) scale(.1)">' + window.G.rotolo() + '</g>' : '') + gocce + '</g>';
+};
+// Dove sta la cabina quando ha fatto la frazione u del suo viaggio (0: al palo della guardiola, 1: tra le nuvole).
+window.G.S2.puntoCabina = function (u) {
+  const [a, b, c] = window.G.S2.TELEFERICA.filo, L1 = Math.hypot(b[0] - a[0], b[1] - a[1]), L2 = Math.hypot(c[0] - b[0], c[1] - b[1]);
+  const d = Math.max(0, Math.min(1, u)) * (L1 + L2);
+  if (d <= L1) return [a[0] + (b[0] - a[0]) * d / L1, a[1] + (b[1] - a[1]) * d / L1];
+  const v = (d - L1) / L2;
+  return [b[0] + (c[0] - b[0]) * v, b[1] + (c[1] - b[1]) * v];
+};
+// Un treno dalle sole parole del modellino (frase) e dai tratti dell'ultimo passeggero (gli unici che il modellino calcola
+// per i giri con la vasca dichiarata). I primi quattro (la bandierina d'oro e «Storie di mare») hanno i colori di sempre;
+// gli altri il colore del loro biglietto (bandierine, biglietti e paperelle dal modellino).
+window.G.S2.trenoDa = function (frase, trattiUltimo) {
+  const G = window.G, S = G.MOD.seconda, capo = S.parco.giri[0].passeggeri, ott = frase.indexOf('⚑ottone');
+  const mare = { Al: G.MOD.mare.passeggeri.Al.biglietto, mare: G.MOD.mare.passeggeri.mare.biglietto, Emma: G.MOD.mare.passeggeri.Emma.biglietto };
+  // Prima della bandierina d'ottone ci sono i biglietti del messaggio; dopo, le paperelle pescate (che salgono come sono).
+  const biglietto = w => S.parco.bandierine[w] || S.teleferica.biglietti[w] || (S.telone || {}).biglietti && S.telone.biglietti[w] || mare[w] || S.parco.biglietti[w];
+  const paperella = w => S.parco.bandierine[w] || (S.telone || {}).paperelle && S.telone.paperelle[w] || S.teleferica.paperelle[w] || S.teleferica.biglietti[w] ||
+    (G.MOD.finisce.passeggeri[w] || {}).biglietto || S.campanella.biglietti[w];
+  return frase.map((w, i) => {
+    if (i < 4 && capo[i].parola === w) return this.chi(capo[i]);
+    const prima = ott < 0 || i < ott, b = (prima ? biglietto(w) : paperella(w)) || '#96969f';
+    const c = this.chi({ parola: w, biglietto: b, tratti: i === frase.length - 1 ? trattiUltimo : [b] });
+    // Un biglietto del messaggio senza un personaggio suo è un sassolino; una parola pescata resta paperella.
+    if (prima && c.tipo === 'paperella') { c.tipo = 'sasso'; c.o = { forma: i % 3 }; }
+    if (!prima && c.tipo !== 'bandierina' && !S.teleferica.biglietti[w]) { c.tipo = 'paperella'; c.o = undefined; }
+    return c;
+  });
+};
+// L'orologio da tasca del custode, da vicino (stagione 2, episodio 4): d'ottone, il quadrante crema senza numeri, solo
+// tacche; al posto della corona, una campanella piccola come un ditale, con la cordicella. Centrato in (0, 0), raggio 100.
+// o.lancetta: da 0 (in basso) a 1 (in cima, alla campanella), a scatti di una tacca per giro (o.tacche, di solito 4);
+// o.suona: di quanti gradi oscilla la campanella; o.tira: da 0 a 1, la cordicella tirata giù.
+window.G.S2.orologio = function (o) {
+  o = o || {};
+  const C = window.G.C, n = o.tacche || 4, a = Math.PI * (1 + (o.lancetta || 0));
+  let tacche = '';
+  for (let k = 0; k <= n; k++) { const b = Math.PI * (1 + k / n), x = Math.sin(b), y = -Math.cos(b); tacche += '<path d="M' + (72 * x).toFixed(1) + ' ' + (72 * y).toFixed(1) + ' L' + (84 * x).toFixed(1) + ' ' + (84 * y).toFixed(1) + '" stroke="' + C.inchiostro + '" stroke-width="' + (k === n ? 7 : 5) + '" stroke-linecap="round"/>'; }
+  const tira = o.tira || 0;
+  return '<g><circle r="100" fill="#E0A93B" stroke="#8C6420" stroke-width="6"/><circle r="88" fill="' + C.crema + '" stroke="#C9A060" stroke-width="3"/>' + tacche +
+    '<path d="M0 0 L' + (64 * Math.sin(a)).toFixed(1) + ' ' + (-64 * Math.cos(a)).toFixed(1) + '" stroke="' + C.inchiostro + '" stroke-width="7" stroke-linecap="round"/><circle r="9" fill="#8C6420"/>' +
+    '<path d="M-60 -50 Q-30 -76 10 -80" stroke="#FFFFFF" stroke-width="7" fill="none" stroke-linecap="round" opacity=".5"/>' +
+    // La campanella, sopra, e la sua cordicella.
+    '<rect x="-10" y="-112" width="20" height="14" rx="3" fill="#E0A93B" stroke="#8C6420" stroke-width="3"/>' +
+    '<g transform="rotate(' + (o.suona || 0).toFixed(1) + ' 0 -150)"><path d="M0 -150 Q-26 -150 -28 -124 L-34 -114 L34 -114 L28 -124 Q26 -150 0 -150 Z" fill="#E0A93B" stroke="#8C6420" stroke-width="4" stroke-linejoin="round"/>' +
+    '<circle cy="-108" r="7" fill="#8C6420"/><circle cx="0" cy="-154" r="5" fill="#8C6420"/></g>' +
+    '<path d="M24 -118 Q60 -100 ' + (70 - 6 * tira).toFixed(1) + ' ' + (-40 + 50 * tira).toFixed(1) + '" stroke="#7E2F3F" stroke-width="4" fill="none" stroke-linecap="round"/>' +
+    '<circle cx="' + (70 - 6 * tira).toFixed(1) + '" cy="' + (-34 + 50 * tira).toFixed(1) + '" r="7" fill="#7E2F3F"/></g>';
+};
+// Un lampione del viale (stagione 2, episodio 4): il palo nero, la lanterna in cima. I piedi in (0, 0), alto 92. acceso 0..1.
+window.G.S2.lampione = function (acceso) {
+  const C = window.G.C, a = acceso || 0;
+  return '<g><path d="M0 0 L0 -78" stroke="#2A2440" stroke-width="5"/><path d="M-8 0 L8 0" stroke="#2A2440" stroke-width="6" stroke-linecap="round"/>' +
+    (a > 0 ? '<circle cx="0" cy="-84" r="34" fill="' + C.luce + '" opacity="' + (0.35 * a).toFixed(2) + '" filter="url(#g-soft)"/>' : '') +
+    '<path d="M-8 -78 L8 -78 L10 -92 L-10 -92 Z" fill="' + mix('#3A3440', '#FFE7A8', a) + '" stroke="#2A2440" stroke-width="2.5"/><path d="M-12 -92 L12 -92 L0 -100 Z" fill="#2A2440"/></g>';
+};
+// Il lucchetto del cancello: centrato in (0, 0), largo 16.
+window.G.S2.lucchetto = function () {
+  return '<g><path d="M-5 -2 L-5 -8 Q-5 -14 0 -14 Q5 -14 5 -8 L5 -2" stroke="#9AA3CF" stroke-width="2.6" fill="none"/><rect x="-8" y="-3" width="16" height="12" rx="2.5" fill="#E0A93B" stroke="#8C6420" stroke-width="1.6"/><circle cx="0" cy="2.5" r="1.6" fill="#8C6420"/></g>';
+};
+// La panchina della stazione: di legno, con lo schienale a doghe. I piedi in (0, 0), larga 84; il sedile a y = -20.
+window.G.S2.panchina = function () {
+  const C = window.G.C;
+  return '<g><path d="M-36 0 L-36 -20 M36 0 L36 -20 M-34 -20 L-34 -44 M34 -20 L34 -44" stroke="#2A2440" stroke-width="4"/>' +
+    '<rect x="-42" y="-24" width="84" height="6" rx="2" fill="' + C.legno + '" stroke="' + C.legnoScuro + '" stroke-width="1.5"/>' +
+    '<rect x="-42" y="-44" width="84" height="5" rx="2" fill="' + C.legno + '" stroke="' + C.legnoScuro + '" stroke-width="1.5"/><rect x="-42" y="-36" width="84" height="5" rx="2" fill="' + C.legno + '" stroke="' + C.legnoScuro + '" stroke-width="1.5"/></g>';
+};
+// I lampioni del viale: dai piedi della ruota su fino alla guardiola, lungo il piede della collina. Coordinate del mondo.
+window.G.S2.VIALE = [[1560, 1006], [1650, 996], [1740, 960], [1814, 908]];
+// Dentro la montagna, un giro intero con le finestre sulla vasca (stagione 2): il treno corre nel fascio di binari, si
+// accendono i fili (da ogni passeggero verso chi gli siede davanti), gli scambi spostano ogni vagone sul suo binario e
+// l'ultimo è tirato via; tre finestre ad arco sull'acqua, e alla terza la camera si avvicina. In fondo, la luce dell'uscita.
+// È la scena delle finestre degli episodi 10–12 resa riutilizzabile, anche dentro un'altra scena (o.t0, o.scala).
+// o: { pre, chi (G.S2.chi…, coi tratti), primo (il colore dell'ultimo prima dei fili: di solito c.biglietto), dopoFili
+//      (il colore dell'ultimo dopo i fili), fili(i, j) → peso (solo per l'ultimo vagone; gli altri hanno fili sottili),
+//      finestre: [conta, conta, conta], seme, t0 (quando comincia, nel tempo della scena), scala (1: 40 secondi),
+//      testa (la camera all'inizio guarda tutto il treno: true; o la coda) }.
+// Monta un <div class="ground"> nella scena; render(t) lo anima e restituisce l'opacità della luce dell'uscita.
+window.G.S2.dentro = function (kit, o) {
+  const G = window.G, C = G.C, I = G.INTERNO, N = o.chi.length, U = N - 1, sc = o.scala || 1, t0 = o.t0 || 0;
+  const c01 = x => Math.max(0, Math.min(1, x)), seg = (t, a, b) => c01((t - a) / (b - a)), lerp = (a, b, p) => a + (b - a) * p;
+  const eo = x => 1 - Math.pow(1 - c01(x), 3), eio = x => { x = c01(x); return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; };
+  const VEL = [[0, 300], [7.0, 300], [7.6, 520], [11.4, 520], [12.4, 40], [13.8, 40], [14.6, 520], [20.8, 520], [21.8, 40], [23.2, 40],
+    [24.0, 520], [30.2, 520], [31.2, 40], [31.8, 30], [37.6, 30], [39.0, 320]];
+  const ULTIMO = [13.0, 22.4, 31.8], uX = I.centri[U];
+  const CAM = [
+    { t: 0, cx: uX - 30, cy: 560, z: 1.05 }, { t: 1.6, cx: uX - 30, cy: 560, z: 1.05 },
+    o.testa ? { t: 3.6, cx: (I.centri[0] + uX) / 2, cy: 540, z: Math.min(1, 1700 / (uX - I.centri[0] + 400)) } : { t: 3.6, cx: uX - 1150, cy: 500, z: 0.55 },
+    o.testa ? { t: 10.4, cx: (I.centri[0] + uX) / 2, cy: 540, z: Math.min(1, 1700 / (uX - I.centri[0] + 400)) } : { t: 10.4, cx: uX - 1150, cy: 500, z: 0.55 },
+    { t: 12.0, cx: uX - 380, cy: 520, z: 0.8 }, { t: 30.2, cx: uX - 380, cy: 520, z: 0.8 },
+    { t: 31.6, cx: uX, cy: 470, z: 1.25 }, { t: 37.4, cx: uX, cy: 470, z: 1.25 }, { t: 39.8, cx: uX - 380, cy: 520, z: 0.8 },
+  ];
+  const CORSIE = [Array(N).fill(2), Array.from({ length: N }, (_, i) => [3, 1, 1, 3, 1][i % 5]), Array.from({ length: N }, (_, i) => [2, 0, 4, 2, 0, 4, 2][i % 7]), Array.from({ length: N }, (_, i) => [3, 1, 3, 1, 1][i % 5])];
+  const passo = Math.min(0.16, 1.4 / N);
+  const TRATTI = [
+    { fili: 1.6, disegna: Math.min(0.2, 2 / N), spegne: [5.6, 6.4], scambi: 6.2, passo },
+    { fili: 15.0, disegna: Math.min(0.06, 0.6 / N), spegne: [16.6, 17.4], scambi: 16.6, passo: passo * 0.8 },
+    { fili: 24.4, disegna: Math.min(0.06, 0.6 / N), spegne: [26.0, 26.8], scambi: 26.0, passo: passo * 0.8 },
+  ];
+  const tipi = o.chi.map(c => c.tipo);
+  const tappe = o.chi.map((c, i) => [i === U ? (o.dopoFili || c.biglietto) : c.biglietto].concat(c.tratti && c.tratti.length === 3 ? c.tratti : [c.biglietto, c.biglietto, c.biglietto]));
+  const primo = o.primo || o.chi[U].biglietto, STOFFA = [3.4, 5.4];
+  const scambi = TRATTI.map((tr, n) => o.chi.map((_, i) => ({ t: tr.scambi + tr.passo * i, da: CORSIE[n][i], a: CORSIE[n + 1][i] })));
+  const pre = o.pre || 'dentro';
+  const finestre = ULTIMO.map((_, k) => '<g class="d-finestra">' + G.finestra(pre + k) + '</g>').join('');
+  const scambiSvg = scambi.map((tr, n) => tr.map((s, i) => {
+    const yd = I.corsie[s.da], ya = I.corsie[s.a];
+    return '<g class="d-scambio" data-n="' + n + '" data-i="' + i + '"><path d="M0 ' + ya + ' C60 ' + ya + ' 80 ' + yd + ' 160 ' + yd + '" stroke="' + C.acciaio + '" stroke-width="5" fill="none"/>' +
+      '<g transform="translate(150 ' + (Math.max(yd, ya) + 46) + ')"><rect x="-4" y="-34" width="8" height="40" fill="' + C.acciaioScuro + '"/><g class="d-disco"><circle cy="-40" r="14" fill="' + C.rosso + '" stroke="' + C.crema + '" stroke-width="3"/><rect x="-12" y="-43" width="24" height="6" fill="' + C.crema + '"/></g></g></g>';
+  }).join('')).join('');
+  const L = uX + 3000;
+  const fondo = '<rect x="-3000" y="-1500" width="' + (L + 3000) + '" height="4500" fill="#07060F"/><rect x="-3000" y="0" width="' + (L + 3000) + '" height="1080" fill="url(#g-interno)"/>';
+  const binari = I.corsie.map(y => '<g><path d="M-3000 ' + (y + 6) + ' L' + L + ' ' + (y + 6) + '" stroke="' + C.legnoScuro + '" stroke-width="14" stroke-dasharray="6 22" class="g-traversine"/><path d="M-3000 ' + y + ' L' + L + ' ' + y + '" stroke="' + C.acciaio + '" stroke-width="4" opacity=".85"/></g>').join('');
+  const linee = '<g class="d-linee" opacity="0"><path d="M0 -10 L60 -14 M4 14 L70 16 M0 38 L54 42" stroke="#FFF4E0" stroke-width="4" stroke-linecap="round"/></g>';
+  const div = kit.h(G.unico('<div class="ground d-ground"><svg class="art" viewBox="0 0 1920 1080">' + G.defs + G.interniDefs +
+    '<defs><radialGradient id="g-uscita" cx="0" cy=".5" r="1"><stop offset="0" stop-color="#FFF6DA"/><stop offset=".35" stop-color="#FFE2A0" stop-opacity=".85"/><stop offset="1" stop-color="#FFE2A0" stop-opacity="0"/></radialGradient></defs>' +
+    '<g class="d-cam">' + fondo + G.interno(o.chi.map((c, i) => ({ tipo: c.tipo, col: i === U ? primo : tappe[i][0], o: c.o })), { corsie: I.corsie, finestre }) + '</g>' +
+    '<rect class="d-luce" x="-200" y="-200" width="2400" height="1480" fill="url(#g-uscita)" opacity="0"/>' +
+    '<rect class="d-nero" x="-200" y="-200" width="2400" height="1480" fill="#07060F"/></svg>' + (o.html || '') + '</div>', pre));
+  kit.stage.append(div);
+  const q = s => div.querySelector(s), qa = s => [...div.querySelectorAll(s)];
+  const lont = q('.g-int-lontano'), vic = q('.g-int-vicino');
+  const ripeti = (el, w) => { const x = el.innerHTML; let h = ''; for (let k = -1; k <= Math.ceil(L / w); k++) h += '<g transform="translate(' + (k * w) + ' 0)">' + x + '</g>'; el.innerHTML = h; };
+  ripeti(lont, 3640); ripeti(vic, 3600);
+  q('.g-int-binari').innerHTML = binari + scambiSvg;
+  q('.g-int-treno').insertAdjacentHTML('beforeend', linee);
+  const vag = qa('.g-vag'), basi = vag.map(v => v.getAttribute('transform')), fin = qa('.d-finestra'), scEl = qa('.d-scambio');
+  const d = t => G.percorso(t, 0, VEL), dUltimo = ULTIMO.map(d);
+  const rgb = c => [1, 3, 5].map(i => parseInt(c.slice(i, i + 2), 16));
+  const dist = (a, b) => { const x = rgb(a), y = rgb(b); return Math.hypot(x[0] - y[0], x[1] - y[1], x[2] - y[2]); };
+  const papere = fin.map((f, k) => {
+    const lista = G.papereFinestra(o.finestre[k], (o.seme || 200) + k), stoffa = tappe[U][k + 1];
+    f.querySelector('.g-fin-papere').innerHTML = lista.map(p => '<g class="d-pap"><g transform="translate(-50 -84)">' + G.paperellaDiLuce(p.col) + '</g></g>').join('');
+    const els = [...f.querySelectorAll('.d-pap')];
+    return lista.map((p, i) => ({ ...p, el: els[i], sim: Math.max(0, 1 - dist(p.col, stoffa) / 170) }));
+  });
+  const peso = (i, j) => i === U ? o.fili(j) : 1 / (i + 1);
+  let fili = '';
+  const filiD = [];
+  TRATTI.forEach((tr, n) => {
+    const dy = CORSIE[n].map(c => I.corsie[c] - I.ruote);
+    for (let i = 0; i < N; i++) for (let j = 0; j <= i; j++) {
+      const w = peso(i, j);
+      if (!(w > 0)) continue;
+      let p;
+      if (i === j) p = G.anello(i, tipi[i], dy[i]);
+      else { const a = G.cima(i, tipi[i], dy[i]), b = G.cima(j, tipi[j], dy[j]), mx = (a[0] + b[0]) / 2, my = Math.min(a[1], b[1]) - 80 - 0.12 * Math.abs(a[0] - b[0]); p = 'M' + b[0] + ' ' + b[1] + ' Q' + mx + ' ' + my + ' ' + a[0] + ' ' + a[1]; }
+      const ww = i === j ? 0.45 * w : w, ult = i === U;
+      fili += '<path class="d-filo" d="' + p + '" fill="none" stroke="#FFF1C9" stroke-width="' + (1.5 + (ult ? 14 : 6) * ww).toFixed(1) + '" stroke-linecap="round" opacity="0" filter="url(#g-glow)"/>';
+      filiD.push({ n, i, j, w, ult });
+    }
+  });
+  q('.g-int-fili').innerHTML = G.unico(fili, pre);
+  const filiEl = qa('.d-filo'), lung = filiEl.map(p => p.getTotalLength());
+  const cam = q('.d-cam'), luce = q('.d-luce'), nero = q('.d-nero'), lin = q('.d-linee');
+  const stati = [];
+  return {
+    div,
+    render(tt) {
+      const t = (tt - t0) / sc;
+      cam.setAttribute('transform', G.camChiavi(CAM, t));
+      nero.setAttribute('opacity', (1 - eio(seg(t, 0, 1.2))).toFixed(3));
+      const dd = d(t);
+      G.scorriInterno({ stage: div }, dd);
+      vic.setAttribute('opacity', (1 - eio(seg(t, 30.4, 31.2)) * (1 - eio(seg(t, 37.6, 38.4)))).toFixed(3));
+      const S = 1.6;
+      fin.forEach((f, k) => {
+        const x = uX + dd - dUltimo[k];
+        f.setAttribute('transform', 'translate(' + (x - 180 * S).toFixed(1) + ' 36) scale(' + S + ')');
+        const fuori = x < -2600 || x > L;
+        f.setAttribute('opacity', fuori ? 0 : 1);
+        if (fuori) return;
+        const ex = (uX - (x - 180 * S)) / S;
+        papere[k].forEach(p => {
+          const a = ULTIMO[k] - 0.7 + p.quando * 1.4, u = seg(t, a, a + 0.4);
+          if (u <= 0) { p.el.setAttribute('opacity', 0); return; }
+          const corsa = k === 2 ? 1.6 : 1, v = eio(seg(t, a + 0.3, a + 2.6)) * p.sim;
+          const px = p.x + Math.max(-60 * corsa, Math.min(60 * corsa, (ex - p.x) * 0.3 * corsa)) * v, py = Math.min(204, p.y + 18 * corsa * v);
+          p.el.setAttribute('opacity', Math.min(1, u * 2).toFixed(3));
+          p.el.setAttribute('transform', 'translate(' + px.toFixed(1) + ' ' + (py + 1.5 * Math.sin(t * 2.4 + p.x)).toFixed(1) + ') scale(' + (0.34 * (0.4 + 0.6 * eo(u)) * (1 + 0.12 * v)).toFixed(3) + ')');
+        });
+      });
+      let li = 0;
+      vag.forEach((v, i) => {
+        let dy = I.corsie[2] - I.ruote, col = i === U ? G.mix(primo, tappe[U][0], Math.round(eio(seg(t, STOFFA[0], STOFFA[1])) * 12) / 12) : tappe[i][0], tir = 0;
+        scambi.forEach((tr, n) => {
+          const s = tr[i], p = eio(seg(t, s.t - 0.25, s.t + 0.3));
+          if (t >= s.t - 0.25) dy = lerp(I.corsie[s.da], I.corsie[s.a], p) - I.ruote;
+          if (t >= s.t) col = G.mix(tappe[i][n], tappe[i][n + 1], Math.round(eio(seg(t, s.t, s.t + 1.4)) * 12) / 12);
+          tir = Math.max(tir, Math.sin(Math.PI * seg(t, s.t - 0.3, s.t + 0.9)));
+        });
+        v.setAttribute('transform', 'translate(0 ' + (dy + 2 * Math.sin(t * 5 + i * 1.3)).toFixed(2) + ') ' + basi[i]);
+        const c = o.chi[i], tirata = i === U && tir > 0.15 && (c.tipo === 'bandierina' || c.tipo === 'emma' || c.tipo === 'chiama');
+        const k = col + tirata;
+        if (stati[i] !== k) { G.cambiaPasseggero(v, c.tipo, col, Object.assign({}, c.o, tirata ? { tirata: true } : {})); stati[i] = k; }
+        if (i === U) {
+          v.querySelector('.g-pass').setAttribute('transform', 'translate(140 40) rotate(' + (-9 * tir).toFixed(2) + ') translate(-140 -40)');
+          const [hx, hy] = G.testa(U, c.tipo, dy);
+          lin.setAttribute('transform', 'translate(' + (hx + 80) + ' ' + hy + ')');
+          li = 0.7 * tir;
+        }
+      });
+      lin.setAttribute('opacity', li.toFixed(3));
+      scEl.forEach(g => {
+        const n = +g.dataset.n, i = +g.dataset.i, s = scambi[n][i], x = I.centri[i] - 80 + dd - d(s.t);
+        g.setAttribute('transform', 'translate(' + x.toFixed(1) + ' 0)');
+        g.setAttribute('opacity', x < -2600 || x > L ? 0 : 1);
+        g.querySelector('.d-disco').setAttribute('transform', 'rotate(' + (90 * eio(seg(t, s.t - 0.45, s.t - 0.25))).toFixed(1) + ' 0 -40)');
+      });
+      filiEl.forEach((el, k) => {
+        const f = filiD[k], tr = TRATTI[f.n], Lk = lung[k], a = tr.fili + tr.disegna * f.i + 0.04 * f.j, u = eo(seg(t, a, a + (f.n === 0 ? 1.2 : 0.6)));
+        el.setAttribute('stroke-dasharray', Lk.toFixed(1));
+        el.setAttribute('stroke-dashoffset', ((1 - u) * Lk).toFixed(1));
+        el.setAttribute('opacity', (u > 0 ? (1 - eio(seg(t, tr.spegne[0], tr.spegne[1]))) * (f.ult ? 0.3 + 0.7 * f.w : 0.15 + 0.3 * f.w) * (1 + 0.08 * Math.sin(t * 3 + k)) : 0).toFixed(3));
+      });
+      const l = 0.95 * eio(seg(t, 37.6, 40.6));
+      luce.setAttribute('opacity', l.toFixed(3));
+      return l;
+    },
+  };
+};
+// Il telone (stagione 2, episodio 5): un grande telone color arancio, cucito a toppe, che il custode stende sopra i vagoni
+// che salgono dopo la paperella arancio. Coordinate del mondo: copre la banchina da x a fino a x b (i vagoni sotto non si
+// vedono), all'altezza dei passeggeri. o.srotola: da 0 a 1, quanto è srotolato (da a verso b; in fondo, il rotolo);
+// o.lembo: da 0 a 1, il lembo sopra la coda sollevato (si sbircia sotto).
+window.G.S2.COLORI_TELONE = ['#E9822C', '#F29A3E', '#D86F22', '#F5A85A', '#E07A2A'];
+window.G.S2.telone = function (a, b, o) {
+  o = o || {};
+  const K = window.G.S2.COLORI_TELONE, sr = o.srotola === undefined ? 1 : o.srotola, e = a + (b - a) * sr, lembo = o.lembo || 0;
+  if (sr <= 0.001) return '';
+  const y0 = 784, y1 = 836, toppe = [];
+  for (let x = a, k = 0; x < e - 4; x += 34, k++) {
+    const w = Math.min(34, e - x);
+    toppe.push('<rect x="' + x.toFixed(1) + '" y="' + (y0 + 8 + (k % 2) * 4) + '" width="' + w.toFixed(1) + '" height="' + (k % 3 ? 26 : 32) + '" fill="' + K[k % K.length] + '"/>' +
+      '<path d="M' + (x + 2).toFixed(1) + ' ' + (y0 + 10 + (k % 2) * 4) + ' L' + (x + w - 2).toFixed(1) + ' ' + (y0 + 10 + (k % 2) * 4) + '" stroke="#FFF1C9" stroke-width="1.2" stroke-dasharray="3 3" opacity=".7"/>');
+  }
+  // Il lembo in fondo (verso b): si solleva, e sotto si vede il buio.
+  // Il bordo di sopra fa una gobba su ogni vagone (sotto ci sono i passeggeri); l'orlo di sotto ondeggia sulla sponda.
+  let sopra = 'M' + a + ' ' + y1 + ' L' + a + ' ' + (y0 + 26), x = a;
+  while (x < e - 1) { const w = Math.min(76, e - x), su = lembo * Math.max(0, Math.min(1, (x + w - e + 150) / 80)); sopra += ' Q' + (x + w / 2).toFixed(1) + ' ' + (y0 - 14 - 30 * su).toFixed(1) + ' ' + (x + w).toFixed(1) + ' ' + (y0 + 26 - 40 * su).toFixed(1); x += w; }
+  let orlo = ' L' + (e + 4 * lembo).toFixed(1) + ' ' + (y1 - 50 * lembo).toFixed(1);
+  for (let xx = e; xx > a + 1; xx -= 19) orlo += ' Q' + (xx - 9.5).toFixed(1) + ' ' + (y1 + 6 - 46 * lembo * Math.max(0, Math.min(1, (xx - e + 150) / 80))).toFixed(1) + ' ' + Math.max(a, xx - 19).toFixed(1) + ' ' + (y1 - 46 * lembo * Math.max(0, Math.min(1, (xx - 19 - e + 150) / 80))).toFixed(1);
+  const corpo = sopra + orlo + ' Z';
+  const rotolo = sr < 0.999 ? '<ellipse cx="' + e.toFixed(1) + '" cy="' + ((y0 + y1) / 2) + '" rx="12" ry="' + ((y1 - y0) / 2 + 2) + '" fill="#C8641C" stroke="#8A4210" stroke-width="2"/>' +
+    '<ellipse cx="' + e.toFixed(1) + '" cy="' + ((y0 + y1) / 2) + '" rx="5" ry="14" fill="#8A4210" opacity=".6"/>' : '';
+  // Il lembo sollevato: sotto si vede il passeggero (il telone non lo copre più); dentro il lembo, il rovescio in ombra.
+  return '<g class="g-telone">' +
+    '<clipPath id="g-telone-' + Math.round(a) + '"><path d="' + corpo + '"/></clipPath>' +
+    '<path d="' + corpo + '" fill="' + K[0] + '"/><g clip-path="url(#g-telone-' + Math.round(a) + ')">' + toppe.join('') + '</g>' +
+    '<path d="' + corpo + '" fill="none" stroke="#8A4210" stroke-width="2.4" stroke-linejoin="round"/>' + rotolo + '</g>';
+};
+// Il telone piegato sul braccio del custode: un fagotto a strati, centrato in (x, y) del mondo.
+window.G.S2.telonePiegato = function (x, y, s) {
+  const K = window.G.S2.COLORI_TELONE;
+  s = s || 1;
+  return '<g transform="translate(' + x + ' ' + y + ') scale(' + s + ')">' + [0, 1, 2, 3].map(k => '<rect x="-14" y="' + (-10 + k * 5) + '" width="28" height="6" rx="2.5" fill="' + K[k] + '" stroke="#8A4210" stroke-width="1"/>').join('') + '</g>';
+};
+// Il fiume, in fondo al parco oltre il binario morto, col ponte di legno; e sull'altra riva il parco gemello: un parco
+// piccolo come quello di Ada, con la montagna identica (G.mondo spostato di GEMELLO.dx). Coordinate del mondo.
+window.G.S2.GEMELLO = { dx: -5700, fiume: [-3560, -2980], ponte: 858 };
+window.G.S2.fiume = function (dx) {
+  const C = window.G.C, [f0, f1] = window.G.S2.GEMELLO.fiume.map(x => x + (dx || 0));
+  let onde = '';
+  for (let y = 905; y < 1080; y += 26) onde += 'M' + (f0 + 20) + ' ' + y + ' q20 -8 40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 ';
+  const pal = [];
+  for (let x = f0 - 20; x <= f1 + 20; x += 60) pal.push('M' + x + ' 838 L' + x + ' 856');
+  return '<g class="g-fiume"><path d="M' + (f0 - 40) + ' 868 Q' + (f0 + 10) + ' 880 ' + (f0 + 20) + ' 900 L' + (f1 - 20) + ' 900 Q' + (f1 - 10) + ' 880 ' + (f1 + 40) + ' 868 L' + (f1 + 40) + ' 1400 L' + (f0 - 40) + ' 1400 Z" fill="#14305A"/>' +
+    '<path d="' + onde + '" stroke="#3E6FA0" stroke-width="3" fill="none" opacity=".6"/>' +
+    // Il ponte: un arco di legno, col parapetto.
+    '<path d="M' + (f0 - 60) + ' 862 Q' + ((f0 + f1) / 2) + ' 840 ' + (f1 + 60) + ' 862 L' + (f1 + 60) + ' 872 Q' + ((f0 + f1) / 2) + ' 852 ' + (f0 - 60) + ' 872 Z" fill="' + C.legno + '" stroke="' + C.legnoScuro + '" stroke-width="3"/>' +
+    '<path d="M' + (f0 + 40) + ' 870 Q' + ((f0 + f1) / 2) + ' 960 ' + (f1 - 40) + ' 870" stroke="' + C.legnoScuro + '" stroke-width="10" fill="none"/>' +
+    '<path d="' + pal.join(' ') + '" stroke="' + C.legnoScuro + '" stroke-width="4"/><path d="M' + (f0 - 40) + ' 840 Q' + ((f0 + f1) / 2) + ' 818 ' + (f1 + 40) + ' 840" stroke="' + C.legno + '" stroke-width="5" fill="none"/></g>';
+};
+// Il parco gemello, sull'altra riva: lo stesso mondo, spostato. o.luci: da 0 (spento) a 1; o.bruco: il Bruco gemello
+// (una faccia di un altro colore). Va disegnato PRIMA del mondo di Ada (che lo copre dove si sovrappongono).
+window.G.S2.parcoGemello = function (o) {
+  o = o || {};
+  const G = window.G, S2 = G.S2, luci = o.luci === undefined ? 1 : o.luci;
+  const mondo = G.mondo({ banchina: true, manopola: 0, spento: 1 - luci, seme: 9, gemello: true });
+  return '<g class="g-gemello" transform="translate(' + S2.GEMELLO.dx + ' 0)">' + mondo + (o.bruco ? S2.brucoFermo(o.bruco, { faccia: S2.FACCIA_GEMELLO }) : '') + '</g>';
+};
+// Il Bruco del parco gemello ha la faccia dipinta di un altro colore.
+window.G.S2.FACCIA_GEMELLO = '#BFE6FF';
+// Il cancello del parco gemello, verso il fiume, con la guardiola del suo custode (coordinate del parco gemello: è il suo
+// G.mondo, con o.gemello). porta: 0 chiusa, 1 aperta.
+window.G.S2.CANCELLO_GEMELLO = [1990, 868];
+window.G.S2.cancelloGemello = function (porta) {
+  const G = window.G, C = G.C, [cx] = window.G.S2.CANCELLO_GEMELLO;
+  let archi = '';
+  for (let k = 0; k < 8; k++) archi += '<rect x="' + (cx - 48 + k * 12) + '" y="734" width="12" height="18" fill="' + (k % 2 ? C.crema : '#3E8F5C') + '"/>';
+  let lamp = '';
+  for (let k = 0; k <= 8; k++) lamp += '<circle cx="' + (cx - 48 + k * 12) + '" cy="' + (730 - 10 * Math.sin(Math.PI * k / 8)).toFixed(1) + '" r="4" fill="' + C.luce + '"/>';
+  const anta = l => { const px = cx + 43 * l, w = 43 * (1 - 0.88 * porta); let sb = ''; for (let k = 1; k < 4; k++) sb += 'M' + (px - l * k * w / 4) + ' 812 L' + (px - l * k * w / 4) + ' 864 ';
+    return '<path d="M' + px + ' 810 L' + (px - l * w) + ' 816 L' + (px - l * w) + ' 866 L' + px + ' 866 Z" fill="none" stroke="' + C.legnoScuro + '" stroke-width="5" stroke-linejoin="round"/><path d="' + sb + '" stroke="' + C.legnoScuro + '" stroke-width="3"/>'; };
+  return '<g class="g-cancello-gemello"><g transform="translate(' + (cx - 150) + ' 734) scale(.8)">' + G.guardiola({ porta: 0 }).replace(/#D9483B/g, '#3E8F5C').replace(/#A8322A/g, '#2A6B42') + '</g>' +
+    '<g stroke="' + C.legnoScuro + '" stroke-width="10"><line x1="' + (cx - 48) + '" y1="870" x2="' + (cx - 48) + '" y2="740"/><line x1="' + (cx + 48) + '" y1="870" x2="' + (cx + 48) + '" y2="740"/></g>' +
+    '<path d="M' + (cx - 58) + ' 754 L' + (cx + 58) + ' 754 L' + (cx + 52) + ' 730 Q' + cx + ' 706 ' + (cx - 52) + ' 730 Z" fill="#2A6B42"/>' + archi + lamp + anta(-1) + anta(1) + '</g>';
+};
+// Le pagine dei regolamenti messi a confronto (episodio 6): i disegni del regolamento di Ada e di quello del custode
+// gemello. Nessuna scritta.
+(function () {
+  const G = window.G, C = G.C, P = G.PAGINE, M = '#5C8FD0', V = '#5DAE3C', R = '#D9483B', cs = C.cremaScura;
+  const striscia = (onde) => '<g transform="translate(76 260) scale(.62)">' + G.segnoBandierina('oro') + '</g>' +
+    '<path d="M88 252 L112 250 L110 262 L112 274 L88 272 L91 262 Z" fill="none" stroke="' + cs + '" stroke-width="1.8"/>' + onde;
+  P.fraseParco = striscia('<circle cx="100" cy="258" r="4" fill="' + V + '"/><circle cx="96" cy="262" r="4" fill="' + V + '"/><circle cx="104" cy="262" r="4" fill="' + V + '"/><path d="M100 264 L100 270" stroke="' + C.legno + '" stroke-width="1.6"/>') +
+    '<path d="M130 268 L170 268 M134 268 L134 258 L166 258 L166 268" stroke="' + cs + '" stroke-width="1.8" fill="none"/><g transform="translate(140 252) scale(.42)">' + G.segnoBandierina('oro') + '</g>';
+  const lupo = col => '<g transform="translate(80 262)"><path d="M-12 8 Q-10 -6 0 -8 Q10 -6 12 8 Z" fill="none" stroke="' + cs + '" stroke-width="1.6"/><path d="M-8 -4 L-10 -12 L-4 -7 M8 -4 L10 -12 L4 -7" stroke="' + cs + '" stroke-width="1.6" fill="none"/></g>' +
+    '<g transform="translate(150 266) scale(.32)">' + G.paperella(col) + '</g><path d="M128 252 L176 252" stroke="' + cs + '" stroke-width="1.6"/>' +
+    '<path d="M134 248 L134 256 M134 252 L' + (col === R ? '160 252' : '146 240') + '" stroke="' + R + '" stroke-width="2.4" stroke-linecap="round"/>';
+  P.brucoRosso = lupo(R);
+  P.brucoVerde = lupo(V);
+  // Nel parco gemello la pagina della teleferica c'è, ma la collina è vuota: nessun pilone, nessun filo.
+  P.telefericaNo = '<path d="M60 278 Q90 250 120 266 Q140 276 178 270" stroke="' + cs + '" stroke-width="1.8" fill="none"/>' +
+    '<path d="M138 250 l10 10 M148 250 l-10 10" stroke="' + R + '" stroke-width="2"/>';
+  const telone = (a, b) => '<path d="M' + a + ' 266 Q' + (a + 10) + ' 254 ' + (a + 20) + ' 266 Q' + (a + 30) + ' 254 ' + b + ' 266 L' + b + ' 272 L' + a + ' 272 Z" fill="#F29A3E" stroke="#8A4210" stroke-width="1.2"/>';
+  P.telone = telone(70, 110) + '<path d="M130 268 L174 268" stroke="' + cs + '" stroke-width="1.6"/>';
+  P.teloneGemello = telone(130, 170) + '<path d="M66 268 L110 268" stroke="' + cs + '" stroke-width="1.6"/>';
+  P.campanellaGemella = P.campanella.replace('rx="12" ry="5"', 'rx="20" ry="9"');
 })();

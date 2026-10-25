@@ -1,0 +1,55 @@
+{
+  "width": 1920,
+  "height": 1080,
+  "background": "#0B1030",
+  "scenes": [
+    {
+      "id": "domanda",
+      "name": "La domanda",
+      "dur": 28,
+      "desc": "Una bambina chiede chi è il più basso tra Emma, Al e Mare. Il treno fa un giro, e un altro, e un altro ancora; ma sul telefono non arriva niente. Titolo."
+    },
+    {
+      "id": "telone",
+      "name": "Il telone",
+      "dur": 31.6,
+      "desc": "Da un'altra casa arriva lo stesso indovinello. Ada pesca una paperella arancio, e il custode stende un grande telone a toppe sopra i vagoni che salgono dopo di lei."
+    },
+    {
+      "id": "sotto",
+      "name": "Sotto il telone",
+      "dur": 40.4,
+      "desc": "Sotto il telone i giri sono giri come gli altri: una paperella grigia, una verde oliva, poi un'arancio scura, e il custode arrotola il telone. Ada sbircia sotto."
+    },
+    {
+      "id": "finestre",
+      "name": "Le finestre sulla vasca",
+      "dur": 37.0,
+      "desc": "Dentro la montagna il telone non c'è: i fili dell'arancio scura arrivano alla grigia e alla verde oliva, e le paperelle di luce si fanno grigie come Al."
+    },
+    {
+      "id": "risposta",
+      "name": "Al",
+      "dur": 33.0,
+      "desc": "Ada pesca una grigia, poi la Fine. Sul telefono arriva la risposta: Al. Ed è giusta."
+    },
+    {
+      "id": "sbagliata",
+      "name": "La paperella sbagliata",
+      "dur": 43.4,
+      "desc": "Un'altra notte, sotto il telone Ada pesca un'acquamarina: la risposta è Mare, con la stessa sicurezza. Ma Mare non è il più basso."
+    },
+    {
+      "id": "campanella",
+      "name": "Il telone a metà",
+      "dur": 30.4,
+      "desc": "Un'altra notte suona la campanella: il custode toglie il telone a metà e attacca lui l'arancio scura. La risposta arriva lo stesso, ma senza i giri che servivano."
+    },
+    {
+      "id": "fiume",
+      "name": "Il fiume",
+      "dur": 21.4,
+      "desc": "In fondo al parco, oltre il fiume, si accendono le luci di un altro parco, con una montagna identica. Fine."
+    }
+  ]
+}
