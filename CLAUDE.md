@@ -20,7 +20,8 @@ cambia prima il soggetto.
 l'unico elemento nuovo e l'idea. Un episodio nuovo parte da lì. La seconda stagione, «Intorno alla giostra», è in
 [mondo/SCALETTA-2.md](mondo/SCALETTA-2.md).
 
-[mondo/DECISIONI.md](mondo/DECISIONI.md) raccoglie le decisioni prese e non ancora realizzate, come la voce narrante.
+[mondo/DECISIONI.md](mondo/DECISIONI.md) raccoglie le decisioni prese e non ancora realizzate, come la voce narrante;
+[mondo/PIANO-FORMATO.md](mondo/PIANO-FORMATO.md) è il piano per portare gli episodi al formato con la coda.
 
 ## Come si lavora
 
@@ -99,7 +100,7 @@ L'elenco completo, tradotto nel luna park, è nel §7 del soggetto. Le più impo
 9. **La pista non l'ha progettata nessuno**: si è piegata sotto milioni di treni carichi di frasi, poi è stata fissata.
 10. **I colori non hanno un nome**: conta solo quanto due colori si somigliano.
 11. **Nella storia parliamo solo del nostro luna park.** Niente confronti con i modelli veri, salvo un episodio
-    dedicato; i nomi veri arrivano nella coda.
+    dedicato; i nomi veri arrivano solo nella coda, in ogni episodio.
 12. **Quello che si mostra una volta, si mostra sempre.** Ogni passeggero ha i suoi colori, ogni finestra le sue
     paperelle di luce, ogni vasca le sue paperelle, in ogni episodio. Se mancano i dati, prima si dichiarano nel modellino,
     poi si mostrano.

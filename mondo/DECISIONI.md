@@ -64,5 +64,6 @@ passo tra il film, senza parole tecniche, e le lezioni, con i numeri.
 dalla domanda di chi scrive, dichiara subito il parco giocattolo, ha la sua coda: prompt, token, modello di
 linguaggio, probabilità). Restano: le code degli altri quattordici episodi; la coda dell'episodio 1, che ripete
 «modello di linguaggio» e si accorcia; l'episodio 9, dove «parco giocattolo» diventa un richiamo e dei quattro nomi
-resta suo solo «addestramento»; la riga della scaletta «9 … dà i nomi veri».
+resta suo solo «addestramento»; la riga della scaletta «9 … dà i nomi veri». Il piano episodio per episodio, con i
+nomi di ogni coda, è in [PIANO-FORMATO.md](PIANO-FORMATO.md): i nomi veri stanno solo nelle code, anche nel 9 e nel 15.
 

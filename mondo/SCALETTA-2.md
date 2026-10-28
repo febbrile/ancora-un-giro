@@ -54,7 +54,7 @@ cancello del luna park; ha il suo episodio, che lo presenta del tutto, con la ca
 - **3** guarda il giro che va a prendere qualcosa fuori dal parco.
 - **4** presenta del tutto il custode, con la campanella che ferma il treno.
 - **5** ha bisogno della campanella: il telone che il custode toglie a metà.
-- **6** chiude la stagione e dà i nomi veri.
+- **6** chiude la stagione: lo stesso treno, un altro parco.
 
 ---
 
@@ -147,8 +147,7 @@ cancello del luna park; ha il suo episodio, che lo presenta del tutto, con la ca
 - **Elemento nuovo**: il parco gemello.
 - **Idea**: la montagna è identica, e lo stesso treno fa lo stesso giro. Ma intorno c'è un altro custode con un altro
   regolamento, un'altra frase del parco, un altro Bruco, e niente teleferica: la stessa frase torna con un'altra
-  risposta. Alla fine, come premio, arrivano i nomi veri: le istruzioni di sistema, il classificatore, lo strumento,
-  il ragionamento; e il custode, con il suo regolamento, si chiama «il programma».
+  risposta. I nomi veri arrivano nella coda, come in ogni episodio.
 - **Sotto**: stessi pesi, codice di inferenza diverso, prodotti diversi; confrontare modelli vuol dire confrontarli a
   parità di codice. Come l'episodio 9, è l'unico della stagione con i nomi da grandi.
 

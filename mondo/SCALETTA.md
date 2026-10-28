@@ -14,7 +14,7 @@ Ogni episodio usa solo elementi già presentati e si chiude da solo. La domanda 
 - **4 e 5** rispondono alle due paure più diffuse: «si ricorda di me» e «impara da me».
 - **6 e 7** guardano i due bordi del giro: come comincia una frase e come finisce.
 - **8** usa quello che si è visto per raccontare un errore che tutti hanno incontrato.
-- **9** chiude la stagione e dà i nomi veri.
+- **9** chiude la stagione: il parco immenso, e la frase da lasciare.
 
 ---
 
@@ -102,12 +102,11 @@ Ogni episodio usa solo elementi già presentati e si chiude da solo. La domanda 
 
 ## 9 · Il parco più grande del mondo
 
-- **Argomento**: i modelli veri, e i nomi veri.
+- **Argomento**: i modelli veri: lo stesso giro, in grande.
 - **Domanda di Ada**: «Che cosa c'è laggiù?»
 - **Elemento nuovo**: il parco immenso.
 - **Idea**: montagne una dietro l'altra, migliaia di scambi, vasche grandi come laghi. Ma il giro è lo stesso.
-  Alla fine, come premio, arrivano le parole vere: token, modello, probabilità, addestramento. Ada chiude il quaderno
-  sulla frase da lasciare.
+  Alla fine Ada chiude il quaderno sulla frase da lasciare; i nomi veri arrivano nella coda, come in ogni episodio.
 - **Chiude con**: Ada torna al suo luna park e al cancello incontra il custode, che c'è sempre stato e lei non aveva mai
   guardato. Apre la [seconda stagione](SCALETTA-2.md).
 - **Sotto**: è l'unico episodio in cui si fanno confronti con i modelli veri (regola 12 del soggetto).
