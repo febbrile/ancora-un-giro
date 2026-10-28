@@ -1,7 +1,8 @@
 # Ancora un giro
 
 Un cartone animato a episodi che racconta, con una storia, cosa succede dopo che premi invio in una chat con
-un'intelligenza artificiale. È pensato per chi non ne sa niente, e lo guardano anche i bambini.
+un'intelligenza artificiale. È pensato per chiunque, senza sapere niente prima: un linguaggio accessibile e immediato,
+non un cartone per bambini, anche se i bambini lo seguono.
 
 Di notte, dietro lo schermo, c'è un luna park. La frase che hai scritto ci arriva su una striscia di carta:
 lo Spezzaparole la strappa in biglietti, i biglietti salgono sul trenino delle montagne russe e diventano passeggeri,

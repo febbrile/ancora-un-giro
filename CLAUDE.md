@@ -1,7 +1,8 @@
 # Ancora un giro: regole di lavoro
 
 Una serie di cartoni animati che racconta, con una storia, cosa succede dopo che premi invio in una chat
-con un'intelligenza artificiale. È per una persona comune, e la guardano anche i bambini.
+con un'intelligenza artificiale. Deve capirla chiunque, senza sapere niente prima: il linguaggio non è per bambini,
+è accessibile e immediato. Non è un cartone per bambini, anche se i bambini la seguono.
 Il mondo è un luna park di notte: una frase fa un giro sulle montagne russe e torna con una parola in più.
 
 **La regola che viene prima di tutte: una sola storia.** Chi guarda segue un racconto, non una lezione.
