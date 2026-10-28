@@ -114,6 +114,26 @@
    "canale": "voce",
    "file": "voce/quaderno-2.wav",
    "da": 223.2
+  },
+  {
+   "canale": "voce",
+   "file": "voce/coda-1.wav",
+   "da": 233
+  },
+  {
+   "canale": "voce",
+   "file": "voce/coda-2.wav",
+   "da": 245.8
+  },
+  {
+   "canale": "voce",
+   "file": "voce/coda-3.wav",
+   "da": 254.6
+  },
+  {
+   "canale": "voce",
+   "file": "voce/coda-4.wav",
+   "da": 263.8
   }
  ]
 }
