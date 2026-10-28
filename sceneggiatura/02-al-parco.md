@@ -5,8 +5,9 @@
 **Cosa presenta.** Una cosa sola: Parco, l'alberello con gli occhi, compagno di viaggio di Emma.
 **Cosa dà per scontato.** Il prologo e l'episodio 1: Ada, lo Spezzaparole, i passeggeri, il treno, la montagna con i fili di luce, gli scambi e le finestre sulla vasca, la vasca, la pesca.
 **Cosa lascia per dopo.** Perché dalla stessa vasca può uscire un'altra paperella? (La stessa vasca, episodio 3.)
+**Cosa chiude.** La coda «Sotto il luna park»: dopo il cartello Fine, i nomi veri di quello che si è visto, sul quaderno di Ada.
 
-Durata: 4:32 · Voci: narratore, Ada.
+Durata: 5:14 (di cui 0:42 di coda) · Voci: narratore, Ada.
 
 ---
 
@@ -146,6 +147,24 @@ In fondo al tunnel si accende la luce dell'uscita.
 
 ---
 
+### coda · Sotto il luna park · 0:42
+
+**VISIVO.** Dopo il cartello Fine lo schermo diventa il quaderno di Ada, aperto su due pagine di carta crema, a tutto schermo. Il luna park non c'è: ci sono i disegni a matita dell'episodio, fermi, e accanto a ognuno una parola scritta a mano, che compare mentre il narratore la dice. La matita disegna ogni schizzo appena prima della sua battuta. Sulla pagina sinistra, in alto, i due trenini di tre vagoni, uno sopra l'altro: il vagone di mezzo del primo è blu, quello del secondo è verde, l'ultimo è rosa in tutti e due, e da ogni Emma parte il filo ad arco verso il vagone di mezzo; la parola *contesto*. Sotto, un biglietto e accanto il vestitino rosa, uguale per i due treni; la parola *embedding*. Sulla pagina destra, due vasche, una sopra l'altra: la prima con le paperelle di luce quasi tutte blu, la seconda quasi tutte verdi; nessuna parola.
+
+**NARRATORE.**
+> Quello che hai visto ha dei nomi. I compagni di viaggio di una parola, tutto il treno intorno a lei, si chiamano contesto.
+
+**NARRATORE.**
+> Il vestito con cui un biglietto sale sul treno, sempre lo stesso per la stessa parola, si chiama embedding.
+
+**NARRATORE.**
+> Il contesto entra solo dai fili: è da lì che a Emma arriva l'azzurro o il verde, e la vasca cambia.
+
+**NARRATORE.**
+> E per la tua chat vuol dire questo: la stessa domanda, con altre parole intorno, dà un'altra risposta.
+
+---
+
 ## Note per noi
 
 | Nella storia | Nel modellino |
@@ -169,4 +188,4 @@ In fondo al tunnel si accende la luce dell'uscita.
 - **Nei tratti 2 e 3** fili e scambi del secondo treno si vedono in montaggio, come nell'episodio 1. Del primo treno, dentro la montagna, si vedono solo i fili del primo tratto.
 - **Non sono elementi nuovi**: il secondo trenino, le case e i telefoni sono copie di cose già presentate. L'unico personaggio nuovo è Parco.
 - **La terza frase** non anticipa la manopola: si vede solo che dalla stessa vasca può uscire un'altra paperella.
-- **Cosa non diciamo**: i nomi veri, perché la pesca cambia (episodio 3), perché il filo più forte va proprio al vagone di mezzo, perché la pista è fatta così.
+- **Cosa non diciamo nella storia**: i nomi veri (contesto ed embedding stanno nella coda), perché la pesca cambia (episodio 3), perché il filo più forte va proprio al vagone di mezzo, perché la pista è fatta così.
