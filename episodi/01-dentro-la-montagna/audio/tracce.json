@@ -1,3 +1,119 @@
 {
-  "volumi": { "musica": 0, "effetti": 0, "voce": 0 }
+ "volumi": {
+  "musica": 0,
+  "effetti": 0,
+  "voce": 0
+ },
+ "clip": [
+  {
+   "canale": "voce",
+   "file": "voce/domanda-1.wav",
+   "da": 0.6
+  },
+  {
+   "canale": "voce",
+   "file": "voce/carrozza-1.wav",
+   "da": 21.4
+  },
+  {
+   "canale": "voce",
+   "file": "voce/buio-1.wav",
+   "da": 43.4
+  },
+  {
+   "canale": "voce",
+   "file": "voce/fili-1.wav",
+   "da": 56.8
+  },
+  {
+   "canale": "voce",
+   "file": "voce/fili-2.wav",
+   "da": 69.2
+  },
+  {
+   "canale": "voce",
+   "file": "voce/scambi-1.wav",
+   "da": 83.8
+  },
+  {
+   "canale": "voce",
+   "file": "voce/scambi-2.wav",
+   "da": 94
+  },
+  {
+   "canale": "voce",
+   "file": "voce/finestre-1.wav",
+   "da": 108
+  },
+  {
+   "canale": "voce",
+   "file": "voce/finestre-2.wav",
+   "da": 112.8
+  },
+  {
+   "canale": "voce",
+   "file": "voce/finestre-3.wav",
+   "da": 117
+  },
+  {
+   "canale": "voce",
+   "file": "voce/finestre-4.wav",
+   "da": 123.6
+  },
+  {
+   "canale": "voce",
+   "file": "voce/finestre-5.wav",
+   "da": 131.4
+  },
+  {
+   "canale": "voce",
+   "file": "voce/finestre-6.wav",
+   "da": 148.6
+  },
+  {
+   "canale": "voce",
+   "file": "voce/uscita-1.wav",
+   "da": 159.8
+  },
+  {
+   "canale": "voce",
+   "file": "voce/uscita-2.wav",
+   "da": 169.2
+  },
+  {
+   "canale": "voce",
+   "file": "voce/uscita-3.wav",
+   "da": 175
+  },
+  {
+   "canale": "voce",
+   "file": "voce/uscita-4.wav",
+   "da": 181
+  },
+  {
+   "canale": "voce",
+   "file": "voce/pesca-1.wav",
+   "da": 189.2
+  },
+  {
+   "canale": "voce",
+   "file": "voce/pesca-2.wav",
+   "da": 194.4
+  },
+  {
+   "canale": "voce",
+   "file": "voce/pesca-3.wav",
+   "da": 204.6
+  },
+  {
+   "canale": "voce",
+   "file": "voce/quaderno-1.wav",
+   "da": 219
+  },
+  {
+   "canale": "voce",
+   "file": "voce/quaderno-2.wav",
+   "da": 223.2
+  }
+ ]
 }
