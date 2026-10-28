@@ -1,0 +1,7 @@
+[
+  {"id": "domanda", "chi": "NARRATORE", "testo": "Ogni sera Ada guarda il trenino sparire nella montagna, e ogni sera si chiede cosa succeda là dentro. Ada sul trenino non sale mai. Noi, questa volta, sì."},
+  {"id": "carrozza", "chi": "NARRATORE", "testo": "Arriva una frase: «Al mare Emma». Lo Spezzaparole la strappa in tre biglietti, e i biglietti salgono sul treno. Emma, nell'ultimo vagone, ha un vestito rosa antico: un colore che non somiglia ancora a niente."},
+  {"id": "scambi", "chi": "NARRATORE", "testo": "Poi arrivano gli scambi. Clac, clac, clac: ogni vagone si sposta di poco, ognuno sul suo binario."},
+  {"id": "uscita", "chi": "NARRATORE", "testo": "La montagna non ha scelto niente: ha riempito una vasca."},
+  {"id": "ada", "chi": "ADA", "testo": "È entrata rosa, ed è uscita blu come il mare!"}
+]
