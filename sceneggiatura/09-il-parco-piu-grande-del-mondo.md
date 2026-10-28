@@ -1,12 +1,13 @@
 # Episodio 9 · Il parco più grande del mondo
 
 **La domanda.** Che cosa c'è laggiù? (È la domanda con cui finisce l'episodio 8.)
-**La risposta.** Laggiù c'è un parco come quello di Ada, ma immenso: è lì che fanno il giro le chat di tutti i giorni. È tutto più grande e ha altri colori, ma il giro è lo stesso: biglietti, un treno senza guidatore, la montagna, il lago, la pesca. E fuori dal luna park le sue cose hanno un nome: token, modello, probabilità, addestramento.
+**La risposta.** Laggiù c'è un parco come quello di Ada, ma immenso: è lì che fanno il giro le chat di tutti i giorni. È tutto più grande e ha altri colori, ma il giro è lo stesso: biglietti, un treno senza guidatore, la montagna, il lago, la pesca. I nomi veri arrivano nella coda, come in ogni episodio.
 **Cosa presenta.** Una cosa sola per questa storia: il parco immenso. Nell'ultima scena, fuori dalla storia, compare il custode: non serve a questo episodio, apre la seconda stagione.
 **Cosa dà per scontato.** Il prologo e gli episodi da 1 a 8: Ada, lo Spezzaparole, i passeggeri, il treno, la montagna con i fili di luce, gli scambi e le finestre sulla vasca, la vasca, la pesca; i treni di prova grigi che hanno piegato la pista e dormono su un binario morto dietro la stazione (episodio 5); le luci oltre le colline (episodio 8).
 **Cosa lascia per dopo.** È la fine della stagione: Ada torna al suo parco, e il treno riparte. Al cancello c'è il custode, con il suo regolamento: è la seconda stagione.
+**Cosa chiude.** La coda «Sotto il luna park»: dopo il cartello Fine, i nomi veri di quello che si è visto, sul quaderno di Ada.
 
-Durata: 4:37 · Voci: narratore, Ada, custode.
+Durata: 5:16 (di cui 0:44 di coda) · Voci: narratore, Ada, custode.
 
 ---
 
@@ -100,33 +101,33 @@ In fondo al tunnel si accende la luce dell'uscita.
 
 ---
 
-### nomi · I nomi veri · 0:50
+### nomi · In grande · 0:50
 
-**VISIVO.** Ada risale in cima alla collina e si siede nell'erba, col quaderno sulle ginocchia. Da una parte c'è il suo luna park, piccolo, con la ruota panoramica e il trenino in stazione; dall'altra il parco immenso. Poi la camera vola sul parco immenso, un'immagine per ogni nome:
+**VISIVO.** Ada risale in cima alla collina e si siede nell'erba, col quaderno sulle ginocchia. Da una parte c'è il suo luna park, piccolo, con la ruota panoramica e il trenino in stazione; dall'altra il parco immenso. Poi la camera vola sul parco immenso, un'immagine alla volta:
 - lo Spezzaparole gigante, e i biglietti che volano sui sedili;
 - la montagna, con la sua pista che entra nella prima cima;
 - il lago, con le paperelle di un treno appena uscito: tantissime di un colore, poche di tutti gli altri;
 - dietro la stazione immensa, un binario morto con file e file di treni di prova grigi, addormentati, a perdita d'occhio.
 
-Torniamo su Ada, che ascolta e annuisce a ogni nome.
+Torniamo su Ada, che guarda e annuisce. I nomi veri non si dicono qui: arrivano nella coda.
 
 **NARRATORE.**
 > Il parco di Ada è un parco giocattolo, fatto apposta per guardarci dentro. Le chat di tutti i giorni fanno il giro in parchi come quello laggiù.
 
 **NARRATORE.**
-> E fuori dal luna park, le sue cose hanno un nome da grandi.
+> Ed è tutto più grande. Ma il giro è lo stesso.
 
 **NARRATORE.**
-> I biglietti si chiamano token.
+> Uno Spezzaparole alto come un palazzo.
 
 **NARRATORE.**
-> La montagna, con la sua pista, è il modello.
+> Una montagna con tante cime, e una pista sola.
 
 **NARRATORE.**
-> Quante paperelle cadono di ogni colore: è la probabilità di ogni parola.
+> Un lago al posto della vasca, con più colori di quanti se ne possano contare.
 
 **NARRATORE.**
-> E il tempo dei treni di prova, che hanno piegato la pista, si chiama addestramento.
+> E dietro la stazione, file e file di treni di prova, che hanno piegato la pista.
 
 ---
 
@@ -160,6 +161,24 @@ Torniamo su Ada, che ascolta e annuisce a ogni nome.
 
 ---
 
+### coda · Sotto il luna park · 0:44
+
+**VISIVO.** Dopo il cartello Fine lo schermo diventa il quaderno di Ada, aperto su due pagine di carta crema, a tutto schermo. Il luna park non c'è: ci sono i disegni a matita dell'episodio, fermi, e accanto a ognuno una parola scritta a mano, che compare mentre il narratore la dice. La matita disegna ogni schizzo appena prima della sua battuta. Sulla pagina sinistra, in alto, la montagna immensa, una fila di cime una dietro l'altra, con la pista che entra nella prima; sotto, grande, la sigla *LLM* e, più piccolo, *modello di grandi dimensioni*. Sotto, tre binari con tanti scambi e, sopra, una manciata di stelle. Sulla pagina destra, il lago, una vasca larga quanto la pagina, con paperelle di tanti colori diversi; la parola *vocabolario*.
+
+**NARRATORE.**
+> Quello che hai visto ha dei nomi. La montagna immensa, con tutti i suoi scambi, è un modello di grandi dimensioni: si dice LLM.
+
+**NARRATORE.**
+> Grande vuol dire questo: più parametri delle stelle in cielo, e una pista piegata da file e file di treni di prova.
+
+**NARRATORE.**
+> Tutti i colori che possono cadere nel lago, tutti i biglietti che lo Spezzaparole conosce, sono il vocabolario.
+
+**NARRATORE.**
+> E per la tua chat vuol dire questo: fa il giro in un parco così. Lo stesso giro del parco di Ada, in grande.
+
+---
+
 ## Note per noi
 
 | Nella storia | Nel mondo vero |
@@ -178,7 +197,7 @@ Torniamo su Ada, che ascolta e annuisce a ogni nome.
 | File e file di treni di prova grigi | Un addestramento su moltissimo più testo |
 | Il giro è lo stesso | Stessa struttura: tokenizer fuori, embedding, attention causale, strati con connessione residua, distribuzione sull'ultima posizione, campionamento fuori, un token alla volta |
 
-**I nomi veri** arrivano solo nella scena `nomi`, detti dal narratore e scritti solo nei sottotitoli: niente insegne né scritte nel parco o sul quaderno (regola 5 del §6 del soggetto).
+**I nomi veri** arrivano solo nella coda, come in ogni episodio (decisione del 28 ottobre 2026, [PIANO-FORMATO.md](../mondo/PIANO-FORMATO.md)); la scena `nomi` mostra il parco in grande senza nominare niente. I quattro nomi di sotto restano come riferimento per noi: token e probabilità sono del prologo, addestramento dell'episodio 5; qui la coda dice modello di grandi dimensioni (LLM) e vocabolario.
 - **token** = il biglietto: un pezzo di frase, non sempre una parola intera (episodio 6).
 - **modello** = la montagna con la sua pista, cioè l'architettura e i parametri. Lo Spezzaparole e la pesca stanno fuori, e infatti non li chiamiamo «modello».
 - **probabilità** = quante paperelle cadono di ogni colore.
@@ -193,4 +212,4 @@ Torniamo su Ada, che ascolta e annuisce a ogni nome.
 - **Non sono elementi nuovi**: la collina, il sentiero e la città lontana sono il paesaggio già visto; la bancarella del lago è la stessa di Ada. L'unico elemento nuovo è il parco immenso.
 - **Il custode** (scena `cancello`) non fa parte della storia di questo episodio: lo presenta per la seconda stagione ([SCALETTA-2.md](../mondo/SCALETTA-2.md)). Qui si dice solo chi è (il custode del parco, con la lanterna, le chiavi, l'orologio e il regolamento) e com'è diverso da Ada: lei chiede perché, lui risponde con il regolamento. Non tocca il treno e non va verso la stazione: quello che fa per i treni lo racconta la seconda stagione. Nel modello è il programma intorno alla montagna, il codice di inferenza; il nome arriva nell'episodio 6 della seconda stagione. Il suo aspetto va deciso nella tela prima della produzione; la guardiola è paesaggio, come la ruota panoramica.
 - **Il ritmo della fine**: la frase da lasciare resta nella scena `quaderno`; la scena `cancello` è un congedo breve, e il cartello finale passa a lei.
-- **Cosa non diciamo**: nomi di prodotti o di aziende, numeri (restano qui), i tanti fili per ogni coppia di passeggeri (le teste dell'attention), perché la pista è fatta così, chi pesca al lago quando Ada non c'è.
+- **Cosa non diciamo**: i nomi veri nella storia (LLM e vocabolario stanno nella coda), nomi di prodotti o di aziende, numeri (restano qui), i tanti fili per ogni coppia di passeggeri (le teste dell'attention), perché la pista è fatta così, chi pesca al lago quando Ada non c'è.
