@@ -41,29 +41,3 @@ Candidati di partenza, da verificare sulle schede ufficiali:
 - altri che emergono dallo scouting.
 Risultato dell'epica: il modello scelto, con il perché, e `strumenti/voce.py` che lo usa. Si realizza in una sessione
 a parte.
-
-## La coda «Sotto il luna park» a fine episodio · 28 ottobre 2026
-
-**La decisione.** Ogni episodio finisce, dopo il cartello Fine, con una coda da trenta a quarantacinque secondi sul
-quaderno di Ada: gli schizzi a matita di quello che l'episodio ha mostrato e, accanto a ognuno, il suo nome vero
-scritto a mano, detto dal narratore con la stessa voce. Nel player è un capitolo a sé, che chi vuole solo la storia
-salta. È la forma scelta tra tre: la coda nel film, una pagina sul sito, o tutte e due da una fonte sola.
-
-**Il perché.** È l'unica forma che arriva a chi guarda il film e basta: all'adulto del §2 del soggetto manca proprio il
-passo tra il film, senza parole tecniche, e le lezioni, con i numeri.
-
-**Le regole della coda.**
-- Nomina solo quello che l'episodio ha mostrato, una cosa per volta; niente concetti in anticipo.
-- I nomi veri sì; formule e numeri no: restano nelle lezioni.
-- Le scritte stanno sul quaderno, mai nel luna park: la regola «niente scritte» resta vera per la storia.
-- Sta fuori dal conto dei cinque minuti, con un suo tetto di un minuto.
-- Non corregge la storia: se la coda deve spiegare quello che il film non ha fatto capire, si riscrive il film.
-
-**Cosa comporta.** Fatti: il pilota, la scena `coda` dell'episodio 1; le regole in CLAUDE.md e nel §6 del soggetto;
-`tempi.py` e `controlla.mjs` che contano la coda a parte; il prologo rifatto per intero nel formato nuovo (parte
-dalla domanda di chi scrive, dichiara subito il parco giocattolo, ha la sua coda: prompt, token, modello di
-linguaggio, probabilità). Restano: le code degli altri quattordici episodi; la coda dell'episodio 1, che ripete
-«modello di linguaggio» e si accorcia; l'episodio 9, dove «parco giocattolo» diventa un richiamo e dei quattro nomi
-resta suo solo «addestramento»; la riga della scaletta «9 … dà i nomi veri». Il piano episodio per episodio, con i
-nomi di ogni coda, è in [PIANO-FORMATO.md](PIANO-FORMATO.md): i nomi veri stanno solo nelle code, anche nel 9 e nel 15.
-

@@ -1,5 +1,5 @@
 # Il piano per portare gli episodi al formato nuovo
-### 28 ottobre 2026 · deciso
+### 28 ottobre 2026 · deciso · realizzato il 28 ottobre 2026 (branch `claude/product-accessibility-evaluation-82ce0a`)
 
 Il formato nuovo è quello del prologo (commit `170d469`): la storia parte da qualcosa che riguarda chi usa una chat,
 il parco di Ada è dichiarato un giocattolo, e dopo il cartello Fine c'è la coda «Sotto il luna park», sul quaderno,
@@ -23,8 +23,10 @@ battuta della coda a riportarla alla chat. Riscrivere le aperture è un lavoro a
 
 ## L'ordine e i nomi
 
-Si va in ordine di numero, perché ogni coda nomina solo cose nuove e i nomi si accumulano. La colonna dei nomi è la
-proposta; il richiamo è tra parentesi.
+Si va in ordine di numero, perché ogni coda nomina solo cose nuove e i nomi si accumulano. La colonna dei nomi è
+quella realizzata, un commit per episodio; il richiamo è tra parentesi. Le code durano da 41 a 48 secondi: la
+battuta finale, quella per chi usa una chat, è la più lunga e decide la durata. Nel 12 il nome è al singolare,
+«strumento», perché la storia mostra una teleferica sola.
 
 | Ep | Cosa ha mostrato | Nomi veri nella coda | Per chi usa una chat |
 |---|---|---|---|
@@ -51,13 +53,17 @@ proposta; il richiamo è tra parentesi.
    Deciso: i nomi veri stanno **solo nelle code**, anche nel 9 e nel 15. La scena «nomi» del 9 (0:50) diventa la
    scena della scala, senza nomi, e tiene la frase da lasciare nella scena «quaderno»; la scena «nomi» del 15 (0:56)
    si accorcia a un confronto tra i due parchi, senza nomi. Si cambiano il soggetto, la scaletta («9 … dà i nomi veri»)
-   e CLAUDE.md (fatto); le scene «nomi» si riscrivono al turno del 9 e del 15.
-2. **La coda dell'episodio 1** si riscrive per prima: oggi dice modello di linguaggio, attenzione, strati, probabilità,
+   e CLAUDE.md (fatto); le scene «nomi» sono riscritte senza nomi (commit del 9 e del 15).
+2. **La coda dell'episodio 1** si riscrive per prima (fatto, `74ca967`): diceva modello di linguaggio, attenzione, strati, probabilità,
    scelta; modello e probabilità sono del prologo, la scelta è dell'episodio 3. Restano attenzione e strati.
 3. **I nomi della tabella** sono approvati; se uno cambia strada facendo, si corregge prima qui.
 
 ## Cosa resta fuori
 
 - Le aperture delle storie (vedi sopra).
-- La pagina «La chiave» sul sito (scenario B): si decide dopo aver visto tre o quattro code.
+- La voce narrante sulle code, con `strumenti/voce.py`, una passata per episodio: oggi solo l'episodio 1 ha la voce,
+  e solo nella storia, non nella coda.
+- La pagina «La chiave» sul sito (scenario B): le code ci sono tutte, si può decidere.
 - Il player: la coda deve essere un capitolo a sé (CLAUDE.md); da verificare che l'elenco delle scene lo faccia già.
+- Le scene «nomi» del 9 («In grande») e del 15 («I due parchi») tengono la durata di prima: il piano diceva di
+  accorciarle, ma camera e musica non sono cambiate; si accorciano, se serve, quando arriva la voce.
