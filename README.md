@@ -26,7 +26,7 @@ Prima stagione.
 | 6 | Lo Spezzaparole | 4:22 | Un nome mai sentito sale sul treno a pezzi, tre biglietti con gli occhi, e la storia va avanti lo stesso | [guarda](https://febbrile.github.io/ancora-un-giro/sito/guarda.html?ep=06-lo-spezzaparole) |
 | 7 | Come finisce la storia | 4:05 | Nella vasca c’è sempre stata una paperella del colore della notte: quando Ada la pesca, la risposta è finita | [guarda](https://febbrile.github.io/ancora-un-giro/sito/guarda.html?ep=07-come-finisce-la-storia) |
 | 8 | La paperella sbagliata | 5:07 | Il cane di Emma non esiste, ma la vasca si riempie lo stesso di nomi che suonano bene | [guarda](https://febbrile.github.io/ancora-un-giro/sito/guarda.html?ep=08-la-paperella-sbagliata) |
-| 9 | Il parco più grande del mondo | 5:16 | Oltre le colline c’è un parco immenso: tutto più grande, ma il giro è lo stesso. E le cose del luna park hanno i loro nomi da grandi. Al ritorno, al cancello, c’è il custode | [guarda](https://febbrile.github.io/ancora-un-giro/sito/guarda.html?ep=09-il-parco-piu-grande-del-mondo) |
+| 9 | Il parco più grande del mondo | 5:16 | Oltre le colline c’è un parco immenso: tutto più grande, ma il giro è lo stesso. Al ritorno, al cancello, c’è il custode | [guarda](https://febbrile.github.io/ancora-un-giro/sito/guarda.html?ep=09-il-parco-piu-grande-del-mondo) |
 
 Seconda stagione, «Intorno alla giostra».
 
@@ -36,8 +36,8 @@ Seconda stagione, «Intorno alla giostra».
 | 2 | Il Bruco | 4:52 | Prima del treno grande c’è il Bruco, una giostrina piccola con due colori soli nella vasca: se escono più rosse che verdi, la sbarra si abbassa e la montagna grande quella frase non la vede mai. Ma il Bruco può sbagliare | [guarda](https://febbrile.github.io/ancora-un-giro/sito/guarda.html?ep=11-il-bruco) |
 | 3 | La teleferica | 5:02 | Il treno non sa se domani piove. Quando Ada pesca le paperelle viola, il custode manda una cabina oltre le colline: la striscia che torna sale sul treno come un passeggero qualunque, anche quando è sbagliata | [guarda](https://febbrile.github.io/ancora-un-giro/sito/guarda.html?ep=12-la-teleferica) |
 | 4 | La campanella | 4:33 | Una storia si ferma a metà, ma nessuno ha pescato la Fine. Il regolamento dice quanti giri può fare una risposta: il custode li conta sull’orologio, e all’ultimo suona la campanella | [guarda](https://febbrile.github.io/ancora-un-giro/sito/guarda.html?ep=13-la-campanella) |
-| 5 | Il telone | 4:25 | Il telefono resta muto mentre il treno gira: i giri sono sotto il telone. Lì sotto ci sono altri giri, come gli altri; e se si pesca una paperella sbagliata, la risposta la segue con la stessa sicurezza | [guarda](https://febbrile.github.io/ancora-un-giro/sito/guarda.html?ep=14-il-telone) |
-| 6 | Il parco gemello | 3:58 | Oltre il fiume c’è un parco con la stessa montagna, ma la stessa frase torna con un’altra parola: lì il custode ha un altro regolamento. E le cose intorno alla giostra hanno un nome da grandi | [guarda](https://febbrile.github.io/ancora-un-giro/sito/guarda.html?ep=15-il-parco-gemello) |
+| 5 | Il telone | 5:11 | Il telefono resta muto mentre il treno gira: i giri sono sotto il telone. Lì sotto ci sono altri giri, come gli altri; e se si pesca una paperella sbagliata, la risposta la segue con la stessa sicurezza | [guarda](https://febbrile.github.io/ancora-un-giro/sito/guarda.html?ep=14-il-telone) |
+| 6 | Il parco gemello | 4:44 | Oltre il fiume c’è un parco con la stessa montagna, ma la stessa frase torna con un’altra parola: lì il custode ha un altro regolamento | [guarda](https://febbrile.github.io/ancora-un-giro/sito/guarda.html?ep=15-il-parco-gemello) |
 
 Argomento, domanda e idea di ogni episodio sono nella [scaletta](mondo/SCALETTA.md) e nella [scaletta della seconda stagione](mondo/SCALETTA-2.md).
 

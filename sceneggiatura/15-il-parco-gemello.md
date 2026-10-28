@@ -1,12 +1,13 @@
 # Stagione 2 · Episodio 6 · Il parco gemello
 
 **La domanda.** Perché la stessa montagna, laggiù, risponde in un altro modo? (Nasce dal parco dall'altra parte del fiume, alla fine dell'episodio 5.)
-**La risposta.** Perché la montagna è la stessa, ma il parco intorno no. Laggiù c'è un altro custode con un altro regolamento: un'altra frase del parco, un altro Bruco, nessuna teleferica. Lo stesso treno fa lo stesso giro, ma sale con altri passeggeri davanti, e la stessa frase torna con un'altra risposta. E fuori dal luna park, tutto questo ha un nome da grandi.
+**La risposta.** Perché la montagna è la stessa, ma il parco intorno no. Laggiù c'è un altro custode con un altro regolamento: un'altra frase del parco, un altro Bruco, nessuna teleferica. Lo stesso treno fa lo stesso giro, ma sale con altri passeggeri davanti, e la stessa frase torna con un'altra risposta. I nomi veri arrivano nella coda, come in ogni episodio.
 **Cosa presenta.** Una cosa sola: il parco gemello, con il suo custode e il suo regolamento.
-**Cosa dà per scontato.** La prima stagione, con il parco più grande del mondo e i suoi nomi da grandi (episodio 9); dalla seconda, il custode e il regolamento, la frase del parco e le bandierine (episodio 1), il Bruco (episodio 2), la teleferica (episodio 3), la campanella (episodio 4), il telone (episodio 5).
+**Cosa dà per scontato.** La prima stagione, con il parco più grande del mondo (episodio 9); dalla seconda, il custode e il regolamento, la frase del parco e le bandierine (episodio 1), il Bruco (episodio 2), la teleferica (episodio 3), la campanella (episodio 4), il telone (episodio 5).
 **Cosa lascia per dopo.** È la fine della stagione: Ada torna al suo parco, e il custode le apre il cancello.
+**Cosa chiude.** La coda «Sotto il luna park»: dopo il cartello Fine, i nomi veri di quello che si è visto, sul quaderno di Ada.
 
-Durata: 4:42 · Voci: narratore, Ada, custode.
+Durata: 4:44 (di cui 0:46 di coda) · Voci: narratore, Ada, custode.
 
 ---
 
@@ -85,31 +86,31 @@ Durata: 4:42 · Voci: narratore, Ada, custode.
 
 ---
 
-### nomi · I nomi veri · 0:56
+### nomi · I due parchi · 0:37
 
-**VISIVO.** Ada si siede in mezzo al ponte, con un parco da una parte e uno dall'altra, e il quaderno sulle ginocchia. Le due montagne, identiche, si guardano da una riva all'altra. Poi la camera vola sui due parchi, un'immagine per ogni nome:
+**VISIVO.** Ada si siede in mezzo al ponte, con un parco da una parte e uno dall'altra, e il quaderno sulle ginocchia. Le due montagne, identiche, si guardano da una riva all'altra. Poi la camera vola sui due parchi, un confronto alla volta:
 - le due frasi del parco, *Storie di mare* e *Storie di parco*, con le loro bandierine d'oro;
 - i due Bruchi, e le loro sbarre;
 - la cabina della teleferica sulla collina di Ada, e la collina vuota di laggiù;
 - il telone, piegato sul braccio del custode;
 - i due custodi, ognuno al suo cancello, col suo regolamento.
 
-Torniamo su Ada, che ascolta e annuisce a ogni nome.
+Torniamo su Ada, che guarda e annuisce. I nomi veri non si dicono qui: arrivano nella coda.
 
 **NARRATORE.**
-> Fuori dal luna park, anche le cose intorno alla giostra hanno un nome da grandi.
+> Dentro, le due montagne sono la stessa: stessa pista, stesso giro, curva per curva.
 
 **NARRATORE.**
-> La frase del parco si chiama istruzioni di sistema.
+> Fuori no: in testa al treno sale un'altra frase del parco.
 
 **NARRATORE.**
-> Il Bruco è un classificatore. La teleferica è uno strumento.
+> Un altro Bruco guarda le strisce, e laggiù non c'è nessuna teleferica.
 
 **NARRATORE.**
-> I giri sotto il telone si chiamano ragionamento.
+> Il telone si stende quando lo dice il regolamento.
 
 **NARRATORE.**
-> E il custode, con il suo regolamento, si chiama il programma.
+> Due custodi, due regolamenti: è il parco intorno che cambia.
 
 ---
 
@@ -128,6 +129,24 @@ Torniamo su Ada, che ascolta e annuisce a ogni nome.
 
 ---
 
+### coda · Sotto il luna park · 0:46
+
+**VISIVO.** Dopo il cartello Fine lo schermo diventa il quaderno di Ada, aperto su due pagine di carta crema, a tutto schermo. Il luna park non c'è: ci sono i disegni a matita dell'episodio, fermi, e accanto a ognuno una parola scritta a mano, che compare mentre il narratore la dice. La matita disegna ogni schizzo appena prima della sua battuta. Sulla pagina sinistra, in alto, due montagne identiche, con la stessa pista, e in mezzo il fiume; la parola *stesso modello*. Sotto, una montagna sola con intorno un recinto tondo e, dentro il recinto, la lanterna del custode, la striscia della frase del parco, il Bruco e il pilone della teleferica; la parola *applicazione*. Sulla pagina destra, due telefoni affiancati con la stessa striscia e, sotto ognuno, una paperella di un altro colore, blu e turchese; nessuna parola.
+
+**NARRATORE.**
+> Quello che hai visto ha dei nomi. Due montagne identiche, con la stessa pista, sono lo stesso modello.
+
+**NARRATORE.**
+> Il parco intorno, con il custode, il regolamento, la frase del parco, il Bruco e la teleferica, si chiama applicazione.
+
+**NARRATORE.**
+> Tutto quello che hai visto in questa stagione sta nel parco, non nella montagna. E ogni parco ha il suo.
+
+**NARRATORE.**
+> E per la tua chat vuol dire questo: due chat con lo stesso modello dentro possono rispondere diverse. Cambia il parco intorno, non la montagna.
+
+---
+
 ## Note per noi
 
 | Nella storia | Nel mondo vero |
@@ -140,7 +159,7 @@ Torniamo su Ada, che ascolta e annuisce a ogni nome.
 | Stessa frase, un'altra risposta | Il comportamento dipende anche da tutto quello che il programma mette intorno |
 | Confrontare due montagne | Si confrontano due modelli a parità di programma |
 
-**I nomi veri** arrivano solo nella scena `nomi`, detti dal narratore e scritti solo nei sottotitoli, come nell'episodio 9 della prima stagione: niente insegne né scritte nel parco o sul quaderno.
+**I nomi veri** arrivano solo nella coda, come in ogni episodio (decisione del 28 ottobre 2026, [PIANO-FORMATO.md](../mondo/PIANO-FORMATO.md)); la scena `nomi` confronta i due parchi senza nominare niente. I cinque nomi di sotto restano come riferimento per noi: classificatore, strumento e ragionamento sono delle code degli episodi 2, 3 e 5 di questa stagione, le istruzioni di sistema (prompt di sistema) di quella dell'episodio 1; qui la coda dice stesso modello e applicazione.
 - **istruzioni di sistema** = la frase del parco, con la sua bandierina d'oro (il system prompt). Le bandierine d'argento e d'ottone (i ruoli) non hanno un nome a parte: non servono alla frase da lasciare.
 - **classificatore** = il Bruco.
 - **strumento** = la teleferica.
@@ -155,4 +174,4 @@ Torniamo su Ada, che ascolta e annuisce a ogni nome.
 - **Il custode gemello** è un personaggio nuovo solo nell'aspetto: fa le stesse cose del custode di Ada, con un altro regolamento. Va disegnato nella tela prima della produzione, diverso a colpo d'occhio (basso e tondo, gilet a quadri, lanterna e regolamento verdi). Ha una battuta sola, la stessa del custode di Ada, con una parola in più.
 - **La frase da lasciare della stagione** arriva nella scena `cancello`, come quella della prima stagione arriva nella scena `quaderno` dell'episodio 9.
 - **Ada pesca nel parco gemello**, come al lago dell'episodio 9: la pesca è la stessa in ogni parco. Chi pesca laggiù quando Ada non c'è non lo diciamo.
-- **Cosa non diciamo**: nomi di prodotti o di aziende; i nomi da grandi delle bandierine, della campanella e della pesca; perché la pista è fatta così.
+- **Cosa non diciamo**: i nomi veri nella storia (stesso modello e applicazione stanno nella coda); nomi di prodotti o di aziende; i nomi da grandi delle bandierine, della campanella e della pesca; perché la pista è fatta così.

@@ -1,7 +1,7 @@
 kit.score(function (S, T) {
   // Musica originale. Il ponte e il parco di laggiù hanno lo stesso tema del parco di Ada, ma il custode tondo ha il suo
-  // motivo, allegro, sulla marimba; dentro la montagna il tema di sempre; i due regolamenti si sfogliano a ritmo; i nomi
-  // veri arrivano piano, uno per uno; i due treni ripartono insieme, e al cancello torna il motivo del custode di Ada.
+  // motivo, allegro, sulla marimba; dentro la montagna il tema di sempre; i due regolamenti si sfogliano a ritmo; i confronti
+  // tra i due parchi arrivano piano, uno per uno; i due treni ripartono insieme, e al cancello torna il motivo del custode di Ada.
   // Gli accordi stanno sul pad (per lo stile «anni 90»).
   const BPM = 84, B = 60 / BPM;
   S.tempo(BPM, { t0: 0 });
@@ -78,7 +78,7 @@ kit.score(function (S, T) {
   S.fx('whoosh', R('piove', 0.2), { dur: 2.4, vel: 26 });
   uscita('piove', 3.0, [5.0, 7.0], 11.4);
   S.fx('pop', R('piove', 13.4), { vel: 40 });
-  // I nomi veri: piano, una campanella per nome.
+  // I due parchi: piano, una campanella per ogni confronto.
   sez(T.nomi, T.treni, ['F', 'C', 'Dm', 'G'], { pad: 24, keys: 18 });
   [10.6, 16.2, 19.4, 23.4, 28.4].forEach((c, k) => S.note('vib', ['C5', 'E5', 'G5', 'A5', 'C6'][k], { t: R('nomi', c), dur: 1.6, vel: 26 }));
   // I due treni, e il cancello.
@@ -88,6 +88,8 @@ kit.score(function (S, T) {
   sez(T.cancello, R('cancello', 11.6), ['F', 'G', 'Am', 'G'], { pad: 26, keys: 22 });
   passi('cancello', 0, 2.6, 0.25); custode(R('cancello', 2.6));
   S.fx('click', R('cancello', 5.2), { vel: 30 });
+  // La coda sul quaderno: solo il pad, piano, sotto la voce.
+  sez(R('coda', 1.0), R('coda', 43.0), ['C', 'Am', 'F', 'G'], { pad: 22, keys: 18 });
   // I due cartelli: il titolo e la fine.
   [R('ponte', 24.6), R('cancello', 11.6)].forEach((a, k) => {
     S.fx('revswell', a - 0.6, { dur: 1.2 });
@@ -97,4 +99,6 @@ kit.score(function (S, T) {
     S.run('box', k ? ['C5', 'E5', 'G5', 'C6', 'E6', 'G6'] : ['C5', 'E5', 'G5', 'C6'], { t: a - 0.2, step: 0.12, vel: 44, cresc: 8 });
     S.fx('chime', a + 0.9);
   });
+  // La matita della coda: un tratto ogni mezzo secondo, per ogni schizzo.
+  [[1.4, 2], [10.3, 2], [21.1, 2], [30.6, 1]].forEach(([a, n]) => { for (let k = 0; k < n * 2; k++) S.fx('tick', R('coda', a + k * 0.25), { vel: 14 }); });
 });

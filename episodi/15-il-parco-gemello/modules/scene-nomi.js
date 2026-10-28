@@ -1,8 +1,8 @@
 const { seg, eo, eio, lerp } = kit;
 // Ada si siede in mezzo al ponte, con un parco da una parte e uno dall'altra, e il quaderno sulle ginocchia. Le due
-// montagne, identiche, si guardano da una riva all'altra. Poi un'immagine per ogni nome: le due frasi del parco, in testa
+// montagne, identiche, si guardano da una riva all'altra. Poi un confronto alla volta: le due frasi del parco, in testa
 // ai due treni; i due Bruchi; la cabina sulla collina di Ada e la collina vuota di laggiù; il telone, piegato sul braccio
-// del custode; i due custodi, ognuno col suo regolamento. Torniamo su Ada, che annuisce.
+// del custode; i due custodi, ognuno col suo regolamento. Torniamo su Ada, che annuisce. Nessun nome vero: stanno nella coda.
 // Coordinate del parco di Ada (il parco gemello è spostato di G.S2.GEMELLO.dx). Si apre sul ponte; finisce su Ada.
 const NO_ADA = [-3270, 852];
 const NO_FRASI = [10.0, 10.4, 15.6, 16.0];
@@ -44,17 +44,17 @@ kit.scene('nomi', {
     this.m = G.costruisciMondo(kit, sopra, {
       pre: 'nomi', manopola: 0, banchina: true, morto: true, bruco: 'acceso', fiume: true, davanti: frasi,
       prima: S2.parcoGemello({ bruco: 'acceso' }),
-      html: G.sottotitolo('NARRATORE', 'Fuori dal luna park, anche le cose intorno alla giostra hanno un nome da grandi.') +
-        G.sottotitolo('NARRATORE', 'La frase del parco si chiama istruzioni di sistema.') +
-        G.sottotitolo('NARRATORE', 'Il Bruco è un classificatore. La teleferica è uno strumento.') +
-        G.sottotitolo('NARRATORE', 'I giri sotto il telone si chiamano ragionamento.') +
-        G.sottotitolo('NARRATORE', 'E il custode, con il suo regolamento, si chiama il programma.'),
+      html: G.sottotitolo('NARRATORE', 'Dentro, le due montagne sono la stessa: stessa pista, stesso giro, curva per curva.') +
+        G.sottotitolo('NARRATORE', 'Fuori no: in testa al treno sale un’altra frase del parco.') +
+        G.sottotitolo('NARRATORE', 'Un altro Bruco guarda le strisce, e laggiù non c’è nessuna teleferica.') +
+        G.sottotitolo('NARRATORE', 'Il telone si stende quando lo dice il regolamento.') +
+        G.sottotitolo('NARRATORE', 'Due custodi, due regolamenti: è il parco intorno che cambia.'),
     });
     this.G = G;
     const q = this.m.q;
     this.cu = q('.no-cu'); this.telone = q('.no-cu-telone'); this.ada = q('.no-ada'); this.frasi = q('.no-frasi');
     this.stati = {};
-    this.sub = G.subs(kit, [[2.0, 9.2], [10.6, 15.4], [16.2, 22.8], [23.4, 27.8], [28.4, 33.8]]);
+    this.sub = G.subs(kit, [[2.0, 9.2], [10.4, 15.6], [16.2, 22.8], [23.4, 27.8], [28.4, 33.8]]);
   },
   cambia(nome, k, el, html) { if (this.stati[nome] !== k) { el.innerHTML = html; this.stati[nome] = k; } },
   render(t, kit) {
