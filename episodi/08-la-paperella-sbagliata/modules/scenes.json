@@ -62,6 +62,12 @@
       "name": "Laggiù",
       "dur": 20.2,
       "desc": "Le sbarre si abbassano e il treno riparte, un vagone più lungo. Ada chiude il quaderno e guarda oltre la ruota panoramica: dietro le colline si accendono le luci di un parco molto più grande. Fine."
+    },
+    {
+      "id": "coda",
+      "name": "Sotto il luna park",
+      "dur": 45,
+      "desc": "Dopo il cartello Fine, sul quaderno di Ada: gli schizzi a matita di quello che l'episodio ha mostrato, e accanto a ognuno il suo nome vero."
     }
   ]
 }
