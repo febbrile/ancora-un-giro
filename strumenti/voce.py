@@ -5,7 +5,7 @@
 Le battute e le loro finestre vengono dalle scene (`node strumenti/battute.mjs`). Il modello è uno di `strumenti/voce/modelli/` (quello scelto
 dal banco di prova, vedi strumenti/voce/BANCO.md) e va lanciato con il suo ambiente. Le clip finiscono in
 `episodi/NN-titolo/audio/voce/<scena>-<n>.wav`; una clip che esiste già non si rigenera, salvo `--rifai`.
-Alla fine segnala le battute la cui clip dura più della finestra del sottotitolo.
+Una clip più lunga della finestra del sottotitolo si rigenera (fino a tre volte); alla fine segnala quelle rimaste lunghe.
 """
 import argparse
 import importlib.util
@@ -18,6 +18,7 @@ from pathlib import Path
 RADICE = Path(__file__).resolve().parent.parent
 VOCE = RADICE / 'strumenti' / 'voce'
 MODELLO = 'chatterbox'      # il modello scelto dal banco di prova
+TENTATIVI = 3               # quante volte generare una battuta che non sta nella sua finestra
 sys.path.insert(0, str(VOCE))                 # i modelli importano `banco` per la voce di riferimento
 os.environ.setdefault('HF_HOME', str(VOCE / 'pesi'))
 os.environ.setdefault('HF_HUB_DISABLE_PROGRESS_BARS', '1')
@@ -48,13 +49,17 @@ def main():
         for i, b in enumerate(s['battute'], 1):
             nome = f"voce/{s['id']}-{i}.wav"
             f = audio / nome
+            finestra = b['a'] - b['da']
             if a.rifai or not f.exists():
                 if m is None:
                     m = mod.carica()
-                wav, sr = mod.genera(m, b['testo'], b['chi'])
-                sf.write(f, np.asarray(wav, dtype=np.float32).squeeze(), sr, subtype='PCM_16')
+                for tentativo in range(TENTATIVI):          # il modello a volte allunga una frase a caso: si riprova
+                    wav, sr = mod.genera(m, b['testo'], b['chi'])
+                    wav = np.asarray(wav, dtype=np.float32).squeeze()
+                    if len(wav) / sr <= finestra:
+                        break
+                sf.write(f, wav, sr, subtype='PCM_16')
             durata = sf.info(f).duration
-            finestra = b['a'] - b['da']
             clip.append({'canale': 'voce', 'file': nome, 'da': b['da']})
             segno = '✗' if durata > finestra else '✓'
             if durata > finestra:

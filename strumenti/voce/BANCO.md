@@ -106,8 +106,8 @@ Chatterbox è subito dietro, ha una licenza libera (MIT) e prende la voce da poc
 film sarà quella dell'autore, come ha chiesto. La lentezza (quattro secondi di calcolo per secondo di audio, sulla CPU)
 non pesa, perché le clip si generano una volta sola. Qwen3-TTS, che sulla carta aveva tutto, all'ascolto non regge.
 
-**Cosa resta da fare.** Registrare la voce dell'autore: 15–20 secondi di italiano letto, stanza silenziosa, in
-`riferimento/voce.wav` con la trascrizione esatta in `riferimento/voce.txt`; poi `banco.py chatterbox` per
-sentirla sulle cinque battute e `strumenti/voce.py` per gli episodi. Finché non c'è, le clip degli episodi usano il
-lettore LibriVox: sono provvisorie. Con la stessa voce per il narratore e per Ada, Ada va distinta in altro modo
-(`exaggeration` di Chatterbox, o una seconda registrazione): da decidere all'ascolto.
+**La voce dell'autore.** Registrata il 28 ottobre 2026 (20 secondi, QuickTime, mono a 24 000 Hz: `riferimento/voce.wav`
+con la trascrizione in `voce.txt` e i dettagli in `FONTE.md`), ascoltata clonata sulle cinque battute e approvata. Da
+allora gli episodi si generano con questa voce (`strumenti/voce.py`); il lettore LibriVox resta in `riferimento/librivox.*`
+come paragone. Con la stessa voce per il narratore e per Ada, Ada va distinta in altro modo (`exaggeration` di Chatterbox,
+o una seconda registrazione): da decidere all'ascolto.
