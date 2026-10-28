@@ -50,6 +50,12 @@
       "name": "La pista",
       "dur": 23.4,
       "desc": "Ada raccoglie i due biglietti e li mette nel quaderno. Il treno sparisce nella montagna; Ada guarda la pista e si chiede chi l'ha costruita. Fine."
+    },
+    {
+      "id": "coda",
+      "name": "Sotto il luna park",
+      "dur": 45,
+      "desc": "Dopo il cartello Fine, sul quaderno di Ada: gli schizzi a matita di quello che l'episodio ha mostrato, e accanto a ognuno il suo nome vero."
     }
   ]
 }
