@@ -5,8 +5,9 @@
 **Cosa presenta.** Una cosa sola: il viaggio dentro la montagna (fili di luce e scambi, con le finestre sulla vasca).
 **Cosa dà per scontato.** Tutto il prologo: Ada, lo Spezzaparole, i passeggeri, il treno, la vasca, la pesca.
 **Cosa lascia per dopo.** E se la frase fosse diversa? (Il parco, episodio 2.)
+**Cosa chiude.** La coda «Sotto il luna park»: dopo il cartello Fine, i nomi veri di quello che si è visto, sul quaderno di Ada.
 
-Durata: 3:52 · Voci: narratore, Ada.
+Durata: 4:36 (di cui 0:44 di coda) · Voci: narratore, Ada.
 
 ---
 
@@ -137,6 +138,27 @@ In fondo al tunnel si accende la luce dell'uscita.
 
 ---
 
+### coda · Sotto il luna park · 0:44
+
+**VISIVO.** Dopo il cartello Fine lo schermo diventa il quaderno di Ada, aperto su due pagine di carta crema, a tutto schermo. Il luna park non c'è: ci sono i disegni a matita dell'episodio, fermi, e accanto a ognuno una parola scritta a mano, che compare mentre il narratore la dice. La matita disegna ogni schizzo appena prima della sua battuta. In alto sulla pagina sinistra: *modello di linguaggio*. Sotto, tre vagoni con i fili di luce ad arco verso chi sta davanti, e la parola *attenzione*; poi tre binari con uno scambio e un vagone che passa sul binario accanto, e la parola *strati*. Sulla pagina destra la vasca piena di paperelle, quasi tutte blu, e la parola *probabilità*; sotto, una paperella sola seduta su un vagone, con la traccia della pesca, e la parola *scelta*.
+
+**NARRATORE.**
+> Quello che hai visto ha dei nomi. Il luna park è un modello di linguaggio: una macchina che calcola, non che pensa.
+
+**NARRATORE.**
+> I fili di luce si chiamano attenzione: ogni parola guarda quelle che vengono prima di lei.
+
+**NARRATORE.**
+> Gli scambi sono gli strati: tappe uguali per tutte le frasi, che spostano un poco alla volta.
+
+**NARRATORE.**
+> Le paperelle nella vasca sono le probabilità, una per ogni parola che può venire dopo.
+
+**NARRATORE.**
+> E la pesca di Ada sta fuori dalla macchina: è la scelta di una parola tra quelle possibili.
+
+---
+
 ## Note per noi
 
 | Nella storia | Nel modellino |
@@ -163,3 +185,4 @@ In fondo al tunnel si accende la luce dell'uscita.
 - **Il ritmo**: dove nessuno parla le scene accelerano, soprattutto prima dello stacco (il `RITMO` in `shared.js`). Le durate qui sono quelle vere.
 - **Al, davanti, ha solo il suo anello di luce**: non ha nessuno davanti.
 - **Cosa non diciamo**: i nomi veri, perché la pista è fatta così, perché la pesca può dare un'altra paperella.
+- **La coda «Sotto il luna park»** è il pilota della decisione in [mondo/DECISIONI.md](../mondo/DECISIONI.md): l'unico posto del film con i nomi veri e scritte a schermo. Le scritte stanno sul quaderno, mai nel luna park; niente formule e niente numeri, quelli restano nelle lezioni.

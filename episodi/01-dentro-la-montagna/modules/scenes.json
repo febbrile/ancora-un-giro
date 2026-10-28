@@ -56,6 +56,12 @@
       "name": "Il quaderno",
       "dur": 21,
       "desc": "Ada disegna il viaggio sul quaderno e si chiede: e se fosse un parco? Il treno riparte. Fine."
+    },
+    {
+      "id": "coda",
+      "name": "Sotto il luna park",
+      "dur": 44,
+      "desc": "Dopo il cartello Fine, il quaderno di Ada a tutto schermo: gli schizzi dell'episodio e, accanto, i loro nomi veri scritti a mano."
     }
   ]
 }

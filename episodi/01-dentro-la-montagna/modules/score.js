@@ -44,6 +44,8 @@ kit.score(function (S, T) {
   sez(T.pesca, R('pesca', 10), ['Am', 'Em', 'F', 'G'], { pad: 30, vib: 24 });
   sez(R('pesca', 10), T.quaderno, giro, { pad: 28, box: 'x.x.x.x.', bv: 30, bass: 48 });
   sez(T.quaderno, R('quaderno', 20.6), ['F', 'C', 'Dm', 'G'], { pad: 28, keys: 28, mallet: 'x...x.x.', mv: 36 });
+  // La coda sul quaderno: solo il pad, piano, sotto la voce.
+  sez(R('coda', 1.0), R('coda', 43.0), ['C', 'Am', 'F', 'G'], { pad: 22, keys: 18 });
   S.drums({ kick: 'x...x...', shaker: 'oxoxoxox' }, { from: Math.ceil(bt(R('uscita', 2))), repeat: 6, vel: 30 });
   // I due cartelli: il titolo e la fine.
   [R('domanda', 19.6), R('quaderno', 20.6)].forEach((a, k) => {
@@ -107,4 +109,6 @@ kit.score(function (S, T) {
   for (let k = 0; k < 14; k++) S.fx('tick', R('quaderno', 12.6 + k * 0.2), { vel: 24 });
   // Sul viadotto della stazione lunga il treno arriva alla montagna prima della fine: ci entra di corsa.
   S.fx('whoosh', R('quaderno', 20.6), { dur: 1.8, vel: 22 });
+  // La matita della coda: un tratto ogni mezzo secondo, per ogni schizzo.
+  [[11.4, 4], [19.8, 3], [28.4, 1], [36.2, 2]].forEach(([a, n]) => { for (let k = 0; k < n * 2; k++) S.fx('tick', R('coda', a + k * 0.25), { vel: 14 }); });
 });

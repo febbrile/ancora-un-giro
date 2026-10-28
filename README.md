@@ -18,7 +18,7 @@ Prima stagione.
 | | Titolo | Durata | Cosa racconta | Guarda |
 |---|---|---|---|---|
 | Prologo | Premi invio | 2:52 | Il mondo e il giro intero, visto da fuori: Ada, lo Spezzaparole, i passeggeri, la montagna, la vasca, la pesca | [guarda](https://febbrile.github.io/ancora-un-giro/sito/guarda.html?ep=00-premi-invio) |
-| 1 | Dentro la montagna | 3:52 | Lo stesso giro, da dentro: i fili di luce, gli scambi, le finestre sulla vasca dove si accendono le paperelle. Emma entra rosa ed esce blu | [guarda](https://febbrile.github.io/ancora-un-giro/sito/guarda.html?ep=01-dentro-la-montagna) |
+| 1 | Dentro la montagna | 4:36 | Lo stesso giro, da dentro: i fili di luce, gli scambi, le finestre sulla vasca dove si accendono le paperelle. Emma entra rosa ed esce blu | [guarda](https://febbrile.github.io/ancora-un-giro/sito/guarda.html?ep=01-dentro-la-montagna) |
 | 2 | Al parco | 4:32 | Due treni uguali tranne un vagone: con Mare Emma esce blu, con Parco esce verde. Stessa frase, stessa vasca, ma la pesca può cambiare | [guarda](https://febbrile.github.io/ancora-un-giro/sito/guarda.html?ep=02-al-parco) |
 | 3 | La stessa vasca | 4:22 | La stessa frase arriva tre volte e la vasca si riempie uguale, ma la pesca cambia. La manopola della bancarella cambia la vasca, mai la montagna | [guarda](https://febbrile.github.io/ancora-un-giro/sito/guarda.html?ep=03-la-stessa-vasca) |
 | 4 | Il treno che ricorda | 4:05 | Il treno non ricorda niente: a ogni messaggio risale tutta la chat. La banchina tiene venticinque vagoni: quando la chat è più lunga, i biglietti del principio restano giù | [guarda](https://febbrile.github.io/ancora-un-giro/sito/guarda.html?ep=04-il-treno-che-ricorda) |
