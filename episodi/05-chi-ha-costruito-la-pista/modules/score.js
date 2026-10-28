@@ -63,6 +63,8 @@ kit.score(function (S, T) {
   sez(T.fine, R('fine', 15), ['Am', 'F', 'Dm', 'G'], { pad: 28, keys: 26, vib: 22 });
   S.drums({ kick: 'x...x...', shaker: 'oxoxoxox' }, { from: Math.ceil(bt(R('oggi', 0.6))), repeat: 5, vel: 30 });
   S.drums({ kick: 'x...x...', shaker: 'oxoxoxox' }, { from: Math.ceil(bt(R('apre', 14.2))), repeat: 3, vel: 28 });
+  // La coda sul quaderno: solo il pad, piano, sotto la voce.
+  sez(R('coda', 1.0), R('coda', 39.0), ['C', 'Am', 'F', 'G'], { pad: 22, keys: 18 });
   // I due cartelli: il titolo e la fine.
   [R('domanda', 21.4), R('fine', 15.0)].forEach((a, k) => {
     S.fx('revswell', a - 0.6, { dur: 1.2 });
@@ -163,4 +165,6 @@ kit.score(function (S, T) {
   S.fx('pop', R('fine', 5.0), { vel: 40 });
   S.fx('boing', R('fine', 7.0), { vel: 30 });
   for (let k = 0; k < 8; k++) S.fx('tick', R('fine', 9.6 + k * 0.4), { vel: 18 });
+  // La matita della coda: un tratto ogni mezzo secondo, per ogni schizzo.
+  [[1.4, 4], [11.6, 3], [21.4, 2]].forEach(([a, n]) => { for (let k = 0; k < n * 2; k++) S.fx('tick', R('coda', a + k * 0.25), { vel: 14 }); });
 });

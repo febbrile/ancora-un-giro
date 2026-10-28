@@ -5,8 +5,9 @@
 **Cosa presenta.** Una cosa sola: i treni di prova, con il loro brivido, prima che il parco aprisse.
 **Cosa dà per scontato.** Il prologo e gli episodi 1 e 2: Ada, lo Spezzaparole, i passeggeri, il treno, la montagna con i fili di luce, gli scambi e le finestre sulla vasca, la vasca, la pesca, Parco.
 **Cosa lascia per dopo.** Una parola mai vista: come la taglia lo Spezzaparole? (Lo Spezzaparole, episodio 6.)
+**Cosa chiude.** La coda «Sotto il luna park»: dopo il cartello Fine, i nomi veri di quello che si è visto, sul quaderno di Ada.
 
-Durata: 4:50 · Voci: narratore, Ada.
+Durata: 5:16 (di cui 0:42 di coda) · Voci: narratore, Ada.
 
 ---
 
@@ -152,6 +153,24 @@ Il treno esce: Emma è blu, e nella vasca cadono tantissime paperelle blu. Sopra
 
 ---
 
+### coda · Sotto il luna park · 0:42
+
+**VISIVO.** Dopo il cartello Fine lo schermo diventa il quaderno di Ada, aperto su due pagine di carta crema, a tutto schermo. Il luna park non c'è: ci sono i disegni a matita dell'episodio, fermi, e accanto a ognuno una parola scritta a mano, che compare mentre il narratore la dice. La matita disegna ogni schizzo appena prima della sua battuta. Sulla pagina sinistra, in alto, un treno grigio di tre vagoni, la vasca con sopra la lanterna accesa e il brivido, un'onda sottile che dalla vasca corre all'indietro verso il treno; la parola *addestramento*. Sotto, tre binari con gli scambi, ognuno piegato un pochino; la parola *parametri*. Sulla pagina destra, la pista di oggi: la salita, la curva e la bocca della montagna, e sui binari nessun brivido; nessuna parola.
+
+**NARRATORE.**
+> Quello che hai visto ha dei nomi. Le notti dei treni di prova, prima che il parco aprisse, si chiamano addestramento.
+
+**NARRATORE.**
+> Gli scambi piegati, un pochino alla volta, sono i parametri: tutto quello che resta delle frasi di prova.
+
+**NARRATORE.**
+> Il brivido non c'è più: la pista è stata fissata così com'era l'ultima notte.
+
+**NARRATORE.**
+> E per la tua chat vuol dire questo: non impara da te mentre ci parli. Quello che le scrivi fa il giro, e la pista non si piega.
+
+---
+
 ## Note per noi
 
 | Nella storia | Nel modellino |
@@ -203,7 +222,7 @@ Il treno esce: Emma è blu, e nella vasca cadono tantissime paperelle blu. Sopra
   mille punti (piantati nella prima scena), i treni grigi sul binario morto e la pista che, con le frasi di oggi, non
   si muove.
 - **Il finale** apre l'episodio 6: la striscia porta una parola mai vista (è «Al mare Zampirù», ma qui non si legge).
-- **Cosa non diciamo**: i nomi veri, chi ha deciso quando fermare i treni di prova, perché la pista è fatta proprio
+- **Cosa non diciamo nella storia**: i nomi veri (addestramento e parametri stanno nella coda), chi ha deciso quando fermare i treni di prova, perché la pista è fatta proprio
   così, i messaggi che non hai scritto.
 - **Per la produzione**: il blocco dell'addestramento entra in `MOD` di `shared.js` solo dopo il merge (oggi
   `--scrivi` scrive i dati prima che il blocco li calcoli). I treni di prova saranno una funzione nuova in `shared.js`,
