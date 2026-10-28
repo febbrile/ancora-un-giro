@@ -73,6 +73,8 @@ kit.score(function (S, T) {
   // Mezza riga: la storia cresce, poi si ferma.
   sez(T.storia, R('storia', 10.0), giro, { pad: 26, box: 'x.x.x.x.', bv: 22, bass: 40 });
   sez(R('storia', 10.0), R('storia', 18.2), ['Dm', 'Am', 'Dm', 'Em'], { pad: 22, vib: 20 });
+  // La coda sul quaderno: solo il pad, piano, sotto la voce.
+  sez(R('coda', 1.0), R('coda', 45.0), ['C', 'Am', 'F', 'G'], { pad: 22, keys: 18 });
   // I due cartelli: il titolo e la fine.
   [R('domanda', 25.0), R('storia', 18.2)].forEach((a, k) => {
     S.fx('revswell', a - 0.6, { dur: 1.2 });
@@ -140,4 +142,6 @@ kit.score(function (S, T) {
   [1.0, 2.6, 7.4, 8.8].forEach(c => S.fx('pop', R('storia', c), { vel: 30 }));
   S.fx('whoosh', R('storia', 3.8), { dur: 2.0, vel: 24 });
   S.fx('thud', R('storia', 10.0), { vel: 18 });
+  // La matita della coda: un tratto ogni mezzo secondo, per ogni schizzo.
+  [[1.4, 3], [12.8, 2], [23.8, 2]].forEach(([a, n]) => { for (let k = 0; k < n * 2; k++) S.fx('tick', R('coda', a + k * 0.25), { vel: 14 }); });
 });
