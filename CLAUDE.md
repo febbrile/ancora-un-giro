@@ -19,6 +19,8 @@ cambia prima il soggetto.
 l'unico elemento nuovo e l'idea. Un episodio nuovo parte da lì. La seconda stagione, «Intorno alla giostra», è in
 [mondo/SCALETTA-2.md](mondo/SCALETTA-2.md).
 
+[mondo/DECISIONI.md](mondo/DECISIONI.md) raccoglie le decisioni prese e non ancora realizzate, come la voce narrante.
+
 ## Come si lavora
 
 - **Si parla in italiano**, nei messaggi, nei testi dei film, nei commenti e nei commit.

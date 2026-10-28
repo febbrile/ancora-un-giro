@@ -1,5 +1,5 @@
 # Ancora un giro · Il soggetto
-### Le fondamenta · bozza 3, 22 ottobre 2026
+### Le fondamenta · bozza 4, 28 ottobre 2026
 
 Questa pagina viene prima di tutto il resto. Ogni personaggio, luogo, episodio o regola nuova deve poterci stare sopra.
 Se una scelta futura contraddice questa pagina, si cambia la scelta, oppure si discute e si cambia prima questa pagina.
@@ -20,7 +20,23 @@ La seconda stagione ne aggiunge una, che si appoggia alla prima:
 
 ## 2. A chi parliamo
 
-A una persona comune, che usa una chat di intelligenza artificiale e non sa cosa succede dopo l'invio. Guardano anche i bambini.
+A chi usa una chat di intelligenza artificiale e non sa cosa succede dopo l'invio: un adulto curioso, che vuole
+capire la cosa che usa tutti i giorni. Non è un cartone per bambini. I bambini sono benvenuti e la seguono, perché il
+luna park è un mondo semplice con regole ferree; ma ogni scelta si fa per l'adulto, e un adulto non deve mai sentirsi
+trattato da bambino.
+
+Da questo discendono tre cose:
+
+- **Si parte dalla domanda di chi scrive, non dal luna park.** Chi guarda ha appena premuto invio e si chiede da dove
+  viene la parola che gli risponde. Ogni episodio deve lasciargli qualcosa della sua chat che ora sa, o che smette di
+  temere: perché la risposta cambia, perché dimentica, perché inventa. Un meccanismo che non cambia niente per lui
+  aspetta, o resta nelle lezioni.
+- **Il parco di Ada è un giocattolo, e si dice subito.** Le chat vere fanno il giro in un parco immenso; il parco di
+  Ada è piccolo, con poche parole e pochi colori, fatto apposta per guardarci dentro. Detto dal principio, «Al mare
+  Emma» è una scelta dichiarata; detto alla fine, sembra una concessione.
+- **Il narratore ha una voce adulta.** Racconta con calma, senza fare il verso ai bambini e senza strizzare l'occhio
+  agli esperti. I sottotitoli accompagnano la voce, non la sostituiscono: un film senza voce è un testo da leggere.
+
 Non diamo per scontato niente: nessuna parola tecnica, nessuna formula, nessun numero da leggere.
 La storia è una sola e la seguono tutti allo stesso modo. Il rigore scientifico c'è, ma sta **sotto** il racconto e non si vede.
 
