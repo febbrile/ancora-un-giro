@@ -20,10 +20,10 @@ La seconda stagione ne aggiunge una, che si appoggia alla prima:
 
 ## 2. A chi parliamo
 
-A chi usa una chat di intelligenza artificiale e non sa cosa succede dopo l'invio: un adulto curioso, che vuole
-capire la cosa che usa tutti i giorni. Non è un cartone per bambini. I bambini sono benvenuti e la seguono, perché il
-luna park è un mondo semplice con regole ferree; ma ogni scelta si fa per l'adulto, e un adulto non deve mai sentirsi
-trattato da bambino.
+A chiunque usi una chat di intelligenza artificiale e non sappia cosa succede dopo l'invio. Deve capirla chiunque,
+senza sapere niente prima: il linguaggio non è per bambini, è accessibile e immediato. Non è un cartone per bambini.
+I bambini sono benvenuti e la seguono, perché il luna park è un mondo semplice con regole ferree; ma nessuno deve mai
+sentirsi trattato da bambino.
 
 Da questo discendono tre cose:
 
