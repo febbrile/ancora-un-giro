@@ -6,13 +6,13 @@
     {
       "id": "invio",
       "name": "Premi invio",
-      "dur": 15.6,
+      "dur": 19,
       "desc": "Sera, un salotto: qualcuno scrive «Al mare Emma» sul telefono e preme invio."
     },
     {
       "id": "volo",
       "name": "Il volo",
-      "dur": 10.4,
+      "dur": 20,
       "desc": "Le parole diventano una striscia di carta che vola sopra i tetti verso le luci di un luna park."
     },
     {
@@ -54,8 +54,14 @@
     {
       "id": "ancora",
       "name": "Ancora un giro",
-      "dur": 23.2,
+      "dur": 25.4,
       "desc": "Il treno riparte, un vagone più lungo; Ada guarda la montagna e si chiede cosa succeda là dentro."
+    },
+    {
+      "id": "coda",
+      "name": "Sotto il luna park",
+      "dur": 46,
+      "desc": "Dopo il titolo, il quaderno di Ada a tutto schermo: gli schizzi del prologo e, accanto, i loro nomi veri scritti a mano."
     }
   ]
 }

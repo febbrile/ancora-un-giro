@@ -50,7 +50,7 @@ kit.score(function (S, T) {
   sez(T.lago, R('lago', 19.4), ['C', 'Am', 'F', 'G'], { pad: 30, mallet: 'x.x.X.x.', mv: 40, bass: 50 });
   sez(R('lago', 19.4), R('lago', 24.4), ['Am', 'Em', 'F', 'G'], { pad: 30, vib: 24 });
   sez(R('lago', 24.4), T.nomi, ['F', 'C', 'Dm', 'G'], { pad: 28, keys: 28, box: 'x...x...', bv: 28 });
-  // I nomi veri: piano, come una ninna nanna.
+  // Il parco in grande: piano, come una ninna nanna.
   sez(T.nomi, R('nomi', 20.4), ['C', 'Em', 'F', 'G'], { pad: 28, keys: 24 });
   sez(R('nomi', 20.4), R('nomi', 48.6), ['Am', 'F', 'C', 'G'], { pad: 30, vib: 24, bass: 40 });
   sez(R('nomi', 48.6), T.quaderno, ['C', 'C'], { pad: 30 });
@@ -62,6 +62,8 @@ kit.score(function (S, T) {
   S.drums({ kick: 'x...x...', shaker: 'oxoxoxox' }, { from: Math.ceil(bt(R('immenso', 8))), repeat: 5, vel: 30 });
   S.drums({ kick: 'x...x...', shaker: 'oxoxoxox' }, { from: Math.ceil(bt(R('lago', 2))), repeat: 5, vel: 30 });
   S.drums({ kick: 'x...x...', shaker: 'oxoxoxox' }, { from: Math.ceil(bt(R('quaderno', 15))), repeat: 3, vel: 32 });
+  // La coda sul quaderno: solo il pad, piano, sotto la voce.
+  sez(R('coda', 1.0), R('coda', 41.0), ['C', 'Am', 'F', 'G'], { pad: 22, keys: 18 });
   // I due cartelli: il titolo e la fine della stagione (più lunga, più piena).
   [R('domanda', 16.4), R('cancello', 20.8)].forEach((a, k) => {
     S.fx('revswell', a - 0.6, { dur: 1.2 });
@@ -127,7 +129,7 @@ kit.score(function (S, T) {
   S.fx('whoosh', R('lago', 16.8), { dur: 1.8 });
   S.fx('pop', R('lago', 20.8), { vel: 40 });
   S.fx('chime', R('lago', 28.8));
-  // I nomi veri: un rintocco per ogni nome.
+  // Il parco in grande: un rintocco per ogni immagine.
   S.fx('whoosh', R('nomi', 1.8), { dur: 1.4, vel: 28 });
   [19.8, 25.8, 31.8, 40.2].forEach(c => S.fx('whoosh', R('nomi', c), { dur: 1.8, vel: 30 }));
   [21.8, 27.6, 33.6, 41.4].forEach(c => S.fx('chime', R('nomi', c)));
@@ -150,4 +152,6 @@ kit.score(function (S, T) {
   S.fx('roll', R('cancello', 19.4), { dur: 0.9, vel: 16 });
   S.fx('thud', R('cancello', 20.4), { vel: 24 });
   S.fx('click', R('cancello', 20.2), { vel: 30 });
+  // La matita della coda: un tratto ogni mezzo secondo, per ogni schizzo.
+  [[1.4, 2], [12.6, 2], [23.0, 1]].forEach(([a, n]) => { for (let k = 0; k < n * 2; k++) S.fx('tick', R('coda', a + k * 0.25), { vel: 14 }); });
 });

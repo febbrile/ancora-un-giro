@@ -56,6 +56,8 @@ kit.score(function (S, T) {
   S.note('bass', 'C2', { t: R('pesca', 15.8), dur: 2.4, vel: 40 });
   // Come finisce: riparte piano.
   sez(R('fine', 1.0), R('fine', 24.2), ['F', 'C', 'Am', 'G'], { pad: 24, vib: 22 });
+  // La coda sul quaderno: solo il pad, piano, sotto la voce.
+  sez(R('coda', 1.0), R('coda', 38.0), ['C', 'Am', 'F', 'G'], { pad: 22, keys: 18 });
   // I due cartelli: il titolo e la fine.
   [R('domanda', 17.0), R('fine', 24.2)].forEach((a, k) => {
     S.fx('revswell', a - 0.6, { dur: 1.2 });
@@ -118,4 +120,6 @@ kit.score(function (S, T) {
   S.fx('whoosh', R('fine', 12.4), { dur: 1.4, vel: 30 });
   S.fx('whoosh', R('fine', 15.0), { dur: 3.0 });
   S.fx('pop', R('fine', 18.0), { vel: 40 });
+  // La matita della coda: un tratto ogni mezzo secondo, per ogni schizzo.
+  [[1.4, 1], [10.0, 1], [19.4, 2]].forEach(([a, n]) => { for (let k = 0; k < n * 2; k++) S.fx('tick', R('coda', a + k * 0.25), { vel: 14 }); });
 });

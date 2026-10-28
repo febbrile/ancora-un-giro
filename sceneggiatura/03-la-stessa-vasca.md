@@ -5,8 +5,9 @@
 **Cosa presenta.** Una cosa sola: la manopola della bancarella.
 **Cosa dà per scontato.** Il prologo e gli episodi 1 e 2: Ada, lo Spezzaparole, i passeggeri, il treno, la montagna con i fili di luce, gli scambi e le finestre sulla vasca, la vasca, la pesca, le case e i telefoni.
 **Cosa lascia per dopo.** Il treno si ricorda di quello che è stato scritto prima? (Il treno che ricorda, episodio 4.)
+**Cosa chiude.** La coda «Sotto il luna park»: dopo il cartello Fine, i nomi veri di quello che si è visto, sul quaderno di Ada.
 
-Durata: 4:31 · Voci: narratore, Ada.
+Durata: 5:10 (di cui 0:48 di coda) · Voci: narratore, Ada.
 
 ---
 
@@ -133,6 +134,24 @@ Durata: 4:31 · Voci: narratore, Ada.
 
 ---
 
+### coda · Sotto il luna park · 0:48
+
+**VISIVO.** Dopo il cartello Fine lo schermo diventa il quaderno di Ada, aperto su due pagine di carta crema, a tutto schermo. Il luna park non c'è: ci sono i disegni a matita dell'episodio, fermi, e accanto a ognuno una parola scritta a mano, che compare mentre il narratore la dice. La matita disegna ogni schizzo appena prima della sua battuta. Sulla pagina sinistra, in alto, la vasca piena di paperelle di luce, quasi tutte blu, e sopra, in fila, le tre paperelle pescate: blu, turchese, verde; la parola *campionamento*. Sotto, la manopola: un cerchio con la freccia nel mezzo e l'arco di lucine, una grande da un lato, tante piccole dall'altro; la parola *temperatura*. Sulla pagina destra, due vasche piccole, una sopra l'altra: la prima quasi tutta blu, la seconda di tutti i colori alla pari; nessuna parola.
+
+**NARRATORE.**
+> Quello che hai visto ha dei nomi. La pesca a occhi chiusi si chiama campionamento: le paperelle più numerose escono spesso, non sempre.
+
+**NARRATORE.**
+> La manopola si chiama temperatura. Sta fuori dalla montagna: non cambia il giro, cambia solo quello che cade nella vasca.
+
+**NARRATORE.**
+> Girata da un lato, quasi solo la paperella più numerosa. Dall'altro, i colori si pareggiano, ed escono anche le rare.
+
+**NARRATORE.**
+> E per la tua chat vuol dire questo: la stessa domanda, due volte, può avere due risposte. E con la manopola girata, risposte più strane.
+
+---
+
 ## Note per noi
 
 | Nella storia | Nel modellino |
@@ -162,4 +181,4 @@ Durata: 4:31 · Voci: narratore, Ada.
 - **La «Fine»** cade nella vasca (una su quaranta, due con la manopola verso le lucine piccole) come una paperella scura qualunque: non si nota e non si pesca. È dell'episodio 7.
 - **Non sono elementi nuovi**: il secondo e il terzo trenino, le case e i telefoni sono copie di cose già presentate. L'unico oggetto nuovo è la manopola.
 - **La striscia nuova** della fine non anticipa la banchina dell'episodio 4: è una striscia come le altre.
-- **Cosa non diciamo**: i nomi veri (temperatura, campionamento), chi gira la manopola nelle chat vere, perché la pista è fatta così, cosa succede alla storia dopo «altalena».
+- **Cosa non diciamo nella storia**: i nomi veri (temperatura e campionamento stanno nella coda), chi gira la manopola nelle chat vere, perché la pista è fatta così, cosa succede alla storia dopo «altalena».

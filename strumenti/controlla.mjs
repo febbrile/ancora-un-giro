@@ -6,7 +6,7 @@
 // - il ritmo (RITMO in shared.js): nessun tratto veloce sotto un sottotitolo; dopo l'ultima battuta (o il cartello,
 //   se la scena ne ha uno: const XX_TITOLO / XX_FINE) al massimo 3 secondi prima dello stacco;
 // - nessun pezzo di sottotitolo che finisce con un articolo, una preposizione, una congiunzione o un apostrofo;
-// - l'episodio sotto i 5 minuti;
+// - l'episodio sotto i 5 minuti, senza contare la scena `coda`, che da sola sta sotto 1 minuto;
 // - nessun numero a schermo nei sottotitoli.
 //
 // Poi controlla il sito: ogni episodio in sito/episodi.json, nella sua stagione, con i campi della scheda e un volto
@@ -16,7 +16,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const RADICE = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const CPS = 12, PAUSA = 3, MAX = 300, CODA = 3.0;
+const CPS = 12, PAUSA = 3, MAX = 300, MAX_CODA = 60, CODA = 3.0;
 const comune = f => fs.readFileSync(path.join(RADICE, 'episodi', 'comune', f), 'utf8');
 globalThis.window = {};
 new Function(comune('shared.js'))();
@@ -29,9 +29,10 @@ const eps = process.argv.slice(2).length ? process.argv.slice(2) : fs.readdirSyn
 for (const ep of eps) {
   const dir = path.join(RADICE, 'episodi', ep, 'modules');
   const scene = JSON.parse(fs.readFileSync(path.join(dir, 'scenes.json'), 'utf8')).scenes;
-  const tot = scene.reduce((s, x) => s + x.dur, 0), code = ep.slice(0, 2);
-  console.log('\n' + ep + ' · ' + Math.floor(tot / 60) + ':' + (tot % 60).toFixed(1).padStart(4, '0'));
+  const tot = scene.filter(x => x.id !== 'coda').reduce((s, x) => s + x.dur, 0), durCoda = scene.filter(x => x.id === 'coda').reduce((s, x) => s + x.dur, 0), code = ep.slice(0, 2);
+  console.log('\n' + ep + ' · ' + Math.floor(tot / 60) + ':' + (tot % 60).toFixed(1).padStart(4, '0') + (durCoda ? ' · coda ' + durCoda + ' s' : ''));
   if (tot > MAX) male('più di 5 minuti');
+  if (durCoda > MAX_CODA) male('coda più lunga di 1 minuto');
   for (const s of scene) {
     const file = path.join(dir, 'scene-' + s.id + '.js');
     if (!fs.existsSync(file)) { male('manca scene-' + s.id + '.js'); continue; }

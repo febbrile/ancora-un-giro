@@ -56,6 +56,12 @@
       "name": "Ancora un giro",
       "dur": 24.2,
       "desc": "Il treno riparte, giro dopo giro, e una paperella sale in fondo finché il treno arriva alla sbarra di dietro della banchina. Sul telefono la storia di Zampirù si allunga e non smette. Ada si gratta la testa: «Ma quando finisce?». Fine."
+    },
+    {
+      "id": "coda",
+      "name": "Sotto il luna park",
+      "dur": 44,
+      "desc": "Dopo il cartello Fine, sul quaderno di Ada: gli schizzi a matita di quello che l'episodio ha mostrato, e accanto a ognuno il suo nome vero."
     }
   ]
 }

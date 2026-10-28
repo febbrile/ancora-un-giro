@@ -56,6 +56,12 @@
       "name": "La giostrina",
       "dur": 20.4,
       "desc": "Il custode prende un'altra striscia e la porta lontano dalla stazione, verso una giostrina nell'angolo buio del parco. Fine."
+    },
+    {
+      "id": "coda",
+      "name": "Sotto il luna park",
+      "dur": 42,
+      "desc": "Dopo il cartello Fine, sul quaderno di Ada: gli schizzi a matita di quello che l'episodio ha mostrato, e accanto a ognuno il suo nome vero."
     }
   ]
 }

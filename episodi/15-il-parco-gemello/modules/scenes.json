@@ -41,9 +41,9 @@
     },
     {
       "id": "nomi",
-      "name": "I nomi veri",
+      "name": "I due parchi",
       "dur": 36.6,
-      "desc": "Seduta in mezzo al ponte, tra i due parchi, Ada ascolta i nomi da grandi delle cose intorno alla giostra: istruzioni di sistema, classificatore, strumento, ragionamento, il programma."
+      "desc": "Seduta in mezzo al ponte, Ada confronta i due parchi: dentro, la stessa montagna; fuori, un'altra frase del parco, un altro Bruco, nessuna teleferica, un altro regolamento."
     },
     {
       "id": "treni",
@@ -56,6 +56,12 @@
       "name": "Il cancello",
       "dur": 14.4,
       "desc": "I due treni ripartono, identici. Ada torna al suo parco, e il suo custode le apre il cancello. Fine."
+    },
+    {
+      "id": "coda",
+      "name": "Sotto il luna park",
+      "dur": 46,
+      "desc": "Dopo il cartello Fine, sul quaderno di Ada: gli schizzi a matita di quello che l'episodio ha mostrato, e accanto a ognuno il suo nome vero."
     }
   ]
 }

@@ -62,6 +62,12 @@
       "name": "Di nuovo",
       "dur": 32,
       "desc": "I treni ripartono. Arriva di nuovo «Al parco Emma»: stesso giro, stessa vasca; Ada pesca e questa volta esce una paperella turchese. Fine."
+    },
+    {
+      "id": "coda",
+      "name": "Sotto il luna park",
+      "dur": 42,
+      "desc": "Dopo il cartello Fine, sul quaderno di Ada: gli schizzi a matita di quello che l'episodio ha mostrato, e accanto a ognuno il suo nome vero."
     }
   ]
 }

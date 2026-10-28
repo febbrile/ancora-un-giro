@@ -5,8 +5,9 @@
 **Cosa presenta.** Una cosa sola: una domanda su qualcosa che non esiste, il nome del cane di Emma.
 **Cosa dà per scontato.** Il prologo e gli episodi da 1 a 7: Ada, lo Spezzaparole, i passeggeri, il treno, la montagna con i fili di luce, gli scambi e le finestre sulla vasca, la vasca, la pesca; i treni di prova che hanno piegato la pista (episodio 5); lo Spezzaparole che fa salire intere le parole di tutti i giorni (episodio 6). La manopola (episodio 3) e la paperella «Fine» (episodio 7) si vedono, senza ruolo.
 **Cosa lascia per dopo.** Che cosa c'è laggiù, oltre le colline? (Il parco più grande del mondo, episodio 9.)
+**Cosa chiude.** La coda «Sotto il luna park»: dopo il cartello Fine, i nomi veri di quello che si è visto, sul quaderno di Ada.
 
-Durata: 4:33 · Voci: narratore, Ada.
+Durata: 5:07 (di cui 0:45 di coda) · Voci: narratore, Ada.
 
 ---
 
@@ -143,6 +144,24 @@ In fondo al tunnel si accende la luce dell'uscita.
 
 ---
 
+### coda · Sotto il luna park · 0:45
+
+**VISIVO.** Dopo il cartello Fine lo schermo diventa il quaderno di Ada, aperto su due pagine di carta crema, a tutto schermo. Il luna park non c'è: ci sono i disegni a matita dell'episodio, fermi, e accanto a ognuno una parola scritta a mano, che compare mentre il narratore la dice. La matita disegna ogni schizzo appena prima della sua battuta. Sulla pagina sinistra, in alto, la vasca piena di paperelle di sei colori caldi e vicini, nessuno più numeroso; la parola *allucinazione*. Sotto, la montagna con dentro il fascio di binari, e nient'altro; poi, accanto, due paperelle in fila, una blu e una caramello, fatte allo stesso modo. Sulla pagina destra, il telefono con la domanda e, sotto, la risposta: due righe, senza parole; nessuna parola.
+
+**NARRATORE.**
+> Quello che hai visto ha un nome. Una risposta su una cosa che non c'è, detta tranquilla come tutte le altre, si chiama allucinazione.
+
+**NARRATORE.**
+> Dentro la montagna non c'è un elenco di cose vere: c'è una pista piegata dai treni di prova, e la vasca si riempie sempre.
+
+**NARRATORE.**
+> La paperella pescata è fatta come tutte le altre: non porta scritto se è vera.
+
+**NARRATORE.**
+> E per la tua chat vuol dire questo: una risposta sicura non è per questo vera. Quando chiedi una cosa che non esiste, ti risponde lo stesso.
+
+---
+
 ## Note per noi
 
 | Nella storia | Nel modellino |
@@ -189,5 +208,5 @@ In fondo al tunnel si accende la luce dell'uscita.
   dietro di loro.
 - **Non sono elementi nuovi**: la casa, il telefono e la striscia sono quelli del prologo; i passeggeri nuovi sono le
   parole della frase. L'unico elemento nuovo è la domanda su una cosa che non c'è.
-- **Cosa non diciamo**: la parola vera («allucinazione»), che le chat vere possono essere addestrate a dire «non lo so» o
+- **Cosa non diciamo nella storia**: la parola vera («allucinazione» sta nella coda), che le chat vere possono essere addestrate a dire «non lo so» o
   a cercare altrove, quanto spesso succede, perché il filo più forte va proprio a Cane, perché la pista è fatta così.

@@ -1,10 +1,10 @@
 const { seg, eo, eio, lerp } = kit;
 // Ada lascia la bancarella, risale in cima alla collina e si siede nell'erba, col quaderno sulle ginocchia: da una parte
 // il suo luna park, piccolo, con la ruota panoramica e il trenino in stazione; dall'altra il parco immenso. Poi la camera
-// vola sul parco immenso, un'immagine per ogni nome da grandi (che stanno solo nei sottotitoli): lo Spezzaparole gigante
-// e i biglietti che volano sui sedili (token); la montagna, con la sua pista che entra nella prima cima (modello); il
-// lago con le paperelle di un treno appena uscito, tantissime di un colore e poche di tutti gli altri (probabilità);
-// dietro la stazione, file e file di treni di prova grigi, addormentati (addestramento). Torniamo su Ada, che annuisce.
+// vola sul parco immenso, un'immagine alla volta: lo Spezzaparole gigante e i biglietti che volano sui sedili; la
+// montagna, con la sua pista che entra nella prima cima; il lago con le paperelle di un treno appena uscito, tantissime
+// di un colore e poche di tutti gli altri; dietro la stazione, file e file di treni di prova grigi, addormentati.
+// Torniamo su Ada, che annuisce. I nomi veri non si dicono qui: arrivano nella coda, come in ogni episodio.
 // Si apre come finisce «lago», su Ada che ride alla bancarella; finisce su Ada seduta in cima (la riprende «quaderno»).
 const NM_P = window.G.PARCO;
 const NM_CAM = [
@@ -45,11 +45,11 @@ kit.scene('nomi', {
       '<g class="nm-ada"></g><g class="nm-prato" opacity="0">' + prato + '</g>', {
       pre: 'nomi', laggiu: 1, manopola: 0, banchina: true, morto: true, treni: true,
       html: G.sottotitolo('NARRATORE', 'Il parco di Ada è un parco giocattolo, fatto apposta per guardarci dentro. Le chat di tutti i giorni fanno il giro in parchi come quello laggiù.') +
-        G.sottotitolo('NARRATORE', 'E fuori dal luna park, le sue cose hanno un nome da grandi.') +
-        G.sottotitolo('NARRATORE', 'I biglietti si chiamano token.') +
-        G.sottotitolo('NARRATORE', 'La montagna, con la sua pista, è il modello.') +
-        G.sottotitolo('NARRATORE', 'Quante paperelle cadono di ogni colore: è la probabilità di ogni parola.') +
-        G.sottotitolo('NARRATORE', 'E il tempo dei treni di prova, che hanno piegato la pista, si chiama addestramento.'),
+        G.sottotitolo('NARRATORE', 'Ed è tutto più grande. Ma il giro è lo stesso.') +
+        G.sottotitolo('NARRATORE', 'Uno Spezzaparole alto come un palazzo.') +
+        G.sottotitolo('NARRATORE', 'Una montagna con tante cime, e una pista sola.') +
+        G.sottotitolo('NARRATORE', 'Un lago al posto della vasca, con più colori di quanti se ne possano contare.') +
+        G.sottotitolo('NARRATORE', 'E dietro la stazione, file e file di treni di prova, che hanno piegato la pista.'),
     });
     this.G = G;
     const q = this.m.q;

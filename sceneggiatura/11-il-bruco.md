@@ -5,8 +5,9 @@
 **Cosa presenta.** Una cosa sola: il Bruco, con la sua piccola montagna a forma di mela, la sua vasca e la sua sbarra.
 **Cosa dà per scontato.** La prima stagione; dalla seconda, il custode alla stazione con il regolamento, la frase del parco e le bandierine, con la bandierina d'ottone nell'ultimo vagone (episodio 1).
 **Cosa lascia per dopo.** Come fa il treno a sapere se domani piove? (La teleferica, episodio 3.)
+**Cosa chiude.** La coda «Sotto il luna park»: dopo il cartello Fine, i nomi veri di quello che si è visto, sul quaderno di Ada.
 
-Durata: 4:40 · Voci: narratore, Ada, custode.
+Durata: 4:52 (di cui 0:46 di coda) · Voci: narratore, Ada, custode.
 
 ---
 
@@ -130,6 +131,24 @@ Durata: 4:40 · Voci: narratore, Ada, custode.
 
 ---
 
+### coda · Sotto il luna park · 0:46
+
+**VISIVO.** Dopo il cartello Fine lo schermo diventa il quaderno di Ada, aperto su due pagine di carta crema, a tutto schermo. Il luna park non c'è: ci sono i disegni a matita dell'episodio, fermi, e accanto a ognuno una parola scritta a mano, che compare mentre il narratore la dice. La matita disegna ogni schizzo appena prima della sua battuta. Sulla pagina sinistra, in alto, il Bruco: una fila di segmenti tondi, la piccola montagna a forma di mela e la vasca con le paperelle verdi e rosse; la parola *classificatore*. Sotto, la sbarra a righe abbassata; la parola *filtro*. Sulla pagina destra, il treno grande con la sbarra davanti e, sotto, il telefono con il biglietto già pronto che gli arriva; nessuna parola.
+
+**NARRATORE.**
+> Quello che hai visto ha dei nomi. Il Bruco, una giostra piccola con due colori soli nella vasca, è un classificatore.
+
+**NARRATORE.**
+> Il custode che conta le rosse e abbassa la sbarra è un filtro: una regola fuori dalla montagna, che conta e non legge.
+
+**NARRATORE.**
+> Il treno grande certe frasi non le vede mai. E anche la risposta, prima del telefono, passa dal Bruco.
+
+**NARRATORE.**
+> E per la tua chat vuol dire questo: quando ti arriva una risposta già pronta, non l'ha scritta il treno. L'ha fermata una sbarra, che può sbagliare.
+
+---
+
 ## Note per noi
 
 | Nella storia | Nel modellino | Nel mondo vero |
@@ -151,4 +170,4 @@ Durata: 4:40 · Voci: narratore, Ada, custode.
 - **Il biglietto già pronto** (*Di questo, qui, non si parla.*) è del regolamento: non passa dalla montagna, e sul telefono si legge, come tutte le frasi della storia.
 - **Il bambino della parolaccia** non la dice mai, e la parola non compare da nessuna parte.
 - **Il Bruco fa verde o rosso**: non decide e non legge. Ada chiede «decide il Bruco?», e il custode risponde che la sbarra la abbassa lui: è il regolamento a decidere, contando.
-- **Cosa non diciamo**: i nomi veri (episodio 6); che non tutti i rifiuti nascono qui (non lo diciamo e non lo neghiamo); quanto spesso il Bruco sbaglia.
+- **Cosa non diciamo nella storia**: i nomi veri (classificatore e filtro stanno nella coda); che non tutti i rifiuti nascono qui (non lo diciamo e non lo neghiamo); quanto spesso il Bruco sbaglia.

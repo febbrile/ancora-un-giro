@@ -50,6 +50,12 @@
       "name": "Il fiume",
       "dur": 21.4,
       "desc": "In fondo al parco, oltre il fiume, si accendono le luci di un altro parco, con una montagna identica. Fine."
+    },
+    {
+      "id": "coda",
+      "name": "Sotto il luna park",
+      "dur": 46,
+      "desc": "Dopo il cartello Fine, sul quaderno di Ada: gli schizzi a matita di quello che l'episodio ha mostrato, e accanto a ognuno il suo nome vero."
     }
   ]
 }

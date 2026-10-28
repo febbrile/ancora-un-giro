@@ -1,7 +1,8 @@
 # Ancora un giro: regole di lavoro
 
 Una serie di cartoni animati che racconta, con una storia, cosa succede dopo che premi invio in una chat
-con un'intelligenza artificiale. È per una persona comune, e la guardano anche i bambini.
+con un'intelligenza artificiale. Deve capirla chiunque, senza sapere niente prima: il linguaggio non è per bambini,
+è accessibile e immediato. Non è un cartone per bambini, anche se i bambini la seguono.
 Il mondo è un luna park di notte: una frase fa un giro sulle montagne russe e torna con una parola in più.
 
 **La regola che viene prima di tutte: una sola storia.** Chi guarda segue un racconto, non una lezione.
@@ -18,6 +19,9 @@ cambia prima il soggetto.
 [mondo/SCALETTA.md](mondo/SCALETTA.md) è la prima stagione: per ogni episodio l'argomento, la domanda di Ada,
 l'unico elemento nuovo e l'idea. Un episodio nuovo parte da lì. La seconda stagione, «Intorno alla giostra», è in
 [mondo/SCALETTA-2.md](mondo/SCALETTA-2.md).
+
+[mondo/DECISIONI.md](mondo/DECISIONI.md) raccoglie le decisioni prese e non ancora realizzate, come la voce narrante;
+[mondo/PIANO-FORMATO.md](mondo/PIANO-FORMATO.md) è il piano per portare gli episodi al formato con la coda.
 
 ## Come si lavora
 
@@ -36,11 +40,13 @@ l'unico elemento nuovo e l'idea. Un episodio nuovo parte da lì. La seconda stag
 Sono gli errori che hanno fatto fallire un primo tentativo con il pubblico vero:
 - **Personaggi, luoghi e oggetti che compaiono senza essere presentati.** Chi guarda deve sapere chi è e a cosa
   serve ogni cosa che vede, prima che serva.
-- **Formule, numeri e parole tecniche a schermo.** Niente monitor, niente calcoli, niente scritte dentro la montagna.
+- **Formule, numeri e parole tecniche a schermo, nella storia.** Niente monitor, niente calcoli, niente scritte dentro
+  la montagna. I nomi veri hanno un posto solo: la coda, dopo il cartello Fine.
 - **Due letture sovrapposte**, una per bambini e una per esperti: distraggono gli uni e non bastano agli altri.
 - **Troppe idee in un episodio.** Un episodio presenta **un solo elemento nuovo** del mondo e usa solo quelli già visti.
-- **Spiegazioni fuori dalla trama**: gag didattiche, esempi messi lì per insegnare, riassunti, mappe. Un concetto
-  che non fa avanzare la storia della puntata aspetta la sua puntata, dove diventerà la storia.
+- **Spiegazioni dentro la trama**: gag didattiche, esempi messi lì per insegnare, riassunti, mappe. Un concetto
+  che non fa avanzare la storia della puntata aspetta la sua puntata, dove diventerà la storia. La spiegazione
+  sta nella coda, dopo il cartello Fine, e nomina solo quello che la storia ha già mostrato.
 - **Elementi estranei al mondo.** Ogni cosa deve appartenere a un luna park: un bambino che c'è stato la riconosce.
 - **Nessuna domanda.** Ogni episodio parte da una domanda e arriva a una risposta: è una storia completa.
 
@@ -55,10 +61,17 @@ Sono gli errori che hanno fatto fallire un primo tentativo con il pubblico vero:
   interno e il `RITMO` di `shared.js` li porta al tempo vero (`t = G.tempo(ep, id, t)` in `render`, `R(id, x)` in
   `score.js`); in `scenes.json` `dur` è la durata vera. Mai accelerare mentre c'è un sottotitolo:
   `node strumenti/controlla.mjs` controlla le due cose.
-- **Un episodio dura al massimo 5 minuti.** Meglio un episodio in più che uno troppo pieno.
+- **Un episodio dura al massimo 5 minuti**, senza contare la coda. Meglio un episodio in più che uno troppo pieno.
 - **I sottotitoli scorrono a pezzi** di 18–48 caratteri (`chunkSub` in `shared.js`). Un pezzo non finisce mai con
   un articolo, una preposizione, una congiunzione o una parola con apostrofo.
 - Le sole scritte a schermo sono i sottotitoli, il titolo e il cartello finale. Sul telefono si vede la frase della storia.
+  Nella coda, e solo lì, ci sono le parole sul quaderno.
+- **La coda «Sotto il luna park».** Dopo il cartello Fine, ogni episodio ha una scena `coda` sul quaderno di Ada:
+  la matita disegna gli schizzi di quello che la storia ha mostrato e accanto a ognuno compare il suo nome vero,
+  scritto a mano, mentre il narratore lo dice. Nomina solo quello che l'episodio ha mostrato, una cosa per volta;
+  nomi veri sì, formule e numeri no, quelli restano nelle lezioni; le scritte stanno sul quaderno, mai nel luna park.
+  Dura al massimo 1 minuto e sta fuori dal conto dei 5 (`tempi.py` e `controlla.mjs` la contano a parte). Nel player
+  è un capitolo a sé. Se la coda deve spiegare quello che il film non ha fatto capire, si riscrive il film.
 
 ## Regole scientifiche
 
@@ -86,7 +99,8 @@ L'elenco completo, tradotto nel luna park, è nel §7 del soggetto. Le più impo
    dai biglietti.
 9. **La pista non l'ha progettata nessuno**: si è piegata sotto milioni di treni carichi di frasi, poi è stata fissata.
 10. **I colori non hanno un nome**: conta solo quanto due colori si somigliano.
-11. **Parliamo solo del nostro luna park.** Niente confronti con i modelli veri, salvo un episodio dedicato.
+11. **Nella storia parliamo solo del nostro luna park.** Niente confronti con i modelli veri, salvo un episodio
+    dedicato; i nomi veri arrivano solo nella coda, in ogni episodio.
 12. **Quello che si mostra una volta, si mostra sempre.** Ogni passeggero ha i suoi colori, ogni finestra le sue
     paperelle di luce, ogni vasca le sue paperelle, in ogni episodio. Se mancano i dati, prima si dichiarano nel modellino,
     poi si mostrano.

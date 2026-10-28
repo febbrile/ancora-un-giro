@@ -41,9 +41,9 @@
     },
     {
       "id": "nomi",
-      "name": "I nomi veri",
+      "name": "In grande",
       "dur": 50,
-      "desc": "Ada, seduta in cima alla collina tra il suo parco e quello immenso, ascolta i nomi da grandi: i biglietti sono i token, la montagna con la sua pista il modello, le paperelle di ogni colore la probabilità, il tempo dei treni di prova l'addestramento."
+      "desc": "Ada, seduta in cima alla collina tra il suo parco e quello immenso, guarda il parco laggiù: lo Spezzaparole alto come un palazzo, la montagna con tante cime, il lago al posto della vasca, file e file di treni di prova. Tutto più grande, e lo stesso giro."
     },
     {
       "id": "quaderno",
@@ -56,6 +56,12 @@
       "name": "Il cancello",
       "dur": 23,
       "desc": "Al cancello del suo luna park, chiuso, Ada trova il custode, uscito dalla guardiola con la lanterna, le chiavi e il regolamento: c'è sempre stato, ma lei non l'aveva mai guardato. Lui apre il cancello, guarda l'orologio: «Fra poco si chiude. Lo dice il regolamento.» Ada passa e riapre il quaderno su una pagina bianca. Fine."
+    },
+    {
+      "id": "coda",
+      "name": "Sotto il luna park",
+      "dur": 44,
+      "desc": "Dopo il cartello Fine, sul quaderno di Ada: gli schizzi a matita di quello che l'episodio ha mostrato, e accanto a ognuno il suo nome vero."
     }
   ]
 }

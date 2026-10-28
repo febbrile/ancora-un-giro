@@ -5,8 +5,9 @@
 **Cosa presenta.** Una cosa sola: la banchina, che ha una lunghezza fissa.
 **Cosa dà per scontato.** Il prologo e gli episodi 1 e 2: Ada, lo Spezzaparole, i passeggeri (Al, Mare, Emma, Parco, le paperelle che salgono sul treno), il treno, la montagna con i fili di luce, gli scambi e le finestre sulla vasca, la vasca, la pesca, il salotto col telefono.
 **Cosa lascia per dopo.** Chi ha costruito una pista così? (Chi ha costruito la pista, episodio 5.)
+**Cosa chiude.** La coda «Sotto il luna park»: dopo il cartello Fine, i nomi veri di quello che si è visto, sul quaderno di Ada.
 
-Durata: 4:15 · Voci: narratore, Ada.
+Durata: 4:50 (di cui 0:45 di coda) · Voci: narratore, Ada.
 
 ---
 
@@ -128,6 +129,24 @@ In fondo al tunnel si accende la luce dell'uscita.
 
 ---
 
+### coda · Sotto il luna park · 0:45
+
+**VISIVO.** Dopo il cartello Fine lo schermo diventa il quaderno di Ada, aperto su due pagine di carta crema, a tutto schermo. Il luna park non c'è: ci sono i disegni a matita dell'episodio, fermi, e accanto a ognuno una parola scritta a mano, che compare mentre il narratore la dice. La matita disegna ogni schizzo appena prima della sua battuta. Sulla pagina sinistra, in alto, la banchina vista di lato: la linea lunga delle assi, una sbarra a righe a ogni capo, e un treno corto di tre vagoni in fondo; la parola *finestra di contesto*. Sulla pagina destra, la striscia lunga che scende dall'alto come un nastro e, sotto, un treno di sei vagoni che si riempie dal principio. Sulla pagina sinistra, in basso, la banchina piena: i vagoni da una sbarra all'altra, e due biglietti per terra davanti alla sbarra; nessuna parola.
+
+**NARRATORE.**
+> Quello che hai visto ha dei nomi. La banchina, con i suoi posti contati, si chiama finestra di contesto.
+
+**NARRATORE.**
+> Il treno non ricorda niente: a ogni messaggio la striscia porta tutta la chat, e i biglietti risalgono dal principio.
+
+**NARRATORE.**
+> Quando la chat è più lunga della banchina, i primi biglietti restano giù, e il treno parte senza di loro.
+
+**NARRATORE.**
+> E per la tua chat vuol dire questo: se diventa lunga, le prime cose che hai scritto non salgono più. Non le ha dimenticate: non le ha mai tenute.
+
+---
+
 ## Note per noi
 
 | Nella storia | Nel modellino |
@@ -149,4 +168,4 @@ In fondo al tunnel si accende la luce dell'uscita.
 - **Chi ha detto cosa** sulla striscia non si distingue: è un rimando della scaletta.
 - **L'ultimo messaggio** non entra nella montagna: il treno parte, e lì finisce la storia.
 - **Non sono elementi nuovi**: il secondo Al, la paperella blu e quella verde come passeggeri, la striscia lunga, il vento che porta via i biglietti. L'unico elemento nuovo è la lunghezza della banchina, con le sue due sbarre a righe.
-- **Cosa non diciamo**: i nomi veri, come finisce una risposta, perché la pista è fatta così, chi l'ha costruita.
+- **Cosa non diciamo nella storia**: i nomi veri (finestra di contesto sta nella coda), come finisce una risposta, perché la pista è fatta così, chi l'ha costruita.

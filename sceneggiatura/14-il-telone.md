@@ -5,8 +5,9 @@
 **Cosa presenta.** Una cosa sola: il telone, con le sue paperelle arancio, chiara e scura.
 **Cosa dà per scontato.** La prima stagione; dalla seconda, il custode e il regolamento, la frase del parco e le bandierine (episodio 1), il Bruco (episodio 2), la bandierina turchese della teleferica (episodio 3), la campanella (episodio 4).
 **Cosa lascia per dopo.** Che parco è quello dall'altra parte del fiume? (Il parco gemello, episodio 6.)
+**Cosa chiude.** La coda «Sotto il luna park»: dopo il cartello Fine, i nomi veri di quello che si è visto, sul quaderno di Ada.
 
-Durata: 4:12 · Voci: narratore, Ada, custode.
+Durata: 5:11 (di cui 0:46 di coda) · Voci: narratore, Ada, custode.
 
 ---
 
@@ -112,6 +113,24 @@ Durata: 4:12 · Voci: narratore, Ada, custode.
 
 ---
 
+### coda · Sotto il luna park · 0:46
+
+**VISIVO.** Dopo il cartello Fine lo schermo diventa il quaderno di Ada, aperto su due pagine di carta crema, a tutto schermo. Il luna park non c'è: ci sono i disegni a matita dell'episodio, fermi, e accanto a ognuno una parola scritta a mano, che compare mentre il narratore la dice. La matita disegna ogni schizzo appena prima della sua battuta. Sulla pagina sinistra, in alto, il treno con il telone a toppe steso sugli ultimi vagoni; la parola *ragionamento nascosto*. Sotto, tre paperelle in fila, grigia, verde oliva e arancio scura, con una freccia dall'una all'altra; la parola *catena di pensiero*. Sulla pagina destra, il telefono con i tre puntini e, sotto, una fila di cerchietti, i giri che il telefono non vede; nessuna parola.
+
+**NARRATORE.**
+> Quello che hai visto ha dei nomi. I giri sotto il telone, quelli che il telefono non vede, sono il ragionamento nascosto.
+
+**NARRATORE.**
+> Le paperelle che salgono lì sotto, una dopo l'altra, prima della risposta, si chiamano catena di pensiero.
+
+**NARRATORE.**
+> Sono giri come gli altri: nessuno li controlla, e una paperella sbagliata lì sotto porta a una risposta sicura lo stesso.
+
+**NARRATORE.**
+> E per la tua chat vuol dire questo: l'attesa prima della risposta sono giri che non vedi. E dentro ci sono parole, come negli altri.
+
+---
+
 ## Note per noi
 
 | Nella storia | Nel modellino | Nel mondo vero |
@@ -140,4 +159,4 @@ Durata: 4:12 · Voci: narratore, Ada, custode.
 - **Sotto il telone c'è sempre un indovinello senza numeri**: chi è il più basso. Al è un sassolino, Mare un'onda, Emma una bambina: chi guarda lo sa già, e vede la risposta sbagliata.
 - **La campanella del telone** è la stessa dell'episodio 4: il regolamento dice quanti giri può durare il telone (`GIRI_TELONE` = 1 nella notte della campanella). Il custode attacca lui la paperella arancio scura: è quello che fa il codice quando il budget finisce.
 - **Il telone non entra nella montagna**: resta sul braccio del custode, sulla banchina. Dentro, i passeggeri sono tutti uguali.
-- **Cosa non diciamo**: i nomi veri (episodio 6); che il ragionamento costa giri e tempo; perché il treno, con le paperelle sotto il telone davanti, porta più spesso alla risposta giusta.
+- **Cosa non diciamo nella storia**: i nomi veri (ragionamento nascosto e catena di pensiero stanno nella coda); che il ragionamento costa giri e tempo; perché il treno, con le paperelle sotto il telone davanti, porta più spesso alla risposta giusta.

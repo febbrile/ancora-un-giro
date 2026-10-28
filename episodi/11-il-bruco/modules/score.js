@@ -73,6 +73,8 @@ kit.score(function (S, T) {
   // Tutti i colori.
   carillon(R('piove', 1.4), R('piove', 4.6), false);
   sez(T.piove, R('piove', 17.6), ['C', 'Am', 'Dm', 'G'], { pad: 26, vib: 22, bass: 40 });
+  // La coda sul quaderno: solo il pad, piano, sotto la voce.
+  sez(R('coda', 1.0), R('coda', 43.0), ['C', 'Am', 'F', 'G'], { pad: 22, keys: 18 });
   // I due cartelli: il titolo e la fine.
   [R('domanda', 21.6), R('piove', 17.6)].forEach((a, k) => {
     S.fx('revswell', a - 0.6, { dur: 1.2 });
@@ -152,4 +154,6 @@ kit.score(function (S, T) {
   bruco('piove', 0.3, 0.3, 3, 1.4, 3.2, [3.4, 4.4]);
   uscita('piove', 5.6, [7.6, 9.6]);
   S.note('vib', 'A3', { t: R('piove', 11.6), dur: 2.4, vel: 28 });
+  // La matita della coda: un tratto ogni mezzo secondo, per ogni schizzo.
+  [[1.4, 3], [11.6, 2], [22.2, 2], [31.6, 2]].forEach(([a, n]) => { for (let k = 0; k < n * 2; k++) S.fx('tick', R('coda', a + k * 0.25), { vel: 14 }); });
 });

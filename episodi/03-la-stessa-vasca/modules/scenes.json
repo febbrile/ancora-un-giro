@@ -56,6 +56,12 @@
       "name": "Ancora",
       "dur": 24.0,
       "desc": "In una delle tre case qualcuno legge la storia di Emma, e scrive ancora. Una striscia nuova vola al luna park; Ada guarda la montagna. Fine."
+    },
+    {
+      "id": "coda",
+      "name": "Sotto il luna park",
+      "dur": 48,
+      "desc": "Dopo il cartello Fine, sul quaderno di Ada: gli schizzi a matita di quello che l'episodio ha mostrato, e accanto a ognuno il suo nome vero."
     }
   ]
 }

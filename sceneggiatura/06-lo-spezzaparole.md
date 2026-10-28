@@ -5,8 +5,9 @@
 **Cosa presenta.** Una cosa sola: la parola nuova, che lo Spezzaparole non ha mai visto intera, e che sale sul treno a pezzi.
 **Cosa dà per scontato.** Il prologo e gli episodi da 1 a 5: Ada, lo Spezzaparole, i passeggeri, il treno, la montagna con i fili di luce, gli scambi e le finestre sulla vasca, la vasca, la pesca, le case con il telefono; la banchina (episodio 4), lungo la quale il treno cresce nel montaggio finale.
 **Cosa lascia per dopo.** Il treno potrebbe girare per sempre? (Come finisce la storia, episodio 7.)
+**Cosa chiude.** La coda «Sotto il luna park»: dopo il cartello Fine, i nomi veri di quello che si è visto, sul quaderno di Ada.
 
-Durata: 3:56 · Voci: narratore, Ada.
+Durata: 4:22 (di cui 0:44 di coda) · Voci: narratore, Ada.
 
 ---
 
@@ -131,6 +132,24 @@ In fondo al tunnel si accende la luce dell'uscita.
 
 ---
 
+### coda · Sotto il luna park · 0:44
+
+**VISIVO.** Dopo il cartello Fine lo schermo diventa il quaderno di Ada, aperto su due pagine di carta crema, a tutto schermo. Il luna park non c'è: ci sono i disegni a matita dell'episodio, fermi, e accanto a ognuno una parola scritta a mano, che compare mentre il narratore la dice. La matita disegna ogni schizzo appena prima della sua battuta. Sulla pagina sinistra, in alto, lo Spezzaparole con la forbice, una striscia che entra e tre biglietti dai bordi strappati che escono; la parola *tokenizzazione*. Sotto, un biglietto intero e, accanto, i tre pezzi coi bordi che combaciano, giallo, corallo e grigio argento; la parola *sottoparole*. Sulla pagina destra, tre vagoni con i tre pezzi e i fili di luce ad arco tra loro; nessuna parola.
+
+**NARRATORE.**
+> Quello che hai visto ha dei nomi. Il lavoro dello Spezzaparole, che taglia ogni frase in biglietti, si chiama tokenizzazione.
+
+**NARRATORE.**
+> I biglietti sono i token. Una parola che non ha il suo biglietto intero sale a pezzi: i pezzi si chiamano sottoparole.
+
+**NARRATORE.**
+> Dentro la montagna la parola intera non c'è: ci sono i suoi pezzi, e i fili di luce li tengono insieme.
+
+**NARRATORE.**
+> E per la tua chat vuol dire questo: le parole di tutti i giorni le vede intere; i nomi rari e inventati, a pezzi.
+
+---
+
 ## Note per noi
 
 | Nella storia | Nel modellino |
@@ -157,4 +176,4 @@ In fondo al tunnel si accende la luce dell'uscita.
 - **La cameretta** è una casa col telefono, come quelle dell'episodio 2; le mani piccole dicono che a scrivere è un bambino.
 - **La prova di Ada** sta tutta fuori dalla montagna: Ada usa lo Spezzaparole, non manda niente sul treno.
 - **Nel montaggio finale** non si vedono vasche da vicino: solo il treno da lontano, le paperelle che salgono e il telefono. Il treno cresce lungo la banchina (episodio 4) e non oltre; il montaggio si ferma prima che un biglietto resti giù. A crescere senza fine è la storia sul telefono.
-- **Cosa non diciamo**: i nomi veri, come sono nati i pezzi dello Spezzaparole, perché proprio «Zam», «pi» e «rù», come finisce la storia (episodio 7).
+- **Cosa non diciamo nella storia**: i nomi veri (tokenizzazione e sottoparole stanno nella coda), come sono nati i pezzi dello Spezzaparole, perché proprio «Zam», «pi» e «rù», come finisce la storia (episodio 7).

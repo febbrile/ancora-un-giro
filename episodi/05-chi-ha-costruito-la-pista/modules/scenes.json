@@ -62,6 +62,12 @@
       "name": "Una parola nuova",
       "dur": 21.4,
       "desc": "Una striscia nuova atterra in mano ad Ada: una parola mai vista. Ada guarda lo Spezzaparole: come la taglia? Fine."
+    },
+    {
+      "id": "coda",
+      "name": "Sotto il luna park",
+      "dur": 42,
+      "desc": "Dopo il cartello Fine, sul quaderno di Ada: gli schizzi a matita di quello che l'episodio ha mostrato, e accanto a ognuno il suo nome vero."
     }
   ]
 }

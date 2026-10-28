@@ -35,12 +35,13 @@ kit.scene('volo', {
         '<rect x="66" y="458" width="270" height="84" rx="36" fill="' + C.luce + '" opacity=".72" filter="url(#g-glow)"/>' +
         '<g class="volo-bolla">' + G.bolle(['Al mare Emma']) + '</g>') + '</g></g>' +
       '<g class="volo-striscia" opacity="0"><g transform="translate(-150 -22)">' + G.striscia('Al mare Emma', 300) + '</g></g>' +
-      '</svg>' + G.sottotitolo('NARRATORE', 'In quell’istante, la frase parte per un viaggio.') + '</div>', 'volo')));
+      '</svg>' + G.sottotitolo('NARRATORE', 'La frase parte per un viaggio. Dove va davvero c’è un parco immenso, e dentro non ci si vede.') +
+      G.sottotitolo('NARRATORE', 'Noi la seguiamo in un parco giocattolo: piccolo, con poche parole, fatto apposta per guardarci dentro.') + '</div>', 'volo')));
     const q = s => kit.stage.querySelector(s);
     this.cam = q('.volo-cam'); this.bolla = q('.volo-bolla'); this.str = q('.volo-striscia');
     this.dentro = q('.volo-dentro'); this.esterno = q('.volo-esterno'); this.pan = q('.volo-pan'); this.ruota = q('.volo-ruota');
     this.G = G;
-    this.sub = G.subs(kit, [[2.2, 7.4]]);
+    this.sub = G.subs(kit, [[1.0, 8.8], [9.4, 18.0]]);
   },
   render(t, kit) {
     t = window.G.tempo('00', 'volo', t);
@@ -61,12 +62,12 @@ kit.scene('volo', {
       rot = -6 + 10 * Math.sin(t * 4) * seg(t, 1.6, 2.2);
       op = Math.min(seg(t, 0.9, 1.4), 1 - seg(t, 4.0, 4.5));
     } else {
-      const u = seg(t, 4.6, 13.2);
+      const u = seg(t, 4.6, 18.6);
       const p = voloBez([[220, 760], [600, 380], [1150, 260], [1720, 600]], eio(u));
       x = p[0]; y = p[1] + 26 * Math.sin(t * 2.4);
       s = lerp(0.85, 0.16, eio(u));
       rot = lerp(-24, 20, u) + 9 * Math.sin(t * 3.1);
-      op = Math.min(seg(t, 4.5, 5.0), 1 - seg(t, 12.6, 13.4));
+      op = Math.min(seg(t, 4.5, 5.0), 1 - seg(t, 18.0, 18.8));
     }
     const sk = 10 * Math.sin(t * 6.3);
     this.str.setAttribute('transform', 'translate(' + x.toFixed(1) + ' ' + y.toFixed(1) + ') rotate(' + rot.toFixed(2) + ') skewX(' + sk.toFixed(2) + ') scale(' + s.toFixed(3) + ')');
@@ -75,7 +76,7 @@ kit.scene('volo', {
     const fuori = eio(seg(t, VOLO_FUORI[0], VOLO_FUORI[1]));
     this.dentro.setAttribute('opacity', (1 - fuori).toFixed(3));
     this.esterno.setAttribute('opacity', fuori.toFixed(3));
-    this.pan.setAttribute('transform', 'translate(' + (-140 * eio(seg(t, 4.2, 14))).toFixed(1) + ' 0)');
+    this.pan.setAttribute('transform', 'translate(' + (-140 * eio(seg(t, 4.2, 19))).toFixed(1) + ' 0)');
     this.ruota.setAttribute('transform', 'rotate(' + (t * 6).toFixed(1) + ')');
     this.sub(t);
   },

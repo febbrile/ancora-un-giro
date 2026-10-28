@@ -5,8 +5,9 @@
 **Cosa presenta.** Una cosa sola: la teleferica, con la sua pagina del regolamento, la bandierina turchese e le paperelle viola che la fanno partire.
 **Cosa dà per scontato.** La prima stagione; dalla seconda, il custode, il regolamento, la frase del parco e le bandierine (episodio 1), il Bruco (episodio 2) e la vasca sparsa di *Domani piove?*, con la sua unica paperella viola.
 **Cosa lascia per dopo.** Perché la storia si è fermata a metà? (La campanella, episodio 4.)
+**Cosa chiude.** La coda «Sotto il luna park»: dopo il cartello Fine, i nomi veri di quello che si è visto, sul quaderno di Ada.
 
-Durata: 4:24 · Voci: narratore, Ada, custode.
+Durata: 5:02 (di cui 0:48 di coda) · Voci: narratore, Ada, custode.
 
 ---
 
@@ -118,6 +119,24 @@ Durata: 4:24 · Voci: narratore, Ada, custode.
 
 ---
 
+### coda · Sotto il luna park · 0:48
+
+**VISIVO.** Dopo il cartello Fine lo schermo diventa il quaderno di Ada, aperto su due pagine di carta crema, a tutto schermo. Il luna park non c'è: ci sono i disegni a matita dell'episodio, fermi, e accanto a ognuno una parola scritta a mano, che compare mentre il narratore la dice. La matita disegna ogni schizzo appena prima della sua battuta. Sulla pagina sinistra, in alto, il pilone con il filo che sale oltre la collina e la cabina appesa; la parola *strumento*. Sotto, due paperelle viola, una chiara e una scura, con in mezzo la striscia della richiesta e una freccia verso la cabina; la parola *chiamata di funzione*. Sulla pagina destra, il treno con la bandierina turchese e, nell'ultimo vagone, il biglietto tornato da oltre le colline; nessuna parola.
+
+**NARRATORE.**
+> Quello che hai visto ha dei nomi. La teleferica, che porta una richiesta fuori dal parco e torna con una striscia, è uno strumento.
+
+**NARRATORE.**
+> Le paperelle viola, la richiesta tra l'una e l'altra, e la cabina che parte: tutto questo si chiama chiamata di funzione.
+
+**NARRATORE.**
+> La striscia che torna sale sul treno come un passeggero qualunque: il treno non sa se è vera.
+
+**NARRATORE.**
+> E per la tua chat vuol dire questo: quando cerca o calcola fuori, il risultato lo porta come qualunque altra parola. Con la stessa calma, anche se è sbagliato.
+
+---
+
 ## Note per noi
 
 | Nella storia | Nel modellino | Nel mondo vero |
@@ -146,4 +165,4 @@ Durata: 4:24 · Voci: narratore, Ada, custode.
 - **La paperella viola sale sul treno** come tutte: la richiesta è fatta di passeggeri, e serve ai giri dopo. Sul telefono non arriva, perché il regolamento lo dice. Solo la Fine non sale (episodio 7).
 - **La vasca della prima scena** è quella dichiarata alla fine dell'episodio 2: senza la pagina della teleferica, una sola paperella viola.
 - **La pioggia oltre le colline** si vede, la striscia che torna è *sole*: è l'unico modo, senza parole, per far vedere che la striscia è sbagliata. Il treno non la controlla.
-- **Cosa non diciamo**: i nomi veri (episodio 6); come il custode legge la richiesta (gli argomenti sono pescati, non letti); dove arriva la cabina, oltre le colline.
+- **Cosa non diciamo nella storia**: i nomi veri (strumento e chiamata di funzione stanno nella coda); come il custode legge la richiesta (gli argomenti sono pescati, non letti); dove arriva la cabina, oltre le colline.

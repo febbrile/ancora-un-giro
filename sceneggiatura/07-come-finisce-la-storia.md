@@ -5,8 +5,9 @@
 **Cosa presenta.** Una cosa sola: la paperella Fine, la paperella del colore della notte.
 **Cosa dà per scontato.** Il prologo e gli episodi da 1 a 6: Ada e il suo quaderno, i passeggeri, il treno, la montagna con i fili di luce, gli scambi e le finestre sulla vasca, la vasca, la pesca, il telefono nel salotto; la banchina dell'episodio 4, dove il treno ci sta sempre; i treni di prova (episodio 5), nominati nella domanda finale.
 **Cosa lascia per dopo.** E se nessun treno di prova ha mai portato la risposta? (La paperella sbagliata, episodio 8.)
+**Cosa chiude.** La coda «Sotto il luna park»: dopo il cartello Fine, i nomi veri di quello che si è visto, sul quaderno di Ada.
 
-Durata: 3:50 · Voci: narratore, Ada.
+Durata: 4:05 (di cui 0:41 di coda) · Voci: narratore, Ada.
 
 ---
 
@@ -126,6 +127,24 @@ In fondo al tunnel si accende la luce dell'uscita.
 
 ---
 
+### coda · Sotto il luna park · 0:41
+
+**VISIVO.** Dopo il cartello Fine lo schermo diventa il quaderno di Ada, aperto su due pagine di carta crema, a tutto schermo. Il luna park non c'è: ci sono i disegni a matita dell'episodio, fermi, e accanto a ognuno una parola scritta a mano, che compare mentre il narratore la dice. La matita disegna ogni schizzo appena prima della sua battuta. Sulla pagina sinistra, in alto, la vasca piena di paperelle quasi tutte scure, del colore della notte; la parola *token di fine*. Sotto, cinque vaschette in fila, i cinque giri: nelle prime tre una sola paperella scura, nella quarta qualcuna, nell'ultima quasi tutte. Sulla pagina destra, il treno fermo in stazione col fanale, e davanti al treno, a terra, la paperella scura che non sale; nessuna parola.
+
+**NARRATORE.**
+> Quello che hai visto ha un nome. La paperella scura, del colore della notte, è il token di fine.
+
+**NARRATORE.**
+> È una paperella come le altre: nella vasca c'è sempre stata, una sola la prima sera, poi sempre di più.
+
+**NARRATORE.**
+> Quando viene pescata, nessuno sale sul treno: il giro si ferma lì, e la risposta è finita.
+
+**NARRATORE.**
+> E per la tua chat vuol dire questo: la risposta finisce perché è uscita una paperella scura, non perché la macchina ha finito di pensare.
+
+---
+
 ## Note per noi
 
 | Nella storia | Nel modellino |
@@ -159,4 +178,4 @@ In fondo al tunnel si accende la luce dell'uscita.
 - **Le scene di montaggio** (giri, punto) mostrano solo l'uscita e la pesca; dentro la montagna si entra solo nell'ultimo giro.
 - **La domanda finale** nomina i treni di prova dell'episodio 5, senza mostrarli. La striscia nuova non si legge: cosa c'è scritto lo decide l'episodio 8.
 - **Con gli episodi 3–6**: se nei loro film la bancarella ha la manopola (episodio 3) o la banchina ha una lunghezza (episodio 4), qui si vedono come le lasciano loro, senza usarle. All'ultimo giro il treno ha sette vagoni e ci sta sulla banchina dell'episodio 4: nessun biglietto resta giù. (Fino al 23 ottobre 2026 la banchina era di sette posti e il treno la riempiva; ora è di venticinque: dove il film mostra la banchina piena, va ritoccato.)
-- **Cosa non diciamo**: i nomi veri, il custode che chiude il parco, perché la paperella scura aumenta proprio quando la storia sembra finita (lo fa la pista, e nessuno sa dire come).
+- **Cosa non diciamo nella storia**: i nomi veri (token di fine sta nella coda), il custode che chiude il parco, perché la paperella scura aumenta proprio quando la storia sembra finita (lo fa la pista, e nessuno sa dire come).

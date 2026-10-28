@@ -51,6 +51,8 @@ kit.score(function (S, T) {
   sez(R('ancora', 17), R('ancora', 29.2), ['Am', 'F', 'Dm', 'G'], { pad: 28, keys: 26 });
   S.drums({ kick: 'x...x...', shaker: 'oxoxoxox' }, { from: Math.ceil(bt(R('mare', 2))), repeat: 5, vel: 30 });
   S.drums({ kick: 'x...x...', shaker: 'oxoxoxox' }, { from: Math.ceil(bt(R('verde', 2))), repeat: 5, vel: 30 });
+  // La coda sul quaderno: solo il pad, piano, sotto la voce.
+  sez(R('coda', 1.0), R('coda', 39.0), ['C', 'Am', 'F', 'G'], { pad: 22, keys: 18 });
   // I due cartelli: il titolo e la fine.
   [R('domanda', 17.6), R('ancora', 29.2)].forEach((a, k) => {
     S.fx('revswell', a - 0.6, { dur: 1.2 });
@@ -126,4 +128,6 @@ kit.score(function (S, T) {
   for (let k = 0; k < 6; k++) S.fx('woodblock', R('ancora', 21.2 + k * 0.22), { vel: 26 });
   S.fx('sparkle', R('ancora', 21.8), { vel: 44 }); S.fx('ding', R('ancora', 22.6), { vel: 40 });
   S.fx('pop', R('ancora', 23.4), { vel: 40 });
+  // La matita della coda: un tratto ogni mezzo secondo, per ogni schizzo.
+  [[1.4, 4], [12.0, 2], [22.0, 2]].forEach(([a, n]) => { for (let k = 0; k < n * 2; k++) S.fx('tick', R('coda', a + k * 0.25), { vel: 14 }); });
 });
