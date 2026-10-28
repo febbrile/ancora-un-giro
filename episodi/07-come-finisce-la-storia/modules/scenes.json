@@ -50,6 +50,12 @@
       "name": "Come finisce",
       "dur": 27,
       "desc": "Ada disegna la paperella scura accanto a quella della prima sera e la rimette nell'acqua. Arriva una striscia nuova: e se nessun treno di prova ha mai portato la risposta? Fine."
+    },
+    {
+      "id": "coda",
+      "name": "Sotto il luna park",
+      "dur": 41,
+      "desc": "Dopo il cartello Fine, sul quaderno di Ada: gli schizzi a matita di quello che l'episodio ha mostrato, e accanto a ognuno il suo nome vero."
     }
   ]
 }
