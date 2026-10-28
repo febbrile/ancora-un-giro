@@ -149,7 +149,7 @@ cancello del luna park; ha il suo episodio, che lo presenta del tutto, con la ca
   regolamento, un'altra frase del parco, un altro Bruco, e niente teleferica: la stessa frase torna con un'altra
   risposta. I nomi veri arrivano nella coda, come in ogni episodio.
 - **Sotto**: stessi pesi, codice di inferenza diverso, prodotti diversi; confrontare modelli vuol dire confrontarli a
-  parità di codice. Come l'episodio 9, è l'unico della stagione con i nomi da grandi.
+  parità di codice. I nomi da grandi stanno nella coda, come in ogni episodio.
 
 ---
 

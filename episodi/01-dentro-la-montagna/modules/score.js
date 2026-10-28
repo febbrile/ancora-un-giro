@@ -110,5 +110,5 @@ kit.score(function (S, T) {
   // Sul viadotto della stazione lunga il treno arriva alla montagna prima della fine: ci entra di corsa.
   S.fx('whoosh', R('quaderno', 20.6), { dur: 1.8, vel: 22 });
   // La matita della coda: un tratto ogni mezzo secondo, per ogni schizzo.
-  [[11.4, 4], [19.8, 3], [28.4, 1], [36.2, 2]].forEach(([a, n]) => { for (let k = 0; k < n * 2; k++) S.fx('tick', R('coda', a + k * 0.25), { vel: 14 }); });
+  [[1.4, 4], [13.8, 3], [22.6, 2]].forEach(([a, n]) => { for (let k = 0; k < n * 2; k++) S.fx('tick', R('coda', a + k * 0.25), { vel: 14 }); });
 });
