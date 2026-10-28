@@ -5,8 +5,9 @@
 **Cosa presenta.** Una cosa sola: la campanella dell'orologio del custode. Con lei, il custode per intero: la sua notte, la guardiola, il regolamento.
 **Cosa dà per scontato.** La prima stagione, con la paperella Fine (episodio 7) e la chat che risale tutta a ogni messaggio (episodio 4); dalla seconda, il custode, la frase del parco e le bandierine (episodio 1), il Bruco (episodio 2), la teleferica e la sua bandierina turchese (episodio 3).
 **Cosa lascia per dopo.** Perché il telefono resta muto mentre il treno gira? (Il telone, episodio 5.)
+**Cosa chiude.** La coda «Sotto il luna park»: dopo il cartello Fine, i nomi veri di quello che si è visto, sul quaderno di Ada.
 
-Durata: 4:20 · Voci: narratore, Ada, custode.
+Durata: 4:33 (di cui 0:44 di coda) · Voci: narratore, Ada, custode.
 
 ---
 
@@ -119,6 +120,24 @@ Sul telefono la storia cresce: *nuota*, *nuota e*, *nuota e gioca*, *nuota e gio
 
 ---
 
+### coda · Sotto il luna park · 0:44
+
+**VISIVO.** Dopo il cartello Fine lo schermo diventa il quaderno di Ada, aperto su due pagine di carta crema, a tutto schermo. Il luna park non c'è: ci sono i disegni a matita dell'episodio, fermi, e accanto a ognuno una parola scritta a mano, che compare mentre il narratore la dice. La matita disegna ogni schizzo appena prima della sua battuta. Sulla pagina sinistra, in alto, l'orologio da tasca con la campanella in cima e, accanto, quattro cerchietti in fila, i giri; la parola *limite di token*. Sotto, il treno fermo con la campanella sopra e, accanto, la mezza riga; la parola *troncamento*. Sulla pagina destra, il telefono con la storia a metà e sotto la parola nuova, e più in basso il treno lungo che risale intero; nessuna parola.
+
+**NARRATORE.**
+> Quello che hai visto ha dei nomi. I giri che il regolamento concede a una risposta sono il limite di token.
+
+**NARRATORE.**
+> La campanella che ferma il treno a metà frase si chiama troncamento: lo fa il custode, fuori dalla montagna, contando.
+
+**NARRATORE.**
+> Nessuno ha pescato la Fine: la storia non era finita, era solo arrivata all'ultimo giro.
+
+**NARRATORE.**
+> E per la tua chat vuol dire questo: una risposta che si ferma a metà frase non è un errore del treno. Basta chiedere di continuare, e risalgono tutti.
+
+---
+
 ## Note per noi
 
 | Nella storia | Nel modellino | Nel mondo vero |
@@ -142,4 +161,4 @@ Sul telefono la storia cresce: *nuota*, *nuota e*, *nuota e gioca*, *nuota e gio
 - **Il regolamento non ha numeri a schermo**: la pagina mostra un trenino che gira e una campanella. Il numero di giri sta solo qui.
 - **Non sono elementi nuovi**: la guardiola, le chiavi, la lanterna, il regolamento e l'orologio da tasca sono del custode dall'episodio 9 della prima stagione. L'unico elemento nuovo è la campanella sull'orologio, e quello che fa.
 - **L'indovinello** non si legge: cosa c'è scritto lo dice l'episodio 5.
-- **Cosa non diciamo**: i nomi veri (episodio 6); perché il regolamento dice proprio quei giri.
+- **Cosa non diciamo nella storia**: i nomi veri (limite di token e troncamento stanno nella coda); perché il regolamento dice proprio quei giri.

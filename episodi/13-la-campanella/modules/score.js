@@ -59,6 +59,8 @@ kit.score(function (S, T) {
   S.chord('pad', C.C, { t: R('continua', 31.2), dur: 3.0, vel: 30 });
   // L'indovinello: il treno gira, il telefono tace.
   sez(T.indovinello, R('indovinello', 17.4), ['Am', 'Em', 'Am', 'Dm'], { pad: 24, mallet: 'x...x...', mv: 28 });
+  // La coda sul quaderno: solo il pad, piano, sotto la voce.
+  sez(R('coda', 1.0), R('coda', 41.0), ['C', 'Am', 'F', 'G'], { pad: 22, keys: 18 });
   // I due cartelli: il titolo e la fine.
   [R('domanda', 18.8), R('indovinello', 17.4)].forEach((a, k) => {
     S.fx('revswell', a - 0.6, { dur: 1.2 });
@@ -115,4 +117,6 @@ kit.score(function (S, T) {
   // L'indovinello.
   S.fx('whoosh', R('indovinello', 0.2), { dur: 2.4 });
   for (let k = 0; k < 6; k++) S.fx('whoosh', R('indovinello', 4.0 + k * 2.2), { dur: 1.2, vel: 18 });
+  // La matita della coda: un tratto ogni mezzo secondo, per ogni schizzo.
+  [[1.4, 3], [11.0, 3], [21.4, 2], [29.6, 1]].forEach(([a, n]) => { for (let k = 0; k < n * 2; k++) S.fx('tick', R('coda', a + k * 0.25), { vel: 14 }); });
 });
