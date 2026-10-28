@@ -89,6 +89,8 @@ kit.score(function (S, T) {
   sez(T.fiume, R('fiume', 18.4), ['F', 'C', 'Am', 'G'], { pad: 24, vib: 20 });
   for (let k = 0; k < 10; k++) S.fx('woodblock', R('fiume', 0.3 + k * 0.5), { vel: 12 });
   for (let k = 0; k < 8; k++) S.note('box', ['C6', 'E6', 'G6', 'C7', 'G6', 'E6', 'G6', 'C7'][k], { t: R('fiume', 5.8 + k * 0.4), dur: 0.3, vel: 24 });
+  // La coda sul quaderno: solo il pad, piano, sotto la voce.
+  sez(R('coda', 1.0), R('coda', 43.0), ['C', 'Am', 'F', 'G'], { pad: 22, keys: 18 });
   // I due cartelli: il titolo e la fine.
   [R('domanda', 24.0), R('fiume', 18.4)].forEach((a, k) => {
     S.fx('revswell', a - 0.6, { dur: 1.2 });
@@ -98,4 +100,6 @@ kit.score(function (S, T) {
     S.run('box', k ? ['C5', 'E5', 'G5', 'C6', 'E6', 'G6'] : ['C5', 'E5', 'G5', 'C6'], { t: a - 0.2, step: 0.12, vel: 44, cresc: 8 });
     S.fx('chime', a + 0.9);
   });
+  // La matita della coda: un tratto ogni mezzo secondo, per ogni schizzo.
+  [[1.4, 3], [11.9, 2], [21.6, 2], [32.5, 1]].forEach(([a, n]) => { for (let k = 0; k < n * 2; k++) S.fx('tick', R('coda', a + k * 0.25), { vel: 14 }); });
 });
