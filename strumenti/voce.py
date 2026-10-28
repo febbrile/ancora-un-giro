@@ -17,7 +17,7 @@ from pathlib import Path
 
 RADICE = Path(__file__).resolve().parent.parent
 VOCE = RADICE / 'strumenti' / 'voce'
-MODELLO = 'qwen'      # il modello scelto dal banco di prova
+MODELLO = 'chatterbox'      # il modello scelto dal banco di prova
 sys.path.insert(0, str(VOCE))                 # i modelli importano `banco` per la voce di riferimento
 os.environ.setdefault('HF_HOME', str(VOCE / 'pesi'))
 os.environ.setdefault('HF_HUB_DISABLE_PROGRESS_BARS', '1')

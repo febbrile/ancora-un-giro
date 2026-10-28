@@ -86,12 +86,28 @@ solo alcune battute.
 - **Supertonic 3**: velocissimo, installazione perfetta, ma niente clonazione, voci pensate per l'inglese e il coreano,
   e il repository è archiviato: nessun aggiornamento.
 
-**La proposta**, in attesa del voto sull'italiano: **Qwen3-TTS 1.7B Base**. È l'unico che soddisfa i tre criteri che
-vengono subito dopo l'ascolto (licenza libera, clonazione, gira su questo Mac); la lentezza non pesa, perché le clip si
-generano una volta sola. Se all'ascolto l'italiano di Qwen3-TTS dovesse deludere, la riserva è Chatterbox (stesse
-licenza e clonazione, solo CPU). Kokoro e Supertonic restano le scelte giuste solo se la clonazione venisse lasciata
-cadere.
+**Il voto all'ascolto** (28 ottobre 2026, alla cieca, tutti e cinque i modelli). Per ogni battuta l'autore ha messo in
+fila i modelli che gli sono piaciuti:
 
-**Prossimo passo dopo la scelta**: registrare la voce dell'autore (15–20 secondi di italiano letto, stanza silenziosa),
-metterla in `riferimento/voce.wav` con la trascrizione esatta in `riferimento/voce.txt`, rigenerare le clip con
-`banco.py` e poi l'episodio 1 con `strumenti/voce.py`.
+| Battuta | 1º | 2º | 3º |
+|---|---|---|---|
+| domanda | Chatterbox | Kokoro | |
+| carrozza | Kokoro | Chatterbox | Qwen3-TTS |
+| scambi | Kokoro | Chatterbox | |
+| uscita | Kokoro | Chatterbox | |
+| Ada | Kokoro | Qwen3-TTS | Supertonic |
+
+Kokoro primo in quattro battute su cinque, Chatterbox sempre tra i primi due, Qwen3-TTS terzo e solo due volte, XTTS
+mai. Un secondo ascolto a due, Kokoro contro Chatterbox, non ha cambiato l'ordine.
+
+**La scelta: Chatterbox Multilingual, con la voce dell'autore clonata.** All'orecchio Kokoro è un poco davanti, ma
+non clona: la voce sarebbe per sempre una delle sue due voci italiane, addestrate con meno di cento minuti ciascuna.
+Chatterbox è subito dietro, ha una licenza libera (MIT) e prende la voce da pochi secondi di registrazione: la voce dei
+film sarà quella dell'autore, come ha chiesto. La lentezza (quattro secondi di calcolo per secondo di audio, sulla CPU)
+non pesa, perché le clip si generano una volta sola. Qwen3-TTS, che sulla carta aveva tutto, all'ascolto non regge.
+
+**Cosa resta da fare.** Registrare la voce dell'autore: 15–20 secondi di italiano letto, stanza silenziosa, in
+`riferimento/voce.wav` con la trascrizione esatta in `riferimento/voce.txt`; poi `banco.py chatterbox` per
+sentirla sulle cinque battute e `strumenti/voce.py` per gli episodi. Finché non c'è, le clip degli episodi usano il
+lettore LibriVox: sono provvisorie. Con la stessa voce per il narratore e per Ada, Ada va distinta in altro modo
+(`exaggeration` di Chatterbox, o una seconda registrazione): da decidere all'ascolto.
