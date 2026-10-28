@@ -5,3 +5,8 @@ node_modules/
 !design/*.png
 *.mp4
 fotogrammi/
+
+# Banco di prova delle voci: ambienti Python, pesi dei modelli, clip generate
+strumenti/voce/amb/
+strumenti/voce/pesi/
+strumenti/voce/prove/
