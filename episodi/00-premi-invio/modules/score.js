@@ -44,25 +44,28 @@ kit.score(function (S, T) {
   sez(T.pesca, R('pesca', 11), ['Am', 'Em', 'F', 'G'], { pad: 30, vib: 24 });
   sez(R('pesca', 11), T.ancora, giro, { pad: 28, box: 'x.x.x.x.', bv: 30, bass: 48 });
   // Ancora un giro: il tema intero, poi il titolo.
-  sez(T.ancora, R('ancora', 19.6), giro, { pad: 30, mallet: 'x.x.X.x.', mv: 44, bass: 54 });
+  sez(T.ancora, R('ancora', 22.0), giro, { pad: 30, mallet: 'x.x.X.x.', mv: 44, bass: 54 });
   S.drums({ kick: 'x...x...', shaker: 'oxoxoxox' }, { from: Math.ceil(bt(R('ancora', 2))), repeat: 6, vel: 34 });
-  const fine = R('ancora', 19.6);
+  const fine = R('ancora', 22.0);
   S.fx('revswell', fine - 0.6, { dur: 1.2 });
   S.chord('pad', C.C, { t: fine, dur: 4.2, vel: 44 });
   S.chord('keys', ['C4', 'E4', 'G4', 'C5'], { t: fine, dur: 3.6, vel: 46 });
   S.note('bass', 'C2', { t: fine, dur: 3, vel: 60 });
   S.run('box', ['C5', 'E5', 'G5', 'C6', 'E6'], { t: fine - 0.2, step: 0.12, vel: 44, cresc: 8 });
   S.fx('chime', fine + 0.9);
+  // La coda sul quaderno: solo il pad, piano, sotto la voce.
+  sez(R('coda', 1.0), R('coda', 45.0), ['C', 'Am', 'F', 'G'], { pad: 22, keys: 18 });
 
   // ── Rumori ─────────────────────────────────────────────────────────────────────────────────────────
   // Il telefono: i tasti e l'invio.
-  for (let k = 0; k < 12; k++) S.fx('tick', R('invio', 2.2 + k * 0.42), { vel: 22 });
-  S.fx('click', R('invio', 11.8), { vel: 50 });
-  S.fx('pop', R('invio', 12.0), { vel: 44 });
+  for (let k = 0; k < 12; k++) S.fx('tick', R('invio', 10.6 + k * 0.42), { vel: 22 });
+  S.fx('click', R('invio', 16.0), { vel: 50 });
+  S.fx('pop', R('invio', 16.2), { vel: 44 });
   // Il volo.
   S.fx('whoosh', R('volo', 1.0), { dur: 1.2 });
   S.fx('whoosh', R('volo', 3.0), { dur: 1.6 });
   S.fx('whoosh', R('volo', 6.0), { dur: 3.0 });
+  S.fx('whoosh', R('volo', 12.0), { dur: 3.0 });
   // Il luna park: la striscia atterra in mano ad Ada.
   S.fx('whoosh', R('lunapark', 8.0), { dur: 2.4 });
   S.fx('pop', R('lunapark', 11.0), { vel: 40 });
@@ -96,6 +99,8 @@ kit.score(function (S, T) {
   // Ancora un giro: si riparte; sul telefono le parole arrivano una alla volta.
   for (let k = 0; k < 16; k++) S.fx('tick', R('ancora', 4.2 + k * 0.2), { vel: 26 });
   S.fx('whoosh', R('ancora', 8.4), { dur: 2.6 });
-  for (let k = 0; k < 9; k++) S.fx('tick', R('ancora', 12.4 + k * 0.32), { vel: 26 });
-  [15.6, 16.8, 18.0].forEach(c => S.fx('doubleclick', R('ancora', c), { vel: 26 }));
+  for (let k = 0; k < 9; k++) S.fx('tick', R('ancora', 8.4 + k * 0.6), { vel: 26 });
+  [18.0, 19.2, 20.4].forEach(c => S.fx('doubleclick', R('ancora', c), { vel: 26 }));
+  // La matita della coda: un tratto ogni mezzo secondo, per ogni schizzo.
+  [[1.4, 2], [9.4, 3], [18.5, 2], [27.4, 1], [37.4, 1]].forEach(([a, n]) => { for (let k = 0; k < n * 2; k++) S.fx('tick', R('coda', a + k * 0.25), { vel: 14 }); });
 });

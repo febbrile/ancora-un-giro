@@ -1,29 +1,37 @@
 # Prologo · Premi invio
 
-**La domanda.** Cosa succede quando qualcuno preme invio?
-**La risposta.** La frase fa un giro sulle montagne russe di un luna park e torna con una parola in più. Poi riparte.
-**Cosa presenta.** Il mondo: il luna park, Ada, lo Spezzaparole, i passeggeri, il treno, la montagna, la vasca, la pesca.
+**La domanda.** Chi scrive la risposta che arriva sul telefono?
+**La risposta.** Nessuno. La frase fa un giro sulle montagne russe di un luna park e torna con una parola in più, pescata. Poi riparte: la risposta nasce una parola alla volta.
+**Cosa presenta.** Il mondo: il luna park giocattolo, Ada, lo Spezzaparole, i passeggeri, il treno, la montagna, la vasca, la pesca.
+**Cosa resta a chi scrive.** La risposta non la scrive qualcuno e non è presa da qualche parte: è costruita un pezzo per volta.
 **Cosa resta un mistero.** Cosa succede dentro la montagna (episodio 1).
+**Cosa chiude.** La coda «Sotto il luna park», sul quaderno di Ada: i nomi veri delle cose che il prologo ha mostrato.
 
-Durata: 2:52 · Voci: narratore, Ada.
+Durata: 3:54 (di cui 0:46 di coda) · Voci: narratore, Ada.
 
 ---
 
-### invio · Premi invio · 0:15.6
+### invio · Premi invio · 0:19
 
 **VISIVO.** Sera, un salotto con una lampada calda. In primo piano due mani tengono un telefono. Sullo schermo, una chat: le dita scrivono *Al mare Emma*, poi premono il tasto di invio. Il messaggio sale nella chat.
 
 **NARRATORE.**
-> È sera. Qualcuno scrive l'inizio di una storia e chiede a un'intelligenza artificiale di continuarla. Poi preme invio.
+> Lo fai anche tu: scrivi a una chat, premi invio, e la risposta arriva una parola dopo l'altra. Chi la scrive?
+
+**NARRATORE.**
+> Stasera qualcuno comincia una storia, e chiede alla chat di continuarla.
 
 ---
 
-### volo · Il volo · 0:10.4
+### volo · Il volo · 0:20
 
 **VISIVO.** Le tre parole si staccano dallo schermo e diventano una striscia di carta. La striscia esce dalla finestra e vola sopra i tetti, nella notte, verso delle luci colorate lontane.
 
 **NARRATORE.**
-> In quell'istante, la frase parte per un viaggio.
+> La frase parte per un viaggio. Dove va davvero c'è un parco immenso, e dentro non ci si vede.
+
+**NARRATORE.**
+> Noi la seguiamo in un parco giocattolo: piccolo, con poche parole, fatto apposta per guardarci dentro.
 
 ---
 
@@ -87,15 +95,39 @@ Durata: 2:52 · Voci: narratore, Ada.
 
 ---
 
-### ancora · Ancora un giro · 0:23.2
+### ancora · Ancora un giro · 0:25
 
 **VISIVO.** Le sbarre si abbassano e il treno riparte, un vagone più lungo: sparisce di nuovo nella montagna. Sul telefono la storia si allunga ancora, riga dopo riga. Ada si sporge dalla banchina e guarda la montagna buia. Titolo: **Ancora un giro**.
 
 **NARRATORE.**
 > E il treno riparte, un vagone più lungo: ancora un giro.
 
+**NARRATORE.**
+> La risposta sul telefono non la scrive nessuno: nasce così, una parola per giro, e ogni parola è pescata.
+
 **ADA.**
 > La vasca si riempie sempre. Ma cosa succede, là dentro?
+
+---
+
+### coda · Sotto il luna park · 0:46
+
+**VISIVO.** Dopo il titolo, il quaderno di Ada a tutto schermo, aperto su due pagine. La matita disegna, a tratti semplici, quello che il prologo ha mostrato, una cosa alla volta, e accanto a ognuna compare il suo nome vero, scritto a mano, mentre il narratore lo dice: il telefono con la riga della frase, la biglietteria con la forbice e i tre biglietti, la montagna con la pista che entra, la vasca con le paperelle (tante blu, poche di altri colori). In fondo, un cerchio tratteggiato intorno a tutto: il giro. Niente fili e niente scambi: il prologo non li ha visti.
+
+**NARRATORE.**
+> Quello che hai visto ha dei nomi. La frase che scrivi, e che fa il giro, si chiama prompt.
+
+**NARRATORE.**
+> I biglietti dello Spezzaparole sono i token: i pezzi in cui ogni frase viene tagliata prima di salire.
+
+**NARRATORE.**
+> La montagna, con la sua pista, è un modello di linguaggio: una macchina che calcola, non che pensa.
+
+**NARRATORE.**
+> Le paperelle nella vasca sono le probabilità: quante ne cadono di un colore è quanto è probabile quella parola.
+
+**NARRATORE.**
+> E la risposta non la scrive nessuno: ogni parola è un giro, pescata tra quelle possibili.
 
 ---
 
@@ -116,4 +148,6 @@ Durata: 2:52 · Voci: narratore, Ada.
 - **Colori e vasca** vengono da [strumenti/modellino.py](../strumenti/modellino.py): Al `#429096`, Mare `#4681d7`, Emma `#bc937f` in stazione e `#2864dc` all'uscita; nella vasca 40 paperelle (18 blu «nuota», 7 turchesi «gioca», 4 «onde», 3 «conchiglie», 2 «sabbia», 2 «corre», una ciascuna «foglie», «altalena», «scivolo», «Fine»). Il passeggero nuovo ha il vestito `#2f73d4`.
 - **In stazione ogni vestito torna del colore del suo biglietto**: si vede, ma non si commenta.
 - **Nel prologo la parola pescata non si legge**: si vede solo la luce blu. La rivela l'episodio 1.
-- **Cosa non diciamo**: i nomi veri (token, modello), perché le parole lunghe si spezzano, da dove viene la pista, perché la pesca cambia. Ognuna di queste cose avrà la sua puntata.
+- **Il parco giocattolo si dichiara subito** (soggetto §2), nella scena *volo*, a parole: il parco immenso non si mostra, resta dell'episodio 9. Ada non lo sa: le luci oltre le colline, alla fine dell'episodio 8, restano la sua scoperta.
+- **La coda** nomina solo quello che il prologo ha mostrato: prompt, token, modello di linguaggio, probabilità. La pesca non ha il suo nome qui: è la storia dell'episodio 3 e il nome tocca alla sua coda. Fili e scambi non ci sono: arrivano con l'episodio 1.
+- **Cosa non diciamo nella storia**: i nomi veri (stanno nella coda), perché le parole lunghe si spezzano, da dove viene la pista, perché la pesca cambia. Ognuna di queste cose avrà la sua puntata.

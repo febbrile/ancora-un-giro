@@ -105,9 +105,9 @@ function subs(kit, wins){
 // In scenes.json dur è la durata vera. Mai un tratto veloce mentre c'è un sottotitolo (lo controlla controlla.mjs).
 const RITMO = {
   '00': {
-    invio: [[14.0, 18, 1.6, 1]], volo: [[7.8, 14, 2.6, 1]], lunapark: [[23.4, 26, 1.8, 1]],
+    invio: [[17.4, 21, 1.6, 1]], lunapark: [[23.4, 26, 1.8, 1]],
     spezzaparole: [[10.0, 20, 2.6, 1]], passeggeri: [[18.0, 28, 2.6, 1]], partenza: [[18.2, 24, 2.4, 1]],
-    vasca: [[19.0, 26, 2.2, 1]], pesca: [[20.8, 26, 2.2, 1]], ancora: [[20.6, 24, 2.6, 1]],
+    vasca: [[19.0, 26, 2.2, 1]], pesca: [[20.8, 26, 2.2, 1]], ancora: [[23.0, 26, 2.4, 1]],
   },
   '01': {
     domanda: [[14.0, 19.0, 2.6], [21.4, 24, 1.6, 1]], carrozza: [[19.0, 28, 2.6, 1]], buio: [[11.0, 16, 2.6, 1]],

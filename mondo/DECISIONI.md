@@ -60,6 +60,9 @@ passo tra il film, senza parole tecniche, e le lezioni, con i numeri.
 - Non corregge la storia: se la coda deve spiegare quello che il film non ha fatto capire, si riscrive il film.
 
 **Cosa comporta.** Fatti: il pilota, la scena `coda` dell'episodio 1; le regole in CLAUDE.md e nel §6 del soggetto;
-`tempi.py` e `controlla.mjs` che contano la coda a parte. Restano: le code degli altri quindici episodi, e
-l'episodio 9, che perde il premio dei nomi veri e resta l'episodio della scala.
+`tempi.py` e `controlla.mjs` che contano la coda a parte; il prologo rifatto per intero nel formato nuovo (parte
+dalla domanda di chi scrive, dichiara subito il parco giocattolo, ha la sua coda: prompt, token, modello di
+linguaggio, probabilità). Restano: le code degli altri quattordici episodi; la coda dell'episodio 1, che ripete
+«modello di linguaggio» e si accorcia; l'episodio 9, dove «parco giocattolo» diventa un richiamo e dei quattro nomi
+resta suo solo «addestramento»; la riga della scaletta «9 … dà i nomi veri».
 
