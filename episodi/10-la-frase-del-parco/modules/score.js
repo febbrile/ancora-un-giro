@@ -66,6 +66,8 @@ kit.score(function (S, T) {
   // La giostrina: il tema del custode che se ne va, e il buio.
   sez(T.giostrina, R('giostrina', 16.4), ['Am', 'Dm', 'Em', 'Am'], { pad: 24, vib: 20 });
   custode(R('giostrina', 3.4));
+  // La coda sul quaderno: solo il pad, piano, sotto la voce.
+  sez(R('coda', 1.0), R('coda', 39.0), ['C', 'Am', 'F', 'G'], { pad: 22, keys: 18 });
   // I due cartelli: il titolo e la fine.
   [R('domanda', 28.4), R('giostrina', 16.4)].forEach((a, k) => {
     S.fx('revswell', a - 0.6, { dur: 1.2 });
@@ -147,4 +149,6 @@ kit.score(function (S, T) {
   // La giostrina: la striscia, i passi del custode che se ne va.
   volo('giostrina', 0.4, 2.6);
   for (let k = 0; k < 14; k++) S.fx('woodblock', R('giostrina', 3.6 + k * 0.52), { vel: 14 - Math.round(k / 2) });
+  // La matita della coda: un tratto ogni mezzo secondo, per ogni schizzo.
+  [[1.4, 2], [12.0, 3], [21.8, 2]].forEach(([a, n]) => { for (let k = 0; k < n * 2; k++) S.fx('tick', R('coda', a + k * 0.25), { vel: 14 }); });
 });

@@ -5,8 +5,9 @@
 **Cosa presenta.** Una cosa sola: la frase del parco, che il custode attacca in testa a ogni striscia, con le sue bandierine (d'oro davanti alla frase del parco, d'argento davanti a ogni messaggio, d'ottone davanti a ogni risposta).
 **Cosa dà per scontato.** Tutta la prima stagione: Ada, lo Spezzaparole, i passeggeri (Al, Mare, Parco, Emma), il treno senza guidatore, la montagna con i fili di luce, gli scambi e le finestre sulla vasca, la vasca, la pesca, la chat che risale tutta a ogni messaggio sulla banchina (episodio 4), la paperella Fine (episodio 7); il custode, con la lanterna e il regolamento, visto al cancello alla fine dell'episodio 9.
 **Cosa lascia per dopo.** Dove porta il custode quella striscia? (Il Bruco, episodio 2.)
+**Cosa chiude.** La coda «Sotto il luna park»: dopo il cartello Fine, i nomi veri di quello che si è visto, sul quaderno di Ada.
 
-Durata: 4:48 · Voci: narratore, Ada, custode.
+Durata: 5:04 (di cui 0:42 di coda) · Voci: narratore, Ada, custode.
 
 ---
 
@@ -139,6 +140,24 @@ In fondo al tunnel si accende la luce dell'uscita.
 
 ---
 
+### coda · Sotto il luna park · 0:42
+
+**VISIVO.** Dopo il cartello Fine lo schermo diventa il quaderno di Ada, aperto su due pagine di carta crema, a tutto schermo. Il luna park non c'è: ci sono i disegni a matita dell'episodio, fermi, e accanto a ognuno una parola scritta a mano, che compare mentre il narratore la dice. La matita disegna ogni schizzo appena prima della sua battuta. Sulla pagina sinistra, in alto, la striscia lunga con in testa la frase del parco, un pezzo a parte, e davanti la bandierina d'oro; la parola *prompt di sistema*. Sotto, tre bandierine in fila, d'oro, d'argento e d'ottone; la parola *ruoli*. Sulla pagina destra, il treno di nove vagoni e il filo di luce lungo, dall'ultimo vagone fino a Mare, in testa; nessuna parola.
+
+**NARRATORE.**
+> Quello che hai visto ha dei nomi. La frase del parco, che il custode attacca in testa a ogni striscia, è il prompt di sistema.
+
+**NARRATORE.**
+> Le bandierine segnano i ruoli: d'oro per il parco, d'argento per chi scrive, d'ottone per la risposta.
+
+**NARRATORE.**
+> Siede davanti a tutto, e il blu arriva lungo i fili. Ma non guida: è un passeggero come gli altri.
+
+**NARRATORE.**
+> E per la tua chat vuol dire questo: prima del tuo messaggio ce n'è uno che non vedi. Pesa, ma non comanda.
+
+---
+
 ## Note per noi
 
 | Nella storia | Nel modellino | Nel mondo vero |
@@ -161,4 +180,4 @@ In fondo al tunnel si accende la luce dell'uscita.
 - **Le risposte finiscono** come nell'episodio 4: il treno torna e la risposta è arrivata. Dopo ogni parola c'è un giro con la paperella Fine, che non si mostra.
 - **Il custode** fa, non decide: attacca la frase del parco e le bandierine perché lo dice il regolamento. Non entra nella montagna e non pesca. Le sue battute rispettano i suoi verbi (§7, regola 15, del soggetto).
 - **Le bandierine la pista le conosce** perché certi treni di prova le portavano già. Non lo diciamo in questo episodio: non serve alla storia.
-- **Cosa non diciamo**: i nomi veri (arrivano nell'episodio 6), perché la pista è fatta così, dove va la striscia che il custode porta via.
+- **Cosa non diciamo nella storia**: i nomi veri (prompt di sistema e ruoli stanno nella coda), perché la pista è fatta così, dove va la striscia che il custode porta via.
