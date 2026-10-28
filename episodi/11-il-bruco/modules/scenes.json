@@ -56,6 +56,12 @@
       "name": "Tutti i colori",
       "dur": 21.6,
       "desc": "«Domani piove?» passa il Bruco e fa il giro grande: nella vasca, paperelle di tutti i colori. Fine."
+    },
+    {
+      "id": "coda",
+      "name": "Sotto il luna park",
+      "dur": 46,
+      "desc": "Dopo il cartello Fine, sul quaderno di Ada: gli schizzi a matita di quello che l'episodio ha mostrato, e accanto a ognuno il suo nome vero."
     }
   ]
 }
