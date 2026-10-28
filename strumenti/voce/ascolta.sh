@@ -7,7 +7,8 @@ battute=${*:-"domanda carrozza scambi uscita ada"}
 : > cieco.txt
 for b in $battute; do
   echo "== $b"
-  lista=$(ls */"$b".wav 2>/dev/null | ${CIECO:+sort -R} ${CIECO:-cat})
+  lista=$(ls */"$b".wav 2>/dev/null)
+  [ -n "$CIECO" ] && lista=$(echo "$lista" | sort -R)
   i=0
   for f in $lista; do
     i=$((i + 1)); lettera=$(printf "\\$(printf '%03o' $((64 + i)))")

@@ -37,3 +37,61 @@ Per i modelli che clonano (Qwen3-TTS, Chatterbox, XTTS) la voce è la stessa: un
 italiano di Multilingual LibriSpeech (LibriVox, CC BY 4.0), scaricato da `riferimento/scarica.py` con la sua
 trascrizione; i dettagli in `riferimento/FONTE.md`. Serve solo al confronto: la voce dei film sarà quella dell'autore, che ha
 proposto di clonare la propria, e con una sua registrazione le clip dei modelli che clonano si rigenerano così com'è (`banco.py`).
+
+## Le misure
+
+Cinque battute, 37–52 secondi di audio in tutto. Tempi misurati con `banco.py` su questo Mac, un modello alla volta
+(`prove/<modello>/misure.json`). «Calcolo per secondo di audio» è il tempo di generazione diviso la durata della clip.
+
+| Modello | Dove gira | Caricamento | Calcolo per secondo di audio | Pesi su disco | Ambiente Python |
+|---|---|---|---|---|---|
+| Kokoro | CPU | 2 s | 0,2 s | 630 MB (tutte le voci) | 820 MB |
+| Supertonic 3 | CPU (ONNX) | 8 s | 0,2 s | 390 MB | 120 MB |
+| XTTS v2 | GPU (MPS) | 24 s | 1,7 s | 3,5 GB | 890 MB |
+| Qwen3-TTS 1.7B | GPU (MPS), float32 | 78 s | 3,6 s | 8,5 GB | 1,1 GB |
+| Chatterbox | CPU (su MPS la memoria esplode) | 14 s | 3,7 s | 6 GB (pesi v2 e v3) | 980 MB |
+
+Un episodio ha circa 25 battute e 3 minuti di parlato: con i modelli lenti sono 10–12 minuti di calcolo, con quelli
+leggeri meno di un minuto. Le clip si generano una volta e restano nel repository, quindi il tempo conta poco.
+
+## Il verdetto
+
+I criteri di `DECISIONI.md`, nell'ordine: qualità dell'italiano (prosodia, doppie, vocali aperte e chiuse), licenza,
+clonazione (per avere la voce che vogliamo noi: quella dell'autore), tempo e peso su questo Mac, facilità di
+installazione. La qualità dell'italiano la vota l'autore all'ascolto, alla cieca:
+
+    CIECO=1 sh strumenti/voce/ascolta.sh          # battuta per battuta, i modelli mescolati e chiamati A, B, C, D, E
+    cat strumenti/voce/prove/cieco.txt            # la soluzione, da leggere dopo
+
+Senza `CIECO=1` dice il nome del modello prima di ogni clip; `sh strumenti/voce/ascolta.sh uscita ada` ascolta
+solo alcune battute.
+
+| | Italiano (voto all'ascolto) | Licenza | Clonazione | Tempo e peso | Installazione |
+|---|---|---|---|---|---|
+| **Qwen3-TTS 1.7B** | _da votare_ | Apache 2.0 ✓ | ✓ da 3 s, con trascrizione | lento, 8,5 GB | `pip install qwen-tts`, gira su MPS senza ritocchi |
+| **Chatterbox** | _da votare_ | MIT ✓ | ✓ | lento, 6 GB | `pip install chatterbox-tts` + `setuptools<80`; solo CPU; i pesi v3 solo da sorgente |
+| **XTTS v2** | _da votare_ | CPML: solo non commerciale ✗ | ✓ da 6 s | medio, 3,5 GB | `pip install coqui-tts` con torch 2.8 (il 2.9 vuole ffmpeg) |
+| **Kokoro** | _da votare_ | Apache 2.0 ✓ | ✗ (2 voci italiane fisse, voto C sulla scheda) | leggerissimo | `pip install kokoro` + espeak-ng da Homebrew |
+| **Supertonic 3** | _da votare_ | OpenRAIL-M ✓ (con restrizioni d'uso) | ✗ (voci fisse, senza italiano dedicato) | leggerissimo | `pip install supertonic`, zero problemi; progetto archiviato |
+
+**Giudizio per modello**, a parte l'ascolto:
+- **Qwen3-TTS**: l'unico con tutto: licenza libera, clonazione, italiano tra le dieci lingue dichiarate, gira sulla GPU
+  del Mac. Il più pesante e il più lento a caricare. Vuole la trascrizione della voce di riferimento (o perde qualità).
+- **Chatterbox**: licenza libera e clonazione, ma su questo Mac va solo sulla CPU, e il pacchetto PyPI è indietro
+  rispetto ai pesi v3 dichiarati sulla scheda.
+- **XTTS v2**: comodo e collaudato, ma la licenza vieta ogni uso commerciale, e il progetto originale è fermo: una
+  scelta che vincola il progetto per sempre. Da tenere solo come termine di paragone.
+- **Kokoro**: velocissimo e minuscolo, ma senza clonazione la voce non sarà mai la nostra, e le due voci italiane hanno
+  poca cura (meno di cento minuti di addestramento ciascuna, voto C sulla scheda ufficiale).
+- **Supertonic 3**: velocissimo, installazione perfetta, ma niente clonazione, voci pensate per l'inglese e il coreano,
+  e il repository è archiviato: nessun aggiornamento.
+
+**La proposta**, in attesa del voto sull'italiano: **Qwen3-TTS 1.7B Base**. È l'unico che soddisfa i tre criteri che
+vengono subito dopo l'ascolto (licenza libera, clonazione, gira su questo Mac); la lentezza non pesa, perché le clip si
+generano una volta sola. Se all'ascolto l'italiano di Qwen3-TTS dovesse deludere, la riserva è Chatterbox (stesse
+licenza e clonazione, solo CPU). Kokoro e Supertonic restano le scelte giuste solo se la clonazione venisse lasciata
+cadere.
+
+**Prossimo passo dopo la scelta**: registrare la voce dell'autore (15–20 secondi di italiano letto, stanza silenziosa),
+metterla in `riferimento/voce.wav` con la trascrizione esatta in `riferimento/voce.txt`, rigenerare le clip con
+`banco.py` e poi l'episodio 1 con `strumenti/voce.py`.
