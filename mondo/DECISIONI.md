@@ -59,8 +59,7 @@ passo tra il film, senza parole tecniche, e le lezioni, con i numeri.
 - Sta fuori dal conto dei cinque minuti, con un suo tetto di un minuto.
 - Non corregge la storia: se la coda deve spiegare quello che il film non ha fatto capire, si riscrive il film.
 
-**Cosa comporta.** Il pilota è la scena `coda` dell'episodio 1. Se regge: le code degli altri quindici episodi;
-`tempi.py` e `controlla.mjs` che contano la coda a parte; le regole da riscrivere in CLAUDE.md («le sole scritte a
-schermo», «spiegazioni fuori dalla trama») e nel §6 del soggetto; l'episodio 9, che perde il premio dei nomi veri e
-resta l'episodio della scala.
+**Cosa comporta.** Fatti: il pilota, la scena `coda` dell'episodio 1; le regole in CLAUDE.md e nel §6 del soggetto;
+`tempi.py` e `controlla.mjs` che contano la coda a parte. Restano: le code degli altri quindici episodi, e
+l'episodio 9, che perde il premio dei nomi veri e resta l'episodio della scala.
 
