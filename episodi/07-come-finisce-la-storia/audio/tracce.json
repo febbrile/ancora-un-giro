@@ -1,3 +1,124 @@
 {
-  "volumi": { "musica": -21, "effetti": 0, "voce": 0 }
+ "volumi": {
+  "musica": -21,
+  "effetti": 0,
+  "voce": 0
+ },
+ "clip": [
+  {
+   "canale": "voce",
+   "file": "voce/domanda-1.wav",
+   "da": 0.8
+  },
+  {
+   "canale": "voce",
+   "file": "voce/domanda-2.wav",
+   "da": 13
+  },
+  {
+   "canale": "voce",
+   "file": "voce/giri-1.wav",
+   "da": 21.2
+  },
+  {
+   "canale": "voce",
+   "file": "voce/giri-2.wav",
+   "da": 38
+  },
+  {
+   "canale": "voce",
+   "file": "voce/giri-3.wav",
+   "da": 48
+  },
+  {
+   "canale": "voce",
+   "file": "voce/quaderno-1.wav",
+   "da": 59.8
+  },
+  {
+   "canale": "voce",
+   "file": "voce/quaderno-2.wav",
+   "da": 69.8
+  },
+  {
+   "canale": "voce",
+   "file": "voce/punto-1.wav",
+   "da": 80
+  },
+  {
+   "canale": "voce",
+   "file": "voce/punto-2.wav",
+   "da": 86.4
+  },
+  {
+   "canale": "voce",
+   "file": "voce/finestre-1.wav",
+   "da": 92.6
+  },
+  {
+   "canale": "voce",
+   "file": "voce/finestre-2.wav",
+   "da": 107.6
+  },
+  {
+   "canale": "voce",
+   "file": "voce/finestre-3.wav",
+   "da": 124
+  },
+  {
+   "canale": "voce",
+   "file": "voce/vasca-1.wav",
+   "da": 138.6
+  },
+  {
+   "canale": "voce",
+   "file": "voce/vasca-2.wav",
+   "da": 148
+  },
+  {
+   "canale": "voce",
+   "file": "voce/pesca-1.wav",
+   "da": 157.8
+  },
+  {
+   "canale": "voce",
+   "file": "voce/pesca-2.wav",
+   "da": 164.6
+  },
+  {
+   "canale": "voce",
+   "file": "voce/fine-1.wav",
+   "da": 183.6
+  },
+  {
+   "canale": "voce",
+   "file": "voce/fine-2.wav",
+   "da": 188.4
+  },
+  {
+   "canale": "voce",
+   "file": "voce/fine-3.wav",
+   "da": 196.6
+  },
+  {
+   "canale": "voce",
+   "file": "voce/coda-1.wav",
+   "da": 205.2
+  },
+  {
+   "canale": "voce",
+   "file": "voce/coda-2.wav",
+   "da": 214.2
+  },
+  {
+   "canale": "voce",
+   "file": "voce/coda-3.wav",
+   "da": 223.6
+  },
+  {
+   "canale": "voce",
+   "file": "voce/coda-4.wav",
+   "da": 232.2
+  }
+ ]
 }
