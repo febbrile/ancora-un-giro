@@ -1,3 +1,114 @@
 {
-  "volumi": { "musica": -21, "effetti": 0, "voce": 0 }
+ "volumi": {
+  "musica": -21,
+  "effetti": 0,
+  "voce": 0
+ },
+ "clip": [
+  {
+   "canale": "voce",
+   "file": "voce/domanda-1.wav",
+   "da": 0.8
+  },
+  {
+   "canale": "voce",
+   "file": "voce/domanda-2.wav",
+   "da": 15.8
+  },
+  {
+   "canale": "voce",
+   "file": "voce/guardiola-1.wav",
+   "da": 25.4
+  },
+  {
+   "canale": "voce",
+   "file": "voce/guardiola-2.wav",
+   "da": 46.4
+  },
+  {
+   "canale": "voce",
+   "file": "voce/guardiola-3.wav",
+   "da": 49.2
+  },
+  {
+   "canale": "voce",
+   "file": "voce/orologio-1.wav",
+   "da": 58.4
+  },
+  {
+   "canale": "voce",
+   "file": "voce/orologio-2.wav",
+   "da": 74.2
+  },
+  {
+   "canale": "voce",
+   "file": "voce/primo-1.wav",
+   "da": 93
+  },
+  {
+   "canale": "voce",
+   "file": "voce/primo-2.wav",
+   "da": 118.4
+  },
+  {
+   "canale": "voce",
+   "file": "voce/giri-1.wav",
+   "da": 126.8
+  },
+  {
+   "canale": "voce",
+   "file": "voce/giri-2.wav",
+   "da": 147.6
+  },
+  {
+   "canale": "voce",
+   "file": "voce/campanella-1.wav",
+   "da": 154.8
+  },
+  {
+   "canale": "voce",
+   "file": "voce/campanella-2.wav",
+   "da": 170.6
+  },
+  {
+   "canale": "voce",
+   "file": "voce/continua-1.wav",
+   "da": 186
+  },
+  {
+   "canale": "voce",
+   "file": "voce/continua-2.wav",
+   "da": 198.8
+  },
+  {
+   "canale": "voce",
+   "file": "voce/indovinello-1.wav",
+   "da": 211.6
+  },
+  {
+   "canale": "voce",
+   "file": "voce/indovinello-2.wav",
+   "da": 219
+  },
+  {
+   "canale": "voce",
+   "file": "voce/coda-1.wav",
+   "da": 230.2
+  },
+  {
+   "canale": "voce",
+   "file": "voce/coda-2.wav",
+   "da": 240.2
+  },
+  {
+   "canale": "voce",
+   "file": "voce/coda-3.wav",
+   "da": 250.6
+  },
+  {
+   "canale": "voce",
+   "file": "voce/coda-4.wav",
+   "da": 258.8
+  }
+ ]
 }

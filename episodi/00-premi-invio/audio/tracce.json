@@ -1,3 +1,129 @@
 {
-  "volumi": { "musica": -21, "effetti": 0, "voce": 0 }
+ "volumi": {
+  "musica": -21,
+  "effetti": 0,
+  "voce": 0
+ },
+ "clip": [
+  {
+   "canale": "voce",
+   "file": "voce/invio-1.wav",
+   "da": 0.8
+  },
+  {
+   "canale": "voce",
+   "file": "voce/invio-2.wav",
+   "da": 10.4
+  },
+  {
+   "canale": "voce",
+   "file": "voce/volo-1.wav",
+   "da": 20
+  },
+  {
+   "canale": "voce",
+   "file": "voce/volo-2.wav",
+   "da": 28.4
+  },
+  {
+   "canale": "voce",
+   "file": "voce/lunapark-1.wav",
+   "da": 39.8
+  },
+  {
+   "canale": "voce",
+   "file": "voce/lunapark-2.wav",
+   "da": 52.2
+  },
+  {
+   "canale": "voce",
+   "file": "voce/lunapark-3.wav",
+   "da": 56
+  },
+  {
+   "canale": "voce",
+   "file": "voce/spezzaparole-1.wav",
+   "da": 64.8
+  },
+  {
+   "canale": "voce",
+   "file": "voce/passeggeri-1.wav",
+   "da": 77.6
+  },
+  {
+   "canale": "voce",
+   "file": "voce/partenza-1.wav",
+   "da": 98.2
+  },
+  {
+   "canale": "voce",
+   "file": "voce/partenza-2.wav",
+   "da": 112
+  },
+  {
+   "canale": "voce",
+   "file": "voce/vasca-1.wav",
+   "da": 118.8
+  },
+  {
+   "canale": "voce",
+   "file": "voce/vasca-2.wav",
+   "da": 125.6
+  },
+  {
+   "canale": "voce",
+   "file": "voce/vasca-3.wav",
+   "da": 133
+  },
+  {
+   "canale": "voce",
+   "file": "voce/pesca-1.wav",
+   "da": 143.6
+  },
+  {
+   "canale": "voce",
+   "file": "voce/pesca-2.wav",
+   "da": 150.6
+  },
+  {
+   "canale": "voce",
+   "file": "voce/ancora-1.wav",
+   "da": 163.2
+  },
+  {
+   "canale": "voce",
+   "file": "voce/ancora-2.wav",
+   "da": 170.2
+  },
+  {
+   "canale": "voce",
+   "file": "voce/ancora-3.wav",
+   "da": 179.6
+  },
+  {
+   "canale": "voce",
+   "file": "voce/coda-1.wav",
+   "da": 188.6
+  },
+  {
+   "canale": "voce",
+   "file": "voce/coda-2.wav",
+   "da": 196.6
+  },
+  {
+   "canale": "voce",
+   "file": "voce/coda-3.wav",
+   "da": 205.7
+  },
+  {
+   "canale": "voce",
+   "file": "voce/coda-4.wav",
+   "da": 214.6
+  },
+  {
+   "canale": "voce",
+   "file": "voce/coda-5.wav",
+   "da": 224.6
+  }
+ ]
 }

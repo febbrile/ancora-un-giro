@@ -1,3 +1,129 @@
 {
-  "volumi": { "musica": -21, "effetti": 0, "voce": 0 }
+ "volumi": {
+  "musica": -21,
+  "effetti": 0,
+  "voce": 0
+ },
+ "clip": [
+  {
+   "canale": "voce",
+   "file": "voce/nome-1.wav",
+   "da": 1
+  },
+  {
+   "canale": "voce",
+   "file": "voce/nome-2.wav",
+   "da": 17.6
+  },
+  {
+   "canale": "voce",
+   "file": "voce/zac-1.wav",
+   "da": 23.6
+  },
+  {
+   "canale": "voce",
+   "file": "voce/zac-2.wav",
+   "da": 33.6
+  },
+  {
+   "canale": "voce",
+   "file": "voce/zac-3.wav",
+   "da": 43.2
+  },
+  {
+   "canale": "voce",
+   "file": "voce/partenza-1.wav",
+   "da": 51.8
+  },
+  {
+   "canale": "voce",
+   "file": "voce/prova-1.wav",
+   "da": 63.2
+  },
+  {
+   "canale": "voce",
+   "file": "voce/prova-2.wav",
+   "da": 69.8
+  },
+  {
+   "canale": "voce",
+   "file": "voce/prova-3.wav",
+   "da": 81.6
+  },
+  {
+   "canale": "voce",
+   "file": "voce/fili-1.wav",
+   "da": 96.8
+  },
+  {
+   "canale": "voce",
+   "file": "voce/fili-2.wav",
+   "da": 107.4
+  },
+  {
+   "canale": "voce",
+   "file": "voce/finestre-1.wav",
+   "da": 116.2
+  },
+  {
+   "canale": "voce",
+   "file": "voce/finestre-2.wav",
+   "da": 126.2
+  },
+  {
+   "canale": "voce",
+   "file": "voce/finestre-3.wav",
+   "da": 146.4
+  },
+  {
+   "canale": "voce",
+   "file": "voce/vasca-1.wav",
+   "da": 162.3
+  },
+  {
+   "canale": "voce",
+   "file": "voce/pesca-1.wav",
+   "da": 180.3
+  },
+  {
+   "canale": "voce",
+   "file": "voce/pesca-2.wav",
+   "da": 188.5
+  },
+  {
+   "canale": "voce",
+   "file": "voce/ancora-1.wav",
+   "da": 195.3
+  },
+  {
+   "canale": "voce",
+   "file": "voce/ancora-2.wav",
+   "da": 209.5
+  },
+  {
+   "canale": "voce",
+   "file": "voce/ancora-3.wav",
+   "da": 212.3
+  },
+  {
+   "canale": "voce",
+   "file": "voce/coda-1.wav",
+   "da": 219.1
+  },
+  {
+   "canale": "voce",
+   "file": "voce/coda-2.wav",
+   "da": 230.3
+  },
+  {
+   "canale": "voce",
+   "file": "voce/coda-3.wav",
+   "da": 240.7
+  },
+  {
+   "canale": "voce",
+   "file": "voce/coda-4.wav",
+   "da": 250.3
+  }
+ ]
 }

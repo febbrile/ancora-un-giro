@@ -20,7 +20,7 @@ cambia prima il soggetto.
 l'unico elemento nuovo e l'idea. Un episodio nuovo parte da lì. La seconda stagione, «Intorno alla giostra», è in
 [mondo/SCALETTA-2.md](mondo/SCALETTA-2.md).
 
-[mondo/DECISIONI.md](mondo/DECISIONI.md) raccoglie le decisioni prese e non ancora realizzate, come la voce narrante;
+[mondo/DECISIONI.md](mondo/DECISIONI.md) raccoglie le decisioni prese e non ancora realizzate;
 [mondo/PIANO-FORMATO.md](mondo/PIANO-FORMATO.md) è il piano per portare gli episodi al formato con la coda.
 
 ## Come si lavora
@@ -180,6 +180,24 @@ L'elenco completo, tradotto nel luna park, è nel §7 del soggetto. Le più impo
   luna park valgono per i film, non per le lezioni.
 - Prima di dire che il sito funziona, aprilo con un server locale (`python3 -m http.server 8791`, poi
   `sito/guarda.html?ep=…&t=…`); dopo la pubblicazione, aprilo anche online.
+
+## La voce narrante
+
+- **La voce è quella dell'autore**, clonata da Chatterbox Multilingual (MIT) a partire dalla registrazione di riferimento
+  `strumenti/voce/riferimento/voce.wav` (20 secondi, con la trascrizione in `voce.txt` e la fonte in `FONTE.md`). La scelta
+  del modello è raccontata in `strumenti/voce/BANCO.md`. I sottotitoli restano, come accompagnamento. Solo l'italiano.
+- **Si genera con `strumenti/voce.py`**, una passata per episodio, coda compresa:
+  `strumenti/voce/amb/chatterbox/bin/python strumenti/voce.py <episodio>` (`--rifai` rigenera anche le clip che esistono
+  già). Le battute e le loro finestre le legge dalle scene (`node strumenti/battute.mjs <episodio>`): una battuta nuova o
+  cambiata si rigenera con la sua clip. Gli ambienti Python e i pesi stanno in `strumenti/voce/amb/` e `strumenti/voce/pesi/`,
+  fuori da git.
+- **Le clip stanno in `episodi/NN-titolo/audio/voce/<scena>-<n>.wav`**, in git, e `audio/tracce.json` le elenca sul canale
+  `voce` con l'istante `da` in cui partono: il player le suona da lì. Dopo ogni modifica a una battuta si rilancia lo script.
+- **Una battuta deve stare nella sua finestra.** Lo script riprova fino a tre volte e alla fine segnala le clip rimaste più
+  lunghe della finestra del sottotitolo: in quel caso si allarga la finestra in `G.subs` della scena (e la `dur` in
+  `scenes.json`, tenendo i limiti: coda ≤ 1 minuto, episodio ≤ 5 minuti senza coda, al massimo 3 secondi dopo l'ultima
+  battuta), poi si aggiornano la durata nella sceneggiatura e nel README e si rilancia lo script. Se non basta, si accorcia
+  la battuta, mai la voce.
 
 ## Verifica
 

@@ -1,3 +1,124 @@
 {
-  "volumi": { "musica": -21, "effetti": 0, "voce": 0 }
+ "volumi": {
+  "musica": -21,
+  "effetti": 0,
+  "voce": 0
+ },
+ "clip": [
+  {
+   "canale": "voce",
+   "file": "voce/domanda-1.wav",
+   "da": 14
+  },
+  {
+   "canale": "voce",
+   "file": "voce/domanda-2.wav",
+   "da": 21
+  },
+  {
+   "canale": "voce",
+   "file": "voce/pagina-1.wav",
+   "da": 37
+  },
+  {
+   "canale": "voce",
+   "file": "voce/pagina-2.wav",
+   "da": 44.4
+  },
+  {
+   "canale": "voce",
+   "file": "voce/pagina-3.wav",
+   "da": 50
+  },
+  {
+   "canale": "voce",
+   "file": "voce/viola-1.wav",
+   "da": 67.2
+  },
+  {
+   "canale": "voce",
+   "file": "voce/viola-2.wav",
+   "da": 76.6
+  },
+  {
+   "canale": "voce",
+   "file": "voce/viola-3.wav",
+   "da": 89.2
+  },
+  {
+   "canale": "voce",
+   "file": "voce/cabina-1.wav",
+   "da": 100.2
+  },
+  {
+   "canale": "voce",
+   "file": "voce/cabina-2.wav",
+   "da": 118
+  },
+  {
+   "canale": "voce",
+   "file": "voce/finestre-1.wav",
+   "da": 125
+  },
+  {
+   "canale": "voce",
+   "file": "voce/finestre-2.wav",
+   "da": 150.2
+  },
+  {
+   "canale": "voce",
+   "file": "voce/si-1.wav",
+   "da": 179.8
+  },
+  {
+   "canale": "voce",
+   "file": "voce/si-2.wav",
+   "da": 186.6
+  },
+  {
+   "canale": "voce",
+   "file": "voce/sole-1.wav",
+   "da": 207.4
+  },
+  {
+   "canale": "voce",
+   "file": "voce/sole-2.wav",
+   "da": 214.8
+  },
+  {
+   "canale": "voce",
+   "file": "voce/sole-3.wav",
+   "da": 227.6
+  },
+  {
+   "canale": "voce",
+   "file": "voce/storia-1.wav",
+   "da": 239.6
+  },
+  {
+   "canale": "voce",
+   "file": "voce/storia-2.wav",
+   "da": 246.6
+  },
+  {
+   "canale": "voce",
+   "file": "voce/coda-1.wav",
+   "da": 255
+  },
+  {
+   "canale": "voce",
+   "file": "voce/coda-2.wav",
+   "da": 266.8
+  },
+  {
+   "canale": "voce",
+   "file": "voce/coda-3.wav",
+   "da": 277.8
+  },
+  {
+   "canale": "voce",
+   "file": "voce/coda-4.wav",
+   "da": 286.4
+  }
+ ]
 }

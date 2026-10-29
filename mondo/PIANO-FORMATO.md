@@ -16,8 +16,8 @@ con i nomi veri delle cose che l'episodio ha mostrato. Le regole sono in CLAUDE.
 3. **La verifica**: fotogrammi di inizio, centro, fine e di ogni battuta della coda; `tempi.py` e `controlla.mjs`.
 4. **Un commit per episodio**, con la durata aggiornata nella sceneggiatura e nel README.
 
-La voce narrante arriva dopo, con `strumenti/voce.py`, quando il branch della voce sarà su `main`: una passata per
-episodio, coda compresa. Le aperture delle storie non si riscrivono: dove la domanda di partenza è già della chat
+La voce narrante è arrivata dopo, con `strumenti/voce.py`, una passata per episodio, coda compresa (le regole sono in
+CLAUDE.md, «La voce narrante»). Le aperture delle storie non si riscrivono: dove la domanda di partenza è già della chat
 (episodi 3, 4, 7, 11, 12, 13, 14) non serve; dove parte dal luna park (2, 5, 6, 8, 9, 10, 15) ci pensa l'ultima
 battuta della coda a riportarla alla chat. Riscrivere le aperture è un lavoro a parte, da decidere episodio per episodio.
 
@@ -61,9 +61,7 @@ battuta finale, quella per chi usa una chat, è la più lunga e decide la durata
 ## Cosa resta fuori
 
 - Le aperture delle storie (vedi sopra).
-- La voce narrante sulle code, con `strumenti/voce.py`, una passata per episodio: oggi solo l'episodio 1 ha la voce,
-  e solo nella storia, non nella coda.
 - La pagina «La chiave» sul sito (scenario B): le code ci sono tutte, si può decidere.
 - Il player: la coda deve essere un capitolo a sé (CLAUDE.md); da verificare che l'elenco delle scene lo faccia già.
 - Le scene «nomi» del 9 («In grande») e del 15 («I due parchi») tengono la durata di prima: il piano diceva di
-  accorciarle, ma camera e musica non sono cambiate; si accorciano, se serve, quando arriva la voce.
+  accorciarle, ma camera e musica non sono cambiate; con la voce le battute ci stanno, e restano così.
