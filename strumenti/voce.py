@@ -5,7 +5,8 @@
 Le battute e le loro finestre vengono dalle scene (`node strumenti/battute.mjs`). Il modello è uno di `strumenti/voce/modelli/` (quello scelto
 dal banco di prova, vedi strumenti/voce/BANCO.md) e va lanciato con il suo ambiente. Le clip finiscono in
 `episodi/NN-titolo/audio/voce/<scena>-<n>.wav`; una clip che esiste già non si rigenera, salvo `--rifai`.
-Una clip più lunga della finestra del sottotitolo si rigenera (fino a tre volte); alla fine segnala quelle rimaste lunghe.
+Il silenzio in fondo a una clip si taglia. Una clip più lunga della finestra del sottotitolo si rigenera (fino a tre volte,
+tenendo la più corta); alla fine segnala quelle rimaste lunghe.
 """
 import argparse
 import importlib.util
@@ -24,6 +25,15 @@ os.environ.setdefault('HF_HOME', str(VOCE / 'pesi'))
 os.environ.setdefault('HF_HUB_DISABLE_PROGRESS_BARS', '1')
 import numpy as np
 import soundfile as sf
+
+
+def senza_coda(wav, sr):
+    """Toglie il silenzio che il modello a volte lascia in fondo, tenendone 0,2 s."""
+    n = int(sr * 0.05)
+    quadri = [np.sqrt((wav[i:i + n] ** 2).mean()) for i in range(0, len(wav) - n, n)]
+    soglia = max(quadri) * 0.03
+    ultimo = max(i for i, q in enumerate(quadri) if q > soglia)
+    return wav[:min(len(wav), (ultimo + 1) * n + int(sr * 0.2))]
 
 
 def battute(ep):
@@ -53,9 +63,12 @@ def main():
             if a.rifai or not f.exists():
                 if m is None:
                     m = mod.carica()
+                wav = None
                 for tentativo in range(TENTATIVI):          # il modello a volte allunga una frase a caso: si riprova
-                    wav, sr = mod.genera(m, b['testo'], b['chi'])
-                    wav = np.asarray(wav, dtype=np.float32).squeeze()
+                    w, sr = mod.genera(m, b['testo'], b['chi'])
+                    w = senza_coda(np.asarray(w, dtype=np.float32).squeeze(), sr)
+                    if wav is None or len(w) < len(wav):
+                        wav = w
                     if len(wav) / sr <= finestra:
                         break
                 sf.write(f, wav, sr, subtype='PCM_16')
