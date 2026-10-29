@@ -1,3 +1,139 @@
 {
-  "volumi": { "musica": -21, "effetti": 0, "voce": 0 }
+ "volumi": {
+  "musica": -21,
+  "effetti": 0,
+  "voce": 0
+ },
+ "clip": [
+  {
+   "canale": "voce",
+   "file": "voce/domanda-1.wav",
+   "da": 0.8
+  },
+  {
+   "canale": "voce",
+   "file": "voce/domanda-2.wav",
+   "da": 12.4
+  },
+  {
+   "canale": "voce",
+   "file": "voce/frase-1.wav",
+   "da": 21.6
+  },
+  {
+   "canale": "voce",
+   "file": "voce/frase-2.wav",
+   "da": 46.6
+  },
+  {
+   "canale": "voce",
+   "file": "voce/prima-1.wav",
+   "da": 55
+  },
+  {
+   "canale": "voce",
+   "file": "voce/prima-2.wav",
+   "da": 66.6
+  },
+  {
+   "canale": "voce",
+   "file": "voce/prima-3.wav",
+   "da": 75.2
+  },
+  {
+   "canale": "voce",
+   "file": "voce/biglietti-1.wav",
+   "da": 85.2
+  },
+  {
+   "canale": "voce",
+   "file": "voce/biglietti-2.wav",
+   "da": 94.8
+  },
+  {
+   "canale": "voce",
+   "file": "voce/partenza-1.wav",
+   "da": 115
+  },
+  {
+   "canale": "voce",
+   "file": "voce/finestre-1.wav",
+   "da": 126.6
+  },
+  {
+   "canale": "voce",
+   "file": "voce/finestre-2.wav",
+   "da": 135.4
+  },
+  {
+   "canale": "voce",
+   "file": "voce/finestre-3.wav",
+   "da": 147.6
+  },
+  {
+   "canale": "voce",
+   "file": "voce/finestre-4.wav",
+   "da": 165.4
+  },
+  {
+   "canale": "voce",
+   "file": "voce/vasca-1.wav",
+   "da": 183.6
+  },
+  {
+   "canale": "voce",
+   "file": "voce/vasca-2.wav",
+   "da": 187.2
+  },
+  {
+   "canale": "voce",
+   "file": "voce/pesca-1.wav",
+   "da": 196.4
+  },
+  {
+   "canale": "voce",
+   "file": "voce/pesca-2.wav",
+   "da": 203.2
+  },
+  {
+   "canale": "voce",
+   "file": "voce/telefono-1.wav",
+   "da": 223
+  },
+  {
+   "canale": "voce",
+   "file": "voce/telefono-2.wav",
+   "da": 228.6
+  },
+  {
+   "canale": "voce",
+   "file": "voce/laggiu-1.wav",
+   "da": 254.2
+  },
+  {
+   "canale": "voce",
+   "file": "voce/laggiu-2.wav",
+   "da": 257.8
+  },
+  {
+   "canale": "voce",
+   "file": "voce/coda-1.wav",
+   "da": 262.6
+  },
+  {
+   "canale": "voce",
+   "file": "voce/coda-2.wav",
+   "da": 274.4
+  },
+  {
+   "canale": "voce",
+   "file": "voce/coda-3.wav",
+   "da": 285.4
+  },
+  {
+   "canale": "voce",
+   "file": "voce/coda-4.wav",
+   "da": 293
+  }
+ ]
 }
