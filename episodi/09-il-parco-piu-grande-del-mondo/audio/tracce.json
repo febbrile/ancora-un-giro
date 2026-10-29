@@ -1,3 +1,169 @@
 {
-  "volumi": { "musica": -21, "effetti": 0, "voce": 0 }
+ "volumi": {
+  "musica": -21,
+  "effetti": 0,
+  "voce": 0
+ },
+ "clip": [
+  {
+   "canale": "voce",
+   "file": "voce/domanda-1.wav",
+   "da": 0.8
+  },
+  {
+   "canale": "voce",
+   "file": "voce/domanda-2.wav",
+   "da": 12
+  },
+  {
+   "canale": "voce",
+   "file": "voce/collina-1.wav",
+   "da": 21
+  },
+  {
+   "canale": "voce",
+   "file": "voce/immenso-1.wav",
+   "da": 35.5
+  },
+  {
+   "canale": "voce",
+   "file": "voce/immenso-2.wav",
+   "da": 42.6
+  },
+  {
+   "canale": "voce",
+   "file": "voce/immenso-3.wav",
+   "da": 50.6
+  },
+  {
+   "canale": "voce",
+   "file": "voce/immenso-4.wav",
+   "da": 63.6
+  },
+  {
+   "canale": "voce",
+   "file": "voce/frase-1.wav",
+   "da": 71.4
+  },
+  {
+   "canale": "voce",
+   "file": "voce/frase-2.wav",
+   "da": 77
+  },
+  {
+   "canale": "voce",
+   "file": "voce/frase-3.wav",
+   "da": 81.4
+  },
+  {
+   "canale": "voce",
+   "file": "voce/frase-4.wav",
+   "da": 92.6
+  },
+  {
+   "canale": "voce",
+   "file": "voce/finestre-1.wav",
+   "da": 103
+  },
+  {
+   "canale": "voce",
+   "file": "voce/finestre-2.wav",
+   "da": 129.6
+  },
+  {
+   "canale": "voce",
+   "file": "voce/lago-1.wav",
+   "da": 145.8
+  },
+  {
+   "canale": "voce",
+   "file": "voce/lago-2.wav",
+   "da": 156
+  },
+  {
+   "canale": "voce",
+   "file": "voce/lago-3.wav",
+   "da": 172.6
+  },
+  {
+   "canale": "voce",
+   "file": "voce/nomi-1.wav",
+   "da": 179
+  },
+  {
+   "canale": "voce",
+   "file": "voce/nomi-2.wav",
+   "da": 193.2
+  },
+  {
+   "canale": "voce",
+   "file": "voce/nomi-3.wav",
+   "da": 199.8
+  },
+  {
+   "canale": "voce",
+   "file": "voce/nomi-4.wav",
+   "da": 205.6
+  },
+  {
+   "canale": "voce",
+   "file": "voce/nomi-5.wav",
+   "da": 211.6
+  },
+  {
+   "canale": "voce",
+   "file": "voce/nomi-6.wav",
+   "da": 219.4
+  },
+  {
+   "canale": "voce",
+   "file": "voce/quaderno-1.wav",
+   "da": 229
+  },
+  {
+   "canale": "voce",
+   "file": "voce/quaderno-2.wav",
+   "da": 244.4
+  },
+  {
+   "canale": "voce",
+   "file": "voce/cancello-1.wav",
+   "da": 251.7
+  },
+  {
+   "canale": "voce",
+   "file": "voce/cancello-2.wav",
+   "da": 261
+  },
+  {
+   "canale": "voce",
+   "file": "voce/cancello-3.wav",
+   "da": 264.3
+  },
+  {
+   "canale": "voce",
+   "file": "voce/cancello-4.wav",
+   "da": 265.9
+  },
+  {
+   "canale": "voce",
+   "file": "voce/coda-1.wav",
+   "da": 273.5
+  },
+  {
+   "canale": "voce",
+   "file": "voce/coda-2.wav",
+   "da": 285.1
+  },
+  {
+   "canale": "voce",
+   "file": "voce/coda-3.wav",
+   "da": 295.5
+  },
+  {
+   "canale": "voce",
+   "file": "voce/coda-4.wav",
+   "da": 305.5
+  }
+ ]
 }
