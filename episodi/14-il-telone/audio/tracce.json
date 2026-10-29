@@ -1,3 +1,114 @@
 {
-  "volumi": { "musica": -21, "effetti": 0, "voce": 0 }
+ "volumi": {
+  "musica": -21,
+  "effetti": 0,
+  "voce": 0
+ },
+ "clip": [
+  {
+   "canale": "voce",
+   "file": "voce/domanda-1.wav",
+   "da": 8.6
+  },
+  {
+   "canale": "voce",
+   "file": "voce/domanda-2.wav",
+   "da": 19.6
+  },
+  {
+   "canale": "voce",
+   "file": "voce/telone-1.wav",
+   "da": 38.4
+  },
+  {
+   "canale": "voce",
+   "file": "voce/telone-2.wav",
+   "da": 43.4
+  },
+  {
+   "canale": "voce",
+   "file": "voce/telone-3.wav",
+   "da": 50
+  },
+  {
+   "canale": "voce",
+   "file": "voce/sotto-1.wav",
+   "da": 70.5
+  },
+  {
+   "canale": "voce",
+   "file": "voce/sotto-2.wav",
+   "da": 94.2
+  },
+  {
+   "canale": "voce",
+   "file": "voce/finestre-1.wav",
+   "da": 101.6
+  },
+  {
+   "canale": "voce",
+   "file": "voce/finestre-2.wav",
+   "da": 127.4
+  },
+  {
+   "canale": "voce",
+   "file": "voce/risposta-1.wav",
+   "da": 157
+  },
+  {
+   "canale": "voce",
+   "file": "voce/risposta-2.wav",
+   "da": 162.2
+  },
+  {
+   "canale": "voce",
+   "file": "voce/sbagliata-1.wav",
+   "da": 181.2
+  },
+  {
+   "canale": "voce",
+   "file": "voce/sbagliata-2.wav",
+   "da": 209.6
+  },
+  {
+   "canale": "voce",
+   "file": "voce/campanella-1.wav",
+   "da": 217.2
+  },
+  {
+   "canale": "voce",
+   "file": "voce/campanella-2.wav",
+   "da": 236.2
+  },
+  {
+   "canale": "voce",
+   "file": "voce/fiume-1.wav",
+   "da": 251.8
+  },
+  {
+   "canale": "voce",
+   "file": "voce/fiume-2.wav",
+   "da": 257.8
+  },
+  {
+   "canale": "voce",
+   "file": "voce/coda-1.wav",
+   "da": 266.2
+  },
+  {
+   "canale": "voce",
+   "file": "voce/coda-2.wav",
+   "da": 277.1
+  },
+  {
+   "canale": "voce",
+   "file": "voce/coda-3.wav",
+   "da": 286.8
+  },
+  {
+   "canale": "voce",
+   "file": "voce/coda-4.wav",
+   "da": 297.7
+  }
+ ]
 }
